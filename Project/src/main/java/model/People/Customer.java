@@ -11,7 +11,7 @@ public class Customer extends Account{
     private ArrayList<Order> historyOfOrders = new ArrayList<Order>();
 
 
-    public Customer(String username, String firstName, String lastName, Double balance, String email, String phoneNumber) {
-        super(username, firstName, lastName, balance, email, phoneNumber);
+    public Customer(String username, String password, String firstName, String lastName, Double balance, String email, String phoneNumber) {
+        super(username, password, firstName, lastName, balance, email, phoneNumber);
     }
 }
