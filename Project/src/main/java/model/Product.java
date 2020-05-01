@@ -133,4 +133,13 @@ public class Product {
     public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
     }
+
+    public Product getProductById(String productID){
+        for (Product product : allProducts) {
+            if (product.productId.equals(productID))
+                return product;
+        }
+
+        return null;
+    }
 }
