@@ -13,9 +13,9 @@ public class Seller extends Account{
     private ArrayList<Product> availableProducts = new ArrayList<Product>();
     private ArrayList<Auction> allAuctions = new ArrayList<Auction>() ;
 
-    public Seller(String username, String firstName, String lastName, Double balance,
+    public Seller(String username, String password ,String firstName, String lastName, Double balance,
                   String email, String phoneNumber , String brandName) {
-        super(username, firstName, lastName, balance, email, phoneNumber);
+        super(username,password, firstName, lastName, balance, email, phoneNumber);
         this.brandName = brandName ;
     }
 

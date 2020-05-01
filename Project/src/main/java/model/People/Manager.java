@@ -13,8 +13,8 @@ public class Manager extends Account {
     private ArrayList<Category> allCategories = new ArrayList<Category>();
 
 
-    public Manager(String username, String firstName, String lastName, Double balance, String email, String phoneNumber) {
-        super(username, firstName, lastName, balance, email, phoneNumber);
+    public Manager(String username,String password, String firstName, String lastName, Double balance, String email, String phoneNumber) {
+        super(username,password, firstName, lastName, balance, email, phoneNumber);
     }
 
     public ArrayList<Request> getAllRequests() {
