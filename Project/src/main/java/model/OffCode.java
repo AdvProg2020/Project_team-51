@@ -72,4 +72,13 @@ public class OffCode {
     public void setOffPercentage(int offPercentage) {
         this.offPercentage = offPercentage;
     }
+
+    public static OffCode getOffIdByProductId(String offId){
+        for (OffCode offCode : allOffCodes) {
+            if (offCode.offCode.equals(offId))
+                return offCode;
+        }
+
+        return null;
+    }
 }

@@ -22,6 +22,7 @@ public class Auction {
         this.endDate = endDate;
         this.appliedProducts = appliedProducts;
         this.offPercentage = offPercentage;
+        this.auctionStatus = new Status(StatusStates.CREATE_PROCESSING);
     }
 
     public static ArrayList<Auction> getAllAuctions() {
@@ -74,5 +75,14 @@ public class Auction {
 
     public void setAuctionStatus(Status auctionStatus) {
         this.auctionStatus = auctionStatus;
+    }
+
+    public static Auction getAuctionById(String auctionId){
+        for (Auction auction : allAuctions) {
+            if (auction.getAuctionId().equals(auctionId))
+                return auction;
+        }
+
+        return null;
     }
 }

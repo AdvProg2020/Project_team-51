@@ -5,11 +5,13 @@ import model.People.Seller;
 import java.util.Date;
 
 public class ItemOfOrder {
+
     private Seller seller;
     private Product product ;
     private Double price;
     private Double discount;
     private Date date;
+    private int quantity ;
 
     public ItemOfOrder(Seller seller, Product product, Double price, Double discount, Date date) {
         this.seller = seller;
@@ -17,6 +19,15 @@ public class ItemOfOrder {
         this.price = price;
         this.discount = discount;
         this.date = date;
+        quantity=0;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void addQuantity() {
+        quantity++;
     }
 
     public Seller getSeller() {
@@ -57,4 +68,5 @@ public class ItemOfOrder {
     public void setDiscount(Double discount) {
         this.discount = discount;
     }
+
 }
