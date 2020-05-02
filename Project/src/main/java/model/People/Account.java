@@ -86,4 +86,14 @@ public abstract class Account {
     public static void setAllAccounts(ArrayList<Account> allAccounts) {
         Account.allAccounts = allAccounts;
     }
+
+    public static Account getAccountById(String username){
+
+        for (Account account : allAccounts) {
+            if (account.username.equals(username)){
+                return account;
+            }
+        }
+        return null;
+    }
 }

@@ -17,9 +17,10 @@ public class Product {
     private Integer quantity;
     private Category parentCategory;
     private String description;
-    private HashMap<String,Attributes> attributes= new HashMap<String, Attributes>();
+    private HashMap<Attributes , String> attributes= new HashMap<>();
     private ArrayList<Rate> rating;
     private ArrayList<Comment> comments;
+
 
     public Product(String productId, String name, String brandName,
                    Double price,Seller seller , Integer quantity, Category parentCategory, String description) {
@@ -32,6 +33,14 @@ public class Product {
         this.description = description;
         sellersForThisProduct.add(seller);
         allProducts.add(this);
+    }
+
+    public HashMap<Attributes,String> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(HashMap<Attributes, String> attributes) {
+        this.attributes = attributes;
     }
 
     public void addAttribute(String value , String Attribute){
@@ -134,12 +143,11 @@ public class Product {
         this.comments = comments;
     }
 
-    public Product getProductById(String productID){
+    public static Product getProductById(String productID){
         for (Product product : allProducts) {
             if (product.productId.equals(productID))
                 return product;
         }
-
         return null;
     }
 }

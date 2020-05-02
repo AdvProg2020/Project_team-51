@@ -2,14 +2,15 @@ package model.OrderLog;
 
 import model.ItemOfOrder;
 import model.People.Customer;
+import model.People.Seller;
 
 import java.util.ArrayList;
 
 public class BuyerLog extends Order{
-    private Customer seller;
+    private Seller seller;
     private ArrayList<ItemOfOrder> items = new ArrayList<ItemOfOrder>();
 
-    public BuyerLog(Customer seller) {
+    public BuyerLog(Seller seller) {
         super();
         this.seller = seller;
     }
@@ -23,7 +24,7 @@ public class BuyerLog extends Order{
 
     }
 
-    public Customer getSeller() {
+    public Seller getSeller() {
         return seller;
     }
 }

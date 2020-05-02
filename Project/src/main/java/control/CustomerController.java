@@ -70,4 +70,5 @@ public class CustomerController extends Controller {
     public static ArrayList<String> viewDiscountCodes(){
         return null;
     }
+
 }

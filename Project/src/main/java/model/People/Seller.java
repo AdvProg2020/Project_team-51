@@ -50,4 +50,6 @@ public class Seller extends Account{
     public void setAllAuctions(ArrayList<Auction> allAuctions) {
         this.allAuctions = allAuctions;
     }
+
+
 }

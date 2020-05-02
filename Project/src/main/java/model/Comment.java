@@ -5,14 +5,16 @@ import model.People.Account;
 public class Comment {
     private Account account;
     private Product product;
+    private String title ;
     private String context ;
     private Status commentStatus;
     private Boolean isBuyer;
 
-    public Comment(Account account, Product product, String context, Status commentStatus, Boolean isBuyer) {
+    public Comment(Account account, Product product, String context , String title , Status commentStatus, Boolean isBuyer) {
         this.account = account;
         this.product = product;
         this.context = context;
+        this.title = title;
         this.commentStatus = commentStatus;
         this.isBuyer = isBuyer;
     }
