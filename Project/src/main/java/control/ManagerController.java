@@ -6,20 +6,22 @@ import model.People.Manager;
 import model.Product;
 import model.Requests.Request;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class ManagerController extends Controller {
     public ManagerController(Account currentAccount) {
         super(currentAccount);
     }
-//what does this do
+
     public static Boolean isThisFieldValid(String field) {
         return true;
     }
-    // these must be checked in view for their format
+
     public void editFirstName (String firstName) {
-        if (this.currentAccount!=null){
-            this.currentAccount.setFirstName(firstName);
+        if (currentAccount!=null){
+            currentAccount.setFirstName(firstName);
         }
     }
 
@@ -38,8 +40,7 @@ public class ManagerController extends Controller {
     public static void editPhoneNumber (String phoneNumber) {
         if (currentAccount!=null) currentAccount.setPhoneNumber(phoneNumber);
     }
-//when you delete a customer or a seller then some fields will become null like
-    // the person who posted a comment or the seller for a product. these must be handled
+
     public static void deleteUser (String username) {
         ArrayList<Account> allAccounts = new ArrayList<>();
         allAccounts = Account.getAllAccounts();
@@ -49,17 +50,23 @@ public class ManagerController extends Controller {
         }
         Account.setAllAccounts(allAccounts);
     }
-// what are the contains of the info
-    public static void createManager (String[] info){
 
+    public static void createManager (String[] info){
+        if (info.length!=7) return;
+        new Manager(info[0],info[1],info[2],info[3],Double.valueOf(info[4]),info[5],info[6]);
     }
+
     public static Boolean isHeAbleToCreateManger(){
         if (currentAccount instanceof Manager) return true;
         return false;
     }
-// this nigger must be a part of main controller too
+    //if the pid is taken returns true
     public static Boolean isThisPidValid(String productId){
-        return true;
+        ArrayList<Product> products = model.Product.getAllProducts();
+        for (Product product : products){
+            if (product.getProductId().equals(productId)) return true;
+        }
+        return false;
     }
 
     public static void removeProduct(String productId){
@@ -71,13 +78,14 @@ public class ManagerController extends Controller {
         }
         model.Product.setAllProducts(allProducts);
     }
-//what should this do too
+
     public static Boolean isThisCodeValid (String code){
         return true;
     }
 
-    public static void createDiscountCode(String [] info){
-
+    public static void createDiscountCode(String [] info) throws ParseException {
+//        new SimpleDateFormat("dd/MM/yyyy").parse(info[1])
+        //this requires an arraylist of accounts
     }
 
     public static void editDiscountCode(String[] info){
@@ -96,9 +104,9 @@ public class ManagerController extends Controller {
     }
 
     public static Boolean isRequestValid(String requestId){
-        return null;
+        return true;
     }
-//there is no id in request
+
     public static Request getRequestDetail(String requestId){
         return null;
     }
@@ -112,8 +120,8 @@ public class ManagerController extends Controller {
     }
 
     public static Boolean isCategoryValid(String category){
-        return null;
-    }
+        return true;
+        }
 
     public static void addCategory(String[] info){
 
