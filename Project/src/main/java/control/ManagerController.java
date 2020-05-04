@@ -1,5 +1,6 @@
 package control;
 
+import model.Category;
 import model.OffCode;
 import model.People.Account;
 import model.People.Manager;
