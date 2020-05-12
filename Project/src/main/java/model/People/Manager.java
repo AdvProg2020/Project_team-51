@@ -41,5 +41,4 @@ public class Manager extends Account {
         this.allCategories = allCategories;
     }
 
-
 }

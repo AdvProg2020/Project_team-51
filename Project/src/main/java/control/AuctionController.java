@@ -1,5 +1,6 @@
 package control;
 
+import model.Auction;
 import model.People.Account;
 import model.Product;
 
@@ -11,11 +12,20 @@ public class AuctionController extends Controller {
         super(currentAccount);
     }
 
-    public static ArrayList<String> showOffs(){
-        return null;
+    // returns auction id s
+    public static ArrayList<String> showOffs() {
+        ArrayList<String> auctions = new ArrayList<>();
+        for (Auction auction : Auction.getAllAuctions()) {
+            auctions.add(auction.getAuctionId());
+        }
+        return auctions;
     }
 
-    public static Product goToProduct(String productId){
+    public static Product goToProduct(String productId) {
+
+        for (Product product : Product.getAllProducts()) {
+            if (product.getProductId().equals(productId)) return product;
+        }
         return null;
     }
 }

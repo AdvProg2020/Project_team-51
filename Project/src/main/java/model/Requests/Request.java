@@ -15,7 +15,7 @@ public class Request <T> {
     private Status status;
     private String editedFieldValue;
     private Date time;
-
+    private String id;
     public Request(T data, Account sender,String editedFieldValue, String description, Date time) {
         this.sender=sender;
         this.data = data;
@@ -37,5 +37,7 @@ public class Request <T> {
     public Date getTime() {
         return time;
     }
+
+    public String getId (){ return id; }
 
 }
