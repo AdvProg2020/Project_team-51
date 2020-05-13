@@ -26,8 +26,11 @@ public class ProductMenu extends Menu {
 
     @Override
     public void showMenu() {
-        int size = category.getSubCategories().size();
-        viewCategories();
+        int size = 0;
+        if (category!=null) {
+            size = category.getSubCategories().size();
+            viewCategories();
+        }
         System.out.println("----------------------------");
         System.out.println(size+1 + ". Show Products");
         System.out.println(size+2 + ". Back");
@@ -35,7 +38,9 @@ public class ProductMenu extends Menu {
 
     @Override
     public void executeMenu() {
-        int size = category.getSubCategories().size();
+        int size =0 ;
+        if(category!=null)
+        size = category.getSubCategories().size();
         while (true) {
             int option = getOption();
             if (option <= size){

@@ -49,7 +49,7 @@ public abstract class Menu {
         while (true) {
             input = scanner.nextLine();
             if (Pattern.matches("[1-9][0-9]*", input))
-                if (Integer.parseInt(input) >= 1 && Integer.parseInt(input) <= subMenus.size()+1)
+                if (Integer.parseInt(input) >= 1 && Integer.parseInt(input) <= subMenus.size()+2)
                     return Integer.parseInt(input);
             System.out.println("Invalid Input : Please Enter A Valid Number");
         }
@@ -78,7 +78,8 @@ public abstract class Menu {
 
     public void back(){
         System.out.flush();
-        menusHistory.pop().showMenu();
-        menusHistory.pop().executeMenu();
+        var lastMenu = menusHistory.pop();
+        lastMenu.showMenu();
+        lastMenu.executeMenu();
     }
 }

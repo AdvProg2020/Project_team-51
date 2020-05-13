@@ -59,11 +59,15 @@ public class ProductPageMenu extends Menu {
                     }
                 }
             };
+            menusHistory.push(this);
             commentsMenu.showMenu();
             commentsMenu.executeMenu();
         } else if (command.matches("(?i)back")){
             back();
         }
+
+        this.showMenu();
+        this.executeMenu();
     }
 
     private void digest() {
