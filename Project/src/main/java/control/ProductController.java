@@ -1,17 +1,16 @@
 package control;
 
 import model.Category;
-import model.Filter;
+import model.Filters.Filter;
 import model.People.Account;
 import model.Product;
-import model.Sort;
+import model.Sorts.Sort;
 
 import java.util.ArrayList;
 
 public class ProductController extends Controller {
 
     private Category category ;
-    private ArrayList<Sort> availableSorts = new ArrayList<Sort>();
     private ArrayList<Filter> availableFilter = new ArrayList<Filter>();
     private Sort currentSort ;
 
@@ -63,6 +62,7 @@ public class ProductController extends Controller {
     public static Product showProduct() {
         return null;
     }
+
 
 
 }

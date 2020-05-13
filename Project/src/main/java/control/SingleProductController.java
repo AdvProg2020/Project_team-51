@@ -7,7 +7,6 @@ import model.People.Account;
 import model.People.Customer;
 import model.People.Seller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

@@ -1,13 +1,12 @@
 package model;
 
-import model.People.Account;
 import model.People.Customer;
 
 public class Rate {
 
     private Customer account ;
     private  Product product;
-    private short score ;
+    private int score ;
 
     public Rate(Customer account, Product product, short score) {
         this.account = account;
@@ -31,11 +30,11 @@ public class Rate {
         this.product = product;
     }
 
-    public short getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(short score) {
+    public void setScore(int score) {
         this.score = score;
     }
 }

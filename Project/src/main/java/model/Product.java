@@ -4,6 +4,8 @@ import model.People.Seller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.OptionalDouble;
+import java.util.stream.IntStream;
 
 public class Product {
 
@@ -149,5 +151,9 @@ public class Product {
                 return product;
         }
         return null;
+    }
+
+    public Double averageRate(){
+        return  ((IntStream) rating.stream().map(r -> r.getScore())).average().orElse(0);
     }
 }
