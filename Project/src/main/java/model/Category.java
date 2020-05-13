@@ -7,6 +7,7 @@ import java.util.Map;
 public class Category {
 
     private String name;
+    private static ArrayList<Category> allCategories ;
     private Map<Integer,Category> subCategories = new HashMap<Integer, Category>();
     private Category parentCategory;
     private ArrayList<Product> categoryProducts = new ArrayList<Product>();
@@ -51,5 +52,9 @@ public class Category {
 
     public void setCategoryProducts(ArrayList<Product> categoryProducts) {
         this.categoryProducts = categoryProducts;
+    }
+
+    public static ArrayList<Category> getAllCategories() {
+        return allCategories;
     }
 }

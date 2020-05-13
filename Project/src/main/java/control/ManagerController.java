@@ -44,13 +44,13 @@ public class ManagerController extends Controller {
     }
 
     public static void deleteUser (String username) {
-        ArrayList<Account> allAccounts;
-        allAccounts = Account.getAllAccounts();
-        for (Account account : allAccounts){
-            if (account.getUsername().equals(username)) { allAccounts.remove(account);
-            break;}
-        }
-        Account.setAllAccounts(allAccounts);
+//        ArrayList<Account> allAccounts;
+//        allAccounts = Account.getAllAccounts();
+//        for (Account account : allAccounts){
+//            if (account.getUsername().equals(username)) { allAccounts.remove(account);
+//            break;}
+//        }
+//        Account.setAllAccounts(allAccounts);
     }
 
     public static void createManager (String[] info){
@@ -151,7 +151,7 @@ public class ManagerController extends Controller {
 
     private static Request getRequestById (String id){
         for (Request request : Manager.getAllRequests()) {
-            if (request.getId().equals(id)) return request;
+            if (request.getRequestId().equals(id)) return request;
         }
         return null;
     }

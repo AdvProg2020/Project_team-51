@@ -7,6 +7,7 @@ import model.People.Account;
 import model.People.Customer;
 import model.People.Seller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -86,9 +87,13 @@ public class SingleProductController extends Controller {
         return comparisonHashMap;
     }
 
-    public void comment(String title ,String content){
+    public void addComment(String title ,String content){
         product.getComments().add(new Comment(currentAccount,product,content,title,
                 new Status(StatusStates.CREATE_PROCESSING),isCurrentAccountBuyer()));
+    }
+
+    public ArrayList<Comment> getComments (){
+        return product.getComments();
     }
 
     private double getProductDiscountAmount(String seller){

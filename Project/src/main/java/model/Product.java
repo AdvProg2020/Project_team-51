@@ -21,6 +21,7 @@ public class Product {
     private String description;
     private HashMap<Attributes , String> attributes= new HashMap<>();
     private ArrayList<Rate> rating;
+    private int views;
     private ArrayList<Comment> comments;
 
 
@@ -35,6 +36,7 @@ public class Product {
         this.description = description;
         sellersForThisProduct.add(seller);
         allProducts.add(this);
+        views = 0 ;
     }
 
     public HashMap<Attributes,String> getAttributes() {
@@ -153,7 +155,15 @@ public class Product {
         return null;
     }
 
-    public Double averageRate(){
-        return  ((IntStream) rating.stream().map(r -> r.getScore())).average().orElse(0);
+    public double averageRate(){
+        return   (double) ((rating.stream().map(r -> r.getScore()).reduce((a,b) -> a+b).orElse(0)) / rating.size()) ;
+    }
+
+    public int getViews() {
+        return views;
+    }
+
+    public void addView(){
+        views++;
     }
 }

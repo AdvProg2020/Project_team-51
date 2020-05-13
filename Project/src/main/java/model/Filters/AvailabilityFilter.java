@@ -4,12 +4,12 @@ import model.Product;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class AvailabilityFilter implements Filter {
+public class AvailabilityFilter extends Filter {
 
     private AvailabilityFilter instance = null;
 
     private AvailabilityFilter(){
-
+        name = "Availability" ;
     }
 
     @Override

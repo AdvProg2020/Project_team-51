@@ -46,22 +46,22 @@ public class SellerController extends Controller {
     }
 
     public static void editProduct(String productId, String field , String value , String description){
-        var product = Product.getProductById(productId);
-        if (currentAccount instanceof Seller){
-            for (Map.Entry<Attributes, String> attribute : product.getAttributes().entrySet()) {
-                if (attribute.getKey().getField().equals(field)){
-                    new Request<Map.Entry<Attributes,String>> (attribute,currentAccount,value,description,new Date());
-                }
-            }
-        }
+//        var product = Product.getProductById(productId);
+//        if (currentAccount instanceof Seller){
+//            for (Map.Entry<Attributes, String> attribute : product.getAttributes().entrySet()) {
+//                if (attribute.getKey().getField().equals(field)){
+//                    new Request<Map.Entry<Attributes,String>> (attribute,currentAccount,value,description,new Date());
+//                }
+//            }
+//        }
     }
 
 
     public static void addProduct(Product product){
-        if(currentAccount instanceof  Seller){
-            new Request<Product>(product
-                    ,currentAccount,"" , "New Product Request" , new Date());
-        }
+//        if(currentAccount instanceof  Seller){
+//            new Request<Product>(product
+//                    ,currentAccount,"" , "New Product Request" , new Date());
+//        }
     }
 
     public static void removeProduct(String productId){
@@ -89,10 +89,10 @@ public class SellerController extends Controller {
     }
 
     public static void addOffId(Auction auction){
-        if(currentAccount instanceof  Seller){
-            new Request<Auction>(auction
-                    ,currentAccount,"" , "New Auction Request" , new Date());
-        }
+//        if(currentAccount instanceof  Seller){
+//            new Request<Auction>(auction
+//                    ,currentAccount,"" , "New Auction Request" , new Date());
+//        }
     }
 
 }

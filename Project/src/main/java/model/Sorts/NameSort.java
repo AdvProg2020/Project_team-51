@@ -5,21 +5,26 @@ import model.Product;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class NameSort implements Sort {
+public class NameSort extends Sort {
+
 
     private static NameSort instance = null ;
 
     private NameSort() {
+        isAscending = false ;
+        name="Name";
     }
 
-    @Override
+
     public ArrayList<Product> applyAscendingSort(ArrayList<Product> products) {
+        isAscending=true;
         products.sort(Comparator.comparing(Product::getName).reversed());
         return products;
     }
 
-    @Override
+
     public ArrayList<Product> applyDescendingSort(ArrayList<Product> products) {
+        isAscending=false;
         products.sort(Comparator.comparing(Product::getName));
         return products;
     }
@@ -28,5 +33,10 @@ public class NameSort implements Sort {
         if (instance==null)
             instance=new NameSort();
         return instance;
+    }
+
+    @Override
+    public ArrayList<Product> applySort(ArrayList<Product> products, Boolean isAscending) {
+        return isAscending ? applyAscendingSort(products) : applyDescendingSort(products);
     }
 }

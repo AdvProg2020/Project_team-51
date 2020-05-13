@@ -24,6 +24,7 @@ public abstract class Account {
         allAccounts.add(this);
     }
 
+
     public String getPassword() {
         return password;
     }

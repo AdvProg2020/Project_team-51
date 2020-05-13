@@ -5,12 +5,12 @@ import model.Product;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class PriceRangeFilter implements Filter {
+public class PriceRangeFilter extends Filter {
 
     private PriceRangeFilter instance = null;
 
     private PriceRangeFilter(){
-
+        name = "PriceRange" ;
     }
 
 

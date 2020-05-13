@@ -5,12 +5,12 @@ import model.Product;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class RateRangeFilter implements Filter {
+public class RateRangeFilter extends Filter {
     
     private RateRangeFilter instance = null;
 
     private RateRangeFilter(){
-
+        name = "RateRange" ;
     }
 
 

@@ -4,11 +4,18 @@ import model.Product;
 
 import java.util.ArrayList;
 
-public interface Filter {
-    default public ArrayList<Product> applyFilter (ArrayList<Product> products) {
+public abstract class Filter {
+
+    protected String name;
+
+    public ArrayList<Product> applyFilter(ArrayList<Product> products) {
         return null;
     }
-    default public ArrayList<Product> applyFilter (ArrayList<Product> products, Double from ,Double to) {
+    public ArrayList<Product> applyFilter(ArrayList<Product> products, Double from, Double to) {
         return null;
+    }
+
+    public String getName() {
+        return name;
     }
 }

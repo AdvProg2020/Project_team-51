@@ -9,9 +9,9 @@ import java.util.regex.Pattern;
 
 public abstract class Menu {
 
-    private static Stack<Menu> menusHistory = new Stack<>();
+    protected static Stack<Menu> menusHistory = new Stack<>();
     public static final Scanner scanner = new Scanner(System.in);
-    private static String command = "";
+    public static String command = "";
     private String name ;
     private Menu parentMenu ;
     protected HashMap<Integer,Menu> subMenus = new HashMap<Integer, Menu>();
@@ -74,5 +74,11 @@ public abstract class Menu {
 
     public String getName() {
         return name;
+    }
+
+    public void back(){
+        System.out.flush();
+        menusHistory.pop().showMenu();
+        menusHistory.pop().executeMenu();
     }
 }

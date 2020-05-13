@@ -4,7 +4,16 @@ import model.Product;
 
 import java.util.ArrayList;
 
-public interface Sort {
-    public ArrayList<Product> applyAscendingSort(ArrayList<Product> products);
-    public ArrayList<Product> applyDescendingSort(ArrayList<Product> products);
+public abstract class Sort {
+
+    protected String name;
+    protected Boolean isAscending ;
+    public abstract ArrayList<Product> applySort(ArrayList<Product> products, Boolean isAscending);
+    public String getName() {
+        return name;
+    }
+
+    public Boolean getAscending() {
+        return isAscending;
+    }
 }

@@ -67,4 +67,7 @@ public class Controller {
         currentAccount = null;
     }
 
+    public static Account getCurrentAccount() {
+        return currentAccount;
+    }
 }

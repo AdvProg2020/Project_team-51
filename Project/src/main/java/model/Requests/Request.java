@@ -45,4 +45,12 @@ public abstract class Request  {
     public void accept(){
 
     }
+
+    public static Request getId(String id) {
+        for (Request request : allRequests) {
+            if (request.requestId.equals(id))
+                return request;
+        }
+        return null;
+    }
 }
