@@ -2,18 +2,13 @@ package view;
 
 public class MainMenu extends Menu {
 
-    public MainMenu( Menu parentMenu) {
-        super("Main Menu", parentMenu);
-    }
-
-    @Override
-    public void showMenu() {
-        super.showMenu();
+    public MainMenu() {
+        super("Main Menu", null);
     }
 
     @Override
     public void executeMenu() {
-        super.executeMenu();
+
     }
 
 
