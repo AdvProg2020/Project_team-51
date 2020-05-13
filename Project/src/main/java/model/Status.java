@@ -1,8 +1,8 @@
 package model;
 
 public class Status {
-    private StatusStates state ;
 
+    private StatusStates state ;
 
     public StatusStates getState() {
         return state;

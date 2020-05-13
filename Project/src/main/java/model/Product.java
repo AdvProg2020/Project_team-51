@@ -67,8 +67,8 @@ public class Product {
         return sellersForThisProduct;
     }
 
-    public void setSellersForThisProduct(ArrayList<Seller> sellersForThisProduct) {
-        this.sellersForThisProduct = sellersForThisProduct;
+    public void addSellerForThisProduct(Seller seller) {
+        sellersForThisProduct.add(seller);
     }
 
     public Status getStatus() {
@@ -139,8 +139,8 @@ public class Product {
         return comments;
     }
 
-    public void setComments(ArrayList<Comment> comments) {
-        this.comments = comments;
+    public void addComment(Comment comment) {
+        comments.add(comment);
     }
 
     public static Product getProductById(String productID){

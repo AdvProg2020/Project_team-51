@@ -57,8 +57,12 @@ public class Auction {
         return appliedProducts;
     }
 
-    public void setAppliedProducts(ArrayList<Product> appliedProducts) {
-        this.appliedProducts = appliedProducts;
+    public void addAppliedProduct(Product product) {
+        appliedProducts.add(product);
+    }
+
+    public void removeAppliedProduct(Product product) {
+        appliedProducts.remove(product);
     }
 
     public int getOffPercentage() {

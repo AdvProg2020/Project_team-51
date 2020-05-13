@@ -20,6 +20,7 @@ public abstract class Account {
         this.balance = balance;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        if (this instanceof Customer || this instanceof Manager)
         allAccounts.add(this);
     }
 
@@ -83,8 +84,8 @@ public abstract class Account {
         return allAccounts;
     }
 
-    public static void setAllAccounts(ArrayList<Account> allAccounts) {
-        Account.allAccounts = allAccounts;
+    public static void addSeller(Seller seller) {
+        allAccounts.add(seller);
     }
 
     public static Account getAccountById(String username){

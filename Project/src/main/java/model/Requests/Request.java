@@ -5,39 +5,44 @@ import model.People.Manager;
 import model.Status;
 import model.StatusStates;
 
+import java.util.ArrayList;
 import java.util.Date;
 
-public class Request <T> {
+public abstract class Request  {
 
-    private T data ;
-    private Account sender;
-    private String description;
-    private Status status;
-    private String editedFieldValue;
-    private Date time;
-    private String id;
-    public Request(T data, Account sender,String editedFieldValue, String description, Date time) {
-        this.sender=sender;
-        this.data = data;
-        this.editedFieldValue=editedFieldValue;
-        this.description = description;
-        this.time = time;
-        this.status = new Status(StatusStates.CREATE_PROCESSING);
-        Manager.getAllRequests().add(this);
+    public static ArrayList<Request> allRequests = new ArrayList<>();
+    private String requestId;
+    public Status status ;
+    private Date date;
+
+    public Request(String requestId , String kind) {
+        this.requestId = requestId;
+        if (kind.equals("add"))
+            status.setState(StatusStates.CREATE_PROCESSING);
+        else if (kind.equals("edit")){
+            status.setState(StatusStates.EDIT_PROCESSING);
+        }
+        this.date = new Date();
     }
 
-    public T getData() {
-        return data;
+
+    public static ArrayList<Request> getAllRequests() {
+        return allRequests;
     }
 
-    public String getDescription() {
-        return description;
+    public Status getStatus() {
+        return status;
     }
 
-    public Date getTime() {
-        return time;
+    public String getRequestId() {
+        return requestId;
     }
 
-    public String getId (){ return id; }
+    public String digest(){
+        return "Request ID : " + requestId ;
+    }
 
+    public void accept(){
+
+    }
 }
