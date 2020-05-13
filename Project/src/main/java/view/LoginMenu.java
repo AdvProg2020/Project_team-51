@@ -12,7 +12,7 @@ public class LoginMenu extends Menu {
 
     @Override
     public void executeMenu() {
-        super.executeMenu();
+
     }
 
     private void register(String type, String username) {

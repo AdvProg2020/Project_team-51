@@ -7,13 +7,8 @@ public class ProductPageMenu extends Menu {
     }
 
     @Override
-    public void showMenu() {
-        super.showMenu();
-    }
-
-    @Override
     public void executeMenu() {
-        super.executeMenu();
+
     }
 
     private void digest() {

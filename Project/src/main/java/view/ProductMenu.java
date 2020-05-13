@@ -6,6 +6,11 @@ public class ProductMenu extends Menu {
         super("Products", parentMenu);
     }
 
+    @Override
+    public void executeMenu() {
+
+    }
+
     public void productsMenu() {
 
     }
@@ -57,4 +62,5 @@ public class ProductMenu extends Menu {
     private void showProduct(String id) {
 
     }
+
 }

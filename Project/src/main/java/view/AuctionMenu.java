@@ -6,14 +6,10 @@ public class AuctionMenu extends Menu{
         super("Auction Menu", parentMenu);
     }
 
-    @Override
-    public void showMenu() {
-        super.showMenu();
-    }
 
     @Override
     public void executeMenu() {
-        super.executeMenu();
+
     }
 
     public void auctionPage() {

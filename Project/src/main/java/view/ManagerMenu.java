@@ -14,7 +14,7 @@ public class ManagerMenu extends Menu{
 
     @Override
     public void executeMenu() {
-        super.executeMenu();
+
     }
 
 

@@ -8,13 +8,8 @@ public class CustomerMenu extends Menu{
     }
 
     @Override
-    public void showMenu() {
-        super.showMenu();
-    }
-
-    @Override
     public void executeMenu() {
-        super.executeMenu();
+
     }
 
     public void customerMenu() {

@@ -6,6 +6,11 @@ public class SellerMenu extends Menu {
         super("Seller Menu", parentMenu);
     }
 
+    @Override
+    public void executeMenu() {
+
+    }
+
     private void viewCompanyInformation() {
 
     }
@@ -57,4 +62,5 @@ public class SellerMenu extends Menu {
     private void viewSellerBalance(){
 
     }
+
 }
