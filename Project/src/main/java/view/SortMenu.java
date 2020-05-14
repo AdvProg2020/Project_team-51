@@ -1,8 +1,10 @@
 package view;
 
-import control.Controller;
 import control.ProductController;
-import model.Product;
+import model.SortTypes;
+import control.Sorts.Sort;
+
+import java.util.Arrays;
 
 public class SortMenu extends Menu {
 
@@ -38,10 +40,7 @@ public class SortMenu extends Menu {
     }
 
     private void showAvailableSorts() {
-        System.out.println("View");
-        System.out.println("Name");
-        System.out.println("Price");
-        System.out.println("Rate");
+        Arrays.stream(SortTypes.values()).map(SortTypes::getSort).map(Sort::getName).forEach(s -> System.out.println(s));
     }
 
     private void sort(String sort) {
@@ -49,7 +48,7 @@ public class SortMenu extends Menu {
     }
 
     private void currentSort() {
-        var sort = ProductController.getCurrentSort();
+        var sort = ProductController.getCurrentSort().getSort();
         System.out.println(sort.getName() + " -> "  + ( sort.getAscending() ? "Ascending" : "Descending"));
     }
 

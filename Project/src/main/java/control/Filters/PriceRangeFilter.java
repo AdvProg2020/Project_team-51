@@ -1,4 +1,4 @@
-package model.Filters;
+package control.Filters;
 
 import model.Product;
 
@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class PriceRangeFilter extends Filter {
 
-    private PriceRangeFilter instance = null;
+    private static PriceRangeFilter instance = null;
 
     private PriceRangeFilter(){
         name = "PriceRange" ;
@@ -20,7 +20,7 @@ public class PriceRangeFilter extends Filter {
                 .collect(Collectors.toList()));
     }
 
-    public PriceRangeFilter getInstance() {
+    public static PriceRangeFilter getInstance() {
         if(instance==null)
             instance=new PriceRangeFilter();
         return instance;

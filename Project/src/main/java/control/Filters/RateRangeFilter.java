@@ -1,4 +1,4 @@
-package model.Filters;
+package control.Filters;
 
 import model.Product;
 
@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class RateRangeFilter extends Filter {
     
-    private RateRangeFilter instance = null;
+    private static RateRangeFilter instance = null;
 
     private RateRangeFilter(){
         name = "RateRange" ;
@@ -20,7 +20,7 @@ public class RateRangeFilter extends Filter {
                 .collect(Collectors.toList()));
     }
 
-    public RateRangeFilter getInstance() {
+    public static RateRangeFilter getInstance() {
         if(instance==null)
             instance=new RateRangeFilter();
         return instance;

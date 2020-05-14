@@ -1,4 +1,4 @@
-package model.Filters;
+package control.Filters;
 
 import model.Product;
 

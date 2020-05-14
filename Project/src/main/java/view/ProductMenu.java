@@ -104,7 +104,7 @@ public class ProductMenu extends Menu {
 
 
     private void listProducts(){
-        var currentSort = ProductController.getCurrentSort();
+        var currentSort = ProductController.getCurrentSort().getSort();
         var productsOfThisCategory = currentSort.applySort(this.productsOfThisCategory , currentSort.getAscending());
         for (int i = 0; i < productsOfThisCategory.size(); i++) {
             if (i!=0)

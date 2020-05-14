@@ -1,8 +1,7 @@
 package view;
 
 import control.ProductController;
-import model.Filters.Filter;
-import view.Menu;
+import control.Filters.Filter;
 
 public class FilterMenu extends Menu {
 

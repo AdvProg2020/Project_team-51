@@ -1,21 +1,25 @@
 package control;
 
+import model.FilterTypes;
+import model.SortTypes;
 import model.Category;
-import model.Filters.Filter;
+import control.Filters.Filter;
 import model.People.Account;
 import model.Product;
-import model.Sorts.Sort;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ProductController extends Controller {
 
 
     private static Category category ;
-    private static ArrayList<Filter> availableFilter = new ArrayList<>();
-    private static ArrayList<Filter> appliedFilters = new ArrayList<>();
-    private static Sort currentSort ;
+    private static ArrayList<FilterTypes> availableFilter =
+            new ArrayList<>(Arrays.stream(FilterTypes.values()).collect(Collectors.toList()));
+    private static ArrayList<FilterTypes> appliedFilters = new ArrayList<>();
+    private static SortTypes currentSort = SortTypes.VIEW_SORT ;
 
     public ProductController(Account currentAccount) {
         super(currentAccount);
@@ -88,15 +92,15 @@ public class ProductController extends Controller {
         ProductController.category = category;
     }
 
-    public static Sort getCurrentSort() {
+    public static SortTypes getCurrentSort() {
         return currentSort;
     }
 
-    public static ArrayList<Filter> getAppliedFilters() {
+    public static ArrayList<FilterTypes> getAppliedFilters() {
         return appliedFilters;
     }
 
-    public static void addAppliedFilters(Filter filter) {
+    public static void addAppliedFilters(FilterTypes filter) {
         appliedFilters.add(filter);
     }
 
@@ -104,7 +108,7 @@ public class ProductController extends Controller {
         appliedFilters.remove(filter);
     }
 
-    public static ArrayList<Filter> getAvailableFilter() {
+    public static ArrayList<FilterTypes> getAvailableFilter() {
         return availableFilter;
     }
 }

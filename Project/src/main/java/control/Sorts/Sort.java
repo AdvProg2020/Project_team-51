@@ -1,4 +1,4 @@
-package model.Sorts;
+package control.Sorts;
 
 import model.Product;
 
