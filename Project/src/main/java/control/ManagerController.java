@@ -7,10 +7,12 @@ import model.People.Manager;
 import model.Product;
 import model.Requests.Request;
 
-import javax.print.DocFlavor;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
 
 public class ManagerController extends Controller {
     public ManagerController(Account currentAccount) {
@@ -44,13 +46,13 @@ public class ManagerController extends Controller {
     }
 
     public static void deleteUser (String username) {
-//        ArrayList<Account> allAccounts;
-//        allAccounts = Account.getAllAccounts();
-//        for (Account account : allAccounts){
-//            if (account.getUsername().equals(username)) { allAccounts.remove(account);
-//            break;}
-//        }
-//        Account.setAllAccounts(allAccounts);
+        ArrayList<Account> allAccounts;
+        allAccounts = Account.getAllAccounts();
+        for (Account account : allAccounts){
+            if (account.getUsername().equals(username)) { allAccounts.remove(account);
+            break;}
+        }
+        Account.setAllAccounts(allAccounts);
     }
 
     public static void createManager (String[] info){
@@ -61,8 +63,6 @@ public class ManagerController extends Controller {
         return currentAccount instanceof Manager;
     }
 
-    //if the pid is taken returns true
-
     public static Boolean isThisPidValid(String productId){
         ArrayList<Product> products = model.Product.getAllProducts();
         for (Product product : products){
@@ -72,8 +72,7 @@ public class ManagerController extends Controller {
     }
 
     public static void removeProduct(String productId){
-        ArrayList<Product> allProducts = new ArrayList<>();
-        allProducts = model.Product.getAllProducts();
+        ArrayList <Product> allProducts = model.Product.getAllProducts();
         for (Product product : allProducts) {
             if (product.getProductId().equals(productId)) {allProducts.remove(product);
             break;}
@@ -84,18 +83,37 @@ public class ManagerController extends Controller {
     public static Boolean isThisCodeValid (String code){
         ArrayList <OffCode> offCodes = model.OffCode.getAllOffCodes();
         for (OffCode offCode : offCodes) {
-            if (offCode.getOffCode().equals(code)) return true;
+            if (offCode.getOffCode().equals(code)) {
+                return  offCode.getBeginDate().before(new Date()) && offCode.getEndDate().after(new Date());
+            }
         }
         return false;
     }
 
-    public static void createDiscountCode(String [] info) throws ParseException {
-        new SimpleDateFormat("dd/MM/yyyy").parse(info[1]);
+    // date must be in format dd/mm/yyyy
 
+    public static void createDiscountCode(String offCode , ArrayList<Account> appliedAccounts ,
+                                          String startDate, String endDate
+            , int offPercent , Double maxDiscount) throws ParseException {
+         new OffCode(offCode ,new SimpleDateFormat("dd/MM/yyyy").parse(startDate) ,
+                 new SimpleDateFormat("dd/MM/yyyy").parse(endDate),
+                 appliedAccounts,
+                 offPercent,
+                 maxDiscount
+                 );
     }
 
-    public static void editDiscountCode(String[] info){
+    // date must be in format dd/mm/yyyy
 
+    public static void editDiscountCode(String code , ArrayList<Account> appliedAccounts ,
+                                        String startDate, String endDate
+            , int offPercent , Double maxDiscount) throws ParseException {
+        OffCode offCode = OffCode.getOffIdById(code);
+        if (appliedAccounts != null) offCode.setAppliedAccounts(appliedAccounts);
+        if (startDate!=null) offCode.setBeginDate(new SimpleDateFormat("dd/MM/yyyy").parse(startDate));
+        if (endDate!=null) offCode.setEndDate(new SimpleDateFormat("dd/MM/yyyy").parse(endDate));
+        if (offPercent!=0) offCode.setOffPercentage(offPercent);
+        if (maxDiscount!=0) offCode.setMaxDiscount(maxDiscount);
     }
 
     public static void removeDiscountCode(String code){
@@ -137,8 +155,23 @@ public class ManagerController extends Controller {
         ((Manager) currentAccount).setAllCategories(allCategories);
     }
 
-    public static void editCategory(String [] info){
-
+    public static void editCategory(Category category , ArrayList<Product> removeProducts
+            , ArrayList <Product> addProducts, String name , Category parent) {
+        ArrayList <Product> products = category.getCategoryProducts();
+        products.removeAll(removeProducts);
+        products.addAll(addProducts);
+        if (name!=null) {
+            if (!isCategoryValid(name)) category.setName(name);
+        }
+        if (parent!=null) {
+            //this doesn't fill the empty number in the map
+            Map<Integer , Category> subCategories= category.getParentCategory().getSubCategories();
+            subCategories.remove(category);
+            category.getParentCategory().setSubCategories(subCategories);
+            category.setParentCategory(parent);
+            Map <Integer , Category> subCategories1 = parent.getSubCategories();
+            subCategories1.put(subCategories1.size()+1 , category);
+        }
     }
 
     public static void  removeCategory(String categoryName){

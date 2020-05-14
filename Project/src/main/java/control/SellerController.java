@@ -79,7 +79,7 @@ public class SellerController extends Controller {
     }
 
     public static Boolean isOffIdValid(String offId){
-        return OffCode.getAllOffCodes().contains(OffCode.getOffIdByProductId(offId));
+        return OffCode.getAllOffCodes().contains(OffCode.getOffIdById(offId));
     }
 
 

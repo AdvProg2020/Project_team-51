@@ -22,6 +22,10 @@ public class Category {
 
     }
 
+    public Map<Integer, Category> getSubCategories() {
+        return subCategories;
+    }
+
     public String getName() {
         return name;
     }

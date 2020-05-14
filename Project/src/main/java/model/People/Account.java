@@ -24,6 +24,10 @@ public abstract class Account {
         allAccounts.add(this);
     }
 
+    public static void setAllAccounts(ArrayList<Account> accounts) {
+        allAccounts = accounts;
+    }
+
 
     public String getPassword() {
         return password;

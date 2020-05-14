@@ -73,7 +73,11 @@ public class OffCode {
         this.offPercentage = offPercentage;
     }
 
-    public static OffCode getOffIdByProductId(String offId){
+    public void setMaxDiscount(Double maxDiscount) {
+        this.maxDiscount = maxDiscount;
+    }
+
+    public static OffCode getOffIdById(String offId){
         for (OffCode offCode : allOffCodes) {
             if (offCode.offCode.equals(offId))
                 return offCode;
