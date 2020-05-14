@@ -1,5 +1,9 @@
 package control;
 
+import control.Exceptions.HaveNotLoggedInException;
+import control.Exceptions.InvalidPasswordException;
+import control.Exceptions.InvalidUsernameException;
+import control.Exceptions.WrongPasswordException;
 import model.ItemOfOrder;
 import model.People.Account;
 import model.People.Customer;
@@ -46,12 +50,15 @@ public class Controller {
 
 
 
-    public static void login(String username , String password){
+    public static void login(String username , String password) throws WrongPasswordException {
         if (doesPasswordMatches(username,password)) {
             var loginAccount = Account.getAccountById(username);
             currentAccount = loginAccount;
             if (currentAccount instanceof Customer)
             ((Customer) currentAccount).setCart(cart);
+        }
+        else {
+            throw new WrongPasswordException("Username Or Password Is Wrong !!");
         }
     }
 
@@ -63,8 +70,13 @@ public class Controller {
         return true;
     }
 
-    public static void logout (){
-        currentAccount = null;
+    public static void logout() throws HaveNotLoggedInException {
+        if (currentAccount!=null)
+            currentAccount = null;
+        else {
+            throw new HaveNotLoggedInException("You Haven't Logged In To Logout !!");
+        }
+
     }
 
     public static Account getCurrentAccount() {
