@@ -1,12 +1,16 @@
 package control;
 
+import control.Exceptions.InvalidAuctionIdException;
+import control.Exceptions.InvalidFieldException;
+import control.Exceptions.InvalidProductIdException;
+import control.Exceptions.NotAllowedActivityException;
 import model.Attributes;
 import model.Auction;
 import model.OffCode;
 import model.People.Account;
 import model.People.Seller;
 import model.Product;
-import model.Requests.Request;
+import model.Requests.*;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -41,30 +45,33 @@ public class SellerController extends Controller {
             currentAccount.setPhoneNumber(phoneNumber);
     }
 
-    public static Boolean isThisPidValid(String productId){
+    public static Boolean isThisPidValid(String productId) throws InvalidProductIdException {
         return Product.getAllProducts().contains(Product.getProductById(productId));
     }
 
-    public static void editProduct(String productId, String field , String value , String description){
-//        var product = Product.getProductById(productId);
-//        if (currentAccount instanceof Seller){
-//            for (Map.Entry<Attributes, String> attribute : product.getAttributes().entrySet()) {
-//                if (attribute.getKey().getField().equals(field)){
-//                    new Request<Map.Entry<Attributes,String>> (attribute,currentAccount,value,description,new Date());
-//                }
-//            }
-//        }
+    public static void editProduct(String productId, String field , String value , String description) throws InvalidProductIdException {
+
+        var product = Product.getProductById(productId);
+        if (currentAccount instanceof Seller){
+            for (Map.Entry<Attributes, String> attribute : product.getAttributes().entrySet()) {
+                if (attribute.getKey().getField().equals(field)){
+                    new EditProductRequest("sth",product,(Seller) currentAccount , field , value);
+                }
+            }
+        }
     }
 
 
-    public static void addProduct(Product product){
-//        if(currentAccount instanceof  Seller){
-//            new Request<Product>(product
-//                    ,currentAccount,"" , "New Product Request" , new Date());
-//        }
+    public static void addProduct(Product product) throws NotAllowedActivityException {
+
+        if(currentAccount instanceof  Seller)
+           new AddItemRequest("sth",product,(Seller) currentAccount);
+         else throw new NotAllowedActivityException("You are not allowed to add products .");
+
     }
 
-    public static void removeProduct(String productId){
+    public static void removeProduct(String productId) throws InvalidProductIdException {
+
         if (currentAccount instanceof Seller){
             ((Seller) currentAccount).getAvailableProducts().remove(Product.getProductById(productId));
         }
@@ -75,24 +82,31 @@ public class SellerController extends Controller {
     }
 
 
-    public static void editOffId(String auctionId , String field , String value , String description){
+    public static void editAuction(String auctionId , String field , String value , String description)
+            throws InvalidAuctionIdException , InvalidFieldException {
+
         var auction = Auction.getAuctionById(auctionId);
-        if (auction!=null){
-            if (field.equals("begin date")){
-                // send proper request
-            } else if (field.equals("end date")){
-                // send proper request
-            } else if (field.equals("off percentage")){
-                // send proper request
-            }
-        }
+        if (auction==null) throw new InvalidAuctionIdException("Auction id is not correct !");
+
+        if (field.equalsIgnoreCase("begin date")){
+            new EditAuctionRequest("sth",auction,"begin date",value);
+        } else if (field.equalsIgnoreCase("end date")){
+            new EditAuctionRequest("sth",auction,"end date",value);
+        } else if (field.equalsIgnoreCase("off percentage")){
+            new EditAuctionRequest("sth",auction,"off percentage",value);
+        } else if (field.equalsIgnoreCase("add product")){
+            new EditAuctionRequest("sth",auction,"add product",value);
+        } else if (field.equalsIgnoreCase("remove product")){
+            new EditAuctionRequest("sth",auction,"remove product",value);
+        } else throw new InvalidFieldException("Field is invalid ! ");
+
     }
 
-    public static void addOffId(Auction auction){
-//        if(currentAccount instanceof  Seller){
-//            new Request<Auction>(auction
-//                    ,currentAccount,"" , "New Auction Request" , new Date());
-//        }
+    public static void addAuction(Auction auction) throws NotAllowedActivityException{
+        if(currentAccount instanceof  Seller)
+            new AddAuctionRequest("sth" , auction , (Seller) currentAccount);
+        else
+            throw new NotAllowedActivityException("You are not allowed to add Auction");
     }
 
 }

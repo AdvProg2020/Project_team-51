@@ -8,6 +8,7 @@ import model.ItemOfOrder;
 import model.People.Account;
 import model.People.Customer;
 import model.People.Seller;
+import model.Requests.AddSellerRequest;
 
 import java.util.ArrayList;
 
@@ -37,9 +38,10 @@ public class Controller {
                     registerInfo[6] , registerInfo[7]);
 
         } else if (registerInfo[0].equals("seller")){
-            new Seller (registerInfo[1],registerInfo[2], registerInfo[3] ,
+            var newSeller = new Seller (registerInfo[1],registerInfo[2], registerInfo[3] ,
                     registerInfo [4] , Double.parseDouble( registerInfo[5] ),
                     registerInfo[6] , registerInfo[7] , registerInfo[8]);
+            new AddSellerRequest("sth" , newSeller);
 
         } else if (registerInfo[0].equals("manager")){
             new Customer(registerInfo[1],registerInfo[2], registerInfo[3] ,
@@ -79,7 +81,7 @@ public class Controller {
 
     }
 
-    public static Account getCurrentAccount() {
+    public static Account getCurrentAccount()  {
         return currentAccount;
     }
 }

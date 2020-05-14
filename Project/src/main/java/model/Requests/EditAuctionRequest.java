@@ -1,5 +1,6 @@
 package model.Requests;
 
+import control.Exceptions.InvalidProductIdException;
 import model.Auction;
 import model.Product;
 import model.StatusStates;
@@ -28,7 +29,7 @@ public class EditAuctionRequest extends Request{
     }
 
     @Override
-    public void accept() {
+    public void accept() throws InvalidProductIdException {
 
         if (field.equals("begin date")){
             auction.setBeginDate(Date.valueOf(value));

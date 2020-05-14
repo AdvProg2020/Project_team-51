@@ -1,11 +1,17 @@
 package control;
 
+import control.Exceptions.InvalidProductIdException;
+import control.Exceptions.LackOfProductException;
+import control.Exceptions.NotAllowedActivityException;
+import control.Exceptions.SameProductForComparisonException;
 import model.*;
 import model.OrderLog.BuyerLog;
 import model.OrderLog.Order;
 import model.People.Account;
 import model.People.Customer;
+import model.People.Manager;
 import model.People.Seller;
+import model.Requests.AddCommentRequest;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,11 +50,16 @@ public class SingleProductController extends Controller {
         return digest.toString() ;
     }
 
-    public void addToCart(String seller){
+    public void addToCart(String seller) throws LackOfProductException, NotAllowedActivityException {
 
+        if (currentAccount instanceof Seller | currentAccount instanceof Manager)
+            throw new NotAllowedActivityException("You are not allowed to buy product");
         for (ItemOfOrder item : cart) {
             if(item.getProduct()== product){
-                item.addQuantity();
+                if (product.getQuantity() == 0)
+                    throw new LackOfProductException("This Product Is Not Available !");
+                else
+                    item.addQuantity();
                 return;
             }
         }
@@ -64,8 +75,10 @@ public class SingleProductController extends Controller {
         return product.getAttributes();
     }
 
-    public HashMap<String,String> compare(String productId){
+    public HashMap<String,String> compare(String productId) throws SameProductForComparisonException, InvalidProductIdException {
         var comparedProduct = Product.getProductById(productId);
+        if (comparedProduct.equals(product))
+            throw new SameProductForComparisonException("You can't compare a product with itself !");
         var comparisonHashMap = new HashMap<String,String>();
         for (Map.Entry<Attributes, String> attribute : product.getAttributes().entrySet()) {
             String comparedProductAttribute = getProductAttribute(attribute.getKey().getField(),comparedProduct);
@@ -87,8 +100,10 @@ public class SingleProductController extends Controller {
         return comparisonHashMap;
     }
 
-    public void addComment(String title ,String content){
-        product.getComments().add(new Comment(currentAccount,product,content,title,
+    public void addComment(String title ,String content) throws NotAllowedActivityException{
+        if(currentAccount==null)
+            throw new NotAllowedActivityException("You should login first !");
+        new AddCommentRequest("sth",new Comment(currentAccount,product,content,title,
                 new Status(StatusStates.CREATE_PROCESSING),isCurrentAccountBuyer()));
     }
 
@@ -97,6 +112,7 @@ public class SingleProductController extends Controller {
     }
 
     private double getProductDiscountAmount(String seller){
+
         var sellerOfProduct = Account.getAccountById(seller);
         if (sellerOfProduct instanceof Seller){
             for (Auction auction : ((Seller) sellerOfProduct).getAllAuctions()) {
@@ -112,6 +128,7 @@ public class SingleProductController extends Controller {
     }
 
     private boolean isCurrentAccountBuyer(){
+
         if (currentAccount instanceof Customer){
             for (Order historyOfOrder : ((Customer) currentAccount).getHistoryOfOrders()) {
                 for (ItemOfOrder item : ((BuyerLog) historyOfOrder).getItems()) {
@@ -120,6 +137,7 @@ public class SingleProductController extends Controller {
                 }
             }
         }
+
         return false;
     }
 

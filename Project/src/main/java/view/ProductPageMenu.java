@@ -1,6 +1,10 @@
 package view;
 
 import control.Controller;
+import control.Exceptions.InvalidProductIdException;
+import control.Exceptions.LackOfProductException;
+import control.Exceptions.NotAllowedActivityException;
+import control.Exceptions.SameProductForComparisonException;
 import control.SingleProductController;
 import model.Attributes;
 import model.Comment;
@@ -8,6 +12,7 @@ import model.People.Account;
 import model.People.Seller;
 import model.Product;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ProductPageMenu extends Menu {
@@ -78,7 +83,13 @@ public class ProductPageMenu extends Menu {
         if (!Controller.isLoggedIn()){
             new LoginMenu(this);
         }
-        singleProductController.addToCart(selectSeller());
+        try {
+            singleProductController.addToCart(selectSeller());
+        } catch (LackOfProductException e) {
+            System.out.println(e.getMessage());
+        } catch (NotAllowedActivityException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private String selectSeller() {
@@ -105,10 +116,25 @@ public class ProductPageMenu extends Menu {
     }
 
     private void compare(String id) {
-        var otherProduct = Product.getProductById(id);
+        Product otherProduct = null;
+        try {
+            otherProduct = Product.getProductById(id);
+        } catch (InvalidProductIdException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
         System.out.println("---------------------------");
         System.out.printf("|%12s|%12s|",product.getName() , otherProduct.getName());
-        var comparison = singleProductController.compare(id);
+        HashMap<String, String> comparison = null;
+        try {
+            comparison = singleProductController.compare(id);
+        } catch (SameProductForComparisonException e) {
+            System.out.println(e.getMessage());
+            return;
+        } catch (InvalidProductIdException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
         for (Map.Entry<String, String> compare : comparison.entrySet()) {
             System.out.printf("|%12s|%12s|", compare.getKey() , compare.getValue());
         }
@@ -123,7 +149,11 @@ public class ProductPageMenu extends Menu {
     }
 
     private void addComment() {
-        singleProductController.addComment(getCommentTitle(),getCommentContent());
+        try {
+            singleProductController.addComment(getCommentTitle(),getCommentContent());
+        } catch (NotAllowedActivityException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private String getCommentTitle(){

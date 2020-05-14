@@ -1,5 +1,6 @@
 package model;
 
+import control.Exceptions.InvalidProductIdException;
 import model.People.Seller;
 
 import java.util.ArrayList;
@@ -147,12 +148,12 @@ public class Product {
         comments.add(comment);
     }
 
-    public static Product getProductById(String productID){
+    public static Product getProductById(String productID) throws InvalidProductIdException {
         for (Product product : allProducts) {
             if (product.productId.equals(productID))
                 return product;
         }
-        return null;
+        throw new InvalidProductIdException("The product id is invalid .");
     }
 
     public double averageRate(){

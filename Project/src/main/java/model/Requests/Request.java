@@ -1,5 +1,6 @@
 package model.Requests;
 
+import control.Exceptions.InvalidProductIdException;
 import model.People.Account;
 import model.People.Manager;
 import model.Status;
@@ -42,7 +43,7 @@ public abstract class Request  {
         return "Request ID : " + requestId ;
     }
 
-    public void accept(){
+    public void accept() throws InvalidProductIdException {
 
     }
 

@@ -1,5 +1,6 @@
 package view;
 
+import control.Exceptions.InvalidProductIdException;
 import control.ProductController;
 import model.Category;
 import model.Product;
@@ -114,7 +115,12 @@ public class ProductMenu extends Menu {
     }
 
     private void showProduct(String pid) {
-        var product = Product.getProductById(pid);
+        Product product = null;
+        try {
+            product = Product.getProductById(pid);
+        } catch (InvalidProductIdException e) {
+            System.out.println(e.getMessage());
+        }
         var productPage = new ProductPageMenu(this , product);
         productPage.showMenu();
         productPage.executeMenu();
