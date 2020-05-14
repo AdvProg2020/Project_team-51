@@ -10,10 +10,11 @@ import model.OffCode;
 import model.People.Account;
 import model.People.Seller;
 import model.Product;
-import model.Requests.*;
+import model.Requests.AddAuctionRequest;
+import model.Requests.AddItemRequest;
+import model.Requests.EditAuctionRequest;
+import model.Requests.EditProductRequest;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 public class SellerController extends Controller {
@@ -22,7 +23,7 @@ public class SellerController extends Controller {
     }
 
     public static Boolean isThisFieldValid(Product product,String field) {
-        return product.getAttributes().keySet().contains(field);
+        return product.getAttributes().containsKey(field);
     }
 
     public static void editFirstName (String firstName) {

@@ -33,6 +33,6 @@ public class ViewSort extends Sort {
     }
     @Override
     public ArrayList<Product> applySort(ArrayList<Product> products, Boolean isAscending) {
-        return null;
+        return isAscending ? applyAscendingSort(products) : applyDescendingSort(products);
     }
 }

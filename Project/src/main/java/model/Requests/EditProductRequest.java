@@ -32,16 +32,22 @@ public class EditProductRequest extends Request {
     @Override
     public void accept() {
 
-        if (field.equals("name")){
-            product.setName(value);
-        } else if (field.equals("brand")){
-            product.setBrandName(value);
-        } else if (field.equals("description")){
-            product.setDescription(value);
-        } else if (field.equals("price")){
-            product.setPrice(Double.parseDouble(value));
-        } else if (field.equals("quantity")) {
-            product.setQuantity(Integer.parseInt(value));
+        switch (field) {
+            case "name":
+                product.setName(value);
+                break;
+            case "brand":
+                product.setBrandName(value);
+                break;
+            case "description":
+                product.setDescription(value);
+                break;
+            case "price":
+                product.setPrice(Double.parseDouble(value));
+                break;
+            case "quantity":
+                product.setQuantity(Integer.parseInt(value));
+                break;
         }
 
         status.setState(StatusStates.APPROVED);

@@ -8,8 +8,6 @@ import control.Exceptions.SameProductForComparisonException;
 import control.SingleProductController;
 import model.Attributes;
 import model.Comment;
-import model.People.Account;
-import model.People.Seller;
 import model.Product;
 
 import java.util.HashMap;
@@ -85,9 +83,7 @@ public class ProductPageMenu extends Menu {
         }
         try {
             singleProductController.addToCart(selectSeller());
-        } catch (LackOfProductException e) {
-            System.out.println(e.getMessage());
-        } catch (NotAllowedActivityException e) {
+        } catch (LackOfProductException | NotAllowedActivityException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -116,7 +112,7 @@ public class ProductPageMenu extends Menu {
     }
 
     private void compare(String id) {
-        Product otherProduct = null;
+        Product otherProduct;
         try {
             otherProduct = Product.getProductById(id);
         } catch (InvalidProductIdException e) {
@@ -125,13 +121,10 @@ public class ProductPageMenu extends Menu {
         }
         System.out.println("---------------------------");
         System.out.printf("|%12s|%12s|",product.getName() , otherProduct.getName());
-        HashMap<String, String> comparison = null;
+        HashMap<String, String> comparison;
         try {
             comparison = singleProductController.compare(id);
-        } catch (SameProductForComparisonException e) {
-            System.out.println(e.getMessage());
-            return;
-        } catch (InvalidProductIdException e) {
+        } catch (SameProductForComparisonException | InvalidProductIdException e) {
             System.out.println(e.getMessage());
             return;
         }

@@ -6,7 +6,6 @@ import model.Product;
 import model.StatusStates;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 public class EditAuctionRequest extends Request{
     private Auction auction;
@@ -31,16 +30,22 @@ public class EditAuctionRequest extends Request{
     @Override
     public void accept() throws InvalidProductIdException {
 
-        if (field.equals("begin date")){
-            auction.setBeginDate(Date.valueOf(value));
-        } else if (field.equals("end date")){
-            auction.setEndDate(Date.valueOf(value));
-        } else if (field.equals("off percentage")){
-            auction.setOffPercentage(Integer.parseInt(value));
-        } else if (field.equals("add product")){
-            auction.addAppliedProduct(Product.getProductById(value));
-        } else if (field.equals("remove product")) {
-            auction.removeAppliedProduct(Product.getProductById(value));
+        switch (field) {
+            case "begin date":
+                auction.setBeginDate(Date.valueOf(value));
+                break;
+            case "end date":
+                auction.setEndDate(Date.valueOf(value));
+                break;
+            case "off percentage":
+                auction.setOffPercentage(Integer.parseInt(value));
+                break;
+            case "add product":
+                auction.addAppliedProduct(Product.getProductById(value));
+                break;
+            case "remove product":
+                auction.removeAppliedProduct(Product.getProductById(value));
+                break;
         }
 
         status.setState(StatusStates.APPROVED);

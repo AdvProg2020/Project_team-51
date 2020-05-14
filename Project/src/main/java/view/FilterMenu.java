@@ -1,7 +1,6 @@
 package view;
 
 import control.ProductController;
-import control.Filters.Filter;
 import model.FilterTypes;
 
 public class FilterMenu extends Menu {
@@ -39,6 +38,7 @@ public class FilterMenu extends Menu {
 
     private void showAvailableFilters() {
         var availableFilters = ProductController.showAvailableFilters();
+        if (availableFilters!=null)
         for (String availableFilter : availableFilters) {
             System.out.println(availableFilter);
         }

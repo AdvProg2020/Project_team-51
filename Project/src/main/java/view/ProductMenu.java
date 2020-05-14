@@ -7,8 +7,6 @@ import model.Category;
 import model.Product;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ProductMenu extends Menu {
 
@@ -18,11 +16,10 @@ public class ProductMenu extends Menu {
 
     public ProductMenu(Menu parentMenu , Category category) {
         super("Products Menu", parentMenu);
-        int size = 0;
+        this.category = category ;
         if (category!=null){
             try {
                 this.subCategories = ProductController.getSubCategories(category);
-                size = subCategories.size();
                 for (int i = 0; i < subCategories.size(); i++) {
                     subMenus.put( (i+1) , new ProductMenu(this,subCategories.get(i)));
                 }
@@ -98,6 +95,8 @@ public class ProductMenu extends Menu {
                         this.executeMenu();
                     }
                 };
+                productLists.showMenu();
+                productLists.executeMenu();
                 break;
             }
             else if (option==size+2){

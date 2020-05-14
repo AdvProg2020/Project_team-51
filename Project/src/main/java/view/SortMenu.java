@@ -40,7 +40,7 @@ public class SortMenu extends Menu {
     }
 
     private void showAvailableSorts() {
-        Arrays.stream(SortTypes.values()).map(SortTypes::getSort).map(Sort::getName).forEach(s -> System.out.println(s));
+        Arrays.stream(SortTypes.values()).map(SortTypes::getSort).map(Sort::getName).forEach(System.out::println);
     }
 
     private void sort(String sort) {

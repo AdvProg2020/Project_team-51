@@ -14,7 +14,7 @@ public abstract class Menu {
     public static String command = "";
     private String name ;
     private Menu parentMenu ;
-    protected HashMap<Integer,Menu> subMenus = new HashMap<Integer, Menu>();
+    protected HashMap<Integer,Menu> subMenus = new HashMap<>();
 
 
     public Menu(String name, Menu parentMenu) {

@@ -33,7 +33,7 @@ public class MainMenu extends Menu {
 
     @Override
     public void executeMenu() {
-        Menu nextMenu = null ;
+        Menu nextMenu;
         int size = subMenus.size();
         while (true) {
             int option = getOption();

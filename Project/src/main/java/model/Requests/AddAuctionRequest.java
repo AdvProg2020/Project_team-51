@@ -1,7 +1,6 @@
 package model.Requests;
 
 import model.Auction;
-import model.OffCode;
 import model.People.Seller;
 import model.Status;
 import model.StatusStates;

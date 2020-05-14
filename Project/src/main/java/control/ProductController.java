@@ -1,16 +1,15 @@
 package control;
 
 import control.Exceptions.NoCategoriesFoundException;
-import model.FilterTypes;
-import model.SortTypes;
-import model.Category;
 import control.Filters.Filter;
+import model.Category;
+import model.FilterTypes;
 import model.People.Account;
 import model.Product;
+import model.SortTypes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ProductController extends Controller {
@@ -28,10 +27,10 @@ public class ProductController extends Controller {
 
     public static ArrayList<Product> showProductsOfThisCategory(Category category){
 
-        ArrayList<Product> products = new ArrayList<>();
+        ArrayList<Product> products;
         try {
             var subCategories = ProductController.getSubCategories(category);
-            products.addAll(category.getCategoryProducts());
+            products = new ArrayList<>(category.getCategoryProducts());
             for (Category subCategory : subCategories) {
                 showProductsOfThisCategory(subCategory);
             }
