@@ -1,6 +1,7 @@
 package view;
 
 import control.Exceptions.InvalidProductIdException;
+import control.Exceptions.NoCategoriesFoundException;
 import control.ProductController;
 import model.Category;
 import model.Product;
@@ -12,26 +13,34 @@ import java.util.stream.Collectors;
 public class ProductMenu extends Menu {
 
     private Category category;
+    private ArrayList<Category> subCategories;
     private ArrayList<Product> productsOfThisCategory = null ;
 
     public ProductMenu(Menu parentMenu , Category category) {
         super("Products Menu", parentMenu);
         int size = 0;
         if (category!=null){
-            size = category.getSubCategories().size();
-            for (Map.Entry<Integer, Category> categoryEntry : category.getSubCategories().entrySet()) {
-                subMenus.put(categoryEntry.getKey() , new ProductMenu(this , categoryEntry.getValue()));
+            try {
+                this.subCategories = ProductController.getSubCategories(category);
+                size = subCategories.size();
+                for (int i = 0; i < subCategories.size(); i++) {
+                    subMenus.put( (i+1) , new ProductMenu(this,subCategories.get(i)));
+                }
+            } catch (NoCategoriesFoundException e) {
+                e.getMessage();
             }
         }
     }
 
     @Override
     public void showMenu() {
-        int size = 0;
-        if (category!=null) {
-            size = category.getSubCategories().size();
-            viewCategories();
+        int size;
+        try {
+            size = subCategories.size();
+        } catch (NullPointerException e){
+            size=0;
         }
+        viewCategories();
         System.out.println("----------------------------");
         System.out.println(size+1 + ". Show Products");
         System.out.println(size+2 + ". Back");
@@ -39,9 +48,12 @@ public class ProductMenu extends Menu {
 
     @Override
     public void executeMenu() {
-        int size =0 ;
-        if(category!=null)
-        size = category.getSubCategories().size();
+        int size;
+        try {
+            size = subCategories.size();
+        } catch (NullPointerException e){
+            size=0;
+        }
         while (true) {
             int option = getOption();
             if (option <= size){
@@ -96,11 +108,23 @@ public class ProductMenu extends Menu {
     }
 
     private void viewCategories() {
-        for (Map.Entry<Integer, Category> category : category.getSubCategories().entrySet()) {
-            System.out.println(category.getKey() + ". " + category.getValue().getName());
+        try {
+            var subCategories = ProductController.getSubCategories(category);
+            listCategories(subCategories);
+        } catch (NoCategoriesFoundException e) {
+            e.getMessage();
         }
     }
 
+    private void listCategories(ArrayList<Category> categories) {
+        if (categories==null)
+            System.out.println("There is no categories !");
+        else {
+            for (int i = 0; i < categories.size(); i++) {
+                System.out.println((i+1) + ". " + categories.get(i).getName());
+            }
+        }
+    }
 
 
     private void listProducts(){

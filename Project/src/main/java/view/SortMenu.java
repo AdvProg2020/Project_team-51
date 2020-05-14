@@ -49,7 +49,7 @@ public class SortMenu extends Menu {
 
     private void currentSort() {
         var sort = ProductController.getCurrentSort().getSort();
-        System.out.println(sort.getName() + " -> "  + ( sort.getAscending() ? "Ascending" : "Descending"));
+        System.out.println(sort.getName() + " → "  + ( sort.getAscending() ? "Ascending ↑" : "Descending ↓"));
     }
 
     private void disableSort() {

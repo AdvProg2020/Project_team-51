@@ -20,6 +20,10 @@ public abstract class Menu {
     public Menu(String name, Menu parentMenu) {
         this.name = name;
         this.parentMenu = parentMenu;
+
+        if (menusHistory.isEmpty() || this != menusHistory.peek())
+            menusHistory.push(this);
+
     }
 
     public abstract void executeMenu();

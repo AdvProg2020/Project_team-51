@@ -1,5 +1,6 @@
 package model.Requests;
 
+import control.Exceptions.InvalidProductIdException;
 import model.People.Seller;
 import model.Product;
 import model.Status;
@@ -25,7 +26,7 @@ public class AddItemRequest extends Request {
     }
 
     @Override
-    public void accept() {
+    public void accept() throws InvalidProductIdException {
 
         var product = Product.getProductById(this.product.getProductId()) ;
 

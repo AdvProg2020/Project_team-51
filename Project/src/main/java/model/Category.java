@@ -30,10 +30,6 @@ public class Category {
         this.name = name;
     }
 
-    public Map<Integer, Category> getSubCategories() {
-        return subCategories;
-    }
-
     public void setSubCategories(Map<Integer, Category> subCategories) {
         this.subCategories = subCategories;
     }

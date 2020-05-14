@@ -1,5 +1,6 @@
 package control;
 
+import control.Exceptions.NoCategoriesFoundException;
 import model.FilterTypes;
 import model.SortTypes;
 import model.Category;
@@ -26,14 +27,16 @@ public class ProductController extends Controller {
     }
 
     public static ArrayList<Product> showProductsOfThisCategory(Category category){
+
         ArrayList<Product> products = new ArrayList<>();
-        if (category.getSubCategories()==null)
+        try {
+            var subCategories = ProductController.getSubCategories(category);
+            products.addAll(category.getCategoryProducts());
+            for (Category subCategory : subCategories) {
+                showProductsOfThisCategory(subCategory);
+            }
+        } catch (NoCategoriesFoundException e) {
             return category.getCategoryProducts();
-
-        products.addAll(category.getCategoryProducts());
-
-        for (Map.Entry<Integer, Category> categoryEntry : category.getSubCategories().entrySet()) {
-            products.addAll(showProductsOfThisCategory(categoryEntry.getValue()));
         }
 
         return  products;
@@ -110,5 +113,18 @@ public class ProductController extends Controller {
 
     public static ArrayList<FilterTypes> getAvailableFilter() {
         return availableFilter;
+    }
+
+    public static ArrayList<Category> getSubCategories(Category parentCategory) throws NoCategoriesFoundException {
+        ArrayList<Category> subCategories ;
+        try {
+            subCategories = new ArrayList<>(Category.getAllCategories().stream().filter(c -> c.getParentCategory()
+                    .equals(parentCategory)).collect(Collectors.toList()));
+        } catch (NullPointerException e){
+            subCategories = null ;
+        }
+        if (subCategories==null)
+            throw new NoCategoriesFoundException("There is no category");
+        return subCategories;
     }
 }

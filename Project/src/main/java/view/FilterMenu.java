@@ -2,6 +2,7 @@ package view;
 
 import control.ProductController;
 import control.Filters.Filter;
+import model.FilterTypes;
 
 public class FilterMenu extends Menu {
 
@@ -50,8 +51,8 @@ public class FilterMenu extends Menu {
 
     private void currentFilters() {
         var currentFilters = ProductController.getAppliedFilters();
-        for (Filter filter : currentFilters) {
-            System.out.println(filter.getName());
+        for (FilterTypes filter : currentFilters) {
+            System.out.println(filter.getFilter().getName());
         }
     }
 
