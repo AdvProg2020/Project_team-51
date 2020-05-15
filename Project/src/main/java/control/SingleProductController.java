@@ -103,7 +103,7 @@ public class SingleProductController extends Controller {
     public void addComment(String title ,String content) throws NotAllowedActivityException{
         if(currentAccount==null)
             throw new NotAllowedActivityException("You should login first !");
-        new AddCommentRequest("sth",new Comment(currentAccount,product,content,title,
+        new AddCommentRequest(TokenGenerator.generateRequestId(),new Comment(currentAccount,product,content,title,
                 new Status(StatusStates.CREATE_PROCESSING),isCurrentAccountBuyer()));
     }
 

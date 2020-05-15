@@ -56,7 +56,7 @@ public class SellerController extends Controller {
         if (currentAccount instanceof Seller){
             for (Map.Entry<Attributes, String> attribute : product.getAttributes().entrySet()) {
                 if (attribute.getKey().getField().equals(field)){
-                    new EditProductRequest("sth",product,(Seller) currentAccount , field , value);
+                    new EditProductRequest(TokenGenerator.generateRequestId(),product,(Seller) currentAccount , field , value);
                 }
             }
         }
@@ -66,7 +66,7 @@ public class SellerController extends Controller {
     public static void addProduct(Product product) throws NotAllowedActivityException {
 
         if(currentAccount instanceof  Seller)
-           new AddItemRequest("sth",product,(Seller) currentAccount);
+           new AddItemRequest(TokenGenerator.generateRequestId(),product,(Seller) currentAccount);
          else throw new NotAllowedActivityException("You are not allowed to add products .");
 
     }
@@ -90,22 +90,22 @@ public class SellerController extends Controller {
         if (auction==null) throw new InvalidAuctionIdException("Auction id is not correct !");
 
         if (field.equalsIgnoreCase("begin date")){
-            new EditAuctionRequest("sth",auction,"begin date",value);
+            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,"begin date",value);
         } else if (field.equalsIgnoreCase("end date")){
-            new EditAuctionRequest("sth",auction,"end date",value);
+            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,"end date",value);
         } else if (field.equalsIgnoreCase("off percentage")){
-            new EditAuctionRequest("sth",auction,"off percentage",value);
+            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,"off percentage",value);
         } else if (field.equalsIgnoreCase("add product")){
-            new EditAuctionRequest("sth",auction,"add product",value);
+            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,"add product",value);
         } else if (field.equalsIgnoreCase("remove product")){
-            new EditAuctionRequest("sth",auction,"remove product",value);
+            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,"remove product",value);
         } else throw new InvalidFieldException("Field is invalid ! ");
 
     }
 
     public static void addAuction(Auction auction) throws NotAllowedActivityException{
         if(currentAccount instanceof  Seller)
-            new AddAuctionRequest("sth" , auction , (Seller) currentAccount);
+            new AddAuctionRequest(TokenGenerator.generateRequestId() , auction , (Seller) currentAccount);
         else
             throw new NotAllowedActivityException("You are not allowed to add Auction");
     }
