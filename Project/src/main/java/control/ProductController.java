@@ -126,4 +126,6 @@ public class ProductController extends Controller {
             throw new NoCategoriesFoundException("There is no category");
         return subCategories;
     }
+
+
 }
