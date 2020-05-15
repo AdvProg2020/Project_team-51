@@ -2,10 +2,12 @@ package model;
 
 import model.People.Seller;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ItemOfOrder {
 
+    public static ArrayList<ItemOfOrder> allItemOfOrders = new ArrayList<>();
     private Seller seller;
     private Product product ;
     private Double price;
@@ -19,6 +21,7 @@ public class ItemOfOrder {
         this.price = price;
         this.discount = discount;
         this.date = date;
+        allItemOfOrders.add(this);
         quantity=0;
     }
 
@@ -67,6 +70,10 @@ public class ItemOfOrder {
 
     public void setDiscount(Double discount) {
         this.discount = discount;
+    }
+
+    public static void addItemOfOrder(ItemOfOrder itemOfOrder){
+        allItemOfOrders.add(itemOfOrder);
     }
 
 }

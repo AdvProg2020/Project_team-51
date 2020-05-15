@@ -16,6 +16,7 @@ public class Category {
     public Category(String name, Category parentCategory) {
         this.name = name;
         this.parentCategory = parentCategory;
+        allCategories.add(this);
     }
 
     public void addAttribute(String value , String Attribute){
@@ -56,5 +57,9 @@ public class Category {
 
     public static ArrayList<Category> getAllCategories() {
         return allCategories;
+    }
+
+    public static void addCategory(Category category){
+        allCategories.add(category);
     }
 }

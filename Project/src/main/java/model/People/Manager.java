@@ -41,4 +41,12 @@ public class Manager extends Account {
         this.allCategories = allCategories;
     }
 
+    public static void addManager(Manager manager) {
+        allAccounts.add(manager);
+    }
+
+    public static void addCategory(Category category){
+        allCategories.add(category);
+    }
+
 }

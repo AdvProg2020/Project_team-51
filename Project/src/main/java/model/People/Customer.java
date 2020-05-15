@@ -26,4 +26,8 @@ public class Customer extends Account{
     public void setCart(ArrayList<ItemOfOrder> cart) {
         this.cart = cart;
     }
+
+    public static void addCustomer(Customer customer){
+        allAccounts.add(customer);
+    }
 }

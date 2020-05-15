@@ -2,8 +2,11 @@ package model;
 
 import model.People.Customer;
 
+import java.util.ArrayList;
+
 public class Rate {
 
+    public static ArrayList<Rate> allRates = new ArrayList<>();
     private Customer account ;
     private  Product product;
     private int score ;
@@ -12,6 +15,7 @@ public class Rate {
         this.account = account;
         this.product = product;
         this.score = score;
+        allRates.add(this);
     }
 
     public Customer getAccount() {
@@ -36,5 +40,9 @@ public class Rate {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public static void addRate(Rate rate) {
+        allRates.add(rate);
     }
 }

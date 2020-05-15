@@ -23,6 +23,7 @@ public class Auction {
         this.appliedProducts = appliedProducts;
         this.offPercentage = offPercentage;
         this.auctionStatus = new Status(StatusStates.CREATE_PROCESSING);
+        allAuctions.add(this);
     }
 
     public static ArrayList<Auction> getAllAuctions() {
@@ -88,5 +89,9 @@ public class Auction {
         }
 
         return null;
+    }
+
+    public static void addAuction(Auction auction){
+        allAuctions.add(auction);
     }
 }

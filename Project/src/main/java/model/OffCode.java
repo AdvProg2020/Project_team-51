@@ -85,4 +85,8 @@ public class OffCode {
 
         return null;
     }
+
+    public static void addOffCode(OffCode offCode){
+        allOffCodes.add(offCode);
+    }
 }

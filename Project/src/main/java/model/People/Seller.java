@@ -55,5 +55,8 @@ public class Seller extends Account{
         this.allAuctions.add(auction);
     }
 
+    public static void  addSeller(Seller seller){
+        allAccounts.add(seller);
+    }
 
 }

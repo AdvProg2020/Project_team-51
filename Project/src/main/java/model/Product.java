@@ -167,4 +167,8 @@ public class Product {
     public void addView(){
         views++;
     }
+
+    public static void addProduct(Product product){
+        allProducts.add(product);
+    }
 }

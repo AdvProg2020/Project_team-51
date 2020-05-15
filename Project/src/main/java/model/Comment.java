@@ -2,7 +2,10 @@ package model;
 
 import model.People.Account;
 
+import java.util.ArrayList;
+
 public class Comment {
+    public static ArrayList<Comment> allComments = new ArrayList<>();
     private Account account;
     private Product product;
     private String title ;
@@ -17,6 +20,7 @@ public class Comment {
         this.title = title;
         this.commentStatus = commentStatus;
         this.isBuyer = isBuyer;
+        allComments.add(this);
     }
 
     public Account getAccount() {
@@ -57,5 +61,9 @@ public class Comment {
 
     public void setBuyer(Boolean buyer) {
         isBuyer = buyer;
+    }
+
+    public static void addComment(Comment comment){
+        allComments.add(comment);
     }
 }

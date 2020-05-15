@@ -54,4 +54,8 @@ public abstract class Request  {
         }
         return null;
     }
+
+    public static void addRequest(Request request){
+        allRequests.add(request);
+    }
 }
