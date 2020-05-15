@@ -110,4 +110,6 @@ public class SellerController extends Controller {
             throw new NotAllowedActivityException("You are not allowed to add Auction");
     }
 
+
+
 }

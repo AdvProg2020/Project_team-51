@@ -59,4 +59,14 @@ public class Seller extends Account{
         allAccounts.add(seller);
     }
 
+    public static ArrayList<Seller> getAllSellers (){
+        ArrayList<Seller> allSellers = new ArrayList<>();
+        for (Account account : allAccounts) {
+            if (account instanceof Seller)
+                allSellers.add((Seller) account);
+        }
+
+        return allSellers;
+    }
+
 }

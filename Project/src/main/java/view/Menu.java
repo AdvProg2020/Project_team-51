@@ -1,5 +1,8 @@
 package view;
 
+import control.Controller;
+import control.Exceptions.HaveNotLoggedInException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -18,7 +21,6 @@ public abstract class Menu {
 
 
     public Menu(String name, Menu parentMenu) {
-        System.out.flush();
         this.name = name;
         this.parentMenu = parentMenu;
 
@@ -28,6 +30,8 @@ public abstract class Menu {
     }
 
     public abstract void executeMenu();
+
+    ;
 
     public void showMenu(){
 
@@ -86,5 +90,13 @@ public abstract class Menu {
         var lastMenu = menusHistory.pop();
         lastMenu.showMenu();
         lastMenu.executeMenu();
+    }
+
+    public void logout(){
+        try {
+            Controller.logout();
+        } catch (HaveNotLoggedInException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

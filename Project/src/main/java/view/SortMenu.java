@@ -39,7 +39,7 @@ public class SortMenu extends Menu {
         this.executeMenu();
     }
 
-    private void showAvailableSorts() {
+    public void showAvailableSorts() {
         Arrays.stream(SortTypes.values()).map(SortTypes::getSort).map(Sort::getName).forEach(System.out::println);
     }
 

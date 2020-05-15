@@ -143,6 +143,7 @@ public class ProductMenu extends Menu {
             product = Product.getProductById(pid);
         } catch (InvalidProductIdException e) {
             System.out.println(e.getMessage());
+            return;
         }
         var productPage = new ProductPageMenu(this , product);
         productPage.showMenu();
