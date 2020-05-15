@@ -15,4 +15,8 @@ public abstract class Order {
     public Order() {
 
     }
+
+  public String getOrderID() {
+    return orderID;
+  }
 }
