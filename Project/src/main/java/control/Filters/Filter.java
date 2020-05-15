@@ -1,5 +1,6 @@
 package control.Filters;
 
+import model.Category;
 import model.Product;
 
 import java.util.ArrayList;
@@ -18,4 +19,6 @@ public abstract class Filter {
     public String getName() {
         return name;
     }
+
+    public abstract ArrayList<Product> applyFilter(ArrayList<Product> products, ArrayList<Category> acceptedCategories);
 }
