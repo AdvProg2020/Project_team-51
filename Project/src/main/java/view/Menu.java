@@ -18,6 +18,7 @@ public abstract class Menu {
 
 
     public Menu(String name, Menu parentMenu) {
+        System.out.flush();
         this.name = name;
         this.parentMenu = parentMenu;
 

@@ -8,6 +8,12 @@ public class AuctionMenu extends Menu{
 
 
     @Override
+    public void showMenu() {
+        System.out.println("1. Offs");
+        System.out.println("1. Show Product [PID]");
+    }
+
+    @Override
     public void executeMenu() {
 
     }

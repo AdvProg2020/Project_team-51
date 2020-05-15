@@ -8,7 +8,7 @@ public class Attributes {
     private String field ;
     private Set<String> values = new HashSet<String>() ;
 
-    public Attributes(String field) {
+    public Attributes(String field , String ... values) {
         this.field = field;
     }
 
@@ -31,4 +31,6 @@ public class Attributes {
     public void setValues(Set<String> values) {
         this.values = values;
     }
+
+
 }

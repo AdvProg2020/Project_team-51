@@ -15,10 +15,13 @@ public abstract class Filter {
     public ArrayList<Product> applyFilter(ArrayList<Product> products, Double from, Double to) {
         return null;
     }
+    public ArrayList<Product> applyFilter(ArrayList<Product> products, ArrayList<Category> categories) {
+        return null;
+    }
 
     public String getName() {
         return name;
     }
 
-    public abstract ArrayList<Product> applyFilter(ArrayList<Product> products, ArrayList<Category> acceptedCategories);
+
 }
