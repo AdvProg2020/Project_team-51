@@ -33,7 +33,13 @@ public enum AllPatterns {
     MANAGE_PRODUCTS("(?i)manage\\s+products"),
     SHOW_CATEGORIES("(?i)show\\s+categories"),
     VIEW_OFFS("(?i)view\\s+offs"),
-    BALANCE("(?i)balance")
+    BALANCE("(?i)balance"),
+    EDIT_PERSONAL_INFO("(?i)edit"),
+    FIRST_NAME("(?i)first\\s+name"),
+    LAST_NAME("(?i)last\\s+name"),
+    EMAIL("(?i)email"),
+    PHONE("(?i)phone"),
+    BRAND("(?i)brand"),
     ;
 
     private String regex ;
