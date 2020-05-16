@@ -108,6 +108,13 @@ public class SellerController extends Controller {
             throw new NotAllowedActivityException("You are not allowed to add Auction");
     }
 
-
-
+    public String viewPersonalInfo(){
+        Seller seller = (Seller) currentAccount ;
+        return seller.getUsername() + "\n" +
+                "First Name : " + seller.getFirstName() + "\n" +
+                "Last Name : " + seller.getLastName() + "\n" +
+                "Email : " + seller.getEmail() + "\n" +
+                "Phone : " + seller.getPhoneNumber() + "\n" +
+                "Brand : " + seller.getBrandName() ;
+    }
 }
