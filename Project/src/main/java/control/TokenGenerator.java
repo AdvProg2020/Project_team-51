@@ -22,12 +22,15 @@ public class TokenGenerator {
     }
 
     public static String generateRequestId(){
-        return generateToken("REQ_" , 5 , false , true);
+        return generateToken("" , 8 , false , true);
     }
 
     public static String generateAuctionId(){
         return generateToken("AUC_" , 5 , false , true);
     }
 
+    public static String generateOrderId(){
+        return generateToken("" , 8 , false , true);
+    }
 
 }
