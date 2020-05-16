@@ -65,6 +65,10 @@ public class SellerController extends Controller {
         ((Seller) currentAccount).setBrandName(brand);
     }
 
+    public String viewCompanyInfo(){
+        return "Brand name : " + ((Seller)currentAccount).getBrandName() ;
+    }
+
     public static Boolean isThisPidValid(String productId) throws InvalidProductIdException {
         return Product.getAllProducts().contains(Product.getProductById(productId));
     }
