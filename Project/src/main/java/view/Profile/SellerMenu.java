@@ -1,6 +1,7 @@
 package view.Profile;
 
 import control.Controller;
+import control.Exceptions.InvalidAuctionIdException;
 import control.Exceptions.WrongFormatException;
 import control.SellerController;
 import view.AllPatterns;
@@ -38,19 +39,17 @@ public class SellerMenu extends Menu {
         } else if (command.matches(AllPatterns.COMPANY_INFO.getRegex())){
             viewCompanyInformation(); //done
         } else if (command.matches(AllPatterns.SALES_HISTORY.getRegex())){
-            viewSalesHistory();
+            viewSalesHistory(); //done
         } else if (command.matches(AllPatterns.MANAGE_PRODUCTS.getRegex())){
             manageProducts();
         } else if (command.matches(AllPatterns.SHOW_CATEGORIES.getRegex())){
             showCategories(); //done
         } else if (command.matches(AllPatterns.VIEW_OFFS.getRegex())){
-            viewOffs();
+            viewOffs(this); //done
         } else if (command.matches(AllPatterns.BALANCE.getRegex())){
             viewSellerBalance(); //done
         } else if (command.matches(AllPatterns.BACK.getRegex())){
             back();
-        } else if (command.matches(AllPatterns.LOGIN.getRegex())){
-            login();
         } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
             logout();
         }
@@ -95,7 +94,7 @@ public class SellerMenu extends Menu {
     }
 
     private void manageProducts() {
-
+        
     }
 
     private void viewProductBuyers(String id) {
@@ -118,15 +117,45 @@ public class SellerMenu extends Menu {
         sellerController.showCategories().stream().forEach(System.out::println);
     }
 
-    private void viewOffs(){
+    private void viewOffs(Menu parent){
+        sellerController.viewOffs().stream().forEach(System.out::println);
+        var offsMenu = new Menu("Offs Menu in Seller Account : " , parent){
 
+            @Override
+            public void showMenu() {
+            }
+
+            @Override
+            public void executeMenu() {
+                menusHistory.push(this);
+                command = inputInFormat("you can view,edit or add an off : " ,"(?i)(add\\s+off|" +
+                                                                                         "edit\\s+(\\w+)|view\\s+(\\w+))");
+                if (command.matches("(?i)add\\s+off")){
+                    addOff();
+                } else if (command.matches("(?i)edit\\s+(\\w+)")){
+                    editOffAttribute(this );
+                } else if (command.matches("(?i)view\\s+(\\w+)")){
+                    viewOffById(command.split("\\s+")[1]);
+                } else if (command.matches(AllPatterns.BACK.getRegex())){
+                    back();
+                } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+                    logout();
+                }
+
+                this.executeMenu();
+            }
+        };
     }
 
     private void viewOffById(String id){
-
+        try {
+            System.out.println(sellerController.viewOffById(id).toString());
+        } catch (InvalidAuctionIdException e) {
+            System.out.println("Wrong Off Id ! ");
+        }
     }
 
-    private void editOffAttribute(String id){
+    private void editOffAttribute(Menu parent){
 
     }
 
