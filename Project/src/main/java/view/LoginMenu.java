@@ -29,14 +29,14 @@ public class LoginMenu extends Menu {
                 this.parentMenu.showMenu();
                 this.parentMenu.executeMenu();
             }
-            else if (command.equals("1")) login();
+            else if (command.equals("1")) loginUser();
             else if (command.equals("2")) signup ();
         }
     }
 
-    private void login() {
+    public void loginUser() {
         String user,pass;
-
+        enterUsername();
     }
 
     private void signup() {
