@@ -14,27 +14,29 @@ public class SortMenu extends Menu {
 
     @Override
     public void showMenu() {
-        System.out.println("1. Show Available Sorts");
-        System.out.println("2. Sort [Available]");
-        System.out.println("3. Current Sort");
-        System.out.println("4. Disable Sort");
-        System.out.println("5. Back");
+        System.out.println("- Show Available Sorts");
+        System.out.println("- Sort [Available]");
+        System.out.println("- Current Sort");
+        System.out.println("- Disable Sort");
     }
 
     @Override
     public void executeMenu() {
-        command = inputInFormat("Please Enter A Valid Command" , "(?i)(show\\s+available\\s+sorts|" +
-                "sort\\s+(w+)|current\\s+sort|disable\\s+sort|back)");
-        if (command.matches("(?i)show\\s+available\\s+sorts")){
+        command = inputInFormat("Please Enter A Valid Command" , MenusPattern.SORT.getRegex());
+        if (command.matches(AllPatterns.SHOW_AVAILABLE_SORTS.getRegex())){
             showAvailableSorts();
-        } else if (command.matches("(?i)sort\\s+(w+)")){
+        } else if (command.matches(AllPatterns.SORT.getRegex())){
             sort(command.split("\\s+")[1]);
-        } else if (command.matches("(?i)current\\s+sort")){
+        } else if (command.matches(AllPatterns.CURRENT_SORT.getRegex())){
             currentSort();
-        } else if (command.matches("(?i)disable\\s+sort")){
+        } else if (command.matches(AllPatterns.DISABLE_SORT.getRegex())){
             disableSort();
-        } else if (command.matches("(?i)back")){
+        } else if (command.matches(AllPatterns.BACK.getRegex())){
             back();
+        } else if (command.matches(AllPatterns.LOGIN.getRegex())){
+            login();
+        } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+            logout();
         }
         this.executeMenu();
     }

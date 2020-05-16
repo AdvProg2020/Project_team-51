@@ -45,6 +45,7 @@ public class ProductMenu extends Menu {
 
     @Override
     public void executeMenu() {
+        menusHistory.push(this);
         int size;
         try {
             size = subCategories.size();
@@ -66,29 +67,31 @@ public class ProductMenu extends Menu {
 
                     @Override
                     public void showMenu() {
-                        System.out.println("1. Show Product [PID]");
-                        System.out.println("2. Sorting");
-                        System.out.println("3. Filtering");
-                        System.out.println("4. Back");
+                        System.out.println("- Show Product [PID]");
+                        System.out.println("- Sorting");
+                        System.out.println("- Filtering");
                     }
 
                     @Override
                     public void executeMenu() {
 
-                            command = inputInFormat("Choose : " , "(?i)(show\\s+product\\s+([0-9]+) | " +
-                                    "sorting|filtering|back)").trim();
-                            if (command.matches("(?i)show\\s+product\\s+([0-9]+)")){
+                            command = inputInFormat("Choose : " , MenusPattern.PRODUCTS.getRegex()).trim();
+                            if (command.matches(AllPatterns.SHOW_PRODUCT.getRegex())){
                                 showProduct(command.split("\\s")[2]);
-                            } else if (command.matches("(?i)sorting")){
+                            } else if (command.matches(AllPatterns.SORTING.getRegex())){
                                 var sort = new SortMenu(this) ;
                                 sort.showMenu();
                                 sort.executeMenu();
-                            } else if (command.matches("(?i)filtering")){
+                            } else if (command.matches(AllPatterns.FILTERING.getRegex())){
                                 var filter = new FilterMenu(this) ;
                                 filter.showMenu();
                                 filter.executeMenu();
-                            } else if (command.matches("(?i)back")){
+                            } else if (command.matches(AllPatterns.BACK.getRegex())){
                                 back();
+                            } else if (command.matches(AllPatterns.LOGIN.getRegex())){
+                                login();
+                            } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+                                logout();
                             }
 
                         this.showMenu();

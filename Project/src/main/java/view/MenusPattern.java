@@ -7,7 +7,8 @@ public enum MenusPattern {
             ,AllPatterns.ADD_COMMENT,AllPatterns.ADD_TO_CART)),
     PRODUCTS(menuPatternBuilder(AllPatterns.SHOW_PRODUCT,AllPatterns.SORTING,AllPatterns.FILTERING)),
     FILTER(menuPatternBuilder(AllPatterns.FILTER,AllPatterns.CURRENT_FILTERS,AllPatterns.DISABLE_FILTER,AllPatterns.SHOW_AVAILABLE_FILTERS)),
-    ADD_COMMENT(menuPatternBuilder(AllPatterns.ADD_COMMENT));
+    ADD_COMMENT(menuPatternBuilder(AllPatterns.ADD_COMMENT)),
+    AUCTION(menuPatternBuilder(AllPatterns.SHOW_PRODUCT,AllPatterns.OFFS));
 
 
     ;

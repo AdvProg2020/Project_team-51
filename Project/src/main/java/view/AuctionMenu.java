@@ -15,50 +15,54 @@ public class AuctionMenu extends Menu{
 
     public AuctionMenu(Menu parentMenu) {
         super("Auction Menu", parentMenu);
-        subMenus.put(1,new LoginMenu(this));
     }
-
 
     @Override
     public void showMenu() {
-        System.out.println("1. Offs");
-        System.out.println("2. Show Product [PID]");
-        System.out.println("3. Back");
-        if (Controller.getCurrentAccount() == null)
-            System.out.println("4. login");
-        else {
-            System.out.println("5. logout");
-        }
+        System.out.println("- Offs");
+        System.out.println("- Show Product [PID]");
     }
 
     @Override
     public void executeMenu() {
-        command = inputInFormat("Please input a valid command : ", "(?i)(offs|show\\s+product\\s+(\\S+)|" +
-                "back|login|logout)");
-        if (command.matches("(?i)offs")){
-            var auctionPage = new Menu("Offs Lists Menu" , this){
+        menusHistory.push(this);
+        command = inputInFormat("Please input a valid command : ", MenusPattern.AUCTION.getRegex() );
+        if (command.matches(AllPatterns.OFFS.getRegex())){
+            var productsWithOffLists = new Menu("productLists", this){
+
+                @Override
+                public void showMenu() {
+                    System.out.println("- Show Product [PID]");
+                    System.out.println("- Sorting");
+                    System.out.println("- Filtering");
+                }
 
                 @Override
                 public void executeMenu() {
-                    showProductsWithOffs();
-                    command = inputInFormat("" ,"(?i)(sort\\s+by\\s+(w+)|view\\s+sorts|back|login|logout)");
-                    if(command.matches("(!?)sort\\s+by\\s+(w+)")){
-                        ProductController.applySort(command.split("\\s+")[2]);
-                    } else if (command.matches("(!?)view\\s+sorts")){
+                    menusHistory.push(this);
+                    command = inputInFormat("Choose : " , MenusPattern.PRODUCTS.getRegex());
+                    if (command.matches(AllPatterns.SHOW_PRODUCT.getRegex())){
+                        showProduct(command.split("\\s")[2]);
+                    } else if (command.matches(AllPatterns.SORTING.getRegex())){
                         var sort = new SortMenu(this) ;
-                        sort.showAvailableSorts();
-                    } else if (command.matches("(!?)back")) {
+                        sort.showMenu();
+                        sort.executeMenu();
+                    } else if (command.matches(AllPatterns.FILTERING.getRegex())){
+                        var filter = new FilterMenu(this) ;
+                        filter.showMenu();
+                        filter.executeMenu();
+                    } else if (command.matches(AllPatterns.BACK.getRegex())){
                         back();
-                    } else if (command.matches("(?i)login") && Controller.getCurrentAccount()==null){
-                        var login = new LoginMenu(this);
-                        login.showMenu();
-                        login.executeMenu();
-                    } else if (command.matches("(?i)logout") && Controller.getCurrentAccount()!=null){
+                    } else if (command.matches(AllPatterns.LOGIN.getRegex())){
+                        login();
+                    } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
                         logout();
                     }
                 }
             };
-            auctionPage.executeMenu();
+            showProductsWithOffs();
+            productsWithOffLists.showMenu();
+            productsWithOffLists.executeMenu();
         } else if (command.matches("(?i)show\\s+product\\s+(\\S+)")) {
             showProduct(command.split("\\s")[2]);
         } else if (command.matches("(?i)back")){
@@ -73,7 +77,6 @@ public class AuctionMenu extends Menu{
         this.executeMenu();
     }
 
-
     private void showProductsWithOffs() {
         var currentSort = ProductController.getCurrentSort().getSort();
         var productsOfThisCategory = currentSort.applySort(getProductsWithOffs() , currentSort.getAscending());
@@ -86,7 +89,7 @@ public class AuctionMenu extends Menu{
     }
 
     private void showProduct(String pid) {
-        Product product = null;
+        Product product;
         try {
             product = Product.getProductById(pid);
         } catch (InvalidProductIdException e) {

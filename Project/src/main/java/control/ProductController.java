@@ -46,7 +46,8 @@ public class ProductController extends Controller {
     }
 
     public static ArrayList<String> showAvailableFilters() {
-        return null;
+        return new ArrayList<>(availableFilter.stream().map(FilterTypes::getFilter)
+                .map(Filter::getName).collect(Collectors.toList()));
     }
 
     public static void applyFilter(String filter){

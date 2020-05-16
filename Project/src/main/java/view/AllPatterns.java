@@ -34,6 +34,11 @@ public enum AllPatterns {
         this.regex = regex;
     }
 
+    @Override
+    public String toString() {
+        return regex;
+    }
+
     public String getRegex() {
         return regex;
     }

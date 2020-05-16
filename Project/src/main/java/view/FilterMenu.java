@@ -8,35 +8,37 @@ public class FilterMenu extends Menu {
     public FilterMenu(Menu parentMenu) {
         super("Filter Menu", parentMenu);
     }
-
     @Override
     public void showMenu() {
-        System.out.println("1. Show Available Filters");
-        System.out.println("2. Filter [Available]");
-        System.out.println("3. Current Filters");
-        System.out.println("4. Disable Filter [Available]");
-        System.out.println("5. Back");
+        System.out.println("- Show Available Filters");
+        System.out.println("- Filter [Available]");
+        System.out.println("- Current Filters");
+        System.out.println("- Disable Filter [Available]");
     }
-
     @Override
     public void executeMenu() {
-        command = inputInFormat("Please Enter A Valid Command" , "(?i)(show\\s+available\\s+filters|" +
-                "filter\\s+(w+)|current\\s+filters|disable\\s+filter\\s+(w+)|back)");
-        if (command.matches("(?i)show\\s+available\\s+filters")){
+        menusHistory.push(this);
+        command = inputInFormat("Please Enter A Valid Command" , MenusPattern.FILTER.getRegex());
+        if (command.matches(AllPatterns.SHOW_AVAILABLE_FILTERS.getRegex())){
             showAvailableFilters();
-        } else if (command.matches("(?i)filter\\s+(w+)")){
+        } else if (command.matches(AllPatterns.FILTER.getRegex())){
             applyFilter(command.split("\\s+")[1]);
-        } else if (command.matches("(?i)current\\s+filters")){
+        } else if (command.matches(AllPatterns.CURRENT_FILTERS.getRegex())){
             currentFilters();
-        } else if (command.matches("(?i)disable\\s+filter\\s+(w+)")){
+        } else if (command.matches(AllPatterns.DISABLE_FILTER.getRegex())){
             disableFilter(command.split("\\s+")[2]);
-        } else if (command.matches("(?i)back")){
+        } else if (command.matches(AllPatterns.BACK.getRegex())){
             back();
+        } else if (command.matches(AllPatterns.LOGIN.getRegex())){
+            login();
+        } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+            logout();
         }
         this.executeMenu();
     }
 
     private void showAvailableFilters() {
+
         var availableFilters = ProductController.showAvailableFilters();
         if (availableFilters!=null)
         for (String availableFilter : availableFilters) {
