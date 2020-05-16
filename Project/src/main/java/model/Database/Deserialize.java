@@ -1,6 +1,7 @@
 package model.Database;
 
 import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import model.*;
 import model.OrderLog.Order;
 import model.People.Customer;
@@ -11,7 +12,7 @@ import model.Requests.*;
 import java.io.IOException;
 
 public class Deserialize {
-    private YaGson yaGson = new YaGson() ;
+    private YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create() ;
 
     public Deserialize(){
     }

@@ -1,5 +1,6 @@
 package model.Database;
 import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import model.*;
 import model.OrderLog.BuyerLog;
 import model.OrderLog.Order;
@@ -14,10 +15,9 @@ import java.io.IOException;
 
 public class Serialize {
 
-    private YaGson yaGson ;
+    private YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create() ;
 
-    public Serialize(YaGson yaGson) {
-        this.yaGson = yaGson;
+    public Serialize() {
     }
 
 
