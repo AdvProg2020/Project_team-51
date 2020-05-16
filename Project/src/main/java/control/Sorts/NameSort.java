@@ -18,14 +18,14 @@ public class NameSort extends Sort {
 
     public ArrayList<Product> applyAscendingSort(ArrayList<Product> products) {
         isAscending=true;
-        products.sort(Comparator.comparing(Product::getName).reversed());
+        products.sort(Comparator.comparing(Product::getName));
         return products;
     }
 
 
     public ArrayList<Product> applyDescendingSort(ArrayList<Product> products) {
         isAscending=false;
-        products.sort(Comparator.comparing(Product::getName));
+        products.sort(Comparator.comparing(Product::getName).reversed());
         return products;
     }
 
