@@ -37,15 +37,15 @@ public class SellerMenu extends Menu {
         } else if (command.matches(AllPatterns.COMPANY_INFO.getRegex())){
             viewCompanyInformation();
         } else if (command.matches(AllPatterns.SALES_HISTORY.getRegex())){
-            
+            viewSalesHistory();
         } else if (command.matches(AllPatterns.MANAGE_PRODUCTS.getRegex())){
-
+            manageProducts();
         } else if (command.matches(AllPatterns.SHOW_CATEGORIES.getRegex())){
-
+            showCategories();
         } else if (command.matches(AllPatterns.VIEW_OFFS.getRegex())){
-
+            viewOffs();
         } else if (command.matches(AllPatterns.BALANCE.getRegex())){
-
+            viewSellerBalance();
         } else if (command.matches(AllPatterns.BACK.getRegex())){
             back();
         } else if (command.matches(AllPatterns.LOGIN.getRegex())){
@@ -132,7 +132,7 @@ public class SellerMenu extends Menu {
     }
 
     private void viewSellerBalance(){
-
+        System.out.println(sellerController.getBalance() + " $");
     }
 
     private void editPersonalInfoField(Menu parent){
