@@ -102,4 +102,12 @@ public abstract class Account {
         }
         return null;
     }
+
+    public static boolean doesManagerExist(){
+        for (Account account : allAccounts)
+        {
+            if (account instanceof Manager) return true;
+        }
+        return false;
+    }
 }

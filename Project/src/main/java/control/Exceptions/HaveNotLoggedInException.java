@@ -1,7 +1,7 @@
 package control.Exceptions;
 
 public class HaveNotLoggedInException extends Exception{
-    public HaveNotLoggedInException(String message) {
-        super(message);
+    public HaveNotLoggedInException() {
+        super("you are not logged in");
     }
 }

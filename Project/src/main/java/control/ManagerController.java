@@ -60,7 +60,8 @@ public class ManagerController extends Controller {
     }
 
     public static Boolean isHeAbleToCreateManger(){
-        return currentAccount instanceof Manager;
+        if (currentAccount instanceof Manager) return true;
+        return !Account.doesManagerExist();
     }
 
     public static Boolean isThisPidValid(String productId){

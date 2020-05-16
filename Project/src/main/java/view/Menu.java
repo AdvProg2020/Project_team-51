@@ -13,7 +13,7 @@ public abstract class Menu {
     public static final Scanner scanner = new Scanner(System.in);
     public static String command = "";
     private String name ;
-    private Menu parentMenu ;
+    protected Menu parentMenu ;
     protected HashMap<Integer,Menu> subMenus = new HashMap<>();
 
 

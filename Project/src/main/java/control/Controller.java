@@ -66,7 +66,7 @@ public class Controller {
         }
     }
 
-    private static boolean doesPasswordMatches(String user , String password){
+    public static boolean doesPasswordMatches(String user , String password){
 
         assert Account.getAccountById(user) != null;
         if ( hasUserWithThisUsername(user) || !Account.getAccountById(user).getPassword().equals(password) ){
@@ -86,5 +86,9 @@ public class Controller {
 
     public static Account getCurrentAccount()  {
         return currentAccount;
+    }
+
+    public static void setCurrentAccount (String username){
+        currentAccount = Manager.getAccountById(username);
     }
 }
