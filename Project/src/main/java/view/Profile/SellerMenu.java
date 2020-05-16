@@ -88,7 +88,7 @@ public class SellerMenu extends Menu {
     }
 
     private void viewSalesHistory() {
-
+        sellerController.showCategories().stream().forEach(System.out::println);
     }
 
     private void manageProducts() {
