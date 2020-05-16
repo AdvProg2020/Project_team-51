@@ -16,7 +16,6 @@ import java.io.IOException;
 public class Serialize {
 
     private YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create() ;
-
     public Serialize() {
     }
 

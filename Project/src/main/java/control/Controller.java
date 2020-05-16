@@ -62,7 +62,7 @@ public class Controller {
             ((Customer) currentAccount).setCart(cart);
         }
         else {
-            throw new WrongPasswordException("Username Or Password Is Wrong !!");
+            throw new WrongPasswordException();
         }
     }
 
@@ -79,7 +79,7 @@ public class Controller {
         if (currentAccount!=null)
             currentAccount = null;
         else {
-            throw new HaveNotLoggedInException("You Haven't Logged In To Logout !!");
+            throw new HaveNotLoggedInException();
         }
 
     }

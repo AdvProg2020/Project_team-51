@@ -26,6 +26,14 @@ public enum AllPatterns {
     DISABLE_SORT("(?i)current\\s+sort"),
     OFFS("(?i)offs"),
     ADD_TO_CART("(?i)add\\s+to\\s+cart"),
+    SIGN_UP("(?i)signUp"),
+    PERSONAL_INFO("(?i)personal\\s+info"),
+    COMPANY_INFO("(?i)company\\s+info"),
+    SALES_HISTORY("(?i)sales\\s+history"),
+    MANAGE_PRODUCTS("(?i)manage\\s+products"),
+    SHOW_CATEGORIES("(?i)show\\s+categories"),
+    VIEW_OFFS("(?i)view\\s+offs"),
+    BALANCE("(?i)balance")
     ;
 
     private String regex ;

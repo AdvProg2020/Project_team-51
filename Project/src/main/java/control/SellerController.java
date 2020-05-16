@@ -62,7 +62,6 @@ public class SellerController extends Controller {
         }
     }
 
-
     public static void addProduct(Product product) throws NotAllowedActivityException {
 
         if(currentAccount instanceof  Seller)
@@ -82,12 +81,11 @@ public class SellerController extends Controller {
         return OffCode.getAllOffCodes().contains(OffCode.getOffIdById(offId));
     }
 
-
     public static void editAuction(String auctionId , String field , String value , String description)
             throws InvalidAuctionIdException , InvalidFieldException {
 
         var auction = Auction.getAuctionById(auctionId);
-        if (auction==null) throw new InvalidAuctionIdException("Auction id is not correct !");
+        if (auction==null) throw new InvalidAuctionIdException();
 
         if (field.equalsIgnoreCase("begin date")){
             new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,"begin date",value);

@@ -151,7 +151,7 @@ public class Product {
             if (product.productId.equals(productID))
                 return product;
         }
-        throw new InvalidProductIdException("The product id is invalid .");
+        throw new InvalidProductIdException();
     }
 
     public double averageRate(){
