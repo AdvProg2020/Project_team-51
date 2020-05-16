@@ -20,7 +20,7 @@ public class Seller extends Account{
                   String email, String phoneNumber , String brandName) {
         super(username,password, firstName, lastName, balance, email, phoneNumber);
         this.brandName = brandName ;
-        this.status.setState(StatusStates.CREATE_PROCESSING);
+        this.status.setState(StatusStates.PENDING_CREATE);
     }
 
     public String getBrandName() {

@@ -125,7 +125,6 @@ public class ProductMenu extends Menu {
         }
     }
 
-
     private void listProducts(){
         var currentSort = ProductController.getCurrentSort().getSort();
         var productsOfThisCategory = currentSort.applySort(this.productsOfThisCategory , currentSort.getAscending());
@@ -138,7 +137,7 @@ public class ProductMenu extends Menu {
     }
 
     private void showProduct(String pid) {
-        Product product = null;
+        Product product;
         try {
             product = Product.getProductById(pid);
         } catch (InvalidProductIdException e) {

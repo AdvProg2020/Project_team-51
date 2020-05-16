@@ -22,7 +22,7 @@ public class Auction {
         this.endDate = endDate;
         this.appliedProducts = appliedProducts;
         this.offPercentage = offPercentage;
-        this.auctionStatus = new Status(StatusStates.CREATE_PROCESSING);
+        this.auctionStatus = new Status(StatusStates.PENDING_CREATE);
         allAuctions.add(this);
     }
 

@@ -1,8 +1,8 @@
 package model;
 
 public enum  StatusStates {
-    CREATE_PROCESSING
-    ,EDIT_PROCESSING
+    PENDING_CREATE
+    ,PENDING_EDIT
     ,APPROVED ;
 
     StatusStates() {

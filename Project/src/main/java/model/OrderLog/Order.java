@@ -1,18 +1,16 @@
 package model.OrderLog;
 
-import model.Status;
-
 import java.util.ArrayList;
-import java.util.Date;
 
 public abstract class Order {
   public static ArrayList<Order> allOrders = new ArrayList<>();
   protected String orderID ;
-  protected Status status ;
+  protected ShippingStatus status ;
 
     public Order(String orderID) {
         this.orderID = orderID;
         allOrders.add(this);
+        status = ShippingStatus.SENT;
     }
 
     public Order() {

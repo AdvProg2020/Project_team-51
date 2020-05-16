@@ -55,4 +55,6 @@ public class SortMenu extends Menu {
     private void disableSort() {
         ProductController.disableSort();
     }
+
+
 }

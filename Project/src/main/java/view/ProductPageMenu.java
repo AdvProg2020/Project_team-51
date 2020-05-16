@@ -43,7 +43,7 @@ public class ProductPageMenu extends Menu {
             attributes();
         } else if (command.matches("(?i)(compare\\s+([0-9]+))")) {
             compare(command.split("\\s+")[1]);
-        } else if (command.matches("comments")){
+        } else if (command.matches("(?i)comments")){
             var commentsMenu = new Menu("Comments Menu" , this){
 
                 @Override
