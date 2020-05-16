@@ -27,23 +27,26 @@ public class ProductPageMenu extends Menu {
 
     @Override
     public void showMenu() {
-        System.out.println("1. Digest");
-        System.out.println("2. Attributes");
-        System.out.println("3. Compare [PID]");
-        System.out.println("4. Comments");
-        System.out.println("5. Back");
+        System.out.println("- Digest");
+        System.out.println("- Attributes");
+        System.out.println("- Compare [PID]");
+        System.out.println("- Comments");
+        System.out.println("- Add Comment");
     }
 
     @Override
     public void executeMenu() {
-        command = inputInFormat("Please Enter A Valid Command" , "(?i)(digest|attributes|(compare\\s+([0-9]+))|comments|back)");
-        if (command.matches("(?i)digest")){
+        menusHistory.push(this);
+
+        command = inputInFormat("Please Enter A Valid Command" , MenusPattern.PRODUCT.getRegex());
+        if (command.matches(AllPatterns.DIGEST.getRegex())){
             digest();
-        } else if (command.matches("(?i)attributes")){
+        } else if (command.matches(AllPatterns.ATTRIBUTES.getRegex())){
             attributes();
-        } else if (command.matches("(?i)(compare\\s+([0-9]+))")) {
+        } else if (command.matches(AllPatterns.COMPARE.getRegex())) {
             compare(command.split("\\s+")[1]);
-        } else if (command.matches("comments")){
+        } else if (command.matches(AllPatterns.COMMENTS.getRegex())){
+            comments();
             var commentsMenu = new Menu("Comments Menu" , this){
 
                 @Override
@@ -54,22 +57,29 @@ public class ProductPageMenu extends Menu {
 
                 @Override
                 public void executeMenu() {
-                    String command = inputInFormat("Please Enter A valid Command", "(?i)(add\\s+comment|back)");
-                    if (command.matches("(?i)(add\\s+comment)")){
+                    String command = inputInFormat("Please Enter A valid Command", MenusPattern.ADD_COMMENT.getRegex());
+                    if (command.matches(AllPatterns.ADD_COMMENT.getRegex())){
                         addComment();
                     } else {
                         back();
                     }
                 }
             };
-            menusHistory.push(this);
-            commentsMenu.showMenu();
-            commentsMenu.executeMenu();
-        } else if (command.matches("(?i)back")){
+//            menusHistory.push(this);
+//            commentsMenu.showMenu();
+//            commentsMenu.executeMenu();
+        } else if (command.matches(AllPatterns.ADD_TO_CART.getRegex())) {
+            addToCart();
+        } else if (command.matches(AllPatterns.ADD_COMMENT.getRegex())) {
+            addComment();
+        } else if (command.matches(AllPatterns.BACK.getRegex())){
             back();
+        } else if (command.matches(AllPatterns.LOGIN.getRegex())){
+            login();
+        } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+            logout();
         }
 
-        this.showMenu();
         this.executeMenu();
     }
 

@@ -1,5 +1,8 @@
 package view;
 
+import control.Controller;
+import control.Exceptions.HaveNotLoggedInException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -21,12 +24,14 @@ public abstract class Menu {
         this.name = name;
         this.parentMenu = parentMenu;
 
-        if (menusHistory.isEmpty() || this != menusHistory.peek())
+        if (menusHistory.isEmpty() || !this.equals(menusHistory.peek()))
             menusHistory.push(this);
 
     }
 
     public abstract void executeMenu();
+
+    ;
 
     public void showMenu(){
 
@@ -81,9 +86,32 @@ public abstract class Menu {
     }
 
     public void back(){
-        System.out.flush();
-        var lastMenu = menusHistory.pop();
+        Menu lastMenu;
+
+        do {
+        lastMenu = menusHistory.pop() ;
+        }
+        while (lastMenu.equals(this));
+
         lastMenu.showMenu();
         lastMenu.executeMenu();
+    }
+
+    public void logout(){
+        try {
+            Controller.logout();
+        } catch (HaveNotLoggedInException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void login(){
+        if (Controller.getCurrentAccount()!=null)
+            System.out.println("You've already logged in");
+        else {
+            var login = new LoginMenu(this);
+            login.showMenu();
+            login.executeMenu();
+        }
     }
 }

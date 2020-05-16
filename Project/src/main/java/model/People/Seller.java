@@ -20,7 +20,7 @@ public class Seller extends Account{
                   String email, String phoneNumber , String brandName) {
         super(username,password, firstName, lastName, balance, email, phoneNumber);
         this.brandName = brandName ;
-        this.status.setState(StatusStates.CREATE_PROCESSING);
+        this.status.setState(StatusStates.PENDING_CREATE);
     }
 
     public String getBrandName() {
@@ -57,6 +57,16 @@ public class Seller extends Account{
 
     public static void  addSeller(Seller seller){
         allAccounts.add(seller);
+    }
+
+    public static ArrayList<Seller> getAllSellers (){
+        ArrayList<Seller> allSellers = new ArrayList<>();
+        for (Account account : allAccounts) {
+            if (account instanceof Seller)
+                allSellers.add((Seller) account);
+        }
+
+        return allSellers;
     }
 
 }

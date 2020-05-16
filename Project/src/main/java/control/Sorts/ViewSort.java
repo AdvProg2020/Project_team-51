@@ -16,13 +16,13 @@ public class ViewSort extends Sort {
 
     protected ArrayList<Product> applyAscendingSort(ArrayList<Product> products) {
         isAscending = true;
-        products.sort(Comparator.comparing(Product::getViews).reversed());
+        products.sort(Comparator.comparing(Product::getViews));
         return products;
     }
 
     protected ArrayList<Product> applyDescendingSort(ArrayList<Product> products) {
         isAscending = false ;
-        products.sort(Comparator.comparing(Product::getViews));
+        products.sort(Comparator.comparing(Product::getViews).reversed());
         return products;
     }
 

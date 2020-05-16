@@ -16,13 +16,13 @@ public class RateSort extends Sort {
 
     protected ArrayList<Product> applyAscendingSort(ArrayList<Product> products) {
         isAscending = true;
-        products.sort(Comparator.comparing(Product::averageRate).reversed());
+        products.sort(Comparator.comparing(Product::averageRate));
         return products;
     }
 
     protected ArrayList<Product> applyDescendingSort(ArrayList<Product> products) {
         isAscending = false ;
-        products.sort(Comparator.comparing(Product::averageRate));
+        products.sort(Comparator.comparing(Product::averageRate).reversed());
         return products;
     }
 

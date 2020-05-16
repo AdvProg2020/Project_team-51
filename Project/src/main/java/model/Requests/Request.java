@@ -1,11 +1,10 @@
 package model.Requests;
 
 import control.Exceptions.InvalidProductIdException;
-import model.People.Account;
-import model.People.Manager;
 import model.Status;
 import model.StatusStates;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -19,9 +18,9 @@ public abstract class Request  {
     public Request(String requestId , String kind) {
         this.requestId = requestId;
         if (kind.equals("add"))
-            status.setState(StatusStates.CREATE_PROCESSING);
+            status.setState(StatusStates.PENDING_CREATE);
         else if (kind.equals("edit")){
-            status.setState(StatusStates.EDIT_PROCESSING);
+            status.setState(StatusStates.PENDING_EDIT);
         }
         this.date = new Date();
     }
@@ -43,7 +42,7 @@ public abstract class Request  {
         return "Request ID : " + requestId ;
     }
 
-    public void accept() throws InvalidProductIdException {
+    public void accept() throws InvalidProductIdException, ParseException {
 
     }
 

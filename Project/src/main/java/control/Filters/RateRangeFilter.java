@@ -1,5 +1,6 @@
 package control.Filters;
 
+import model.Category;
 import model.Product;
 
 import java.util.ArrayList;

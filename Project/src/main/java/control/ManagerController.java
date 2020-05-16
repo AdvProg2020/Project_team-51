@@ -7,7 +7,6 @@ import model.People.Manager;
 import model.Product;
 import model.Requests.Request;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import java.util.Date;
 import java.util.Map;
 
 public class ManagerController extends Controller {
+
     public ManagerController(Account currentAccount) {
         super(currentAccount);
     }

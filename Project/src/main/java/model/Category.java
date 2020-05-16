@@ -7,7 +7,7 @@ import java.util.Map;
 public class Category {
 
     private String name;
-    private static ArrayList<Category> allCategories ;
+    private static ArrayList<Category> allCategories = new ArrayList<>();
     private Map<Integer,Category> subCategories = new HashMap<Integer, Category>();
     private Category parentCategory;
     private ArrayList<Product> categoryProducts = new ArrayList<Product>();

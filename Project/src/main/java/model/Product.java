@@ -5,8 +5,6 @@ import model.People.Seller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.OptionalDouble;
-import java.util.stream.IntStream;
 
 public class Product {
 
@@ -171,4 +169,7 @@ public class Product {
     public static void addProduct(Product product){
         allProducts.add(product);
     }
+
+
+
 }

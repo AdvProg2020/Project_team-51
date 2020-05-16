@@ -1,5 +1,6 @@
 package model.Database;
 import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import model.*;
 import model.OrderLog.BuyerLog;
 import model.OrderLog.Order;
@@ -14,10 +15,9 @@ import java.io.IOException;
 
 public class Serialize {
 
-    private YaGson yaGson ;
+    private YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create() ;
 
-    public Serialize(YaGson yaGson) {
-        this.yaGson = yaGson;
+    public Serialize() {
     }
 
 
@@ -33,17 +33,17 @@ public class Serialize {
     }
 
     private void serializeManager(Manager manager) throws IOException {
-        String filePath = "Project\\src\\resources\\People\\Managers\\" + manager.getUsername() + ".json";
+        String filePath = "Project\\src\\resources\\People\\Managers\\" + "Manager_" + manager.getUsername() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(manager, Manager.class), filePath);
     }
 
     private void serializeSeller(Seller seller) throws IOException {
-        String filePath = "Project\\src\\resources\\People\\Sellers\\" + seller.getUsername() + ".json";
+        String filePath = "Project\\src\\resources\\People\\Sellers\\" + "Seller_"+ seller.getUsername() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(seller, Seller.class), filePath);
     }
 
     private void serializeCustomer(Customer customer) throws IOException {
-        String filePath = "Project\\src\\resources\\People\\Customers\\" + customer.getUsername() + ".json";
+        String filePath = "Project\\src\\resources\\People\\Customers\\" + "Customer_" + customer.getUsername() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(customer, Customer.class), filePath);
     }
 
@@ -58,19 +58,19 @@ public class Serialize {
     }
 
     public void serializeRate(Rate rate) throws IOException {
-        String filePath = "Project\\src\\resources\\Rates\\" + "rt_" + rate.getAccount().getUsername() + "_"
+        String filePath = "Project\\src\\resources\\Rates\\" + "RT_" + rate.getAccount().getUsername() + "_"
                 + rate.getProduct() + "_" + (int)(Math.random()*100) + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(rate , Rate.class), filePath);
     }
 
     public void serializeComment(Comment comment) throws IOException {
-        String filePath = "Project\\src\\resources\\Comments\\" + "cm_" +comment.getAccount().getUsername() + "_"
+        String filePath = "Project\\src\\resources\\Comments\\" + "CM_" +comment.getAccount().getUsername() + "_"
                 + comment.getProduct() + "_" + (int)(Math.random()*100) + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(comment, Comment.class), filePath);
     }
 
     public void serializeCategory(Category category) throws IOException {
-        String filePath = "Project\\src\\resources\\Categories\\" + category.getName() + "_" + (int)(Math.random()*100)
+        String filePath = "Project\\src\\resources\\Categories\\" + "CTG_"+ category.getName() + "_" + (int)(Math.random()*100)
                 + (int)(Math.random()*100) + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(category, Category.class), filePath);
     }
@@ -79,22 +79,22 @@ public class Serialize {
         String filePath = "Project\\src\\resources\\Requests\\" ;
         if (request instanceof AddAuctionRequest){
             serializeAddAuctionRequest((AddAuctionRequest) request,filePath + "AddAuctionRequests\\"
-                    + request.getRequestId()  + ".json");
+                    + "AA_"+ request.getRequestId()  + ".json");
         } else if (request instanceof AddCommentRequest){
             serializeAddCommentRequest((AddCommentRequest) request,filePath + "AddCommentRequests\\"
-                    + request.getRequestId()  + ".json");
+                    + "AC_"+ request.getRequestId()  + ".json");
         } else if (request instanceof AddItemRequest){
             serializeAddItemRequest((AddItemRequest) request,filePath + "AddItemRequests\\"
-                    + request.getRequestId()  + ".json");
+                    + "AI_"+ request.getRequestId()  + ".json");
         } else if (request instanceof AddSellerRequest){
             serializeAddSellerRequest((AddSellerRequest) request,filePath + "AddSellerRequests\\"
-                    + request.getRequestId()  + ".json");
+                    + "AS_"+ request.getRequestId()  + ".json");
         } else if (request instanceof EditAuctionRequest){
             serializeEditAuctionRequest((EditAuctionRequest) request,filePath + "EditAuctionRequest\\"
-                    + request.getRequestId()  + ".json");
+                    + "EA_"+ request.getRequestId()  + ".json");
         } else if (request instanceof EditProductRequest){
             serializeEditProductRequest((EditProductRequest) request,filePath + "EditProductRequests\\"
-                    + request.getRequestId()  + ".json");
+                    + "EP_"+ request.getRequestId()  + ".json");
         }
     }
 
@@ -123,7 +123,7 @@ public class Serialize {
     }
 
     public void serializeOrder(Order order) throws IOException {
-            String filePath = "Project\\src\\resources\\Orders\\" + "order_" + order.getOrderID() + ".json";
+            String filePath = "Project\\src\\resources\\Orders\\" + "Order_" + order.getOrderID() + ".json";
         if (order instanceof BuyerLog)
             WriteIntoFiles.writeIntoFile(yaGson.toJson(order, BuyerLog.class), filePath);
         else if (order instanceof SellerLog)
@@ -132,7 +132,7 @@ public class Serialize {
     }
 
     public void serializeItemOfOrder(ItemOfOrder itemOfOrder) throws IOException {
-        String filePath = "Project\\src\\resources\\ItemsOfOrders\\" + "item_" +itemOfOrder.getSeller().getUsername() + "_"
+        String filePath = "Project\\src\\resources\\ItemsOfOrders\\" + "IOO_" +itemOfOrder.getSeller().getUsername() + "_"
                 + itemOfOrder.getProduct().getProductId() + "_" + itemOfOrder.getDate() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(itemOfOrder, ItemOfOrder.class), filePath);
     }

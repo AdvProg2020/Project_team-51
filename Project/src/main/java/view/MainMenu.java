@@ -33,6 +33,7 @@ public class MainMenu extends Menu {
 
     @Override
     public void executeMenu() {
+        menusHistory.push(this);
         Menu nextMenu;
         int size = subMenus.size();
         while (true) {
@@ -45,7 +46,6 @@ public class MainMenu extends Menu {
             }
         }
 
-        menusHistory.push(this);
         nextMenu.showMenu();
         nextMenu.executeMenu();
     }

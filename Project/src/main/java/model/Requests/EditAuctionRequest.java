@@ -5,7 +5,8 @@ import model.Auction;
 import model.Product;
 import model.StatusStates;
 
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class EditAuctionRequest extends Request{
     private Auction auction;
@@ -28,14 +29,14 @@ public class EditAuctionRequest extends Request{
     }
 
     @Override
-    public void accept() throws InvalidProductIdException {
+    public void accept() throws InvalidProductIdException, ParseException {
 
         switch (field) {
             case "begin date":
-                auction.setBeginDate(Date.valueOf(value));
+                auction.setBeginDate(new SimpleDateFormat("dd//MM/yyyy").parse(value));
                 break;
             case "end date":
-                auction.setEndDate(Date.valueOf(value));
+                auction.setEndDate(new SimpleDateFormat("dd//MM/yyyy").parse(value));
                 break;
             case "off percentage":
                 auction.setOffPercentage(Integer.parseInt(value));
