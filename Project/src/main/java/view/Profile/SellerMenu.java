@@ -1,5 +1,6 @@
 package view.Profile;
 
+import control.Controller;
 import control.Exceptions.WrongFormatException;
 import control.SellerController;
 import view.AllPatterns;
@@ -12,9 +13,9 @@ public class SellerMenu extends Menu {
 
     private SellerController sellerController ;
 
-    public SellerMenu(Menu parentMenu ,SellerController sellerController) {
+    public SellerMenu(Menu parentMenu) {
         super("Seller Menu", parentMenu);
-        this.sellerController = sellerController;
+        this.sellerController = new SellerController(Controller.getCurrentAccount());
     }
 
     @Override
@@ -33,19 +34,19 @@ public class SellerMenu extends Menu {
         menusHistory.push(this);
         command = inputInFormat("Select option : " , MenusPattern.SELLER.getRegex());
         if (command.matches(AllPatterns.PERSONAL_INFO.getRegex())){
-            viewPersonalInfo();
+            viewPersonalInfo(); //done
         } else if (command.matches(AllPatterns.COMPANY_INFO.getRegex())){
-            viewCompanyInformation();
+            viewCompanyInformation(); //done
         } else if (command.matches(AllPatterns.SALES_HISTORY.getRegex())){
             viewSalesHistory();
         } else if (command.matches(AllPatterns.MANAGE_PRODUCTS.getRegex())){
             manageProducts();
         } else if (command.matches(AllPatterns.SHOW_CATEGORIES.getRegex())){
-            showCategories();
+            showCategories(); //done
         } else if (command.matches(AllPatterns.VIEW_OFFS.getRegex())){
             viewOffs();
         } else if (command.matches(AllPatterns.BALANCE.getRegex())){
-            viewSellerBalance();
+            viewSellerBalance(); //done
         } else if (command.matches(AllPatterns.BACK.getRegex())){
             back();
         } else if (command.matches(AllPatterns.LOGIN.getRegex())){
@@ -85,10 +86,12 @@ public class SellerMenu extends Menu {
 
     private void viewCompanyInformation() {
         System.out.println(sellerController.viewCompanyInfo());
+        command = inputInFormat("write Back in order to get back to last Menu : " , AllPatterns.BACK.getRegex());
     }
 
     private void viewSalesHistory() {
-        sellerController.showCategories().stream().forEach(System.out::println);
+        sellerController.viewSalesHistory().stream().forEach(System.out::println);
+        command = inputInFormat("write Back in order to get back to last Menu : " , AllPatterns.BACK.getRegex());
     }
 
     private void manageProducts() {
@@ -112,7 +115,7 @@ public class SellerMenu extends Menu {
     }
 
     private void showCategories(){
-
+        sellerController.showCategories().stream().forEach(System.out::println);
     }
 
     private void viewOffs(){
