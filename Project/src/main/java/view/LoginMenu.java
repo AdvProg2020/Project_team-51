@@ -18,23 +18,28 @@ public class LoginMenu extends Menu {
     }
     @Override
     public void showMenu() {
-        System.out.println("- Login");
-        System.out.println("- SignUp");
+        System.out.println("enter 1 for login\n2 for signup\n0 for back");
     }
 
     @Override
     public void executeMenu() {
-        command=inputInFormat("" , MenusPattern.LOGIN.getRegex());
-        if (command.matches(AllPatterns.LOGIN.getRegex())) login();
-        else if (command.matches(AllPatterns.SIGN_UP.getRegex())) signUp();
-        else if (command.matches(AllPatterns.BACK.getRegex())) back();
+        while (true) {
+            command = scanner.nextLine();
+            if (command.equals("0")) {
+                this.parentMenu.showMenu();
+                this.parentMenu.executeMenu();
+            }
+            else if (command.equals("1")) loginUser();
+            else if (command.equals("2")) signup ();
+        }
     }
 
-    public void login() {
+    public void loginUser() {
         String user,pass;
+        enterUsername();
     }
 
-    private void signUp() {
+    private void signup() {
         getType();
     }
 
@@ -195,7 +200,7 @@ public class LoginMenu extends Menu {
         try {
             if (!Controller.doesPasswordMatches(user,pass)) throw new InvalidPasswordException();
             Controller.setCurrentAccount(username);
-        // which menu should it open now ?
+// which menu should it open now ?
         }catch (Exception e){
             System.err.println(e.getMessage());
             enterPass();
