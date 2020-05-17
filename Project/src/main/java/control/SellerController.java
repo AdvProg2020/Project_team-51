@@ -81,13 +81,13 @@ public class SellerController extends Controller {
         return Product.getAllProducts().contains(Product.getProductById(productId));
     }
 
-    public static void editProduct(String productId, String field , String value , String description) throws InvalidProductIdException {
+    public static void editProduct(Product product, String field , String value ) {
 
-        var product = Product.getProductById(productId);
         if (currentAccount instanceof Seller){
             for (Map.Entry<Attributes, String> attribute : product.getAttributes().entrySet()) {
-                if (attribute.getKey().getField().equals(field)){
-                    new EditProductRequest(TokenGenerator.generateRequestId(),product,(Seller) currentAccount , field , value);
+                if (attribute.getKey().getField().equalsIgnoreCase(field)){
+                    new EditProductRequest(TokenGenerator.generateRequestId(),product,(Seller) currentAccount
+                            , field.toLowerCase() , value);
                 }
             }
         }

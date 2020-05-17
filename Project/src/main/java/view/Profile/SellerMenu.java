@@ -116,12 +116,15 @@ public class SellerMenu extends Menu {
         } else if (command.matches(AllPatterns.VIEW_BUYERS_PID.getRegex())){
             viewProductBuyers(command.split("\\s+")[2]); //done
         } else if (command.matches(AllPatterns.EDIT_PID.getRegex())){
-
+            editProduct(command.split("\\s+")[1]);
         } else if (command.matches(AllPatterns.BACK.getRegex())){
             back();
         } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
             logout();
         }
+
+        manageProducts();
+
     }
 
     private void viewProductBuyers(String id) {
@@ -151,6 +154,17 @@ public class SellerMenu extends Menu {
     }
 
     private void editProduct(String id) {
+        Product product ;
+        try {
+            product = Product.getProductById(id);
+        } catch (InvalidProductIdException e) {
+            System.out.println("invalid product id");
+            return;
+        }
+        System.out.println("Name\nPrice\nDescription\nQuantity");
+        String field = inputInFormat("select a option : " , "(?i)(name|price|description|quantity)");
+        String value = inputInFormat("Enter a value for selected field : " , "\\W+");
+        sellerController.editProduct(product,field,value);
 
     }
 
