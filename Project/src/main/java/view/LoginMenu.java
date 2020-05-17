@@ -3,39 +3,42 @@ package view;
 import control.Controller;
 import control.Exceptions.*;
 import control.ManagerController;
+import control.TokenGenerator;
 import model.People.Customer;
 import model.People.Manager;
 import model.People.Seller;
+import model.Requests.AddSellerRequest;
 
 import java.util.regex.Pattern;
 
 public class LoginMenu extends Menu {
+    private static final int MINIMUM_PASSWORD_LENGTH = 4 ;
     String type;
-    String username,password,phone,email,firstName,lastName,number,user,pass;
+    String username,password,email,firstName,lastName,number,user,pass;
 
     public LoginMenu(Menu parentMenu) {
         super("Login", parentMenu);
     }
     @Override
     public void showMenu() {
-        System.out.println("enter 1 for login\n2 for signup\n0 for back");
+        System.out.println("1.login\n2.signup\nback");
     }
 
     @Override
     public void executeMenu() {
         while (true) {
             command = scanner.nextLine();
-            if (command.equals("0")) {
+            if (command.equals("back")) {
                 this.parentMenu.showMenu();
                 this.parentMenu.executeMenu();
             }
             else if (command.equals("1")) loginUser();
             else if (command.equals("2")) signup ();
+            else System.err.println("wrong command");
         }
     }
 
     public void loginUser() {
-        String user,pass;
         enterUsername();
     }
 
@@ -50,14 +53,13 @@ public class LoginMenu extends Menu {
 
     public void getType (){
         try{
-            System.out.println("select account type :\n1.customer\n2.seller\n3.manager\n4.back");
-            if ((command = scanner.nextLine()).equalsIgnoreCase("4")) {
+            System.out.println("select account type :\n1.customer\n2.seller\n3.manager\nback");
+            if ((command = scanner.nextLine().trim()).equalsIgnoreCase("back")) {
             this.showMenu();
             this.executeMenu();
         }
             else if (command.equals("3")){
-                if (ManagerController.isHeAbleToCreateManger())type =  "manager";
-                else throw new Exception("you can't create manager");
+                if (ManagerController.isHeAbleToCreateManger()) type =  "manager";
     }
             else if (command.equals("2")) type = "seller";
             else if (command.equals("1")) type = "customer";
@@ -69,30 +71,28 @@ public class LoginMenu extends Menu {
         }
     }
 
-    public void getUsername () {
+    private void getUsername () {
         try{
             System.out.println("please enter username OR back");
-            if ((command = scanner.nextLine()).equalsIgnoreCase("back")) {
-                getType();
-            }
-            if (doesMatch("\\W+",command)) throw new WrongFormatException("username");
-            if (Manager.getAccountById(command)!=null) throw new UsernameAlreadyExistsException();
-            else username = command;
+            if ((command = scanner.nextLine().trim()).equalsIgnoreCase("back")) getType();
+            checkUsername(command);
+            username = command;
             getPassword();
         }catch (Exception e){
             System.err.println(e.getMessage());
             getUsername();
         }
     }
+    private void checkUsername (String string) throws Exception{
+        if (doesMatch("\\W",string)) throw new WrongFormatException("username");
+        Controller.isUserNameUsed(string);
+    }
 
-    public void getPassword (){
+    private void getPassword (){
         try {
             System.out.println("enter password OR back");
-            if ((command = scanner.nextLine()).equalsIgnoreCase("back")) {
-                getUsername();
-            }
-            if (doesMatch("\\W+",command)) throw new WrongFormatException("password");
-            if (command.length()<4) throw new WeakPasswordException();
+            if ((command = scanner.nextLine().trim()).equalsIgnoreCase("back")) getUsername();
+            checkPassword(command);
             password = command;
             getFirstName();
         }catch (Exception e){
@@ -100,14 +100,16 @@ public class LoginMenu extends Menu {
             getPassword();
         }
     }
+    private void checkPassword (String string) throws Exception {
+        if (doesMatch("\\W",string)) throw new WrongFormatException("password");
+        if (string.length()<MINIMUM_PASSWORD_LENGTH) throw new WeakPasswordException();
+    }
 
-    public void getFirstName(){
+    private void getFirstName(){
         try{
             System.out.println("please enter your name");
-            if ((command = scanner.nextLine()).equalsIgnoreCase("back")) {
-                getPassword();
-            }
-        if (doesMatch("\\W+",command)) throw new WrongFormatException("first name");
+            if ((command = scanner.nextLine().trim()).equalsIgnoreCase("back")) getPassword();
+            checkName(command);
         firstName = command;
         getLastName();
         }catch (Exception e){
@@ -115,13 +117,17 @@ public class LoginMenu extends Menu {
             getFirstName();
         }
     }
+    private void checkName (String s)throws Exception{
+        if (doesMatch("\\s\\s",s)) throw new WrongFormatException("name");
+        if (doesMatch("[^a-zA-Z ]",s)) throw new WrongFormatException("name");
+    }
 
-    public void getLastName(){
+    private void getLastName(){
         try{System.out.println("please enter your lastName");
-            if ((command = scanner.nextLine()).equalsIgnoreCase("back")) {
+            if ((command = scanner.nextLine().trim()).equalsIgnoreCase("back")) {
                 getFirstName();
             }
-            if (doesMatch("\\W+",command)) throw new WrongFormatException("last name");
+            checkName(command);
             lastName = command;
             getEmail();
         }catch (Exception e){
@@ -130,11 +136,11 @@ public class LoginMenu extends Menu {
         }
     }
 
-    public void getEmail(){
+    private void getEmail(){
         try{
             System.out.println("enter Email OR back");
-            if ((command = scanner.nextLine()).equalsIgnoreCase("back")) getLastName();
-            if (!doesMatch("\\w+@w+\\.w+",command)) throw new WrongFormatException("email");
+            if ((command = scanner.nextLine().trim()).equalsIgnoreCase("back")) getLastName();
+            checkEmail(command);
             email = command;
             getNumber();
         }catch (Exception e){
@@ -142,12 +148,16 @@ public class LoginMenu extends Menu {
             getEmail();
         }
     }
+    private void checkEmail (String s)throws Exception {
+        if (!doesMatch("\\w+@\\w+\\.\\w+",s)) throw new WrongFormatException("email");
+        Controller.isEmailUsed(s);
+    }
 
-    public void getNumber (){
+    private void getNumber (){
         try{
-            System.out.println("enter phone number OR back to cancel");
-            if ((command = scanner.nextLine()).equalsIgnoreCase("back")) getEmail();
-            if (doesMatch("\\D",command)) throw new WrongFormatException("phone number");
+            System.out.println("enter phone number OR back");
+            if ((command = scanner.nextLine().trim()).equalsIgnoreCase("back")) getEmail();
+            checkNumber(command);
             number = command;
             getBalance();
         }catch (Exception e){
@@ -155,18 +165,23 @@ public class LoginMenu extends Menu {
             getNumber();
         }
     }
+    private void checkNumber (String s) throws Exception{
+        if (doesMatch("\\D",s)) throw new WrongFormatException("phone number");
+        Controller.isNumberUsed(s);
+    }
 
-    public void getBalance(){
+    private void getBalance(){
         try{System.out.println("enter balance OR back");
-        if ((command = scanner.nextLine()).equalsIgnoreCase("back"))getNumber();
-        if (!doesMatch("^\\d+\\.\\d*$",command)) throw new WrongFormatException("balance amount");
+        if ((command = scanner.nextLine().trim()).equalsIgnoreCase("back"))getNumber();
+        checkBalance(command);
         double balance = Double.parseDouble(command);
         switch (type){
             case "customer" : new Customer(username,password,firstName,lastName,balance,email,number);
             case "seller" : {
                 System.out.println("please enter your brand name");
                 String brand = scanner.nextLine();
-                new Seller(username,password,firstName,lastName,balance,email,number,brand);
+                Seller selller = new Seller(username,password,firstName,lastName,balance,email,number,brand);
+                new AddSellerRequest(TokenGenerator.generateRequestId(),selller);
             }
             case "manager" : new Manager(username,password,firstName,lastName,balance,email,number);
         }
@@ -177,7 +192,12 @@ public class LoginMenu extends Menu {
         }
     }
 
-    public void enterUsername(){
+    private void checkBalance(String s) throws Exception{
+        if (!doesMatch("^\\d+\\.{0,1}\\d*$",s)) throw new WrongFormatException("balance amount");
+        if ((Double.valueOf(s)) < 0) throw new Exception("balance amount must be positive");
+    }
+
+    private void enterUsername(){
         System.out.println("please enter username OR back");
         if ((user=scanner.nextLine()).equalsIgnoreCase("back")) {
             this.showMenu();
@@ -191,8 +211,8 @@ public class LoginMenu extends Menu {
                 enterUsername();
             }
     }
-
-    public void enterPass (){
+// not completed
+    private void enterPass (){
         System.out.println("please enter password or back");
         if ((pass=scanner.nextLine()).equalsIgnoreCase("back")) {
             getUsername();
@@ -206,4 +226,6 @@ public class LoginMenu extends Menu {
             enterPass();
         }
     }
+
+
 }

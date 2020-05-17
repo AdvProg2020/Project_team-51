@@ -1,5 +1,6 @@
 package control;
 
+import control.Exceptions.NotAllowedActivityException;
 import model.Category;
 import model.OffCode;
 import model.People.Account;
@@ -59,9 +60,10 @@ public class ManagerController extends Controller {
         new Manager(info[0],info[1],info[2],info[3],Double.valueOf(info[4]),info[5],info[6]);
     }
 
-    public static Boolean isHeAbleToCreateManger(){
+    public static Boolean isHeAbleToCreateManger() throws Exception{
         if (currentAccount instanceof Manager) return true;
-        return !Account.doesManagerExist();
+        if (!Account.doesManagerExist()) return true;
+        throw new NotAllowedActivityException("only managers are able to create manager");
     }
 
     public static Boolean isThisPidValid(String productId){

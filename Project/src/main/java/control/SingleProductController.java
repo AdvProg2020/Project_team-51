@@ -78,7 +78,7 @@ public class SingleProductController extends Controller {
     public HashMap<String,String> compare(String productId) throws SameProductForComparisonException, InvalidProductIdException {
         var comparedProduct = Product.getProductById(productId);
         if (comparedProduct.equals(product))
-            throw new SameProductForComparisonException("You can't compare a product with itself !");
+            throw new SameProductForComparisonException();
         var comparisonHashMap = new HashMap<String,String>();
         for (Map.Entry<Attributes, String> attribute : product.getAttributes().entrySet()) {
             String comparedProductAttribute = getProductAttribute(attribute.getKey().getField(),comparedProduct);

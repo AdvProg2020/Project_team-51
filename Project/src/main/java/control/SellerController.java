@@ -87,7 +87,7 @@ public class SellerController extends Controller {
             throws InvalidAuctionIdException , InvalidFieldException {
 
         var auction = Auction.getAuctionById(auctionId);
-        if (auction==null) throw new InvalidAuctionIdException("Auction id is not correct !");
+        if (auction==null) throw new InvalidAuctionIdException();
 
         if (field.equalsIgnoreCase("begin date")){
             new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,"begin date",value);

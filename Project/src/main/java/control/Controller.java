@@ -1,7 +1,6 @@
 package control;
 
-import control.Exceptions.HaveNotLoggedInException;
-import control.Exceptions.WrongPasswordException;
+import control.Exceptions.*;
 import model.ItemOfOrder;
 import model.People.Account;
 import model.People.Customer;
@@ -79,7 +78,7 @@ public class Controller {
         if (currentAccount!=null)
             currentAccount = null;
         else {
-            throw new HaveNotLoggedInException("You Haven't Logged In To Logout !!");
+            throw new HaveNotLoggedInException();
         }
 
     }
@@ -90,5 +89,23 @@ public class Controller {
 
     public static void setCurrentAccount (String username){
         currentAccount = Manager.getAccountById(username);
+    }
+
+    public static void isEmailUsed (String Email) throws InvalidEmailException {
+        for (Account account : model.People.Account.getAllAccounts()){
+            if (account.getEmail().equalsIgnoreCase(Email)) throw new InvalidEmailException();
+        }
+    }
+
+    public static void isNumberUsed (String number)throws Exception{
+        for (Account account : model.People.Account.getAllAccounts()){
+            if (account.getPhoneNumber().equalsIgnoreCase(number)) throw new InvalidPhoneNumberException();
+        }
+    }
+
+    public static void isUserNameUsed (String username)throws Exception {
+        for (Account account : model.People.Account.getAllAccounts()){
+            if (account.getUsername().equalsIgnoreCase(username)) throw new InvalidUsernameException();
+        }
     }
 }
