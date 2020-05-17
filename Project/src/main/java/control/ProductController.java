@@ -1,7 +1,7 @@
 package control;
 
 import control.Exceptions.NoCategoriesFoundException;
-import control.Filters.Filter;
+import control.Filters.*;
 import model.Category;
 import model.FilterTypes;
 import model.People.Account;
@@ -10,24 +10,26 @@ import model.SortTypes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductController extends Controller {
 
 
-    private static Category category ;
-    private static ArrayList<FilterTypes> availableFilter =
+    private static Category category;
+    private static List<FilterTypes> availableFilter =
             new ArrayList<>(Arrays.stream(FilterTypes.values()).collect(Collectors.toList()));
-    private static ArrayList<FilterTypes> appliedFilters = new ArrayList<>();
-    private static SortTypes currentSort = SortTypes.VIEW_SORT ;
+    private static List<FilterTypes> appliedFilters = new ArrayList<>();
+    private static SortTypes currentSort = SortTypes.VIEW_SORT;
 
     public ProductController(Account currentAccount) {
         super(currentAccount);
     }
 
-    public static ArrayList<Product> showProductsOfThisCategory(Category category){
+    public static List<Product> showProductsOfThisCategory(Category category) {
 
-        ArrayList<Product> products;
+        List<Product> products;
+
         try {
             var subCategories = ProductController.getSubCategories(category);
             products = new ArrayList<>(category.getCategoryProducts());
@@ -38,28 +40,39 @@ public class ProductController extends Controller {
             return category.getCategoryProducts();
         }
 
-        return  products;
+        return products;
     }
 
-    public static ArrayList<String> viewCategories() {
-        return null;
+    public static List<String> showAvailableFilters() {
+        return availableFilter.stream().map(FilterTypes::getFilter)
+                .map(Filter::getName).collect(Collectors.toList());
     }
 
-    public static ArrayList<String> showAvailableFilters() {
-        return new ArrayList<>(availableFilter.stream().map(FilterTypes::getFilter)
-                .map(Filter::getName).collect(Collectors.toList()));
+    public static List<Product> filter(List<Product> products) {
+        List<Product> filteredProducts = new ArrayList<>();
+        for (FilterTypes filterType : appliedFilters) {
+            var filter = filterType.getFilter();
+            if (filter instanceof AvailabilityFilter) {
+                filteredProducts = filter.applyFilter(filteredProducts);
+            } else if (filter instanceof PriceRangeFilter) {
+                filteredProducts = filter.applyFilter(filteredProducts, PriceRangeFilter.getInstance().from,
+                        PriceRangeFilter.getInstance().to);
+            } else if (filter instanceof RateRangeFilter) {
+                filteredProducts = filter.applyFilter(filteredProducts, RateRangeFilter.getInstance().from,
+                        RateRangeFilter.getInstance().to);
+            } else if (filter instanceof CategoryFilter) {
+                filteredProducts = filter.applyFilter(filteredProducts, CategoryFilter.getInstance().acceptedCategories);
+            }
+        }
+        return filteredProducts;
     }
 
-    public static void applyFilter(String filter){
-
+    public static List<FilterTypes> currentFilters() {
+        return appliedFilters;
     }
 
-    public static ArrayList<String> currentFilters() {
-        return null;
-    }
-
-    public static void disableFilter(String filter){
-
+    public static void disableFilter(FilterTypes filter) {
+        appliedFilters.remove(filter);
     }
 
 
@@ -67,16 +80,16 @@ public class ProductController extends Controller {
         return null;
     }
 
-    public static void applySort(String sort){
-
+    public static void applySort(SortTypes sort) {
+        currentSort = sort;
     }
 
-    public static String currentSort(){
-        return null;
+    public static SortTypes currentSort() {
+        return currentSort;
     }
 
-    public static void disableSort(){
-
+    public static void disableSort() {
+        currentSort = SortTypes.VIEW_SORT;
     }
 
     public static ArrayList<String> showProducts() {
@@ -99,7 +112,7 @@ public class ProductController extends Controller {
         return currentSort;
     }
 
-    public static ArrayList<FilterTypes> getAppliedFilters() {
+    public static List<FilterTypes> getAppliedFilters() {
         return appliedFilters;
     }
 
@@ -107,26 +120,20 @@ public class ProductController extends Controller {
         appliedFilters.add(filter);
     }
 
-    public static void removeAppliedFilters(Filter filter) {
-        appliedFilters.remove(filter);
-    }
-
-    public static ArrayList<FilterTypes> getAvailableFilter() {
-        return availableFilter;
-    }
-
-    public static ArrayList<Category> getSubCategories(Category parentCategory) throws NoCategoriesFoundException {
-        ArrayList<Category> subCategories ;
+    public static List<Category> getSubCategories(Category parentCategory) throws NoCategoriesFoundException {
+        List<Category> subCategories;
         try {
-            subCategories = new ArrayList<>(Category.getAllCategories().stream().filter(c -> c.getParentCategory()
-                    .equals(parentCategory)).collect(Collectors.toList()));
-        } catch (NullPointerException e){
-            subCategories = null ;
+            subCategories = Category.getAllCategories().stream().filter(c -> c.getParentCategory()
+                    .equals(parentCategory)).collect(Collectors.toList());
+        } catch (NullPointerException e) {
+            subCategories = null;
         }
-        if (subCategories==null)
-            throw new NoCategoriesFoundException("There is no category");
+        if (subCategories == null)
+            throw new NoCategoriesFoundException("There is no category ! ");
         return subCategories;
     }
+
+
 
 
 }

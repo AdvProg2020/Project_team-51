@@ -1,7 +1,8 @@
 package control.Filters;
 
 import model.Product;
-import java.util.ArrayList;
+
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class AvailabilityFilter extends Filter {
@@ -13,8 +14,8 @@ public class AvailabilityFilter extends Filter {
     }
 
     @Override
-    public ArrayList<Product> applyFilter(ArrayList<Product> products) {
-        return new ArrayList<>(products.stream().filter(product -> product.getTotalQuantity()> 0).collect(Collectors.toList()));
+    public List<Product> applyFilter(List<Product> products) {
+        return products.stream().filter(product -> product.getTotalQuantity() > 0).collect(Collectors.toList());
     }
 
     public static AvailabilityFilter getInstance() {

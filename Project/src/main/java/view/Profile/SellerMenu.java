@@ -15,9 +15,9 @@ import model.Product;
 import model.Requests.AddAuctionRequest;
 import model.Requests.AddSellerForItemRequest;
 import model.Requests.EditAuctionRequest;
-import view.AllCommands;
+import view.Enums.AllCommands;
+import view.Enums.MenusPattern;
 import view.Menu;
-import view.MenusPattern;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.text.ParseException;

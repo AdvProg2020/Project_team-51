@@ -2,8 +2,8 @@ package control.Sorts;
 
 import model.Product;
 
-import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class NameSort extends Sort {
 
@@ -16,15 +16,15 @@ public class NameSort extends Sort {
     }
 
 
-    public ArrayList<Product> applyAscendingSort(ArrayList<Product> products) {
-        isAscending=true;
+    public List<Product> applyAscendingSort(List<Product> products) {
+        isAscending = true;
         products.sort(Comparator.comparing(Product::getName));
         return products;
     }
 
 
-    public ArrayList<Product> applyDescendingSort(ArrayList<Product> products) {
-        isAscending=false;
+    public List<Product> applyDescendingSort(List<Product> products) {
+        isAscending = false;
         products.sort(Comparator.comparing(Product::getName).reversed());
         return products;
     }
@@ -36,7 +36,7 @@ public class NameSort extends Sort {
     }
 
     @Override
-    public ArrayList<Product> applySort(ArrayList<Product> products, Boolean isAscending) {
+    public List<Product> applySort(List<Product> products, Boolean isAscending) {
         return isAscending ? applyAscendingSort(products) : applyDescendingSort(products);
     }
 }

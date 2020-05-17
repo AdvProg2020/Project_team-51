@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class ManagerController extends Controller {
@@ -21,7 +22,7 @@ public class ManagerController extends Controller {
     }
 
     public static Boolean isThisFieldValid(Product product,String field) {
-        return product.getAttributes().keySet().contains(field);
+        return product.getAttributes().containsKey(field);
     }
 
     public void editFirstName (String firstName) {
@@ -152,15 +153,15 @@ public class ManagerController extends Controller {
 
     public static void addCategory(String[] info){
         if (!(currentAccount instanceof Manager)) return;
-        Category newCategory = new Category(info[0],getCategoryByName(info[1]));
-        ArrayList <Category> allCategories = ((Manager) currentAccount).getAllCategories();
+        Category newCategory = new Category(info[0], getCategoryByName(info[1]));
+        List<Category> allCategories = ((Manager) currentAccount).getAllCategories();
         allCategories.add(newCategory);
         ((Manager) currentAccount).setAllCategories(allCategories);
     }
 
     public static void editCategory(Category category , ArrayList<Product> removeProducts
             , ArrayList <Product> addProducts, String name , Category parent) {
-        ArrayList <Product> products = category.getCategoryProducts();
+        List<Product> products = category.getCategoryProducts();
         products.removeAll(removeProducts);
         products.addAll(addProducts);
         if (name!=null) {
@@ -180,7 +181,7 @@ public class ManagerController extends Controller {
     public static void  removeCategory(String categoryName){
         Category category = getCategoryByName(categoryName);
         Manager manager = (Manager) currentAccount;
-        ArrayList <Category> allCategories = manager.getAllCategories();
+        List<Category> allCategories = manager.getAllCategories();
         allCategories.remove(getCategoryByName(categoryName));
         manager.setAllCategories(allCategories);
     }

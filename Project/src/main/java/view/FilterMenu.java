@@ -1,7 +1,10 @@
 package view;
 
+import control.Filters.Filter;
 import control.ProductController;
 import model.FilterTypes;
+import view.Enums.AllCommands;
+import view.Enums.MenusPattern;
 
 public class FilterMenu extends Menu {
 
@@ -38,17 +41,17 @@ public class FilterMenu extends Menu {
     }
 
     private void showAvailableFilters() {
-
         var availableFilters = ProductController.showAvailableFilters();
-        if (availableFilters!=null)
-        for (String availableFilter : availableFilters) {
-            System.out.println(availableFilter);
-        }
+        if (availableFilters != null)
+            for (String availableFilter : availableFilters) {
+                System.out.println(availableFilter);
+            }
 
     }
 
-    private void applyFilter(String filterType) {
-        ProductController.applyFilter(filterType);
+    private void applyFilter(String filterName) {
+        var filterType = Filter.getFilterType(filterName);
+        ProductController.addAppliedFilters(filterType);
     }
 
     private void currentFilters() {
@@ -58,7 +61,8 @@ public class FilterMenu extends Menu {
         }
     }
 
-    private void disableFilter(String filter) {
-        ProductController.disableFilter(filter);
+    private void disableFilter(String filterName) {
+        var filterType = Filter.getFilterType(filterName);
+        ProductController.disableFilter(filterType);
     }
 }

@@ -1,4 +1,4 @@
-package view;
+package view.Enums;
 
 public enum MenusPattern {
 

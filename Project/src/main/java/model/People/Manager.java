@@ -5,47 +5,48 @@ import model.OffCode;
 import model.Requests.Request;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Manager extends Account {
 
-    private static ArrayList<Request> allRequests = new ArrayList<Request>();
-    private static ArrayList<OffCode> availableOffCodes = new ArrayList<OffCode>();
-    private static ArrayList<Category> allCategories = new ArrayList<Category>();
+    private static List<Request> allRequests = new ArrayList<Request>();
+    private static List<OffCode> availableOffCodes = new ArrayList<OffCode>();
+    private static List<Category> allCategories = new ArrayList<Category>();
 
 
-    public Manager(String username,String password, String firstName, String lastName, Double balance, String email, String phoneNumber) {
-        super(username,password, firstName, lastName, balance, email, phoneNumber);
+    public Manager(String username, String password, String firstName, String lastName, Double balance, String email, String phoneNumber) {
+        super(username, password, firstName, lastName, balance, email, phoneNumber);
     }
 
-    public static ArrayList<Request> getAllRequests() {
+    public static List<Request> getAllRequests() {
         return allRequests;
     }
 
-    public void setAllRequests(ArrayList<Request> allRequests) {
-        this.allRequests = allRequests;
+    public void setAllRequests(List<Request> allRequests) {
+        Manager.allRequests = allRequests;
     }
 
-    public ArrayList<OffCode> getAvailableOffCodes() {
+    public List<OffCode> getAvailableOffCodes() {
         return availableOffCodes;
     }
 
-    public void setAvailableOffCodes(ArrayList<OffCode> availableOffCodes) {
-        this.availableOffCodes = availableOffCodes;
+    public void setAvailableOffCodes(List<OffCode> availableOffCodes) {
+        Manager.availableOffCodes = availableOffCodes;
     }
 
-    public ArrayList<Category> getAllCategories() {
+    public List<Category> getAllCategories() {
         return allCategories;
     }
 
-    public void setAllCategories(ArrayList<Category> allCategories) {
-        this.allCategories = allCategories;
+    public void setAllCategories(List<Category> allCategories) {
+        Manager.allCategories = allCategories;
     }
 
     public static void addManager(Manager manager) {
         allAccounts.add(manager);
     }
 
-    public static void addCategory(Category category){
+    public static void addCategory(Category category) {
         allCategories.add(category);
     }
 

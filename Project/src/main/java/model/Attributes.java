@@ -8,9 +8,10 @@ public class Attributes {
     private String field ;
     private Set<String> values = new HashSet<String>() ;
 
-    public Attributes(String field , String ... values) {
+    public Attributes(String field) {
         this.field = field;
     }
+
 
     public void addAttributeValue(String value){
         values.add(value);

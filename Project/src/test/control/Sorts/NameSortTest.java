@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -29,19 +30,19 @@ class NameSortTest {
 
     @Test
     void applyAscendingSort() {
-        ArrayList<Product> actual = nameSort.applySort(new ArrayList<>(Arrays.asList(p1,p2,p3,p4)),true);
-        ArrayList<Product> expected = new ArrayList<>(new ArrayList<>(Arrays.asList(p1,p3,p2,p4)));
+        List<Product> actual = nameSort.applySort(new ArrayList<>(Arrays.asList(p1, p2, p3, p4)), true);
+        List<Product> expected = new ArrayList<>(new ArrayList<>(Arrays.asList(p1, p3, p2, p4)));
         for (int i = 0; i < actual.size(); i++) {
-            assertEquals(expected.get(i),actual.get(i));
+            assertEquals(expected.get(i), actual.get(i));
         }
     }
 
     @Test
     void applyDescendingSort() {
-        ArrayList<Product> actual = nameSort.applySort(new ArrayList<>(Arrays.asList(p1,p2,p3,p4)),false);
-        ArrayList<Product> expected = new ArrayList<>(new ArrayList<>(Arrays.asList(p4,p2,p3,p1)));
+        List<Product> actual = nameSort.applySort(new ArrayList<>(Arrays.asList(p1, p2, p3, p4)), false);
+        List<Product> expected = new ArrayList<>(new ArrayList<>(Arrays.asList(p4, p2, p3, p1)));
         for (int i = 0; i < actual.size(); i++) {
-            assertEquals(expected.get(i),actual.get(i));
+            assertEquals(expected.get(i), actual.get(i));
         }
     }
 

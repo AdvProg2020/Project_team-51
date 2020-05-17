@@ -9,6 +9,8 @@ import control.SingleProductController;
 import model.Attributes;
 import model.Comment;
 import model.Product;
+import view.Enums.AllCommands;
+import view.Enums.MenusPattern;
 
 import java.util.HashMap;
 import java.util.Map;

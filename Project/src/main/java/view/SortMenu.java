@@ -3,6 +3,8 @@ package view;
 import control.ProductController;
 import control.Sorts.Sort;
 import model.SortTypes;
+import view.Enums.AllCommands;
+import view.Enums.MenusPattern;
 
 import java.util.Arrays;
 
@@ -45,13 +47,14 @@ public class SortMenu extends Menu {
         Arrays.stream(SortTypes.values()).map(SortTypes::getSort).map(Sort::getName).forEach(System.out::println);
     }
 
-    private void sort(String sort) {
+    private void sort(String sortName) {
+        var sort = Sort.getSortType(sortName);
         ProductController.applySort(sort);
     }
 
     private void currentSort() {
         var sort = ProductController.getCurrentSort().getSort();
-        System.out.println(sort.getName() + " → "  + ( sort.getAscending() ? "Ascending ↑" : "Descending ↓"));
+        System.out.println(sort.getName() + " → " + (sort.getAscending() ? "Ascending ↑" : "Descending ↓"));
     }
 
     private void disableSort() {

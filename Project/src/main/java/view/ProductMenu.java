@@ -5,23 +5,25 @@ import control.Exceptions.NoCategoriesFoundException;
 import control.ProductController;
 import model.Category;
 import model.Product;
+import view.Enums.AllCommands;
+import view.Enums.MenusPattern;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ProductMenu extends Menu {
 
     private Category category;
-    private ArrayList<Category> subCategories;
-    private ArrayList<Product> productsOfThisCategory = null ;
+    private List<Category> subCategories;
+    private List<Product> productsOfThisCategory = null;
 
-    public ProductMenu(Menu parentMenu , Category category) {
+    public ProductMenu(Menu parentMenu, Category category) {
         super("Products Menu", parentMenu);
-        this.category = category ;
-        if (category!=null){
+        this.category = category;
+        if (category != null) {
             try {
                 this.subCategories = ProductController.getSubCategories(category);
                 for (int i = 0; i < subCategories.size(); i++) {
-                    subMenus.put( (i+1) , new ProductMenu(this,subCategories.get(i)));
+                    subMenus.put((i + 1), new ProductMenu(this, subCategories.get(i)));
                 }
             } catch (NoCategoriesFoundException e) {
                 e.getMessage();
@@ -118,12 +120,12 @@ public class ProductMenu extends Menu {
         }
     }
 
-    private void listCategories(ArrayList<Category> categories) {
-        if (categories==null)
+    private void listCategories(List<Category> categories) {
+        if (categories == null)
             System.out.println("There is no categories !");
         else {
             for (int i = 0; i < categories.size(); i++) {
-                System.out.println((i+1) + ". " + categories.get(i).getName());
+                System.out.println((i + 1) + ". " + categories.get(i).getName());
             }
         }
     }
