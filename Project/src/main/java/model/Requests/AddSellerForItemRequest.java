@@ -30,15 +30,9 @@ public class AddSellerForItemRequest extends Request {
 
     @Override
     public void accept() throws InvalidProductIdException {
-
-//        var product = Product.getProductById(this.product.getProductId()) ;
 //
-//        if (product != null)
-//            this.product.addSellerForThisProduct(seller);
-//
-//        seller.addAvailableProduct(this.product);
-//        status.setState(StatusStates.APPROVED);
-//        this.product.setStatus(new Status(StatusStates.APPROVED));
+//        product.setQuantity(quantity);
+//        product.setPrice();
 
     }
 }

@@ -79,6 +79,10 @@ public class Deserialize {
         Request.addRequest(yaGson.fromJson(serializedObject , EditProductRequest.class));
     }
 
+    public void deserializeAddSellerForItemRequests(String serializedObject) throws IOException {
+        Request.addRequest(yaGson.fromJson(serializedObject , AddSellerForItemRequest.class));
+    }
+
     public void deserializeOrders(String serializedObject) throws IOException {
         Order.addOrder(yaGson.fromJson(serializedObject , Order.class));
     }
