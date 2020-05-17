@@ -126,4 +126,15 @@ public abstract class Menu {
             System.out.println("Invalid Input : Please Enter A Valid Number");
         }
     }
+
+    public double getOptionWithRangeDouble(double from , double to){
+        String input;
+        while (true) {
+            input = scanner.nextLine();
+            if (Pattern.matches("[1-9][0-9]*(\\.[0-9]+)?", input))
+                if (Double.parseDouble(input) >= from && Double.parseDouble(input) <= to)
+                    return Double.parseDouble(input);
+            System.out.println("Invalid Input : Please Enter A Valid Number");
+        }
+    }
 }

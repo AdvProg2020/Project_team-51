@@ -10,6 +10,7 @@ import model.Auction;
 import model.People.Seller;
 import model.Product;
 import model.Requests.AddAuctionRequest;
+import model.Requests.AddSellerForItemRequest;
 import model.Requests.EditAuctionRequest;
 import view.AllPatterns;
 import view.Menu;
@@ -199,7 +200,21 @@ public class SellerMenu extends Menu {
     }
 
     private void addExistedProduct(){
+        Product product ;
+        String id = inputInFormat("Please enter the product Id : " , "\\w+");
+        try {
+            product = Product.getProductById(id);
+        } catch (InvalidProductIdException e) {
+            System.out.println("invalid product id");
+            return;
+        }
+        System.out.println("Enter Quantity : ");
+        int quantity = getOptionWithRange(0 , Integer.MAX_VALUE);
+        System.out.println("Enter Price : ");
+        double price = getOptionWithRangeDouble(0.00 , Double.MAX_VALUE);
 
+        new AddSellerForItemRequest(TokenGenerator.generateRequestId(),product,
+                                    (Seller)Controller.getCurrentAccount(), quantity,price);
     }
 
     private void addNewProduct(){
