@@ -2,13 +2,24 @@ package view.Profile;
 
 import control.Controller;
 import control.Exceptions.InvalidAuctionIdException;
+import control.Exceptions.InvalidProductIdException;
 import control.Exceptions.WrongFormatException;
 import control.SellerController;
+import control.TokenGenerator;
+import model.Auction;
+import model.People.Seller;
+import model.Product;
+import model.Requests.AddAuctionRequest;
 import view.AllPatterns;
 import view.Menu;
 import view.MenusPattern;
 
 import javax.management.InstanceAlreadyExistsException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.regex.Pattern;
 
 public class SellerMenu extends Menu {
 
@@ -94,7 +105,7 @@ public class SellerMenu extends Menu {
     }
 
     private void manageProducts() {
-        
+
     }
 
     private void viewProductBuyers(String id) {
@@ -132,7 +143,7 @@ public class SellerMenu extends Menu {
                                                                                          "edit\\s+(\\w+)|view\\s+(\\w+))");
                 if (command.matches("(?i)add\\s+off")){
                     addOff();
-                } else if (command.matches("(?i)edit\\s+(\\w+)")){
+                } else if (command.matches("(?i)edit")){
                     editOffAttribute(this );
                 } else if (command.matches("(?i)view\\s+(\\w+)")){
                     viewOffById(command.split("\\s+")[1]);
@@ -159,13 +170,73 @@ public class SellerMenu extends Menu {
 
     }
 
+    // Seller seller ,Date beginDate, Date endDate, ArrayList<Product> appliedProducts, int offPercentage
     private void addOff(){
-
+        var seller = (Seller)Controller.getCurrentAccount();
+        Date beginDate = getBeginDate();
+        Date endDate = getEndDate(beginDate);
+        ArrayList<Product> appliedProducts = new ArrayList<>(getAppliedProducts());
+        int offPercentage = getOffPercentage();
+        new AddAuctionRequest(TokenGenerator.generateRequestId(),
+                              new Auction(seller,beginDate,endDate,
+                              appliedProducts,offPercentage),seller);
     }
+
+    private int getOffPercentage(){
+        String input;
+        while (true) {
+            input = scanner.nextLine();
+            if (Pattern.matches("[1-9][0-9]*", input))
+                if (Integer.parseInt(input) >= 1 && Integer.parseInt(input) <= 99)
+                    return Integer.parseInt(input);
+            System.out.println("Invalid Input : Please Enter A Valid Number From 1 To 99 ! ");
+        }
+    }
+
+    private ArrayList<Product> getAppliedProducts(){
+        String productId = "" ;
+        ArrayList<Product> appliedProducts = new ArrayList<>();
+        while (!(productId=scanner.nextLine()).equalsIgnoreCase("end")){
+            try {
+                var product = Product.getProductById(productId);
+                appliedProducts.add(product);
+            } catch (InvalidProductIdException e) {
+                System.out.println("Invalid PID !");
+            }
+        }
+
+        return appliedProducts;
+    }
+
+    private Date getBeginDate(){
+        try {
+            return new SimpleDateFormat("dd//MM/yyyy").parse(inputInFormat("Enter Begin Date in format (dd/mm/yyyy) : "
+                    , "\\d\\d/\\d\\d/\\d\\d\\d\\d"));
+        } catch (ParseException e) {
+            System.out.println("invalid date");
+            getBeginDate();
+        }
+        return null;
+    }
+
+    private Date getEndDate(Date begin) {
+        try {
+            var date = new SimpleDateFormat("dd//MM/yyyy").parse(inputInFormat("Enter Begin Date in format (dd/mm/yyyy) : "
+                    , "\\d\\d/\\d\\d/\\d\\d\\d\\d"));
+            if (date.compareTo(begin) > 0)
+                return date;
+            else
+                getEndDate(begin);
+            } catch(ParseException e){
+                System.out.println("invalid date");
+                getEndDate(begin);
+            }
+            return null;
+        }
 
     private void viewSellerBalance(){
         System.out.println(sellerController.getBalance() + " $");
-    }
+     }
 
     private void editPersonalInfoField(Menu parent){
         var editPersonalInfo = new Menu("Edit Personal Info " , parent){
