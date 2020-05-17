@@ -5,7 +5,8 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        new Build();
+        Thread thread = new Thread(new Build());
+        thread.start();
         new MainMenu();
     }
 }

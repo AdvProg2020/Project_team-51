@@ -192,6 +192,7 @@ public class LoginMenu extends Menu {
         }
     }
 
+
     private void checkBalance(String s) throws Exception{
         if (!doesMatch("^\\d+\\.{0,1}\\d*$",s)) throw new WrongFormatException("balance amount");
         if ((Double.valueOf(s)) < 0) throw new Exception("balance amount must be positive");

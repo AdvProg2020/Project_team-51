@@ -3,10 +3,7 @@ package view;
 import control.Controller;
 import control.Exceptions.HaveNotLoggedInException;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +14,7 @@ public abstract class Menu {
     public static String command = "";
     private String name ;
     protected Menu parentMenu ;
-    protected HashMap<Integer,Menu> subMenus = new HashMap<>();
+    protected Map<Integer,Menu> subMenus = new LinkedHashMap<>();
 
 
     public Menu(String name, Menu parentMenu) {

@@ -34,16 +34,14 @@ public class MainMenu extends Menu {
     @Override
     public void executeMenu() {
         menusHistory.push(this);
-        Menu nextMenu;
+        Menu nextMenu = null;
         int size = subMenus.size();
-        while (true) {
-            int option = getOption();
-            if (option == (size+1))
-                System.exit(0);
-            if (option <= size) {
-                nextMenu = subMenus.get(option);
-                break;
-            }
+        int option = getOptionWithRange(1,size+1);
+
+        if (option == (size+1))
+          System.exit(0);
+        else if (option <= size) {
+          nextMenu = subMenus.get(option);
         }
 
 
