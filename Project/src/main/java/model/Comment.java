@@ -10,10 +10,10 @@ public class Comment {
     private Product product;
     private String title ;
     private String context ;
-    private StatusStates commentStatus;
+    private Status commentStatus;
     private Boolean isBuyer;
 
-    public Comment(Account account, Product product, String context , String title , StatusStates commentStatus, Boolean isBuyer) {
+    public Comment(Account account, Product product, String context , String title , Status commentStatus, Boolean isBuyer) {
         this.account = account;
         this.product = product;
         this.context = context;
@@ -47,11 +47,11 @@ public class Comment {
         this.context = context;
     }
 
-    public StatusStates getCommentStatus() {
+    public Status getCommentStatus() {
         return commentStatus;
     }
 
-    public void setCommentStatus(StatusStates commentStatus) {
+    public void setCommentStatus(Status commentStatus) {
         this.commentStatus = commentStatus;
     }
 

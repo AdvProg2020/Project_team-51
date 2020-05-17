@@ -2,7 +2,7 @@ package model.Requests;
 
 import model.People.Account;
 import model.People.Seller;
-import model.StatusStates;
+import model.Status;
 
 public class AddSellerRequest extends Request {
 
@@ -24,7 +24,7 @@ public class AddSellerRequest extends Request {
     @Override
     public void accept() {
         Account.addSeller(seller);
-        status=(StatusStates.APPROVED);
-        seller.setStatus(StatusStates.APPROVED);
+        status=(Status.APPROVED);
+        seller.setStatus(Status.APPROVED);
     }
 }

@@ -14,7 +14,7 @@ public class Auction {
     private Date endDate;
     private ArrayList<Product> appliedProducts = new ArrayList<Product>();
     private int offPercentage;
-    private StatusStates auctionStatus ;
+    private Status auctionStatus ;
 
     public Auction(Seller seller ,Date beginDate, Date endDate, ArrayList<Product> appliedProducts, int offPercentage) {
         this.seller=seller;
@@ -22,7 +22,7 @@ public class Auction {
         this.endDate = endDate;
         this.appliedProducts = appliedProducts;
         this.offPercentage = offPercentage;
-        this.auctionStatus = StatusStates.PENDING_CREATE;
+        this.auctionStatus = Status.PENDING_CREATE;
         allAuctions.add(this);
     }
 
@@ -74,11 +74,11 @@ public class Auction {
         this.offPercentage = offPercentage;
     }
 
-    public StatusStates getAuctionStatus() {
+    public Status getAuctionStatus() {
         return auctionStatus;
     }
 
-    public void setAuctionStatus(StatusStates auctionStatus) {
+    public void setAuctionStatus(Status auctionStatus) {
         this.auctionStatus = auctionStatus;
     }
 

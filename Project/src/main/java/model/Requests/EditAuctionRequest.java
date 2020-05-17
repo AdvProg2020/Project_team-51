@@ -3,7 +3,7 @@ package model.Requests;
 import control.Exceptions.InvalidProductIdException;
 import model.Auction;
 import model.Product;
-import model.StatusStates;
+import model.Status;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,6 +49,6 @@ public class EditAuctionRequest extends Request{
                 break;
         }
 
-        status=StatusStates.APPROVED;
+        status= Status.APPROVED;
     }
 }

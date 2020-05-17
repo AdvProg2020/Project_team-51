@@ -13,7 +13,7 @@ public class Product {
     private static ArrayList<Product> allProducts = new ArrayList<Product>();
     private String productId;
     private ArrayList<Seller> sellersForThisProduct = new ArrayList<Seller>();
-    private Map<Seller,StatusStates> status;
+    private Map<Seller, Status> status;
     private String name;
     private String brandName;
     private Map<Seller,Double> price = new HashMap<>();
@@ -37,7 +37,7 @@ public class Product {
         this.parentCategory = parentCategory;
         this.description = description;
         this.attributes=attributes;
-        this.status.putIfAbsent(seller,StatusStates.PENDING_CREATE);
+        this.status.putIfAbsent(seller, Status.PENDING_CREATE);
         sellersForThisProduct.add(seller);
         allProducts.add(this);
         views = 0 ;
@@ -80,11 +80,11 @@ public class Product {
         sellersForThisProduct.add(seller);
     }
 
-    public Map<Seller,StatusStates> getStatus() {
+    public Map<Seller, Status> getStatus() {
         return status;
     }
 
-    public void setStatus(StatusStates status , Seller seller) {
+    public void setStatus(Status status , Seller seller) {
         this.status.replace(seller,status);
     }
 

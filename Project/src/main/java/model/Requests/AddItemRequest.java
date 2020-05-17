@@ -3,7 +3,7 @@ package model.Requests;
 import control.Exceptions.InvalidProductIdException;
 import model.People.Seller;
 import model.Product;
-import model.StatusStates;
+import model.Status;
 
 public class AddItemRequest extends Request {
 
@@ -33,8 +33,8 @@ public class AddItemRequest extends Request {
             this.product.addSellerForThisProduct(seller);
 
         seller.addAvailableProduct(this.product);
-        status=StatusStates.APPROVED;
-        this.product.setStatus(StatusStates.APPROVED,seller);
+        status= Status.APPROVED;
+        this.product.setStatus(Status.APPROVED,seller);
 
     }
 }

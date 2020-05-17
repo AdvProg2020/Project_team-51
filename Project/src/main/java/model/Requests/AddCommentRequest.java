@@ -1,7 +1,7 @@
 package model.Requests;
 
 import model.Comment;
-import model.StatusStates;
+import model.Status;
 
 public class AddCommentRequest extends Request{
 
@@ -23,7 +23,7 @@ public class AddCommentRequest extends Request{
     @Override
     public void accept() {
         comment.getProduct().addComment(comment);
-        this.status=StatusStates.APPROVED;
-        comment.setCommentStatus(StatusStates.APPROVED);
+        this.status= Status.APPROVED;
+        comment.setCommentStatus(Status.APPROVED);
     }
 }

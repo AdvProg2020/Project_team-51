@@ -2,7 +2,7 @@ package model.Requests;
 
 import model.People.Seller;
 import model.Product;
-import model.StatusStates;
+import model.Status;
 
 public class EditProductRequest extends Request {
 
@@ -50,6 +50,6 @@ public class EditProductRequest extends Request {
                 break;
         }
 
-        status=StatusStates.APPROVED;
+        status= Status.APPROVED;
     }
 }
