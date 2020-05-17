@@ -40,6 +40,11 @@ public enum AllPatterns {
     EMAIL("(?i)email"),
     PHONE("(?i)phone"),
     BRAND("(?i)brand"),
+    ADD_PRODUCT("(?i)add\\s+product"),
+    REMOVE_PRODUCT("(?i)remove\\s+product"),
+    VIEW_PID("(?i)view\\s+(\\w+)"),
+    VIEW_BUYERS_PID("(?i)view\\s+(\\w+)"),
+    EDIT_PID("(?i)edit\\s+(\\w+)"),
     ;
 
     private String regex ;

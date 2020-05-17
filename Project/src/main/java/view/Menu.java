@@ -114,4 +114,16 @@ public abstract class Menu {
             login.executeMenu();
         }
     }
+
+
+    public int getOptionWithRange(int from , int to){
+        String input;
+        while (true) {
+            input = scanner.nextLine();
+            if (Pattern.matches("[1-9][0-9]*", input))
+                if (Integer.parseInt(input) >= from && Integer.parseInt(input) <= to)
+                    return Integer.parseInt(input);
+            System.out.println("Invalid Input : Please Enter A Valid Number");
+        }
+    }
 }

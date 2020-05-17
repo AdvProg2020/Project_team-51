@@ -1,9 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class Category {
 
@@ -12,7 +9,7 @@ public class Category {
     private Map<Integer,Category> subCategories = new HashMap<Integer, Category>();
     private Category parentCategory;
     private ArrayList<Product> categoryProducts = new ArrayList<Product>();
-    private HashMap<String,Attributes> attributes= new HashMap<String, Attributes>();
+    private List<Attributes> attributes= new ArrayList<>();
 
     public Category(String name, Category parentCategory) {
         this.name = name;

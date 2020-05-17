@@ -2,7 +2,9 @@ package control;
 
 import control.Exceptions.*;
 import model.*;
+import model.OrderLog.SellerLog;
 import model.People.Account;
+import model.People.Customer;
 import model.People.Seller;
 import model.Requests.AddAuctionRequest;
 import model.Requests.AddItemRequest;
@@ -72,7 +74,9 @@ public class SellerController extends Controller {
                 .collect(Collectors.toList());
     }
 
-
+    public List<String> showSellersProducts(){
+        return ((Seller)currentAccount).getAvailableProducts().stream().map(Product::toString).collect(Collectors.toList());
+    }
     public static Boolean isThisPidValid(String productId) throws InvalidProductIdException {
         return Product.getAllProducts().contains(Product.getProductById(productId));
     }
@@ -135,6 +139,11 @@ public class SellerController extends Controller {
             throw new NotAllowedActivityException("You are not allowed to add Auction");
     }
 
+    public String showProductDetails(Product product){
+        var productController = new SingleProductController(currentAccount,product);
+        return productController.digest();
+    }
+
     public List<String> viewSalesHistory(){
         return ((Seller)currentAccount).getHistoryOfSells().stream().map(s -> { StringBuilder builder = new StringBuilder("");
                                                                     builder.append("order Id : " + s.getOrderID() + "\n"
@@ -147,6 +156,15 @@ public class SellerController extends Controller {
                                                                     .collect(Collectors.toList());
     }
 
+    public List<String> viewProductBuyers(Product product){
+        return ((Seller)currentAccount).getHistoryOfSells().stream()
+                .filter( a -> a.getItems().stream().map(b-> (b.getProduct())).equals(product))
+                .map(SellerLog::getBuyer)
+                .distinct()
+                .map(Customer::getUsername)
+                .collect(Collectors.toList());
+    }
+
     public List<String> viewOffs () {
         return ((Seller) currentAccount).getAllAuctions().stream().map(a -> { StringBuilder builder = new StringBuilder("");
                                                                              builder.append("ID : " + a.getAuctionId() +
@@ -156,6 +174,7 @@ public class SellerController extends Controller {
                                                                               return builder.toString(); })
                                                                               .collect(Collectors.toList());
     }
+
     public String viewPersonalInfo(){
         Seller seller = (Seller) currentAccount ;
         return seller.getUsername() + "\n" +

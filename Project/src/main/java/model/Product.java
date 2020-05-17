@@ -15,7 +15,7 @@ public class Product {
     private String name;
     private String brandName;
     private Double price;
-    private Integer quantity;
+    private int quantity;
     private Category parentCategory;
     private String description;
     private HashMap<Attributes , String> attributes= new HashMap<>();
@@ -25,7 +25,7 @@ public class Product {
 
 
     public Product(String productId, String name, String brandName,
-                   Double price,Seller seller , Integer quantity, Category parentCategory, String description) {
+                   Double price,Seller seller , int quantity, Category parentCategory, String description) {
         this.productId = productId;
         this.name = name;
         this.brandName = brandName;
@@ -170,6 +170,12 @@ public class Product {
         allProducts.add(product);
     }
 
-
-
+    @Override
+    public String toString() {
+        return "productId : " + productId + '\'' +
+                " ,name : " + name + '\'' +
+                " ,price : " + price +
+                " ,rate : " + this.averageRate() +
+                " ,quantity : " + quantity ;
+    }
 }

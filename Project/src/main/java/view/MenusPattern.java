@@ -11,10 +11,10 @@ public enum MenusPattern {
     AUCTION(menuPatternBuilder(AllPatterns.SHOW_PRODUCT,AllPatterns.OFFS)),
     LOGIN(menuPatternBuilder(AllPatterns.LOGIN,AllPatterns.SIGN_UP)),
     SELLER(menuPatternBuilder(AllPatterns.PERSONAL_INFO,AllPatterns.COMPANY_INFO,AllPatterns.MANAGE_PRODUCTS,AllPatterns.SALES_HISTORY,
-           AllPatterns.BALANCE,AllPatterns.SHOW_CATEGORIES,AllPatterns.VIEW_OFFS )),
+           AllPatterns.BALANCE,AllPatterns.SHOW_CATEGORIES,AllPatterns.VIEW_OFFS,AllPatterns.ADD_PRODUCT,AllPatterns.REMOVE_PRODUCT )),
     SELLER_PERSONAL_INFO(menuPatternBuilder(AllPatterns.EDIT_PERSONAL_INFO)),
-    EDIT_SELLER_PERSONAL_INFO(menuPatternBuilder(AllPatterns.FIRST_NAME,AllPatterns.LAST_NAME,AllPatterns.EMAIL,AllPatterns.PHONE,AllPatterns.BRAND));
-
+    EDIT_SELLER_PERSONAL_INFO(menuPatternBuilder(AllPatterns.FIRST_NAME,AllPatterns.LAST_NAME,AllPatterns.EMAIL,AllPatterns.PHONE,AllPatterns.BRAND)),
+    MANAGE_PRODUCTS(menuPatternBuilder(AllPatterns.VIEW_PID,AllPatterns.VIEW_BUYERS_PID,AllPatterns.EDIT_PID));
     ;
     private String regex ;
 

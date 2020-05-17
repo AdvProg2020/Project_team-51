@@ -40,6 +40,8 @@ public class SellerMenu extends Menu {
         System.out.println("- Show Categories");
         System.out.println("- View Offs");
         System.out.println("- Balance");
+        System.out.println("- Add Product");
+        System.out.println("- Remove Product");
     }
 
     @Override
@@ -106,11 +108,46 @@ public class SellerMenu extends Menu {
     }
 
     private void manageProducts() {
+        sellerController.showSellersProducts().stream().forEach(System.out::println);
+        command = inputInFormat("You Can View a Product Info,Buyers or Edit it: ",
+                                MenusPattern.MANAGE_PRODUCTS.getRegex());
+        if (command.matches(AllPatterns.VIEW_PID.getRegex())){
+            viwProductDetails(command.split("\\s+")[1]); //done
+        } else if (command.matches(AllPatterns.VIEW_BUYERS_PID.getRegex())){
+            viewProductBuyers(command.split("\\s+")[2]); //done
+        } else if (command.matches(AllPatterns.EDIT_PID.getRegex())){
 
+        } else if (command.matches(AllPatterns.BACK.getRegex())){
+            back();
+        } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+            logout();
+        }
     }
 
     private void viewProductBuyers(String id) {
 
+        Product product ;
+        try {
+            product = Product.getProductById(id);
+        } catch (InvalidProductIdException e) {
+            System.out.println("invalid product id");
+            return;
+        }
+
+        sellerController.viewProductBuyers(product).forEach(System.out::println);
+    }
+
+    private void viwProductDetails(String id){
+
+        Product product ;
+        try {
+            product = Product.getProductById(id);
+        } catch (InvalidProductIdException e) {
+            System.out.println("invalid product id");
+            return;
+        }
+
+        System.out.println(sellerController.showProductDetails(product));
     }
 
     private void editProduct(String id) {
@@ -121,7 +158,7 @@ public class SellerMenu extends Menu {
 
     }
 
-    private void deleteProduct(String id) {
+    private void removeProduct(String id) {
 
     }
 
@@ -131,7 +168,7 @@ public class SellerMenu extends Menu {
 
     private void viewOffs(Menu parent){
         sellerController.viewOffs().stream().forEach(System.out::println);
-        var offsMenu = new Menu("Offs Menu in Seller Account : " , parent){
+        var offsMenu = new Menu("Offs Manager Menu" , parent){
 
             @Override
             public void showMenu() {
@@ -145,7 +182,7 @@ public class SellerMenu extends Menu {
                 if (command.matches("(?i)add\\s+off")){
                     addOff(); // done
                 } else if (command.matches("(?i)edit")){
-                    editOffAttribute(this );
+                    editOffAttribute(this ); //done
                 } else if (command.matches("(?i)view\\s+(\\w+)")){
                     viewOffById(command.split("\\s+")[1]); //done
                 } else if (command.matches(AllPatterns.BACK.getRegex())){
@@ -216,8 +253,6 @@ public class SellerMenu extends Menu {
                 "(?i)(begin\\s+date|end\\s+date|off\\+percentage|add\\s+product|remove\\s+product)", "Invalid Format");
     }
 
-
-
     private Auction getAuctionToEdit(){
 
         command = inputInFormatWithError("Enter Auction Id you want to edit  :" , "AUC_\\d{5}"  , "Invalid Format");
@@ -227,7 +262,6 @@ public class SellerMenu extends Menu {
 
     }
 
-    // Seller seller ,Date beginDate, Date endDate, ArrayList<Product> appliedProducts, int offPercentage
     private void addOff(){
         var seller = (Seller)Controller.getCurrentAccount();
         Date beginDate = getBeginDate();
@@ -272,8 +306,6 @@ public class SellerMenu extends Menu {
     private String getEndDateForEdit(){
         return inputInFormat("Enter End Date in format (dd/mm/yyyy) : ", "\\d\\d/\\d\\d/\\d\\d\\d\\d");
     }
-
-
 
     private Date getBeginDate(){
         try {
@@ -411,9 +443,5 @@ public class SellerMenu extends Menu {
             getBrand();
         }
     }
-
-
-
-
 
 }
