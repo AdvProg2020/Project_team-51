@@ -21,7 +21,7 @@ public class ProductPageMenu extends Menu {
     public ProductPageMenu(Menu parentMenu , Product product) {
         super("Product Page", parentMenu);
         this.product=product;
-        this.singleProductController = new SingleProductController(Controller.getCurrentAccount());
+        this.singleProductController = new SingleProductController(Controller.getCurrentAccount() , product);
         this.singleProductController.setProduct(product);
     }
 
