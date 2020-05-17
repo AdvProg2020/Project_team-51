@@ -115,12 +115,12 @@ public class SellerMenu extends Menu {
     }
 
     private void viewSalesHistory() {
-        sellerController.viewSalesHistory().stream().forEach(System.out::println);
+        sellerController.viewSalesHistory().forEach(System.out::println);
         command = inputInFormat("write Back in order to get back to last Menu : " , AllPatterns.BACK.getRegex());
     }
 
     private void manageProducts() {
-        sellerController.showSellersProducts().stream().forEach(System.out::println);
+        sellerController.showSellersProducts().forEach(System.out::println);
         command = inputInFormat("You Can View a Product Info,Buyers or Edit it: ",
                                 MenusPattern.MANAGE_PRODUCTS.getRegex());
         if (command.matches(AllPatterns.VIEW_PID.getRegex())){
@@ -176,12 +176,12 @@ public class SellerMenu extends Menu {
         System.out.println("Name\nPrice\nDescription\nQuantity");
         String field = inputInFormat("select a option : " , "(?i)(name|price|description|quantity)");
         String value = inputInFormat("Enter a value for selected field : " , "\\W+");
-        sellerController.editProduct(product,field,value);
+        SellerController.editProduct(product,field,value);
 
     }
 
     private void addProduct(Menu parent) {
-        var addProductMenu = new Menu("Add Product Menu : " , this){
+        var addProductMenu = new Menu("Add Product Menu : " , parent){
 
             @Override
             public void showMenu() {
@@ -202,6 +202,7 @@ public class SellerMenu extends Menu {
                     logout();
                 }
 
+                this.executeMenu();
             }
         };
         addProductMenu.showMenu();
@@ -235,7 +236,6 @@ public class SellerMenu extends Menu {
 
     private void addNewProduct(){
         var categories = sellerController.listCategories();
-        System.out.println("");
         String name = inputInFormat("Enter the name of product : " , "\\w+");
         String brand = inputInFormat("Enter the name of product : " , "\\w+");
         showCategories(categories);
@@ -261,9 +261,9 @@ public class SellerMenu extends Menu {
     private Map<Attributes,String> getAttributesToAddProduct(Category parentCategory){
         return parentCategory.getAttributes().stream()
                 .peek(System.out::println)
-                .collect(Collectors.toMap(Function.identity(),a-> { return inputInFormat(
+                .collect(Collectors.toMap(Function.identity(),a-> inputInFormat(
                                                                     "Please enter a value for field : ",
-                                                                    "\\w+");}));
+                                                                    "\\w+")));
     }
 
     private void removeProduct(String id) {
@@ -278,16 +278,12 @@ public class SellerMenu extends Menu {
     }
 
     private void showCategories(){
-        sellerController.showCategories().stream().forEach(System.out::println);
+        sellerController.showCategories().forEach(System.out::println);
     }
 
     private void viewOffs(Menu parent){
-        sellerController.viewOffs().stream().forEach(System.out::println);
+        sellerController.viewOffs().forEach(System.out::println);
         var offsMenu = new Menu("Offs Manager Menu" , parent){
-
-            @Override
-            public void showMenu() {
-            }
 
             @Override
             public void executeMenu() {
@@ -297,7 +293,7 @@ public class SellerMenu extends Menu {
                 if (command.matches("(?i)add\\s+off")){
                     addOff(); // done
                 } else if (command.matches("(?i)edit")){
-                    editOffAttribute(this ); //done
+                    editOffAttribute(); //done
                 } else if (command.matches("(?i)view\\s+(\\w+)")){
                     viewOffById(command.split("\\s+")[1]); //done
                 } else if (command.matches(AllPatterns.BACK.getRegex())){
@@ -309,6 +305,8 @@ public class SellerMenu extends Menu {
                 this.executeMenu();
             }
         };
+        offsMenu.showMenu();
+        offsMenu.executeMenu();
     }
 
     private void viewOffById(String id){
@@ -319,7 +317,7 @@ public class SellerMenu extends Menu {
         }
     }
 
-    private void editOffAttribute(Menu parent){
+    private void editOffAttribute(){
         var auction = getAuctionToEdit();
         command = getAttribute();
         if (command.matches("(?i)begin\\s+date")){
@@ -400,7 +398,7 @@ public class SellerMenu extends Menu {
     }
 
     private ArrayList<Product> getAppliedProducts(){
-        String productId = "" ;
+        String productId;
         ArrayList<Product> appliedProducts = new ArrayList<>();
         while (!(productId=scanner.nextLine()).equalsIgnoreCase("end")){
             try {
@@ -494,7 +492,7 @@ public class SellerMenu extends Menu {
         System.out.println("Please Enter Your New First Name : ");
         command=inputInFormat("Invalid Format !" , "(?i)\\w+");
         try {
-            sellerController.editFirstName(command);
+            SellerController.editFirstName(command);
             System.out.println("New first name submitted !");
         } catch (InstanceAlreadyExistsException e) {
             System.out.println("This is your old first name ! ");
@@ -506,7 +504,7 @@ public class SellerMenu extends Menu {
         System.out.println("Please Enter Your New Last Name : ");
         command=inputInFormat("Invalid Format !" , "(?i)\\w+");
         try {
-            sellerController.editLastName(command);
+            SellerController.editLastName(command);
             System.out.println("New last name submitted !");
         } catch (InstanceAlreadyExistsException e) {
             System.out.println("This is your old last name ! ");
@@ -518,7 +516,7 @@ public class SellerMenu extends Menu {
         System.out.println("Please Enter Your New Email : ");
         command=inputInFormat("Invalid Format !" , "(?i)\\w+@\\w+\\.\\w+");
         try {
-            sellerController.editEmail(command);
+            SellerController.editEmail(command);
             System.out.println("New email submitted !");
         } catch (InstanceAlreadyExistsException e ) {
             System.out.println("This is your old email ! ");
@@ -533,7 +531,7 @@ public class SellerMenu extends Menu {
         System.out.println("Please Enter Your New Phone Number : ");
         command=inputInFormat("Invalid Format !" , "(?i)[0-9]+");
         try {
-            sellerController.editPhoneNumber(command);
+            SellerController.editPhoneNumber(command);
             System.out.println("New phoneNumber submitted !");
         } catch (InstanceAlreadyExistsException e) {
             System.out.println("This is your old phone number ! ");
@@ -551,7 +549,7 @@ public class SellerMenu extends Menu {
         System.out.println("Please Enter Your New Brand Name : ");
         command=inputInFormat("Invalid Format !" , "(?i)\\w+");
         try {
-            sellerController.editBrand(command);
+            SellerController.editBrand(command);
             System.out.println("New brand name submitted !");
         } catch (InstanceAlreadyExistsException e) {
             System.out.println("This is your old brand name ! ");
