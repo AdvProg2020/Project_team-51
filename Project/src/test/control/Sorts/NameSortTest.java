@@ -21,10 +21,10 @@ class NameSortTest {
     @BeforeEach
     void setup(){
         nameSort = NameSort.getInstance();
-        p1 = new Product(" ", "a" , "" , 0.00 , null , 10 , null , "");
-        p2 = new Product(" ", "e" , "" , 0.00 , null , 10 , null , "");
-        p3 = new Product(" ", "c" , "" , 0.00 , null , 10 , null , "");
-        p4 = new Product(" ", "f" , "" , 0.00 , null , 10 , null , "");
+        p1 = new Product(" ", "a" , "" , 0.00 , null , 10 , null , "", null);
+        p2 = new Product(" ", "e" , "" , 0.00 , null , 10 , null , "", null);
+        p3 = new Product(" ", "c" , "" , 0.00 , null , 10 , null , "", null);
+        p4 = new Product(" ", "f" , "" , 0.00 , null , 10 , null , "", null);
     }
 
     @Test

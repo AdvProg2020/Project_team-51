@@ -69,7 +69,7 @@ public class SingleProductController extends Controller {
 
     }
 
-    public HashMap<Attributes, String> showAttributes(){
+    public Map<Attributes, String> showAttributes(){
         return product.getAttributes();
     }
 

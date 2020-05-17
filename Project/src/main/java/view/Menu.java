@@ -67,13 +67,13 @@ public abstract class Menu {
     public String inputInFormatWithError(String message , String format , String error){
         Pattern pattern = Pattern.compile(format);
         do {
+            System.out.println(message);
             command = scanner.nextLine().trim();
             Matcher matcher = pattern.matcher(command);
             if (matcher.find())
                 return command;
             if (!error.equals(""))
             System.out.println(error);
-            System.out.println(message);
         } while (true);
     }
 

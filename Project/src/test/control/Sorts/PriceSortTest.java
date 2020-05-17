@@ -20,10 +20,10 @@ class PriceSortTest {
     @BeforeEach
     void setup(){
         priceSort = PriceSort.getInstance();
-        p1 = new Product(" ", "a" , "" , 10.00 , null , 10 , null , "");
-        p2 = new Product(" ", "e" , "" , 84.00 , null , 10 , null , "");
-        p3 = new Product(" ", "c" , "" , 15.00 , null , 10 , null , "");
-        p4 = new Product(" ", "f" , "" , 50.00 , null , 10 , null , "");
+        p1 = new Product(" ", "a" , "" , 10.00 , null , 10 , null , "", null);
+        p2 = new Product(" ", "e" , "" , 84.00 , null , 10 , null , "", null);
+        p3 = new Product(" ", "c" , "" , 15.00 , null , 10 , null , "", null);
+        p4 = new Product(" ", "f" , "" , 50.00 , null , 10 , null , "", null);
     }
 
     @Test

@@ -30,10 +30,10 @@ class CategoryFilterTest {
         c1 = new Category("salam" , null) ;
         c2 = new Category("chetori ?" , c1);
         c3 = new Category("khobam" , null);
-        p1 = new Product(" ", "a" , "" , 0.00 , null , 10 , c1 , "");
-        p2 = new Product(" ", "e" , "" , 0.00 , null , 0 , c2 , "");
-        p3 = new Product(" ", "c" , "" , 0.00 , null , 10 , c3 , "");
-        p4 = new Product(" ", "f" , "" , 0.00 , null , 0 , null , "");
+        p1 = new Product(" ", "a" , "" , 0.00 , null , 10 , c1 , "", null);
+        p2 = new Product(" ", "e" , "" , 0.00 , null , 0 , c2 , "", null);
+        p3 = new Product(" ", "c" , "" , 0.00 , null , 10 , c3 , "", null);
+        p4 = new Product(" ", "f" , "" , 0.00 , null , 0 , null , "", null);
     }
 
     @Test

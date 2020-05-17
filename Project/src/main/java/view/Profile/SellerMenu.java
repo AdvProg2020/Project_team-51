@@ -3,10 +3,13 @@ package view.Profile;
 import control.Controller;
 import control.Exceptions.InvalidAuctionIdException;
 import control.Exceptions.InvalidProductIdException;
+import control.Exceptions.NotAllowedActivityException;
 import control.Exceptions.WrongFormatException;
 import control.SellerController;
 import control.TokenGenerator;
+import model.Attributes;
 import model.Auction;
+import model.Category;
 import model.People.Seller;
 import model.Product;
 import model.Requests.AddAuctionRequest;
@@ -21,7 +24,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class SellerMenu extends Menu {
 
@@ -186,9 +193,9 @@ public class SellerMenu extends Menu {
                 command = inputInFormat("Select a option : " , "(?i)(existed\\s+product|new\\s+product" +
                                                                                 "|back|logout)");
                 if (command.matches("existed\\s+product")){
-
+                    addExistedProduct();
                 } else if (command.matches("new\\s+product")){
-
+                    addNewProduct();
                 } else if (command.matches(AllPatterns.BACK.getRegex())){
                     back();
                 } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
@@ -197,6 +204,8 @@ public class SellerMenu extends Menu {
 
             }
         };
+        addProductMenu.showMenu();
+        addProductMenu.executeMenu();
     }
 
     private void addExistedProduct(){
@@ -217,12 +226,55 @@ public class SellerMenu extends Menu {
                                     (Seller)Controller.getCurrentAccount(), quantity,price);
     }
 
-    private void addNewProduct(){
+    private void showCategories(List<Category> categories){
+        for (int i = 0; i < categories.size(); i++) {
+            var category = categories.get(i);
+            System.out.println((i+1)+ ". " + Category.getPathOfCategory(category) );
+        }
+    }
 
+    private void addNewProduct(){
+        var categories = sellerController.listCategories();
+        System.out.println("");
+        String name = inputInFormat("Enter the name of product : " , "\\w+");
+        String brand = inputInFormat("Enter the name of product : " , "\\w+");
+        showCategories(categories);
+        System.out.println("Enter product parent category number : ");
+        int categoryOption = getOptionWithRange(1,categories.size());
+        var parentCategory = categories.get(categoryOption-1);
+        Map<Attributes,String> attribute = getAttributesToAddProduct(parentCategory);
+        System.out.println("Enter product quantity : ");
+        int quantity = getOptionWithRange(1,Integer.MAX_VALUE);
+        System.out.println("Enter product price : ");
+        double price = getOptionWithRangeDouble(0.00 , Double.MAX_VALUE);
+        String description = inputInFormat("Enter a description for product : " , "\\w+");
+        try {
+            sellerController.addProduct(new Product(TokenGenerator.generateProductId(),name,brand,price,
+                                                   (Seller)Controller.getCurrentAccount(),quantity
+                                                    ,parentCategory,description,attribute));
+            System.out.println("Adding Product Request Sent ! ");
+        } catch (NotAllowedActivityException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private Map<Attributes,String> getAttributesToAddProduct(Category parentCategory){
+        return parentCategory.getAttributes().stream()
+                .peek(System.out::println)
+                .collect(Collectors.toMap(Function.identity(),a-> { return inputInFormat(
+                                                                    "Please enter a value for field : ",
+                                                                    "\\w+");}));
     }
 
     private void removeProduct(String id) {
-
+        Product product ;
+        try {
+            product = Product.getProductById(id);
+        } catch (InvalidProductIdException e) {
+            System.out.println("invalid product id");
+            return;
+        }
+        sellerController.removeProduct(product);
     }
 
     private void showCategories(){

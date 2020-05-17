@@ -39,6 +39,10 @@ public class Category {
         return path.toString();
     }
 
+    public List<Attributes> getAttributes() {
+        return attributes;
+    }
+
     public Map<Integer, Category> getSubCategories() {
         return subCategories;
     }

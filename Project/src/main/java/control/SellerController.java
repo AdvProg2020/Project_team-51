@@ -93,7 +93,7 @@ public class SellerController extends Controller {
         }
     }
 
-    public static void addProduct(Product product) throws NotAllowedActivityException {
+    public void addProduct(Product product) throws NotAllowedActivityException {
 
         if(currentAccount instanceof  Seller)
            new AddItemRequest(TokenGenerator.generateRequestId(),product,(Seller) currentAccount);
@@ -101,10 +101,10 @@ public class SellerController extends Controller {
 
     }
 
-    public static void removeProduct(String productId) throws InvalidProductIdException {
+    public void removeProduct(Product product) {
 
         if (currentAccount instanceof Seller){
-            ((Seller) currentAccount).getAvailableProducts().remove(Product.getProductById(productId));
+            ((Seller) currentAccount).getAvailableProducts().remove(product);
         }
     }
 
@@ -130,6 +130,12 @@ public class SellerController extends Controller {
             new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,"remove product",value);
         } else throw new InvalidFieldException("Field is invalid ! ");
 
+    }
+
+    public List<Category> listCategories(){
+        var allCategories = Category.getAllCategories();
+        return allCategories.stream().filter(c -> c.getSubCategories()==null)
+                .collect(Collectors.toList());
     }
 
     public static void addAuction(Auction auction) throws NotAllowedActivityException{
