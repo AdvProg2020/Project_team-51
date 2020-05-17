@@ -134,7 +134,7 @@ public class LoginMenu extends Menu {
         try{
             System.out.println("enter Email OR back");
             if ((command = scanner.nextLine()).equalsIgnoreCase("back")) getLastName();
-            if (!doesMatch("\\w+@w+\\.w+",command)) throw new WrongFormatException("email");
+            if (!doesMatch("\\w+@\\w+\\.\\w+",command)) throw new WrongFormatException("email");
             email = command;
             getNumber();
         }catch (Exception e){
@@ -159,7 +159,7 @@ public class LoginMenu extends Menu {
     public void getBalance(){
         try{System.out.println("enter balance OR back");
         if ((command = scanner.nextLine()).equalsIgnoreCase("back"))getNumber();
-        if (!doesMatch("^\\d+\\.\\d*$",command)) throw new WrongFormatException("balance amount");
+        if (!doesMatch("\\d+(\\.\\d+)?",command)) throw new WrongFormatException("balance amount");
         double balance = Double.parseDouble(command);
         switch (type){
             case "customer" : new Customer(username,password,firstName,lastName,balance,email,number);

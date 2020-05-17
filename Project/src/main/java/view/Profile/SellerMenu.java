@@ -10,6 +10,7 @@ import model.Auction;
 import model.People.Seller;
 import model.Product;
 import model.Requests.AddAuctionRequest;
+import model.Requests.EditAuctionRequest;
 import view.AllPatterns;
 import view.Menu;
 import view.MenusPattern;
@@ -142,11 +143,11 @@ public class SellerMenu extends Menu {
                 command = inputInFormat("you can view,edit or add an off : " ,"(?i)(add\\s+off|" +
                                                                                          "edit\\s+(\\w+)|view\\s+(\\w+))");
                 if (command.matches("(?i)add\\s+off")){
-                    addOff();
+                    addOff(); // done
                 } else if (command.matches("(?i)edit")){
                     editOffAttribute(this );
                 } else if (command.matches("(?i)view\\s+(\\w+)")){
-                    viewOffById(command.split("\\s+")[1]);
+                    viewOffById(command.split("\\s+")[1]); //done
                 } else if (command.matches(AllPatterns.BACK.getRegex())){
                     back();
                 } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
@@ -167,6 +168,62 @@ public class SellerMenu extends Menu {
     }
 
     private void editOffAttribute(Menu parent){
+        var auction = getAuctionToEdit();
+        command = getAttribute();
+        if (command.matches("(?i)begin\\s+date")){
+            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,command,getBeginDateForEdit());
+        } else if (command.matches("(?i)end\\s+date")){
+            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,command,getEndDateForEdit());
+        } else if (command.matches("(?i)off\\s+percentage")){
+            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,command,Integer.toString(getOffPercentage()));
+        } else if (command.matches("(?i)add\\s+product")){
+            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,command,getProductToAddForEdit(auction));
+        } else if (command.matches("(?i)remove\\s+product")){
+            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,command,getProductToRemoveForEdit(auction));
+        }
+    }
+
+    private String getProductToAddForEdit(Auction auction){
+        Product product = null;
+        String pid = "";
+        while ( product==null || auction.getAppliedProducts().contains(product)) {
+            pid = scanner.nextLine();
+            try {
+                product= Product.getProductById(pid);
+            } catch (InvalidProductIdException e) {
+                System.out.println("invalid PID !");
+            }
+        }
+        return pid ;
+    }
+
+    private String getProductToRemoveForEdit(Auction auction){
+        Product product = null;
+        String pid = "";
+        while ( product==null || !auction.getAppliedProducts().contains(product)) {
+            pid = scanner.nextLine();
+            try {
+                product= Product.getProductById(pid);
+            } catch (InvalidProductIdException e) {
+                System.out.println("invalid PID !");
+            }
+        }
+        return pid;
+    }
+
+    private String getAttribute(){
+        return inputInFormatWithError("Enter Auction Id you want to edit  :" ,
+                "(?i)(begin\\s+date|end\\s+date|off\\+percentage|add\\s+product|remove\\s+product)", "Invalid Format");
+    }
+
+
+
+    private Auction getAuctionToEdit(){
+
+        command = inputInFormatWithError("Enter Auction Id you want to edit  :" , "AUC_\\d{5}"  , "Invalid Format");
+        var auction = Auction.getAuctionById(command);
+        if (auction!=null) return auction;
+        else return  getAuctionToEdit();
 
     }
 
@@ -207,6 +264,16 @@ public class SellerMenu extends Menu {
 
         return appliedProducts;
     }
+
+    private String getBeginDateForEdit(){
+        return inputInFormat("Enter Begin Date in format (dd/mm/yyyy) : ", "\\d\\d/\\d\\d/\\d\\d\\d\\d");
+    }
+
+    private String getEndDateForEdit(){
+        return inputInFormat("Enter End Date in format (dd/mm/yyyy) : ", "\\d\\d/\\d\\d/\\d\\d\\d\\d");
+    }
+
+
 
     private Date getBeginDate(){
         try {

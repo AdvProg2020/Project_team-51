@@ -94,4 +94,13 @@ public class Auction {
     public static void addAuction(Auction auction){
         allAuctions.add(auction);
     }
+
+    @Override
+    public String toString() {
+        return  "auctionId : " + auctionId  + "\n" +
+                "beginDate : " + beginDate + "\n" +
+                "endDate : " + endDate + "\n" +
+                "offPercentage : " + offPercentage + "\n" +
+                "auctionStatus : " + auctionStatus ;
+    }
 }

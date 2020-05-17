@@ -1,12 +1,9 @@
 package control;
 
 import control.Exceptions.*;
-import model.Attributes;
-import model.Auction;
-import model.OffCode;
+import model.*;
 import model.People.Account;
 import model.People.Seller;
-import model.Product;
 import model.Requests.AddAuctionRequest;
 import model.Requests.AddItemRequest;
 import model.Requests.EditAuctionRequest;
@@ -55,7 +52,7 @@ public class SellerController extends Controller {
         if(phoneNumbers.contains(phoneNumber))
             throw new IllegalArgumentException();
         if ( phoneNumber.length() != 11 || !phoneNumber.startsWith("09"))
-            throw new WrongFormatException();
+            throw new WrongFormatException("");
         currentAccount.setPhoneNumber(phoneNumber);
     }
 
@@ -68,6 +65,13 @@ public class SellerController extends Controller {
     public String viewCompanyInfo(){
         return "Brand name : " + ((Seller)currentAccount).getBrandName() ;
     }
+
+    public List<String> showCategories(){
+        var allCategories = Category.getAllCategories();
+        return allCategories.stream().filter(c -> c.getSubCategories()==null).map(Category::getPathOfCategory)
+                .collect(Collectors.toList());
+    }
+
 
     public static Boolean isThisPidValid(String productId) throws InvalidProductIdException {
         return Product.getAllProducts().contains(Product.getProductById(productId));
@@ -131,6 +135,27 @@ public class SellerController extends Controller {
             throw new NotAllowedActivityException("You are not allowed to add Auction");
     }
 
+    public List<String> viewSalesHistory(){
+        return ((Seller)currentAccount).getHistoryOfSells().stream().map(s -> { StringBuilder builder = new StringBuilder("");
+                                                                    builder.append("order Id : " + s.getOrderID() + "\n"
+                                                                    + "Buyer : " + s.getBuyer().getFirstName() + " " +
+                                                                    s.getBuyer().getLastName() + "\n"  +
+                                                                    "Products :" + "\n" );
+                                                                    (s.getItems().stream().map(ItemOfOrder::toString))
+                                                                     .forEach(builder::append);
+                                                                     return builder.toString();})
+                                                                    .collect(Collectors.toList());
+    }
+
+    public List<String> viewOffs () {
+        return ((Seller) currentAccount).getAllAuctions().stream().map(a -> { StringBuilder builder = new StringBuilder("");
+                                                                             builder.append("ID : " + a.getAuctionId() +
+                                                                                            "  Off : " + a.getOffPercentage() +
+                                                                                            "  from : " + a.getBeginDate().toString() +
+                                                                                            "  to : " + a.getEndDate().toString());
+                                                                              return builder.toString(); })
+                                                                              .collect(Collectors.toList());
+    }
     public String viewPersonalInfo(){
         Seller seller = (Seller) currentAccount ;
         return seller.getUsername() + "\n" +
@@ -140,6 +165,10 @@ public class SellerController extends Controller {
                 "Phone : " + seller.getPhoneNumber() + "\n" +
                 "Brand : " + seller.getBrandName() ;
     }
+
+    public double getBalance(){
+        return ((Seller)currentAccount).getBalance();
+    }
     
     private static List<String> getAllEmails(){
         return Account.getAllAccounts().stream().map(Account::getEmail).collect(Collectors.toList());
@@ -147,5 +176,13 @@ public class SellerController extends Controller {
 
     private static List<String> getAllPhoneNumbers(){
         return Account.getAllAccounts().stream().map(Account::getPhoneNumber).collect(Collectors.toList());
+    }
+
+    public Auction viewOffById(String id) throws InvalidAuctionIdException{
+        Seller seller = (Seller) currentAccount ;
+        var auction = Auction.getAuctionById(id);
+        if (auction==null || !seller.getAllAuctions().contains(auction))
+            throw new InvalidAuctionIdException();
+        return auction;
     }
 }

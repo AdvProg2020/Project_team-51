@@ -1,7 +1,7 @@
 package model.People;
 
 import model.Auction;
-import model.OrderLog.Order;
+import model.OrderLog.SellerLog;
 import model.Product;
 import model.Status;
 import model.StatusStates;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Seller extends Account{
 
     private String brandName ;
-    private ArrayList<Order> historyOfSells = new ArrayList<Order>();
+    private ArrayList<SellerLog> historyOfSells = new ArrayList<>();
     private ArrayList<Product> availableProducts = new ArrayList<Product>();
     private ArrayList<Auction> allAuctions = new ArrayList<Auction>() ;
     private Status status;
@@ -31,11 +31,11 @@ public class Seller extends Account{
         this.brandName = brandName;
     }
 
-    public ArrayList<Order> getHistoryOfSells() {
+    public ArrayList<SellerLog> getHistoryOfSells() {
         return historyOfSells;
     }
 
-    public void setHistoryOfSells(ArrayList<Order> historyOfSells) {
+    public void setHistoryOfSells(ArrayList<SellerLog> historyOfSells) {
         this.historyOfSells = historyOfSells;
     }
 
