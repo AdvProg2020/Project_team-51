@@ -54,7 +54,7 @@ public class SingleProductController extends Controller {
             throw new NotAllowedActivityException("You are not allowed to buy product");
         for (ItemOfOrder item : cart) {
             if(item.getProduct()== product){
-                if (product.getQuantity() == 0)
+                if (product.getTotalQuantity() == 0)
                     throw new LackOfProductException("This Product Is Not Available !");
                 else
                     item.addQuantity();
@@ -64,7 +64,7 @@ public class SingleProductController extends Controller {
 
         var sellerOfProduct = Account.getAccountById(seller);
         if (sellerOfProduct instanceof  Seller)
-        cart.add(new ItemOfOrder((Seller)sellerOfProduct,product , product.getPrice()
+        cart.add(new ItemOfOrder((Seller)sellerOfProduct,product , product.getPriceForSeller((Seller) sellerOfProduct)
                 , this.getProductDiscountAmount(seller), new Date()));
 
     }
@@ -105,7 +105,7 @@ public class SingleProductController extends Controller {
                 new Status(StatusStates.PENDING_CREATE),isCurrentAccountBuyer()));
     }
 
-    public ArrayList<Comment> getComments (){
+    public List<Comment> getComments (){
         return product.getComments();
     }
 

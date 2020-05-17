@@ -3,7 +3,6 @@ package model.Requests;
 import control.Exceptions.InvalidProductIdException;
 import model.People.Seller;
 import model.Product;
-import model.Status;
 import model.StatusStates;
 
 public class AddItemRequest extends Request {
@@ -35,7 +34,7 @@ public class AddItemRequest extends Request {
 
         seller.addAvailableProduct(this.product);
         status.setState(StatusStates.APPROVED);
-        this.product.setStatus(new Status(StatusStates.APPROVED));
+        this.product.setStatus(StatusStates.APPROVED,seller);
 
     }
 }

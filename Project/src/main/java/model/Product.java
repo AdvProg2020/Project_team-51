@@ -5,6 +5,7 @@ import model.People.Seller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Product {
@@ -12,17 +13,17 @@ public class Product {
     private static ArrayList<Product> allProducts = new ArrayList<Product>();
     private String productId;
     private ArrayList<Seller> sellersForThisProduct = new ArrayList<Seller>();
-    private Status status;
+    private Map<Seller,StatusStates> status;
     private String name;
     private String brandName;
-    private Double price;
-    private int quantity;
+    private Map<Seller,Double> price = new HashMap<>();
+    private Map<Seller,Integer> quantity = new HashMap<>();
     private Category parentCategory;
     private String description;
     private Map<Attributes , String> attributes= new HashMap<>();
-    private ArrayList<Rate> rating;
+    private List<Rate> rating = new ArrayList<>();
     private int views;
-    private ArrayList<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
 
     public Product(String productId, String name, String brandName,
@@ -31,11 +32,12 @@ public class Product {
         this.productId = productId;
         this.name = name;
         this.brandName = brandName;
-        this.price = price;
-        this.quantity = quantity;
+        this.price.putIfAbsent(seller,price);
+        this.quantity.putIfAbsent(seller,quantity);
         this.parentCategory = parentCategory;
         this.description = description;
         this.attributes=attributes;
+        this.status.putIfAbsent(seller,StatusStates.PENDING_CREATE);
         sellersForThisProduct.add(seller);
         allProducts.add(this);
         views = 0 ;
@@ -78,12 +80,12 @@ public class Product {
         sellersForThisProduct.add(seller);
     }
 
-    public Status getStatus() {
+    public Map<Seller,StatusStates> getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatus(StatusStates status , Seller seller) {
+        this.status.replace(seller,status);
     }
 
     public String getName() {
@@ -102,20 +104,20 @@ public class Product {
         this.brandName = brandName;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getPriceForSeller(Seller seller) {
+        return price.get(seller);
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setPrice(Double price , Seller seller) {
+        this.price.replace(seller,price);
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public int getQuantityForSeller(Seller seller) {
+        return quantity.get(seller);
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setQuantity(int quantity , Seller seller) {
+        this.quantity.replace(seller,quantity);
     }
 
     public Category getParentCategory() {
@@ -134,7 +136,7 @@ public class Product {
         this.description = description;
     }
 
-    public ArrayList<Rate> getRating() {
+    public List<Rate> getRating() {
         return rating;
     }
 
@@ -142,7 +144,7 @@ public class Product {
         this.rating = rating;
     }
 
-    public ArrayList<Comment> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
@@ -172,6 +174,23 @@ public class Product {
 
     public static void addProduct(Product product){
         allProducts.add(product);
+    }
+
+    public Map<Seller, Double> getPrice() {
+        return price;
+    }
+
+    public Map<Seller, Integer> getQuantity() {
+        return quantity;
+    }
+
+    public double getAveragePrice(){
+        double total =  price.values().stream().reduce(0.00, Double::sum);
+        return (double) total/price.size() ;
+    }
+
+    public int getTotalQuantity(){
+        return quantity.values().stream().reduce(0, Integer::sum);
     }
 
     @Override

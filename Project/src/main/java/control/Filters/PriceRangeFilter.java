@@ -16,7 +16,7 @@ public class PriceRangeFilter extends Filter {
 
     @Override
     public ArrayList<Product> applyFilter(ArrayList<Product> products, Double from, Double to) {
-        return new ArrayList<>(products.stream().filter(product -> (product.getPrice() >= from && product.getPrice()<= to))
+        return new ArrayList<>(products.stream().filter(product -> (product.getAveragePrice() >= from && product.getAveragePrice()<= to))
                 .collect(Collectors.toList()));
     }
 

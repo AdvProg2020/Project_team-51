@@ -17,13 +17,13 @@ public class PriceSort extends Sort {
 
     public ArrayList<Product> applyAscendingSort(ArrayList<Product> products) {
         isAscending = true;
-        products.sort(Comparator.comparing(Product::getPrice));
+        products.sort(Comparator.comparing(Product::getAveragePrice));
         return products;
     }
 
     public ArrayList<Product> applyDescendingSort(ArrayList<Product> products) {
         isAscending = false;
-        products.sort(Comparator.comparing(Product::getPrice).reversed());
+        products.sort(Comparator.comparing(Product::getAveragePrice).reversed());
         return products;
     }
 

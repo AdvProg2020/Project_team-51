@@ -43,10 +43,10 @@ public class EditProductRequest extends Request {
                 product.setDescription(value);
                 break;
             case "price":
-                product.setPrice(Double.parseDouble(value));
+                product.setPrice(Double.parseDouble(value),seller);
                 break;
             case "quantity":
-                product.setQuantity(Integer.parseInt(value));
+                product.setQuantity(Integer.parseInt(value),seller);
                 break;
         }
 

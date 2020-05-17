@@ -14,7 +14,7 @@ public class AvailabilityFilter extends Filter {
 
     @Override
     public ArrayList<Product> applyFilter(ArrayList<Product> products) {
-        return new ArrayList<>(products.stream().filter(product -> product.getQuantity() > 0).collect(Collectors.toList()));
+        return new ArrayList<>(products.stream().filter(product -> product.getTotalQuantity()> 0).collect(Collectors.toList()));
     }
 
     public static AvailabilityFilter getInstance() {
