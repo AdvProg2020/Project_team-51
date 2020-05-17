@@ -19,19 +19,19 @@ public class FilterMenu extends Menu {
     public void executeMenu() {
         menusHistory.push(this);
         command = inputInFormat("Please Enter A Valid Command" , MenusPattern.FILTER.getRegex());
-        if (command.matches(AllPatterns.SHOW_AVAILABLE_FILTERS.getRegex())){
+        if (command.matches(AllCommands.SHOW_AVAILABLE_FILTERS.getRegex())) {
             showAvailableFilters();
-        } else if (command.matches(AllPatterns.FILTER.getRegex())){
+        } else if (command.matches(AllCommands.FILTER.getRegex())) {
             applyFilter(command.split("\\s+")[1]);
-        } else if (command.matches(AllPatterns.CURRENT_FILTERS.getRegex())){
+        } else if (command.matches(AllCommands.CURRENT_FILTERS.getRegex())) {
             currentFilters();
-        } else if (command.matches(AllPatterns.DISABLE_FILTER.getRegex())){
+        } else if (command.matches(AllCommands.DISABLE_FILTER.getRegex())) {
             disableFilter(command.split("\\s+")[2]);
-        } else if (command.matches(AllPatterns.BACK.getRegex())){
+        } else if (command.matches(AllCommands.BACK.getRegex())) {
             back();
-        } else if (command.matches(AllPatterns.LOGIN.getRegex())){
+        } else if (command.matches(AllCommands.LOGIN.getRegex())) {
             login();
-        } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+        } else if (command.matches(AllCommands.LOGOUT.getRegex())) {
             logout();
         }
         this.executeMenu();

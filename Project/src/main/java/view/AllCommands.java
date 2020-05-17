@@ -1,6 +1,6 @@
 package view;
 
-public enum AllPatterns {
+public enum AllCommands {
 
     SHOW_PRODUCT("(?i)show\\s+product\\s+([0-9]+)"),
     SORTING("(?i)sorting"),
@@ -49,7 +49,7 @@ public enum AllPatterns {
 
     private String regex ;
 
-    AllPatterns(String regex) {
+    AllCommands(String regex) {
         this.regex = regex;
     }
 

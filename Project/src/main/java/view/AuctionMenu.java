@@ -26,9 +26,9 @@ public class AuctionMenu extends Menu{
     @Override
     public void executeMenu() {
         menusHistory.push(this);
-        command = inputInFormat("Please input a valid command : ", MenusPattern.AUCTION.getRegex() );
-        if (command.matches(AllPatterns.OFFS.getRegex())){
-            var productsWithOffLists = new Menu("productLists", this){
+        command = inputInFormat("Please input a valid command : ", MenusPattern.AUCTION.getRegex());
+        if (command.matches(AllCommands.OFFS.getRegex())) {
+            var productsWithOffLists = new Menu("productLists", this) {
 
                 @Override
                 public void showMenu() {
@@ -41,21 +41,21 @@ public class AuctionMenu extends Menu{
                 public void executeMenu() {
                     menusHistory.push(this);
                     command = inputInFormat("Choose : " , MenusPattern.PRODUCTS.getRegex());
-                    if (command.matches(AllPatterns.SHOW_PRODUCT.getRegex())){
+                    if (command.matches(AllCommands.SHOW_PRODUCT.getRegex())) {
                         showProduct(command.split("\\s")[2]);
-                    } else if (command.matches(AllPatterns.SORTING.getRegex())){
-                        var sort = new SortMenu(this) ;
+                    } else if (command.matches(AllCommands.SORTING.getRegex())) {
+                        var sort = new SortMenu(this);
                         sort.showMenu();
                         sort.executeMenu();
-                    } else if (command.matches(AllPatterns.FILTERING.getRegex())){
-                        var filter = new FilterMenu(this) ;
+                    } else if (command.matches(AllCommands.FILTERING.getRegex())) {
+                        var filter = new FilterMenu(this);
                         filter.showMenu();
                         filter.executeMenu();
-                    } else if (command.matches(AllPatterns.BACK.getRegex())){
+                    } else if (command.matches(AllCommands.BACK.getRegex())) {
                         back();
-                    } else if (command.matches(AllPatterns.LOGIN.getRegex())){
+                    } else if (command.matches(AllCommands.LOGIN.getRegex())) {
                         login();
-                    } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+                    } else if (command.matches(AllCommands.LOGOUT.getRegex())) {
                         logout();
                     }
                 }

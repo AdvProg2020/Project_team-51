@@ -15,7 +15,7 @@ import model.Product;
 import model.Requests.AddAuctionRequest;
 import model.Requests.AddSellerForItemRequest;
 import model.Requests.EditAuctionRequest;
-import view.AllPatterns;
+import view.AllCommands;
 import view.Menu;
 import view.MenusPattern;
 
@@ -56,27 +56,27 @@ public class SellerMenu extends Menu {
     public void executeMenu() {
         menusHistory.push(this);
         command = inputInFormat("Select option : " , MenusPattern.SELLER.getRegex());
-        if (command.matches(AllPatterns.PERSONAL_INFO.getRegex())){
+        if (command.matches(AllCommands.PERSONAL_INFO.getRegex())) {
             viewPersonalInfo(); //done
-        } else if (command.matches(AllPatterns.COMPANY_INFO.getRegex())){
+        } else if (command.matches(AllCommands.COMPANY_INFO.getRegex())) {
             viewCompanyInformation(); //done
-        } else if (command.matches(AllPatterns.SALES_HISTORY.getRegex())){
+        } else if (command.matches(AllCommands.SALES_HISTORY.getRegex())) {
             viewSalesHistory(); //done
-        } else if (command.matches(AllPatterns.MANAGE_PRODUCTS.getRegex())){
+        } else if (command.matches(AllCommands.MANAGE_PRODUCTS.getRegex())) {
             manageProducts();
-        } else if (command.matches(AllPatterns.SHOW_CATEGORIES.getRegex())){
+        } else if (command.matches(AllCommands.SHOW_CATEGORIES.getRegex())) {
             showCategories(); //done
-        } else if (command.matches(AllPatterns.VIEW_OFFS.getRegex())){
+        } else if (command.matches(AllCommands.VIEW_OFFS.getRegex())) {
             viewOffs(this); //done
-        } else if (command.matches(AllPatterns.BALANCE.getRegex())){
+        } else if (command.matches(AllCommands.BALANCE.getRegex())) {
             viewSellerBalance(); //done
-        } else if (command.matches(AllPatterns.ADD_PRODUCT.getRegex())){
+        } else if (command.matches(AllCommands.ADD_PRODUCT.getRegex())) {
             addProduct(this);
-        } else if (command.matches(AllPatterns.REMOVE_PRODUCT.getRegex())){
+        } else if (command.matches(AllCommands.REMOVE_PRODUCT.getRegex())) {
             removeProduct(command.split("\\s+")[2]);
-        }  else if (command.matches(AllPatterns.BACK.getRegex())){
+        } else if (command.matches(AllCommands.BACK.getRegex())) {
             back();
-        } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+        } else if (command.matches(AllCommands.LOGOUT.getRegex())) {
             logout();
         }
 
@@ -96,11 +96,11 @@ public class SellerMenu extends Menu {
             public void executeMenu() {
                 menusHistory.push(this);
                 command=inputInFormat("Select option : ",MenusPattern.SELLER_PERSONAL_INFO.getRegex());
-                if (command.matches(AllPatterns.EDIT_PERSONAL_INFO.getRegex())){
+                if (command.matches(AllCommands.EDIT_PERSONAL_INFO.getRegex())) {
                     editPersonalInfoField(this);
-                } else if (command.matches(AllPatterns.BACK.getRegex())){
+                } else if (command.matches(AllCommands.BACK.getRegex())) {
                     back();
-                } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+                } else if (command.matches(AllCommands.LOGOUT.getRegex())) {
                     logout();
                 }
 
@@ -111,27 +111,27 @@ public class SellerMenu extends Menu {
 
     private void viewCompanyInformation() {
         System.out.println(sellerController.viewCompanyInfo());
-        command = inputInFormat("write Back in order to get back to last Menu : " , AllPatterns.BACK.getRegex());
+        command = inputInFormat("write Back in order to get back to last Menu : ", AllCommands.BACK.getRegex());
     }
 
     private void viewSalesHistory() {
         sellerController.viewSalesHistory().forEach(System.out::println);
-        command = inputInFormat("write Back in order to get back to last Menu : " , AllPatterns.BACK.getRegex());
+        command = inputInFormat("write Back in order to get back to last Menu : ", AllCommands.BACK.getRegex());
     }
 
     private void manageProducts() {
         sellerController.showSellersProducts().forEach(System.out::println);
         command = inputInFormat("You Can View a Product Info,Buyers or Edit it: ",
                                 MenusPattern.MANAGE_PRODUCTS.getRegex());
-        if (command.matches(AllPatterns.VIEW_PID.getRegex())){
+        if (command.matches(AllCommands.VIEW_PID.getRegex())) {
             viwProductDetails(command.split("\\s+")[1]); //done
-        } else if (command.matches(AllPatterns.VIEW_BUYERS_PID.getRegex())){
+        } else if (command.matches(AllCommands.VIEW_BUYERS_PID.getRegex())) {
             viewProductBuyers(command.split("\\s+")[2]); //done
-        } else if (command.matches(AllPatterns.EDIT_PID.getRegex())){
+        } else if (command.matches(AllCommands.EDIT_PID.getRegex())) {
             editProduct(command.split("\\s+")[1]);
-        } else if (command.matches(AllPatterns.BACK.getRegex())){
+        } else if (command.matches(AllCommands.BACK.getRegex())) {
             back();
-        } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+        } else if (command.matches(AllCommands.LOGOUT.getRegex())) {
             logout();
         }
 
@@ -192,13 +192,13 @@ public class SellerMenu extends Menu {
             public void executeMenu() {
                 command = inputInFormat("Select a option : " , "(?i)(existed\\s+product|new\\s+product" +
                                                                                 "|back|logout)");
-                if (command.matches("existed\\s+product")){
+                if (command.matches("existed\\s+product")) {
                     addExistedProduct();
-                } else if (command.matches("new\\s+product")){
+                } else if (command.matches("new\\s+product")) {
                     addNewProduct();
-                } else if (command.matches(AllPatterns.BACK.getRegex())){
+                } else if (command.matches(AllCommands.BACK.getRegex())) {
                     back();
-                } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+                } else if (command.matches(AllCommands.LOGOUT.getRegex())) {
                     logout();
                 }
 
@@ -292,13 +292,13 @@ public class SellerMenu extends Menu {
                                                                                          "edit\\s+(\\w+)|view\\s+(\\w+))");
                 if (command.matches("(?i)add\\s+off")){
                     addOff(); // done
-                } else if (command.matches("(?i)edit")){
+                } else if (command.matches("(?i)edit")) {
                     editOffAttribute(); //done
-                } else if (command.matches("(?i)view\\s+(\\w+)")){
+                } else if (command.matches("(?i)view\\s+(\\w+)")) {
                     viewOffById(command.split("\\s+")[1]); //done
-                } else if (command.matches(AllPatterns.BACK.getRegex())){
+                } else if (command.matches(AllCommands.BACK.getRegex())) {
                     back();
-                } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+                } else if (command.matches(AllCommands.LOGOUT.getRegex())) {
                     logout();
                 }
 
@@ -467,19 +467,19 @@ public class SellerMenu extends Menu {
                 menusHistory.push(this);
                 command = SellerMenu.this.inputInFormat("Select Option : ",
                                                         MenusPattern.EDIT_SELLER_PERSONAL_INFO.getRegex());
-                if (command.matches(AllPatterns.FIRST_NAME.getRegex())){
+                if (command.matches(AllCommands.FIRST_NAME.getRegex())) {
                     getFirstName();
-                } else if (command.matches(AllPatterns.LAST_NAME.getRegex())){
+                } else if (command.matches(AllCommands.LAST_NAME.getRegex())) {
                     getLastName();
-                } else if (command.matches(AllPatterns.EMAIL.getRegex())){
+                } else if (command.matches(AllCommands.EMAIL.getRegex())) {
                     getEmail();
-                } else if (command.matches(AllPatterns.PHONE.getRegex())){
+                } else if (command.matches(AllCommands.PHONE.getRegex())) {
                     getPhone();
-                } else if (command.matches(AllPatterns.BRAND.getRegex())){
+                } else if (command.matches(AllCommands.BRAND.getRegex())) {
                     getBrand();
-                } else if (command.matches(AllPatterns.BACK.getRegex())){
+                } else if (command.matches(AllCommands.BACK.getRegex())) {
                     back();
-                } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+                } else if (command.matches(AllCommands.LOGOUT.getRegex())) {
                     logout();
                 }
             }

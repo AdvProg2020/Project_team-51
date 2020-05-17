@@ -39,15 +39,15 @@ public class ProductPageMenu extends Menu {
         menusHistory.push(this);
 
         command = inputInFormat("Please Enter A Valid Command" , MenusPattern.PRODUCT.getRegex());
-        if (command.matches(AllPatterns.DIGEST.getRegex())){
+        if (command.matches(AllCommands.DIGEST.getRegex())) {
             digest();
-        } else if (command.matches(AllPatterns.ATTRIBUTES.getRegex())){
+        } else if (command.matches(AllCommands.ATTRIBUTES.getRegex())) {
             attributes();
-        } else if (command.matches(AllPatterns.COMPARE.getRegex())) {
+        } else if (command.matches(AllCommands.COMPARE.getRegex())) {
             compare(command.split("\\s+")[1]);
-        } else if (command.matches(AllPatterns.COMMENTS.getRegex())){
+        } else if (command.matches(AllCommands.COMMENTS.getRegex())) {
             comments();
-            var commentsMenu = new Menu("Comments Menu" , this){
+            var commentsMenu = new Menu("Comments Menu", this) {
 
                 @Override
                 public void showMenu() {
@@ -58,7 +58,7 @@ public class ProductPageMenu extends Menu {
                 @Override
                 public void executeMenu() {
                     String command = inputInFormat("Please Enter A valid Command", MenusPattern.ADD_COMMENT.getRegex());
-                    if (command.matches(AllPatterns.ADD_COMMENT.getRegex())){
+                    if (command.matches(AllCommands.ADD_COMMENT.getRegex())) {
                         addComment();
                     } else {
                         back();
@@ -68,15 +68,15 @@ public class ProductPageMenu extends Menu {
 //            menusHistory.push(this);
 //            commentsMenu.showMenu();
 //            commentsMenu.executeMenu();
-        } else if (command.matches(AllPatterns.ADD_TO_CART.getRegex())) {
+        } else if (command.matches(AllCommands.ADD_TO_CART.getRegex())) {
             addToCart();
-        } else if (command.matches(AllPatterns.ADD_COMMENT.getRegex())) {
+        } else if (command.matches(AllCommands.ADD_COMMENT.getRegex())) {
             addComment();
-        } else if (command.matches(AllPatterns.BACK.getRegex())){
+        } else if (command.matches(AllCommands.BACK.getRegex())) {
             back();
-        } else if (command.matches(AllPatterns.LOGIN.getRegex())){
+        } else if (command.matches(AllCommands.LOGIN.getRegex())) {
             login();
-        } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+        } else if (command.matches(AllCommands.LOGOUT.getRegex())) {
             logout();
         }
 

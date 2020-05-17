@@ -2,21 +2,20 @@ package view;
 
 public enum MenusPattern {
 
-    SORT( menuPatternBuilder(AllPatterns.SHOW_AVAILABLE_SORTS,AllPatterns.SORT,AllPatterns.CURRENT_SORT,AllPatterns.DISABLE_SORT)),
-    PRODUCT(menuPatternBuilder(AllPatterns.DIGEST,AllPatterns.ATTRIBUTES,AllPatterns.COMPARE,AllPatterns.COMMENTS
-            ,AllPatterns.ADD_COMMENT,AllPatterns.ADD_TO_CART)),
-    PRODUCTS(menuPatternBuilder(AllPatterns.SHOW_PRODUCT,AllPatterns.SORTING,AllPatterns.FILTERING)),
-    FILTER(menuPatternBuilder(AllPatterns.FILTER,AllPatterns.CURRENT_FILTERS,AllPatterns.DISABLE_FILTER,AllPatterns.SHOW_AVAILABLE_FILTERS)),
-    ADD_COMMENT(menuPatternBuilder(AllPatterns.ADD_COMMENT)),
-    AUCTION(menuPatternBuilder(AllPatterns.SHOW_PRODUCT,AllPatterns.OFFS)),
-    LOGIN(menuPatternBuilder(AllPatterns.LOGIN,AllPatterns.SIGN_UP)),
-    SELLER(menuPatternBuilder(AllPatterns.PERSONAL_INFO,AllPatterns.COMPANY_INFO,AllPatterns.MANAGE_PRODUCTS,AllPatterns.SALES_HISTORY,
-           AllPatterns.BALANCE,AllPatterns.SHOW_CATEGORIES,AllPatterns.VIEW_OFFS,AllPatterns.ADD_PRODUCT,AllPatterns.REMOVE_PRODUCT )),
-    SELLER_PERSONAL_INFO(menuPatternBuilder(AllPatterns.EDIT_PERSONAL_INFO)),
-    EDIT_SELLER_PERSONAL_INFO(menuPatternBuilder(AllPatterns.FIRST_NAME,AllPatterns.LAST_NAME,AllPatterns.EMAIL,AllPatterns.PHONE,AllPatterns.BRAND)),
-    MANAGE_PRODUCTS(menuPatternBuilder(AllPatterns.VIEW_PID,AllPatterns.VIEW_BUYERS_PID,AllPatterns.EDIT_PID));
-    ;
-    private String regex ;
+    SORT(menuPatternBuilder(AllCommands.SHOW_AVAILABLE_SORTS, AllCommands.SORT, AllCommands.CURRENT_SORT, AllCommands.DISABLE_SORT)),
+    PRODUCT(menuPatternBuilder(AllCommands.DIGEST, AllCommands.ATTRIBUTES, AllCommands.COMPARE, AllCommands.COMMENTS
+            , AllCommands.ADD_COMMENT, AllCommands.ADD_TO_CART)),
+    PRODUCTS(menuPatternBuilder(AllCommands.SHOW_PRODUCT, AllCommands.SORTING, AllCommands.FILTERING)),
+    FILTER(menuPatternBuilder(AllCommands.FILTER, AllCommands.CURRENT_FILTERS, AllCommands.DISABLE_FILTER, AllCommands.SHOW_AVAILABLE_FILTERS)),
+    ADD_COMMENT(menuPatternBuilder(AllCommands.ADD_COMMENT)),
+    AUCTION(menuPatternBuilder(AllCommands.SHOW_PRODUCT, AllCommands.OFFS)),
+    LOGIN(menuPatternBuilder(AllCommands.LOGIN, AllCommands.SIGN_UP)),
+    SELLER(menuPatternBuilder(AllCommands.PERSONAL_INFO, AllCommands.COMPANY_INFO, AllCommands.MANAGE_PRODUCTS, AllCommands.SALES_HISTORY,
+            AllCommands.BALANCE, AllCommands.SHOW_CATEGORIES, AllCommands.VIEW_OFFS, AllCommands.ADD_PRODUCT, AllCommands.REMOVE_PRODUCT)),
+    SELLER_PERSONAL_INFO(menuPatternBuilder(AllCommands.EDIT_PERSONAL_INFO)),
+    EDIT_SELLER_PERSONAL_INFO(menuPatternBuilder(AllCommands.FIRST_NAME, AllCommands.LAST_NAME, AllCommands.EMAIL, AllCommands.PHONE, AllCommands.BRAND)),
+    MANAGE_PRODUCTS(menuPatternBuilder(AllCommands.VIEW_PID, AllCommands.VIEW_BUYERS_PID, AllCommands.EDIT_PID));
+    private String regex;
 
     MenusPattern(String regex) {
         this.regex = regex;
@@ -26,9 +25,9 @@ public enum MenusPattern {
         return regex;
     }
 
-    private static String menuPatternBuilder(AllPatterns ... patterns){
+    private static String menuPatternBuilder(AllCommands... patterns) {
         StringBuilder regex = new StringBuilder("(");
-        for (AllPatterns pattern : patterns) {
+        for (AllCommands pattern : patterns) {
             regex.append(pattern.getRegex()).append("|");
         }
         regex.append("(?i)back|(?i)login|(?i)logout)");

@@ -1,8 +1,8 @@
 package view;
 
 import control.ProductController;
-import model.SortTypes;
 import control.Sorts.Sort;
+import model.SortTypes;
 
 import java.util.Arrays;
 
@@ -23,19 +23,19 @@ public class SortMenu extends Menu {
     @Override
     public void executeMenu() {
         command = inputInFormat("Please Enter A Valid Command" , MenusPattern.SORT.getRegex());
-        if (command.matches(AllPatterns.SHOW_AVAILABLE_SORTS.getRegex())){
+        if (command.matches(AllCommands.SHOW_AVAILABLE_SORTS.getRegex())) {
             showAvailableSorts();
-        } else if (command.matches(AllPatterns.SORT.getRegex())){
+        } else if (command.matches(AllCommands.SORT.getRegex())) {
             sort(command.split("\\s+")[1]);
-        } else if (command.matches(AllPatterns.CURRENT_SORT.getRegex())){
+        } else if (command.matches(AllCommands.CURRENT_SORT.getRegex())) {
             currentSort();
-        } else if (command.matches(AllPatterns.DISABLE_SORT.getRegex())){
+        } else if (command.matches(AllCommands.DISABLE_SORT.getRegex())) {
             disableSort();
-        } else if (command.matches(AllPatterns.BACK.getRegex())){
+        } else if (command.matches(AllCommands.BACK.getRegex())) {
             back();
-        } else if (command.matches(AllPatterns.LOGIN.getRegex())){
+        } else if (command.matches(AllCommands.LOGIN.getRegex())) {
             login();
-        } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+        } else if (command.matches(AllCommands.LOGOUT.getRegex())) {
             logout();
         }
         this.executeMenu();
