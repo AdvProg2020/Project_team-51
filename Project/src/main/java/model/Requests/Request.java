@@ -1,7 +1,6 @@
 package model.Requests;
 
 import control.Exceptions.InvalidProductIdException;
-import model.Status;
 import model.StatusStates;
 
 import java.text.ParseException;
@@ -12,15 +11,15 @@ public abstract class Request  {
 
     public static ArrayList<Request> allRequests = new ArrayList<>();
     private String requestId;
-    public Status status ;
+    public StatusStates status ;
     private Date date;
 
     public Request(String requestId , String kind) {
         this.requestId = requestId;
         if (kind.equals("add"))
-            status.setState(StatusStates.PENDING_CREATE);
+            status=StatusStates.PENDING_CREATE;
         else if (kind.equals("edit")){
-            status.setState(StatusStates.PENDING_EDIT);
+            status=StatusStates.PENDING_EDIT;
         }
         this.date = new Date();
     }
@@ -30,7 +29,7 @@ public abstract class Request  {
         return allRequests;
     }
 
-    public Status getStatus() {
+    public StatusStates getStatus() {
         return status;
     }
 

@@ -50,6 +50,6 @@ public class EditProductRequest extends Request {
                 break;
         }
 
-        status.setState(StatusStates.APPROVED);
+        status=StatusStates.APPROVED;
     }
 }

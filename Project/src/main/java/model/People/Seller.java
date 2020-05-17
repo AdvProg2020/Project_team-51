@@ -3,7 +3,6 @@ package model.People;
 import model.Auction;
 import model.OrderLog.SellerLog;
 import model.Product;
-import model.Status;
 import model.StatusStates;
 
 import java.util.ArrayList;
@@ -14,13 +13,13 @@ public class Seller extends Account{
     private ArrayList<SellerLog> historyOfSells = new ArrayList<>();
     private ArrayList<Product> availableProducts = new ArrayList<Product>();
     private ArrayList<Auction> allAuctions = new ArrayList<Auction>() ;
-    private Status status;
+    private StatusStates status;
 
     public Seller(String username, String password ,String firstName, String lastName, Double balance,
                   String email, String phoneNumber , String brandName) {
         super(username,password, firstName, lastName, balance, email, phoneNumber);
         this.brandName = brandName ;
-        this.status.setState(StatusStates.PENDING_CREATE);
+        this.status=StatusStates.PENDING_CREATE;
     }
 
     public String getBrandName() {
@@ -69,4 +68,7 @@ public class Seller extends Account{
         return allSellers;
     }
 
+    public void setStatus(StatusStates status) {
+        this.status = status;
+    }
 }

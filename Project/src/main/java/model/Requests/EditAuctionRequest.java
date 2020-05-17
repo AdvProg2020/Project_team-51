@@ -49,6 +49,6 @@ public class EditAuctionRequest extends Request{
                 break;
         }
 
-        status.setState(StatusStates.APPROVED);
+        status=StatusStates.APPROVED;
     }
 }

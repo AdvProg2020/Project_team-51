@@ -24,6 +24,7 @@ public class AddSellerRequest extends Request {
     @Override
     public void accept() {
         Account.addSeller(seller);
-        status.setState(StatusStates.APPROVED);
+        status=(StatusStates.APPROVED);
+        seller.setStatus(StatusStates.APPROVED);
     }
 }

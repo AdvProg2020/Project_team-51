@@ -2,7 +2,6 @@ package model.Requests;
 
 import model.Auction;
 import model.People.Seller;
-import model.Status;
 import model.StatusStates;
 
 public class AddAuctionRequest extends Request {
@@ -27,7 +26,7 @@ public class AddAuctionRequest extends Request {
     @Override
     public void accept() {
         seller.addAuction(auction);
-        status.setState(StatusStates.APPROVED);
-        auction.setAuctionStatus(new Status(StatusStates.APPROVED));
+        status=StatusStates.APPROVED;
+        auction.setAuctionStatus(StatusStates.APPROVED);
     }
 }

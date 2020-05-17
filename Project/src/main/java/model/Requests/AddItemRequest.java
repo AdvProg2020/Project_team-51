@@ -33,7 +33,7 @@ public class AddItemRequest extends Request {
             this.product.addSellerForThisProduct(seller);
 
         seller.addAvailableProduct(this.product);
-        status.setState(StatusStates.APPROVED);
+        status=StatusStates.APPROVED;
         this.product.setStatus(StatusStates.APPROVED,seller);
 
     }
