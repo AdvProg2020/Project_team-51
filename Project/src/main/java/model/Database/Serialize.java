@@ -16,7 +16,6 @@ import java.io.IOException;
 public class Serialize {
 
     private YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create() ;
-
     public Serialize() {
     }
 
@@ -95,8 +94,16 @@ public class Serialize {
         } else if (request instanceof EditProductRequest){
             serializeEditProductRequest((EditProductRequest) request,filePath + "EditProductRequests\\"
                     + "EP_"+ request.getRequestId()  + ".json");
+        } else if (request instanceof AddSellerForItemRequest){
+            serializeAddSellerForItemRequest((AddSellerForItemRequest) request,filePath + "AddSellerForItemRequests\\"
+                    + "ASI_"+ request.getRequestId()  + ".json");
         }
     }
+
+    private void serializeAddSellerForItemRequest(AddSellerForItemRequest request , String path) throws IOException {
+        WriteIntoFiles.writeIntoFile(yaGson.toJson(request, AddSellerForItemRequest.class), path);
+    }
+
 
     private void serializeAddAuctionRequest(AddAuctionRequest request , String path) throws IOException {
         WriteIntoFiles.writeIntoFile(yaGson.toJson(request, AddAuctionRequest.class), path);

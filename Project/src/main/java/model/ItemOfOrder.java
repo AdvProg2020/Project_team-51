@@ -76,4 +76,12 @@ public class ItemOfOrder {
         allItemOfOrders.add(itemOfOrder);
     }
 
+    @Override
+    public String toString() {
+        return  "product : " + product + "\n" +
+                "price : " + price + "\n" +
+                "discount : " + discount + "\n" +
+                "date : " + date + "\n" +
+                "quantity :" + quantity  + "\n" ;
+    }
 }

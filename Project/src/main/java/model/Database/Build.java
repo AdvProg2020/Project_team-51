@@ -141,7 +141,13 @@ public class Build {
             e.printStackTrace();
         }
     };
-
+    public final Consumer<String> addSellerForItemRequest = str -> {
+        try {
+            deserialize.deserializeAddSellerForItemRequests(str);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    };
 
 
     public Build() throws IOException {
@@ -165,7 +171,7 @@ public class Build {
         createStream().filter(file -> file.getName().startsWith("AI")).map(File::toPath).map(readContent).forEach(addItemRequest);
         createStream().filter(file -> file.getName().startsWith("EA")).map(File::toPath).map(readContent).forEach(editAuctionRequest);
         createStream().filter(file -> file.getName().startsWith("EP")).map(File::toPath).map(readContent).forEach(editProductRequest);
-
+        createStream().filter(file -> file.getName().startsWith("ASI")).map(File::toPath).map(readContent).forEach(addSellerForItemRequest);
 }
 
 private Stream<File> createStream() throws IOException {

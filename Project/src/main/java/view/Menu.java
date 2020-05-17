@@ -67,13 +67,13 @@ public abstract class Menu {
     public String inputInFormatWithError(String message , String format , String error){
         Pattern pattern = Pattern.compile(format);
         do {
+            System.out.println(message);
             command = scanner.nextLine().trim();
             Matcher matcher = pattern.matcher(command);
             if (matcher.find())
                 return command;
             if (!error.equals(""))
             System.out.println(error);
-            System.out.println(message);
         } while (true);
     }
 
@@ -112,6 +112,29 @@ public abstract class Menu {
             var login = new LoginMenu(this);
             login.showMenu();
             login.executeMenu();
+        }
+    }
+
+
+    public int getOptionWithRange(int from , int to){
+        String input;
+        while (true) {
+            input = scanner.nextLine();
+            if (Pattern.matches("[1-9][0-9]*", input))
+                if (Integer.parseInt(input) >= from && Integer.parseInt(input) <= to)
+                    return Integer.parseInt(input);
+            System.out.println("Invalid Input : Please Enter A Valid Number");
+        }
+    }
+
+    public double getOptionWithRangeDouble(double from , double to){
+        String input;
+        while (true) {
+            input = scanner.nextLine();
+            if (Pattern.matches("[1-9][0-9]*(\\.[0-9]+)?", input))
+                if (Double.parseDouble(input) >= from && Double.parseDouble(input) <= to)
+                    return Double.parseDouble(input);
+            System.out.println("Invalid Input : Please Enter A Valid Number");
         }
     }
 }

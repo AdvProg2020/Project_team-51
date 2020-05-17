@@ -13,17 +13,15 @@ import model.People.Manager;
 import model.People.Seller;
 import model.Requests.AddCommentRequest;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class SingleProductController extends Controller {
 
     private Product product ;
 
-    public SingleProductController(Account currentAccount) {
+    public SingleProductController(Account currentAccount , Product product) {
         super(currentAccount);
+        this.product = product ;
     }
 
     public Product getProduct() {
@@ -71,7 +69,7 @@ public class SingleProductController extends Controller {
 
     }
 
-    public HashMap<Attributes, String> showAttributes(){
+    public Map<Attributes, String> showAttributes(){
         return product.getAttributes();
     }
 
@@ -159,4 +157,6 @@ public class SingleProductController extends Controller {
 
         return null;
     }
+
+
 }

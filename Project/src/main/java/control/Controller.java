@@ -61,7 +61,7 @@ public class Controller {
             ((Customer) currentAccount).setCart(cart);
         }
         else {
-            throw new WrongPasswordException("Username Or Password Is Wrong !!");
+            throw new WrongPasswordException();
         }
     }
 

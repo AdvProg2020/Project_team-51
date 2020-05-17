@@ -23,10 +23,10 @@ class PriceRangeFilterTest {
     @BeforeEach
     void setup(){
         filter = PriceRangeFilter.getInstance();
-        p1 = new Product(" ", "a" , "" , 20.00 , null , 10 , null , "");
-        p2 = new Product(" ", "e" , "" , 30.00 , null , 0 , null , "");
-        p3 = new Product(" ", "c" , "" , 40.00 , null , 10 , null , "");
-        p4 = new Product(" ", "f" , "" , 50.00 , null , 0 , null , "");
+        p1 = new Product(" ", "a" , "" , 20.00 , null , 10 , null , "", null);
+        p2 = new Product(" ", "e" , "" , 30.00 , null , 0 , null , "", null);
+        p3 = new Product(" ", "c" , "" , 40.00 , null , 10 , null , "", null);
+        p4 = new Product(" ", "f" , "" , 50.00 , null , 0 , null , "", null);
     }
 
     @Test

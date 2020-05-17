@@ -5,6 +5,7 @@ import model.People.Seller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Product {
 
@@ -15,17 +16,18 @@ public class Product {
     private String name;
     private String brandName;
     private Double price;
-    private Integer quantity;
+    private int quantity;
     private Category parentCategory;
     private String description;
-    private HashMap<Attributes , String> attributes= new HashMap<>();
+    private Map<Attributes , String> attributes= new HashMap<>();
     private ArrayList<Rate> rating;
     private int views;
     private ArrayList<Comment> comments;
 
 
     public Product(String productId, String name, String brandName,
-                   Double price,Seller seller , Integer quantity, Category parentCategory, String description) {
+                   Double price,Seller seller , int quantity, Category parentCategory, String description ,
+                   Map<Attributes,String> attributes) {
         this.productId = productId;
         this.name = name;
         this.brandName = brandName;
@@ -33,12 +35,14 @@ public class Product {
         this.quantity = quantity;
         this.parentCategory = parentCategory;
         this.description = description;
+        this.attributes=attributes;
         sellersForThisProduct.add(seller);
         allProducts.add(this);
         views = 0 ;
+
     }
 
-    public HashMap<Attributes,String> getAttributes() {
+    public Map<Attributes,String> getAttributes() {
         return attributes;
     }
 
@@ -170,6 +174,12 @@ public class Product {
         allProducts.add(product);
     }
 
-
-
+    @Override
+    public String toString() {
+        return "productId : " + productId + '\'' +
+                " ,name : " + name + '\'' +
+                " ,price : " + price +
+                " ,rate : " + this.averageRate() +
+                " ,quantity : " + quantity ;
+    }
 }

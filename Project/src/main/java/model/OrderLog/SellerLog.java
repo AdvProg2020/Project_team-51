@@ -22,6 +22,7 @@ public class SellerLog extends Order{
 
     }
 
+
     public Customer getBuyer() {
         return buyer;
     }
