@@ -62,7 +62,11 @@ public class SellerMenu extends Menu {
             viewOffs(this); //done
         } else if (command.matches(AllPatterns.BALANCE.getRegex())){
             viewSellerBalance(); //done
-        } else if (command.matches(AllPatterns.BACK.getRegex())){
+        } else if (command.matches(AllPatterns.ADD_PRODUCT.getRegex())){
+            addProduct(this);
+        } else if (command.matches(AllPatterns.REMOVE_PRODUCT.getRegex())){
+            removeProduct(command.split("\\s+")[2]);
+        }  else if (command.matches(AllPatterns.BACK.getRegex())){
             back();
         } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
             logout();
@@ -168,7 +172,37 @@ public class SellerMenu extends Menu {
 
     }
 
-    private void addProduct() {
+    private void addProduct(Menu parent) {
+        var addProductMenu = new Menu("Add Product Menu : " , this){
+
+            @Override
+            public void showMenu() {
+                System.out.println("-New Product\n-Existed Product");
+            }
+
+            @Override
+            public void executeMenu() {
+                command = inputInFormat("Select a option : " , "(?i)(existed\\s+product|new\\s+product" +
+                                                                                "|back|logout)");
+                if (command.matches("existed\\s+product")){
+
+                } else if (command.matches("new\\s+product")){
+
+                } else if (command.matches(AllPatterns.BACK.getRegex())){
+                    back();
+                } else if (command.matches(AllPatterns.LOGOUT.getRegex())){
+                    logout();
+                }
+
+            }
+        };
+    }
+
+    private void addExistedProduct(){
+
+    }
+
+    private void addNewProduct(){
 
     }
 
