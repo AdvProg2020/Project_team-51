@@ -60,7 +60,7 @@ public class SingleProductController extends Controller {
                 if (product.getTotalQuantity() == 0)
                     throw new LackOfProductException("This Product Is Not Available !");
                 else
-                    item.increamentQuantity();
+                    item.incrementQuantity();
                 return;
             }
         }

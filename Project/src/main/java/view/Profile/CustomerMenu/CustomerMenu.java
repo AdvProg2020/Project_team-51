@@ -1,15 +1,18 @@
 package view.Profile.CustomerMenu;
 
+import control.Controller;
+import control.CustomerController;
 import view.Menu;
 
 import java.util.List;
 
 public class CustomerMenu extends Menu {
-    private CustomerMenu customerMenu;
 
-    public CustomerMenu(Menu parentMenu, CustomerMenu customerMenu) {
+    private CustomerController customerController;
+
+    public CustomerMenu(Menu parentMenu) {
         super("Customer Menu", parentMenu);
-        this.customerMenu = customerMenu;
+        customerController = new CustomerController(Controller.getCurrentAccount());
     }
 
     @Override

@@ -15,7 +15,7 @@ public class SellerMenu extends Menu {
     public SellerMenu(Menu parentMenu) {
         super("Seller Menu", parentMenu);
         this.sellerController = new SellerController(Controller.getCurrentAccount());
-        subMenus.put(1, new PersonalInfoMenu(this));
+        subMenus.put(1, new PersonalInfoMenu(this, sellerController));
         subMenus.put(2, new Menu("Company Info", this) {
             @Override
             public void executeMenu() {
