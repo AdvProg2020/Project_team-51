@@ -98,7 +98,7 @@ public class ManageProductsMenu extends Menu {
         try {
             product = Product.getProductById(id);
             System.out.println("Name\nPrice\nDescription\nQuantity");
-            String field = inputInFormat("select a option : ", "(?i)(name|price|description|quantity)");
+            String field = inputInFormat("Select a option : ", "(?i)(name|price|description|quantity)");
             String value = inputInFormat("Enter a value for selected field : ", "\\W+");
             SellerController.editProduct(product, field, value);
         } catch (InvalidProductIdException e) {
@@ -106,4 +106,5 @@ public class ManageProductsMenu extends Menu {
             return;
         }
     }
+
 }
