@@ -48,5 +48,4 @@ public class PersonalInfoMenu extends Menu {
     public void viewPersonaInfo() {
         System.out.println(customerController.viewPersonalInfo());
     }
-
 }

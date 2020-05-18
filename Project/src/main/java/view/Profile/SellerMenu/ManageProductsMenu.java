@@ -67,6 +67,7 @@ public class ManageProductsMenu extends Menu {
 
     private void viewProductBuyers() {
         String id = inputInFormat("Enter a Product id : ", "\\w+");
+        if (command.equalsIgnoreCase("back")) return;
         Product product = null;
         try {
             product = Product.getProductById(id);
@@ -81,6 +82,7 @@ public class ManageProductsMenu extends Menu {
     private void viwProductDetails() {
 
         String id = inputInFormat("Enter a Product id : ", "\\w+");
+        if (command.equalsIgnoreCase("back")) return;
         Product product;
         try {
             product = Product.getProductById(id);
@@ -94,6 +96,7 @@ public class ManageProductsMenu extends Menu {
 
     private void editProduct() {
         String id = inputInFormat("Enter a Product id : ", "\\w+");
+        if (command.equalsIgnoreCase("back")) return;
         Product product;
         try {
             product = Product.getProductById(id);

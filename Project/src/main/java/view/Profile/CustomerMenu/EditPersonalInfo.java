@@ -49,7 +49,6 @@ public class EditPersonalInfo extends Menu {
         menusHistory.push(this);
         int size = subMenus.size();
         int option = getOptionWithRange(1, size);
-
         if (option <= size) {
             var nextMenu = subMenus.get(option);
             nextMenu.showMenu();
@@ -75,6 +74,7 @@ public class EditPersonalInfo extends Menu {
     private void getFirstName() {
         System.out.println("Please Enter Your New First Name : ");
         command = inputInFormat("Invalid Format !", "(?i)\\w+");
+        if (command.equalsIgnoreCase("back")) return;
         try {
             customerController.editFirstName(command);
             System.out.println("New first name submitted !");
@@ -87,6 +87,7 @@ public class EditPersonalInfo extends Menu {
     private void getLastName() {
         System.out.println("Please Enter Your New Last Name : ");
         command = inputInFormat("Invalid Format !", "(?i)\\w+");
+        if (command.equalsIgnoreCase("back")) return;
         try {
             customerController.editLastName(command);
             System.out.println("New last name submitted !");
@@ -99,6 +100,7 @@ public class EditPersonalInfo extends Menu {
     private void getEmail() {
         System.out.println("Please Enter Your New Email : ");
         command = inputInFormat("Invalid Format !", "(?i)\\w+@\\w+\\.\\w+");
+        if (command.equalsIgnoreCase("back")) return;
         try {
             customerController.editEmail(command);
             System.out.println("New email submitted !");
@@ -114,6 +116,7 @@ public class EditPersonalInfo extends Menu {
     private void getPhone() {
         System.out.println("Please Enter Your New Phone Number : ");
         command = inputInFormat("Invalid Format !", "(?i)[0-9]+");
+        if (command.equalsIgnoreCase("back")) return;
         try {
             CustomerController.editPhoneNumber(command);
             System.out.println("New phoneNumber submitted !");
