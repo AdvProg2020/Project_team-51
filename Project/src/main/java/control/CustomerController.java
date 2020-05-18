@@ -38,7 +38,7 @@ public class CustomerController extends Controller {
         return Account.getAllAccounts().stream().map(Account::getEmail).collect(Collectors.toList());
     }
 
-    public static List<OffCode> viewDiscountCodes() {
+    public List<OffCode> viewDiscountCodes() {
         var customer = ((Customer) currentAccount);
         return OffCode.getAllOffCodes().stream()
                 .filter(a -> a.getAppliedAccounts().contains(customer))

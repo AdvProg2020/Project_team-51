@@ -3,12 +3,12 @@ package view.Profile.CustomerMenu;
 import control.CustomerController;
 import view.Menu;
 
-public class PurchaseMenu extends Menu {
+public class CartMenu extends Menu {
 
     private CustomerController customerController;
 
-    public PurchaseMenu(Menu parentMenu, CustomerController customerController) {
-        super("Purchase", parentMenu);
+    public CartMenu(Menu parentMenu, CustomerController customerController) {
+        super("Cart Menu", parentMenu);
         this.customerController = customerController;
     }
 

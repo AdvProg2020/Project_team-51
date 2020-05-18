@@ -1,6 +1,7 @@
 package view.Profile.CustomerMenu;
 
 import control.Controller;
+import control.CustomerController;
 import control.Exceptions.WrongFormatException;
 import control.SellerController;
 import view.LoginMenu;
@@ -12,8 +13,11 @@ import javax.management.InstanceAlreadyExistsException;
 public class EditPersonalInfo extends Menu {
 
 
-    public EditPersonalInfo(Menu parentMenu) {
+    private CustomerController customerController;
+
+    public EditPersonalInfo(Menu parentMenu, CustomerController customerController) {
         super("Edit Personal Info", parentMenu);
+        this.customerController = customerController;
         subMenus.put(1, new Menu("First Name", this) {
             @Override
             public void executeMenu() {

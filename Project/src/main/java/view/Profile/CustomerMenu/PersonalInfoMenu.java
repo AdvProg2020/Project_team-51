@@ -1,17 +1,19 @@
 package view.Profile.CustomerMenu;
 
 import control.Controller;
+import control.CustomerController;
 import view.LoginMenu;
 import view.MainMenu;
 import view.Menu;
 
 public class PersonalInfoMenu extends Menu {
 
+    private CustomerController customerController;
 
-    public PersonalInfoMenu(Menu parentMenu) {
+    public PersonalInfoMenu(Menu parentMenu, CustomerController customerController) {
         super("View Personal Info", parentMenu);
-        subMenus.put(1, new EditPersonalInfo(this));
-
+        this.customerController = customerController;
+        subMenus.put(1, new EditPersonalInfo(this, customerController));
     }
 
     @Override
@@ -42,9 +44,4 @@ public class PersonalInfoMenu extends Menu {
         this.executeMenu();
     }
 
-    private void editPersonalInfoField(Menu parent) {
-        var editPersonalInfo = new EditPersonalInfo(this);
-        editPersonalInfo.showMenu();
-        editPersonalInfo.executeMenu();
-    }
 }
