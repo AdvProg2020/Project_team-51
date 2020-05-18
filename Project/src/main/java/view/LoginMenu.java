@@ -1,10 +1,10 @@
 package view;
 
 import control.Controller;
-import control.Exceptions.InvalidPasswordException;
 import control.Exceptions.InvalidUsernameException;
 import control.Exceptions.WeakPasswordException;
 import control.Exceptions.WrongFormatException;
+import control.Exceptions.WrongPasswordException;
 import control.ManagerController;
 import control.TokenGenerator;
 import model.People.Customer;
@@ -232,12 +232,10 @@ public class LoginMenu extends Menu {
             getUsername();
         }
         try {
-            if (!Controller.doesPasswordMatches(user, pass)) throw new InvalidPasswordException();
-            Controller.setCurrentAccount(username);
-            goToNextMenu ();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            enterPass();
+            Controller.login(user, pass);
+            goToNextMenu();
+        } catch (WrongPasswordException e) {
+            System.out.println(e.getMessage());
         }
     }
 

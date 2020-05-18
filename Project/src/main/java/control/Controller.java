@@ -65,9 +65,7 @@ public class Controller {
     }
 
     public static boolean doesPasswordMatches(String user, String password) {
-
-        assert Account.getAccountById(user) != null;
-        return !hasUserWithThisUsername(user) && Account.getAccountById(user).getPassword().equals(password);
+        return hasUserWithThisUsername(user) && Account.getAccountById(user).getPassword().equals(password);
     }
 
     public static void logout() throws HaveNotLoggedInException {
