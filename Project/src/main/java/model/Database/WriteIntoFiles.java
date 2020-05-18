@@ -10,6 +10,7 @@ public class WriteIntoFiles {
         File file = new File(path);
         if (!file.exists()) {
             try {
+                file.getParentFile().mkdir();
                 file.createNewFile();
             } catch (IOException e) {
                 throw new IOException();
