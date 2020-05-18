@@ -1,12 +1,9 @@
 package view;
 
-import control.Exceptions.InvalidProductIdException;
 import control.Exceptions.NoCategoriesFoundException;
 import control.ProductController;
 import model.Category;
 import model.Product;
-import view.Enums.AllCommands;
-import view.Enums.MenusPattern;
 
 import java.util.List;
 
@@ -36,13 +33,13 @@ public class ProductMenu extends Menu {
         int size;
         try {
             size = subCategories.size();
-        } catch (NullPointerException e){
-            size=0;
+        } catch (NullPointerException e) {
+            size = 0;
         }
         viewCategories();
         System.out.println("----------------------------");
-        System.out.println(size+1 + ". Show Products");
-        System.out.println(size+2 + ". Back");
+        System.out.println(size + 1 + ". Show Products");
+        System.out.println(size + 2 + ". Back");
     }
 
     @Override
@@ -51,63 +48,22 @@ public class ProductMenu extends Menu {
         int size;
         try {
             size = subCategories.size();
-        } catch (NullPointerException e){
-            size=0;
+        } catch (NullPointerException e) {
+            size = 0;
         }
-        while (true) {
-            int option = getOption();
-            if (option <= size){
-                var nextMenu = subMenus.get(option);
-                nextMenu.showMenu();
-                nextMenu.executeMenu();
-                break;
-            }
-            else if (option==size+1){
-                productsOfThisCategory = ProductController.showProductsOfThisCategory(category);
-                listProducts();
-                var productLists = new Menu("productLists", this){
-
-                    @Override
-                    public void showMenu() {
-                        System.out.println("- Show Product [PID]");
-                        System.out.println("- Sorting");
-                        System.out.println("- Filtering");
-                    }
-
-                    @Override
-                    public void executeMenu() {
-
-                            command = inputInFormat("Choose : " , MenusPattern.PRODUCTS.getRegex()).trim();
-                            if (command.matches(AllCommands.SHOW_PRODUCT.getRegex())) {
-                                showProduct(command.split("\\s")[2]);
-                            } else if (command.matches(AllCommands.SORTING.getRegex())) {
-                                var sort = new SortMenu(this);
-                                sort.showMenu();
-                                sort.executeMenu();
-                            } else if (command.matches(AllCommands.FILTERING.getRegex())) {
-                                var filter = new FilterMenu(this);
-                                filter.showMenu();
-                                filter.executeMenu();
-                            } else if (command.matches(AllCommands.BACK.getRegex())) {
-                                back();
-                            } else if (command.matches(AllCommands.LOGIN.getRegex())) {
-                                login();
-                            } else if (command.matches(AllCommands.LOGOUT.getRegex())) {
-                                logout();
-                            }
-
-                        this.showMenu();
-                        this.executeMenu();
-                    }
-                };
-                productLists.showMenu();
-                productLists.executeMenu();
-                break;
-            }
-            else if (option==size+2){
-                back();
-                break;
-            }
+        int option = getOptionWithRange(1, size + 2);
+        if (option <= size) {
+            var nextMenu = subMenus.get(option - 1);
+            nextMenu.showMenu();
+            nextMenu.executeMenu();
+        } else if (option == size + 1) {
+            productsOfThisCategory = ProductController.showProductsOfThisCategory(category);
+            listProducts();
+            var productLists = new ProductList(this);
+            productLists.showMenu();
+            productLists.executeMenu();
+        } else if (option == size + 2) {
+            back();
         }
     }
 
@@ -130,28 +86,15 @@ public class ProductMenu extends Menu {
         }
     }
 
-    private void listProducts(){
+    private void listProducts() {
         var currentSort = ProductController.getCurrentSort().getSort();
-        var productsOfThisCategory = currentSort.applySort(this.productsOfThisCategory , currentSort.getAscending());
+        var productsOfThisCategory = currentSort.applySort(this.productsOfThisCategory, currentSort.getAscending());
         for (int i = 0; i < productsOfThisCategory.size(); i++) {
-            if (i!=0)
-            System.out.println("--------------------------");
+            if (i != 0)
+                System.out.println("--------------------------");
             var product = productsOfThisCategory.get(i);
-            System.out.println((i+1) + ". " + product.getName() + " |  " + product.getPrice() + "$" + "  |  " + product.getProductId());
+            System.out.println((i + 1) + ". " + product.getName() + " |  " + product.getPrice() + "$" + "  |  " + product.getProductId());
         }
-    }
-
-    private void showProduct(String pid) {
-        Product product;
-        try {
-            product = Product.getProductById(pid);
-        } catch (InvalidProductIdException e) {
-            System.out.println(e.getMessage());
-            return;
-        }
-        var productPage = new ProductPageMenu(this , product);
-        productPage.showMenu();
-        productPage.executeMenu();
     }
 
 }
