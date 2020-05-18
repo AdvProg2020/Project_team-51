@@ -5,7 +5,6 @@ import control.Exceptions.LackOfProductException;
 import control.Exceptions.NotAllowedActivityException;
 import control.Exceptions.SameProductForComparisonException;
 import model.*;
-import model.OrderLog.BuyerLog;
 import model.OrderLog.Order;
 import model.People.Account;
 import model.People.Customer;
@@ -111,7 +110,7 @@ public class SingleProductController extends Controller {
         return product.getComments();
     }
 
-    private double getProductDiscountAmount(String seller) {
+    private int getProductDiscountAmount(String seller) {
 
         var sellerOfProduct = Account.getAccountById(seller);
         if (sellerOfProduct instanceof Seller) {
@@ -131,7 +130,7 @@ public class SingleProductController extends Controller {
 
         if (currentAccount instanceof Customer) {
             for (Order historyOfOrder : ((Customer) currentAccount).getHistoryOfOrders()) {
-                for (ItemOfOrder item : ((BuyerLog) historyOfOrder).getItems()) {
+                for (ItemOfOrder item : historyOfOrder.getItems()) {
                     if (item.getProduct() == product)
                         return true;
                 }

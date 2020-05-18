@@ -104,4 +104,8 @@ public class Controller {
             if (account.getUsername().equalsIgnoreCase(username)) throw new InvalidUsernameException();
         }
     }
+
+    public static List<ItemOfOrder> getCart() {
+        return cart;
+    }
 }

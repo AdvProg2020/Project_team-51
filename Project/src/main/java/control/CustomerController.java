@@ -103,6 +103,10 @@ public class CustomerController extends Controller {
         return cart.stream().map(ItemOfOrder::getTotalPrice).reduce(0.00, (a, b) -> a + b);
     }
 
+    public Double showTotalPriceWithDiscount() {
+        return cart.stream().map(ItemOfOrder::getTotalPriceWithDiscount).reduce(0.00, (a, b) -> a + b);
+    }
+
     public void purchase() throws InsufficientBalanceException {
         var customer = (Customer) currentAccount;
         if (showTotalPrice() <= viewBalance())
