@@ -36,14 +36,13 @@ public class MainMenu extends Menu {
         menusHistory.push(this);
         Menu nextMenu = null;
         int size = subMenus.size();
-        int option = getOptionWithRange(1, size + 1);
+        int option = getOptionWithRange(1, size);
 
         if (option == (size + 1))
             System.exit(0);
         else if (option <= size) {
             nextMenu = subMenus.get(option);
         }
-
 
         nextMenu.showMenu();
         nextMenu.executeMenu();

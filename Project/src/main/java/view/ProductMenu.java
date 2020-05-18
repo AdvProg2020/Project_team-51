@@ -1,16 +1,18 @@
 package view;
 
+import control.Controller;
 import control.Exceptions.NoCategoriesFoundException;
 import control.ProductController;
 import model.Category;
 import model.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductMenu extends Menu {
 
     private Category category;
-    private List<Category> subCategories;
+    private List<Category> subCategories = new ArrayList<>();
     private List<Product> productsOfThisCategory = null;
 
     public ProductMenu(Menu parentMenu, Category category) {
@@ -26,6 +28,8 @@ public class ProductMenu extends Menu {
                 e.getMessage();
             }
         }
+        subMenus.put(subCategories.size() + 1,
+                new ProductListMenu(this, ProductController.showProductsOfThisCategory(category)));
     }
 
     @Override
@@ -38,8 +42,12 @@ public class ProductMenu extends Menu {
         }
         viewCategories();
         System.out.println("----------------------------");
-        System.out.println(size + 1 + ". Show Products");
-        System.out.println(size + 2 + ". Back");
+        System.out.println((size + 1) + ". Show Products");
+        System.out.println((size + 2) + ". Back");
+        if (Controller.getCurrentAccount() == null)
+            System.out.println((size + 3) + ". Login");
+        else
+            System.out.println((size + 3) + ". Logout");
     }
 
     @Override
@@ -51,19 +59,11 @@ public class ProductMenu extends Menu {
         } catch (NullPointerException e) {
             size = 0;
         }
-        int option = getOptionWithRange(1, size + 2);
-        if (option <= size) {
+        int option = getOptionWithRange(1, size + 1);
+        if (option <= size + 1) {
             var nextMenu = subMenus.get(option - 1);
             nextMenu.showMenu();
             nextMenu.executeMenu();
-        } else if (option == size + 1) {
-            productsOfThisCategory = ProductController.showProductsOfThisCategory(category);
-            listProducts();
-            var productLists = new ProductList(this);
-            productLists.showMenu();
-            productLists.executeMenu();
-        } else if (option == size + 2) {
-            back();
         }
     }
 
@@ -86,15 +86,5 @@ public class ProductMenu extends Menu {
         }
     }
 
-    private void listProducts() {
-        var currentSort = ProductController.getCurrentSort().getSort();
-        var productsOfThisCategory = currentSort.applySort(this.productsOfThisCategory, currentSort.getAscending());
-        for (int i = 0; i < productsOfThisCategory.size(); i++) {
-            if (i != 0)
-                System.out.println("--------------------------");
-            var product = productsOfThisCategory.get(i);
-            System.out.println((i + 1) + ". " + product.getName() + " |  " + product.getPrice() + "$" + "  |  " + product.getProductId());
-        }
-    }
 
 }

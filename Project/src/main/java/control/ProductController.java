@@ -26,13 +26,14 @@ public class ProductController extends Controller {
         super(currentAccount);
     }
 
-    public static List<Product> showProductsOfThisCategory(Category category) {
+    public static List<Product> showProductsOfThisCategory(Category category) throws NullPointerException {
 
-        List<Product> products;
+        List<Product> products = new ArrayList<>();
 
         try {
             var subCategories = ProductController.getSubCategories(category);
-            products = new ArrayList<>(category.getCategoryProducts());
+            if (category != null)
+                products.addAll(category.getCategoryProducts());
             for (Category subCategory : subCategories) {
                 showProductsOfThisCategory(subCategory);
             }

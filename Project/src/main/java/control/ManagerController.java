@@ -30,7 +30,7 @@ public class ManagerController extends Controller {
     }
 
     public static void deleteUser(String username) {
-        ArrayList<Account> allAccounts;
+        List<Account> allAccounts;
         allAccounts = Account.getAllAccounts();
         for (Account account : allAccounts) {
             if (account.getUsername().equals(username)) {
@@ -71,7 +71,7 @@ public class ManagerController extends Controller {
     }
 
     public static Boolean isThisCodeValid(String code) {
-        ArrayList<OffCode> offCodes = model.OffCode.getAllOffCodes();
+        List<OffCode> offCodes = model.OffCode.getAllOffCodes();
         for (OffCode offCode : offCodes) {
             if (offCode.getOffCode().equals(code)) {
                 return offCode.getBeginDate().before(new Date()) && offCode.getEndDate().after(new Date());
@@ -103,7 +103,7 @@ public class ManagerController extends Controller {
     }
 
     public static void removeDiscountCode(String code) {
-        ArrayList<OffCode> offCodes = model.OffCode.getAllOffCodes();
+        List<OffCode> offCodes = model.OffCode.getAllOffCodes();
         for (OffCode offCode : offCodes) {
             if (offCode.getOffCode().equals(code)) {
                 offCodes.remove(offCode);

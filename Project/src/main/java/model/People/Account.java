@@ -29,7 +29,7 @@ public abstract class Account {
         return allAccounts;
     }
 
-    public static void setAllAccounts(ArrayList<Account> accounts) {
+    public static void setAllAccounts(List<Account> accounts) {
         allAccounts = accounts;
     }
 

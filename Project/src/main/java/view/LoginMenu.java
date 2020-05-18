@@ -29,7 +29,7 @@ public class LoginMenu extends Menu {
 
     @Override
     public void showMenu() {
-        System.out.println("1.login\n2.signup\nback");
+        System.out.println("1. Login\n2. SignUp\nBack");
     }
 
     @Override

@@ -63,6 +63,7 @@ public abstract class Menu {
     }
 
     public String inputInFormatWithError(String message, String format, String error) {
+
         Pattern pattern = Pattern.compile(format);
         do {
             System.out.println(message);
@@ -116,12 +117,24 @@ public abstract class Menu {
 
     public int getOptionWithRange(int from, int to) {
         String input;
+        StringBuilder backAndLog = new StringBuilder("|(?i)back");
+        if (Controller.getCurrentAccount() == null) {
+            backAndLog.append("|(?i)login");
+        } else {
+            backAndLog.append("|(?i)logout");
+        }
+        String regex = "[1-9][0-9]*" + backAndLog.toString();
         while (true) {
             input = scanner.nextLine();
-            if (Pattern.matches("[1-9][0-9]*", input))
-                if (Integer.parseInt(input) >= from && Integer.parseInt(input) <= to)
+            if (Pattern.matches(regex, input)) {
+                if (Integer.parseInt(input) >= from && Integer.parseInt(input) <= to + 2)
                     return Integer.parseInt(input);
-            System.out.println("Invalid Input : Please Enter A Valid Number");
+                else if (input.equalsIgnoreCase("back"))
+                    return to + 1;
+                else if (input.matches(backAndLog.substring(1)))
+                    return to + 2;
+            }
+            System.out.println("Invalid Input ! Please Enter A Valid Number : ");
         }
     }
 

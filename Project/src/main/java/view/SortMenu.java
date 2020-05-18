@@ -1,10 +1,9 @@
 package view;
 
+import control.Controller;
 import control.ProductController;
 import control.Sorts.Sort;
 import model.SortTypes;
-import view.Enums.AllCommands;
-import view.Enums.MenusPattern;
 
 import java.util.Arrays;
 
@@ -12,33 +11,67 @@ public class SortMenu extends Menu {
 
     public SortMenu(Menu parentMenu) {
         super("Sort Menu", parentMenu);
+        subMenus.put(1, new Menu("Show Available Sorts ", this) {
+            @Override
+            public void executeMenu() {
+                showAvailableSorts();
+            }
+        });
+        subMenus.put(2, new Menu("Show Available Sorts ", this) {
+            @Override
+            public void executeMenu() {
+                sort();
+            }
+        });
+        subMenus.put(3, new Menu("Show Available Sorts ", this) {
+            @Override
+            public void executeMenu() {
+                currentSort();
+            }
+        });
+        subMenus.put(4, new Menu("Show Available Sorts ", this) {
+            @Override
+            public void executeMenu() {
+                disableSort();
+            }
+        });
     }
 
     @Override
     public void showMenu() {
-        System.out.println("- Show Available Sorts");
-        System.out.println("- Sort [Available]");
-        System.out.println("- Current Sort");
-        System.out.println("- Disable Sort");
+        System.out.println("1. Show Available Sorts");
+        System.out.println("2. Sort");
+        System.out.println("3. Current Sort");
+        System.out.println("4. Disable Sort");
+        System.out.println("5. Back");
+        if (Controller.getCurrentAccount() == null)
+            System.out.println("6. Login");
+        else
+            System.out.println("6. Logout");
     }
 
     @Override
     public void executeMenu() {
-        command = inputInFormat("Please Enter A Valid Command", MenusPattern.SORT.getRegex());
-        if (command.matches(AllCommands.SHOW_AVAILABLE_SORTS.getRegex())) {
-            showAvailableSorts();
-        } else if (command.matches(AllCommands.SORT.getRegex())) {
-            sort(command.split("\\s+")[1]);
-        } else if (command.matches(AllCommands.CURRENT_SORT.getRegex())) {
-            currentSort();
-        } else if (command.matches(AllCommands.DISABLE_SORT.getRegex())) {
-            disableSort();
-        } else if (command.matches(AllCommands.BACK.getRegex())) {
+        menusHistory.push(this);
+        int size = subMenus.size();
+        int option = getOptionWithRange(1, size);
+        if (option <= size) {
+            var nextMenu = subMenus.get(option);
+            nextMenu.showMenu();
+            nextMenu.executeMenu();
+        } else if (option == size + 1) {
             back();
-        } else if (command.matches(AllCommands.LOGIN.getRegex())) {
-            login();
-        } else if (command.matches(AllCommands.LOGOUT.getRegex())) {
-            logout();
+        } else if (option == size + 2) {
+            if (Controller.getCurrentAccount() == null) {
+                var login = subMenus.get(option);
+                login.showMenu();
+                login.executeMenu();
+            } else {
+                logout();
+                var mainMenu = new MainMenu();
+                mainMenu.showMenu();
+                mainMenu.executeMenu();
+            }
         }
         this.executeMenu();
     }
@@ -47,7 +80,8 @@ public class SortMenu extends Menu {
         Arrays.stream(SortTypes.values()).map(SortTypes::getSort).map(Sort::getName).forEach(System.out::println);
     }
 
-    private void sort(String sortName) {
+    private void sort() {
+        String sortName = inputInFormat("Enter A Valid Sort Name: ", "(?i)(rate|name|view|price)");
         var sort = Sort.getSortType(sortName);
         ProductController.applySort(sort);
     }

@@ -33,6 +33,11 @@ public class ProductPageMenu extends Menu {
         System.out.println("- Compare [PID]");
         System.out.println("- Comments");
         System.out.println("- Add Comment");
+        System.out.println("3. Back");
+        if (Controller.getCurrentAccount() == null)
+            System.out.println("4. Login");
+        else
+            System.out.println("4. Logout");
     }
 
     @Override
