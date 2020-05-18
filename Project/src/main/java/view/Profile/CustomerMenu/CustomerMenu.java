@@ -117,6 +117,11 @@ public class CustomerMenu extends Menu {
     }
 
     private void viewDiscountCodes() {
+        var discountCodes = customerController.viewDiscountCodes();
+        if (discountCodes == null || discountCodes.isEmpty()) {
+            System.out.println("You have no Discount Code !");
+            return;
+        }
         customerController.viewDiscountCodes().forEach(System.out::println);
     }
 }
