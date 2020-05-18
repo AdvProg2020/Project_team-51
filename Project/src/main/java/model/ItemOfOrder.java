@@ -4,16 +4,17 @@ import model.People.Seller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ItemOfOrder {
 
-    public static ArrayList<ItemOfOrder> allItemOfOrders = new ArrayList<>();
+    public static List<ItemOfOrder> allItemOfOrders = new ArrayList<>();
     private Seller seller;
-    private Product product ;
+    private Product product;
     private Double price;
     private Double discount;
     private Date date;
-    private int quantity ;
+    private int quantity;
 
     public ItemOfOrder(Seller seller, Product product, Double price, Double discount, Date date) {
         this.seller = seller;
@@ -22,7 +23,11 @@ public class ItemOfOrder {
         this.discount = discount;
         this.date = date;
         allItemOfOrders.add(this);
-        quantity=0;
+        quantity = 0;
+    }
+
+    public static void addItemOfOrder(ItemOfOrder itemOfOrder) {
+        allItemOfOrders.add(itemOfOrder);
     }
 
     public int getQuantity() {
@@ -64,6 +69,7 @@ public class ItemOfOrder {
     public void setDate(Date date) {
         this.date = date;
     }
+
     public Double getDiscount() {
         return discount;
     }
@@ -72,16 +78,12 @@ public class ItemOfOrder {
         this.discount = discount;
     }
 
-    public static void addItemOfOrder(ItemOfOrder itemOfOrder){
-        allItemOfOrders.add(itemOfOrder);
-    }
-
     @Override
     public String toString() {
-        return  "product : " + product + "\n" +
+        return "product : " + product + "\n" +
                 "price : " + price + "\n" +
                 "discount : " + discount + "\n" +
                 "date : " + date + "\n" +
-                "quantity :" + quantity  + "\n" ;
+                "quantity :" + quantity + "\n";
     }
 }

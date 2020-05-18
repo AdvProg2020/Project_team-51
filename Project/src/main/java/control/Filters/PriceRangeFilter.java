@@ -15,6 +15,11 @@ public class PriceRangeFilter extends Filter {
         name = "PriceRange";
     }
 
+    public static PriceRangeFilter getInstance() {
+        if (instance == null)
+            instance = new PriceRangeFilter();
+        return instance;
+    }
 
     @Override
     public List<Product> applyFilter(List<Product> products, Double from, Double to) {
@@ -22,11 +27,5 @@ public class PriceRangeFilter extends Filter {
         this.to = to;
         return products.stream().filter(product -> (product.getAveragePrice() >= from && product.getAveragePrice() <= to))
                 .collect(Collectors.toList());
-    }
-
-    public static PriceRangeFilter getInstance() {
-        if(instance==null)
-            instance=new PriceRangeFilter();
-        return instance;
     }
 }

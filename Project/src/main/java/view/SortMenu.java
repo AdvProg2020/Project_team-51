@@ -24,7 +24,7 @@ public class SortMenu extends Menu {
 
     @Override
     public void executeMenu() {
-        command = inputInFormat("Please Enter A Valid Command" , MenusPattern.SORT.getRegex());
+        command = inputInFormat("Please Enter A Valid Command", MenusPattern.SORT.getRegex());
         if (command.matches(AllCommands.SHOW_AVAILABLE_SORTS.getRegex())) {
             showAvailableSorts();
         } else if (command.matches(AllCommands.SORT.getRegex())) {

@@ -6,17 +6,17 @@ import model.Status;
 
 public class EditProductRequest extends Request {
 
-    private Product product ;
+    private Product product;
     private Seller seller;
     private String field;
     private String value;
 
-    public EditProductRequest(String requestId ,Product product, Seller seller, String field , String value ) {
-        super(requestId,"edit");
-        this.product = product ;
-        this.seller = seller ;
-        this.field = field ;
-        this.value = value ;
+    public EditProductRequest(String requestId, Product product, Seller seller, String field, String value) {
+        super(requestId, "edit");
+        this.product = product;
+        this.seller = seller;
+        this.field = field;
+        this.value = value;
     }
 
     @Override
@@ -43,13 +43,13 @@ public class EditProductRequest extends Request {
                 product.setDescription(value);
                 break;
             case "price":
-                product.setPrice(Double.parseDouble(value),seller);
+                product.setPrice(Double.parseDouble(value), seller);
                 break;
             case "quantity":
-                product.setQuantity(Integer.parseInt(value),seller);
+                product.setQuantity(Integer.parseInt(value), seller);
                 break;
         }
 
-        status= Status.APPROVED;
+        status = Status.APPROVED;
     }
 }

@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 
 public class SellerMenu extends Menu {
 
-    private SellerController sellerController ;
+    private SellerController sellerController;
 
     public SellerMenu(Menu parentMenu) {
         super("Seller Menu", parentMenu);
@@ -55,7 +55,7 @@ public class SellerMenu extends Menu {
     @Override
     public void executeMenu() {
         menusHistory.push(this);
-        command = inputInFormat("Select option : " , MenusPattern.SELLER.getRegex());
+        command = inputInFormat("Select option : ", MenusPattern.SELLER.getRegex());
         if (command.matches(AllCommands.PERSONAL_INFO.getRegex())) {
             viewPersonalInfo(); //done
         } else if (command.matches(AllCommands.COMPANY_INFO.getRegex())) {
@@ -83,9 +83,9 @@ public class SellerMenu extends Menu {
         this.executeMenu();
     }
 
-    private void viewPersonalInfo(){
+    private void viewPersonalInfo() {
         System.out.println(sellerController.viewPersonalInfo());
-        var subMenu = new Menu("Edit Personal Info" , this) {
+        var subMenu = new Menu("Edit Personal Info", this) {
 
             @Override
             public void showMenu() {
@@ -95,7 +95,7 @@ public class SellerMenu extends Menu {
             @Override
             public void executeMenu() {
                 menusHistory.push(this);
-                command=inputInFormat("Select option : ",MenusPattern.SELLER_PERSONAL_INFO.getRegex());
+                command = inputInFormat("Select option : ", MenusPattern.SELLER_PERSONAL_INFO.getRegex());
                 if (command.matches(AllCommands.EDIT_PERSONAL_INFO.getRegex())) {
                     editPersonalInfoField(this);
                 } else if (command.matches(AllCommands.BACK.getRegex())) {
@@ -122,7 +122,7 @@ public class SellerMenu extends Menu {
     private void manageProducts() {
         sellerController.showSellersProducts().forEach(System.out::println);
         command = inputInFormat("You Can View a Product Info,Buyers or Edit it: ",
-                                MenusPattern.MANAGE_PRODUCTS.getRegex());
+                MenusPattern.MANAGE_PRODUCTS.getRegex());
         if (command.matches(AllCommands.VIEW_PID.getRegex())) {
             viwProductDetails(command.split("\\s+")[1]); //done
         } else if (command.matches(AllCommands.VIEW_BUYERS_PID.getRegex())) {
@@ -141,7 +141,7 @@ public class SellerMenu extends Menu {
 
     private void viewProductBuyers(String id) {
 
-        Product product ;
+        Product product;
         try {
             product = Product.getProductById(id);
         } catch (InvalidProductIdException e) {
@@ -152,9 +152,9 @@ public class SellerMenu extends Menu {
         sellerController.viewProductBuyers(product).forEach(System.out::println);
     }
 
-    private void viwProductDetails(String id){
+    private void viwProductDetails(String id) {
 
-        Product product ;
+        Product product;
         try {
             product = Product.getProductById(id);
         } catch (InvalidProductIdException e) {
@@ -166,7 +166,7 @@ public class SellerMenu extends Menu {
     }
 
     private void editProduct(String id) {
-        Product product ;
+        Product product;
         try {
             product = Product.getProductById(id);
         } catch (InvalidProductIdException e) {
@@ -174,14 +174,14 @@ public class SellerMenu extends Menu {
             return;
         }
         System.out.println("Name\nPrice\nDescription\nQuantity");
-        String field = inputInFormat("select a option : " , "(?i)(name|price|description|quantity)");
-        String value = inputInFormat("Enter a value for selected field : " , "\\W+");
-        SellerController.editProduct(product,field,value);
+        String field = inputInFormat("select a option : ", "(?i)(name|price|description|quantity)");
+        String value = inputInFormat("Enter a value for selected field : ", "\\W+");
+        SellerController.editProduct(product, field, value);
 
     }
 
     private void addProduct(Menu parent) {
-        var addProductMenu = new Menu("Add Product Menu : " , parent){
+        var addProductMenu = new Menu("Add Product Menu : ", parent) {
 
             @Override
             public void showMenu() {
@@ -190,8 +190,8 @@ public class SellerMenu extends Menu {
 
             @Override
             public void executeMenu() {
-                command = inputInFormat("Select a option : " , "(?i)(existed\\s+product|new\\s+product" +
-                                                                                "|back|logout)");
+                command = inputInFormat("Select a option : ", "(?i)(existed\\s+product|new\\s+product" +
+                        "|back|logout)");
                 if (command.matches("existed\\s+product")) {
                     addExistedProduct();
                 } else if (command.matches("new\\s+product")) {
@@ -209,9 +209,9 @@ public class SellerMenu extends Menu {
         addProductMenu.executeMenu();
     }
 
-    private void addExistedProduct(){
-        Product product ;
-        String id = inputInFormat("Please enter the product Id : " , "\\w+");
+    private void addExistedProduct() {
+        Product product;
+        String id = inputInFormat("Please enter the product Id : ", "\\w+");
         try {
             product = Product.getProductById(id);
         } catch (InvalidProductIdException e) {
@@ -219,55 +219,55 @@ public class SellerMenu extends Menu {
             return;
         }
         System.out.println("Enter Quantity : ");
-        int quantity = getOptionWithRange(0 , Integer.MAX_VALUE);
+        int quantity = getOptionWithRange(0, Integer.MAX_VALUE);
         System.out.println("Enter Price : ");
-        double price = getOptionWithRangeDouble(0.00 , Double.MAX_VALUE);
+        double price = getOptionWithRangeDouble(0.00, Double.MAX_VALUE);
 
-        new AddSellerForItemRequest(TokenGenerator.generateRequestId(),product,
-                                    (Seller)Controller.getCurrentAccount(), quantity,price);
+        new AddSellerForItemRequest(TokenGenerator.generateRequestId(), product,
+                (Seller) Controller.getCurrentAccount(), quantity, price);
     }
 
-    private void showCategories(List<Category> categories){
+    private void showCategories(List<Category> categories) {
         for (int i = 0; i < categories.size(); i++) {
             var category = categories.get(i);
-            System.out.println((i+1)+ ". " + Category.getPathOfCategory(category) );
+            System.out.println((i + 1) + ". " + Category.getPathOfCategory(category));
         }
     }
 
-    private void addNewProduct(){
+    private void addNewProduct() {
         var categories = sellerController.listCategories();
-        String name = inputInFormat("Enter the name of product : " , "\\w+");
-        String brand = inputInFormat("Enter the name of product : " , "\\w+");
+        String name = inputInFormat("Enter the name of product : ", "\\w+");
+        String brand = inputInFormat("Enter the name of product : ", "\\w+");
         showCategories(categories);
         System.out.println("Enter product parent category number : ");
-        int categoryOption = getOptionWithRange(1,categories.size());
-        var parentCategory = categories.get(categoryOption-1);
-        Map<Attributes,String> attribute = getAttributesToAddProduct(parentCategory);
+        int categoryOption = getOptionWithRange(1, categories.size());
+        var parentCategory = categories.get(categoryOption - 1);
+        Map<Attributes, String> attribute = getAttributesToAddProduct(parentCategory);
         System.out.println("Enter product quantity : ");
-        int quantity = getOptionWithRange(1,Integer.MAX_VALUE);
+        int quantity = getOptionWithRange(1, Integer.MAX_VALUE);
         System.out.println("Enter product price : ");
-        double price = getOptionWithRangeDouble(0.00 , Double.MAX_VALUE);
-        String description = inputInFormat("Enter a description for product : " , "\\w+");
+        double price = getOptionWithRangeDouble(0.00, Double.MAX_VALUE);
+        String description = inputInFormat("Enter a description for product : ", "\\w+");
         try {
-            sellerController.addProduct(new Product(TokenGenerator.generateProductId(),name,brand,price,
-                                                   (Seller)Controller.getCurrentAccount(),quantity
-                                                    ,parentCategory,description,attribute));
+            sellerController.addProduct(new Product(TokenGenerator.generateProductId(), name, brand, price,
+                    (Seller) Controller.getCurrentAccount(), quantity
+                    , parentCategory, description, attribute));
             System.out.println("Adding Product Request Sent ! ");
         } catch (NotAllowedActivityException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private Map<Attributes,String> getAttributesToAddProduct(Category parentCategory){
+    private Map<Attributes, String> getAttributesToAddProduct(Category parentCategory) {
         return parentCategory.getAttributes().stream()
                 .peek(System.out::println)
-                .collect(Collectors.toMap(Function.identity(),a-> inputInFormat(
-                                                                    "Please enter a value for field : ",
-                                                                    "\\w+")));
+                .collect(Collectors.toMap(Function.identity(), a -> inputInFormat(
+                        "Please enter a value for field : ",
+                        "\\w+")));
     }
 
     private void removeProduct(String id) {
-        Product product ;
+        Product product;
         try {
             product = Product.getProductById(id);
         } catch (InvalidProductIdException e) {
@@ -277,20 +277,20 @@ public class SellerMenu extends Menu {
         sellerController.removeProduct(product);
     }
 
-    private void showCategories(){
+    private void showCategories() {
         sellerController.showCategories().forEach(System.out::println);
     }
 
-    private void viewOffs(Menu parent){
+    private void viewOffs(Menu parent) {
         sellerController.viewOffs().forEach(System.out::println);
-        var offsMenu = new Menu("Offs Manager Menu" , parent){
+        var offsMenu = new Menu("Offs Manager Menu", parent) {
 
             @Override
             public void executeMenu() {
                 menusHistory.push(this);
-                command = inputInFormat("you can view,edit or add an off : " ,"(?i)(add\\s+off|" +
-                                                                                         "edit\\s+(\\w+)|view\\s+(\\w+))");
-                if (command.matches("(?i)add\\s+off")){
+                command = inputInFormat("you can view,edit or add an off : ", "(?i)(add\\s+off|" +
+                        "edit\\s+(\\w+)|view\\s+(\\w+))");
+                if (command.matches("(?i)add\\s+off")) {
                     addOff(); // done
                 } else if (command.matches("(?i)edit")) {
                     editOffAttribute(); //done
@@ -309,7 +309,7 @@ public class SellerMenu extends Menu {
         offsMenu.executeMenu();
     }
 
-    private void viewOffById(String id){
+    private void viewOffById(String id) {
         try {
             System.out.println(sellerController.viewOffById(id).toString());
         } catch (InvalidAuctionIdException e) {
@@ -317,43 +317,29 @@ public class SellerMenu extends Menu {
         }
     }
 
-    private void editOffAttribute(){
+    private void editOffAttribute() {
         var auction = getAuctionToEdit();
         command = getAttribute();
-        if (command.matches("(?i)begin\\s+date")){
-            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,command,getBeginDateForEdit());
-        } else if (command.matches("(?i)end\\s+date")){
-            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,command,getEndDateForEdit());
-        } else if (command.matches("(?i)off\\s+percentage")){
-            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,command,Integer.toString(getOffPercentage()));
-        } else if (command.matches("(?i)add\\s+product")){
-            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,command,getProductToAddForEdit(auction));
-        } else if (command.matches("(?i)remove\\s+product")){
-            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,command,getProductToRemoveForEdit(auction));
+        if (command.matches("(?i)begin\\s+date")) {
+            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, command, getBeginDateForEdit());
+        } else if (command.matches("(?i)end\\s+date")) {
+            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, command, getEndDateForEdit());
+        } else if (command.matches("(?i)off\\s+percentage")) {
+            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, command, Integer.toString(getOffPercentage()));
+        } else if (command.matches("(?i)add\\s+product")) {
+            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, command, getProductToAddForEdit(auction));
+        } else if (command.matches("(?i)remove\\s+product")) {
+            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, command, getProductToRemoveForEdit(auction));
         }
     }
 
-    private String getProductToAddForEdit(Auction auction){
+    private String getProductToAddForEdit(Auction auction) {
         Product product = null;
         String pid = "";
-        while ( product==null || auction.getAppliedProducts().contains(product)) {
+        while (product == null || auction.getAppliedProducts().contains(product)) {
             pid = scanner.nextLine();
             try {
-                product= Product.getProductById(pid);
-            } catch (InvalidProductIdException e) {
-                System.out.println("invalid PID !");
-            }
-        }
-        return pid ;
-    }
-
-    private String getProductToRemoveForEdit(Auction auction){
-        Product product = null;
-        String pid = "";
-        while ( product==null || !auction.getAppliedProducts().contains(product)) {
-            pid = scanner.nextLine();
-            try {
-                product= Product.getProductById(pid);
+                product = Product.getProductById(pid);
             } catch (InvalidProductIdException e) {
                 System.out.println("invalid PID !");
             }
@@ -361,32 +347,46 @@ public class SellerMenu extends Menu {
         return pid;
     }
 
-    private String getAttribute(){
-        return inputInFormatWithError("Enter Auction Id you want to edit  :" ,
+    private String getProductToRemoveForEdit(Auction auction) {
+        Product product = null;
+        String pid = "";
+        while (product == null || !auction.getAppliedProducts().contains(product)) {
+            pid = scanner.nextLine();
+            try {
+                product = Product.getProductById(pid);
+            } catch (InvalidProductIdException e) {
+                System.out.println("invalid PID !");
+            }
+        }
+        return pid;
+    }
+
+    private String getAttribute() {
+        return inputInFormatWithError("Enter Auction Id you want to edit  :",
                 "(?i)(begin\\s+date|end\\s+date|off\\+percentage|add\\s+product|remove\\s+product)", "Invalid Format");
     }
 
-    private Auction getAuctionToEdit(){
+    private Auction getAuctionToEdit() {
 
-        command = inputInFormatWithError("Enter Auction Id you want to edit  :" , "AUC_\\d{5}"  , "Invalid Format");
+        command = inputInFormatWithError("Enter Auction Id you want to edit  :", "AUC_\\d{5}", "Invalid Format");
         var auction = Auction.getAuctionById(command);
-        if (auction!=null) return auction;
-        else return  getAuctionToEdit();
+        if (auction != null) return auction;
+        else return getAuctionToEdit();
 
     }
 
-    private void addOff(){
-        var seller = (Seller)Controller.getCurrentAccount();
+    private void addOff() {
+        var seller = (Seller) Controller.getCurrentAccount();
         Date beginDate = getBeginDate();
         Date endDate = getEndDate(beginDate);
         ArrayList<Product> appliedProducts = new ArrayList<>(getAppliedProducts());
         int offPercentage = getOffPercentage();
         new AddAuctionRequest(TokenGenerator.generateRequestId(),
-                              new Auction(seller,beginDate,endDate,
-                              appliedProducts,offPercentage),seller);
+                new Auction(seller, beginDate, endDate,
+                        appliedProducts, offPercentage), seller);
     }
 
-    private int getOffPercentage(){
+    private int getOffPercentage() {
         String input;
         while (true) {
             input = scanner.nextLine();
@@ -397,10 +397,10 @@ public class SellerMenu extends Menu {
         }
     }
 
-    private ArrayList<Product> getAppliedProducts(){
+    private ArrayList<Product> getAppliedProducts() {
         String productId;
         ArrayList<Product> appliedProducts = new ArrayList<>();
-        while (!(productId=scanner.nextLine()).equalsIgnoreCase("end")){
+        while (!(productId = scanner.nextLine()).equalsIgnoreCase("end")) {
             try {
                 var product = Product.getProductById(productId);
                 appliedProducts.add(product);
@@ -412,15 +412,15 @@ public class SellerMenu extends Menu {
         return appliedProducts;
     }
 
-    private String getBeginDateForEdit(){
+    private String getBeginDateForEdit() {
         return inputInFormat("Enter Begin Date in format (dd/mm/yyyy) : ", "\\d\\d/\\d\\d/\\d\\d\\d\\d");
     }
 
-    private String getEndDateForEdit(){
+    private String getEndDateForEdit() {
         return inputInFormat("Enter End Date in format (dd/mm/yyyy) : ", "\\d\\d/\\d\\d/\\d\\d\\d\\d");
     }
 
-    private Date getBeginDate(){
+    private Date getBeginDate() {
         try {
             return new SimpleDateFormat("dd//MM/yyyy").parse(inputInFormat("Enter Begin Date in format (dd/mm/yyyy) : "
                     , "\\d\\d/\\d\\d/\\d\\d\\d\\d"));
@@ -439,24 +439,24 @@ public class SellerMenu extends Menu {
                 return date;
             else
                 getEndDate(begin);
-            } catch(ParseException e){
-                System.out.println("invalid date");
-                getEndDate(begin);
-            }
-            return null;
+        } catch (ParseException e) {
+            System.out.println("invalid date");
+            getEndDate(begin);
         }
+        return null;
+    }
 
-    private void viewSellerBalance(){
+    private void viewSellerBalance() {
         System.out.println(sellerController.getBalance() + " $");
-     }
+    }
 
-    private void editPersonalInfoField(Menu parent){
-        var editPersonalInfo = new Menu("Edit Personal Info " , parent){
+    private void editPersonalInfoField(Menu parent) {
+        var editPersonalInfo = new Menu("Edit Personal Info ", parent) {
 
             @Override
             public void showMenu() {
-                System.out.println("First Name : "+ "\n" +
-                        "Last Name : "  + "\n" +
+                System.out.println("First Name : " + "\n" +
+                        "Last Name : " + "\n" +
                         "Email : " + "\n" +
                         "Phone : " + "\n" +
                         "Brand ");
@@ -466,7 +466,7 @@ public class SellerMenu extends Menu {
             public void executeMenu() {
                 menusHistory.push(this);
                 command = SellerMenu.this.inputInFormat("Select Option : ",
-                                                        MenusPattern.EDIT_SELLER_PERSONAL_INFO.getRegex());
+                        MenusPattern.EDIT_SELLER_PERSONAL_INFO.getRegex());
                 if (command.matches(AllCommands.FIRST_NAME.getRegex())) {
                     getFirstName();
                 } else if (command.matches(AllCommands.LAST_NAME.getRegex())) {
@@ -488,9 +488,9 @@ public class SellerMenu extends Menu {
         editPersonalInfo.executeMenu();
     }
 
-    private void getFirstName(){
+    private void getFirstName() {
         System.out.println("Please Enter Your New First Name : ");
-        command=inputInFormat("Invalid Format !" , "(?i)\\w+");
+        command = inputInFormat("Invalid Format !", "(?i)\\w+");
         try {
             SellerController.editFirstName(command);
             System.out.println("New first name submitted !");
@@ -500,9 +500,9 @@ public class SellerMenu extends Menu {
         }
     }
 
-    private void getLastName(){
+    private void getLastName() {
         System.out.println("Please Enter Your New Last Name : ");
-        command=inputInFormat("Invalid Format !" , "(?i)\\w+");
+        command = inputInFormat("Invalid Format !", "(?i)\\w+");
         try {
             SellerController.editLastName(command);
             System.out.println("New last name submitted !");
@@ -512,24 +512,24 @@ public class SellerMenu extends Menu {
         }
     }
 
-    private void getEmail(){
+    private void getEmail() {
         System.out.println("Please Enter Your New Email : ");
-        command=inputInFormat("Invalid Format !" , "(?i)\\w+@\\w+\\.\\w+");
+        command = inputInFormat("Invalid Format !", "(?i)\\w+@\\w+\\.\\w+");
         try {
             SellerController.editEmail(command);
             System.out.println("New email submitted !");
-        } catch (InstanceAlreadyExistsException e ) {
+        } catch (InstanceAlreadyExistsException e) {
             System.out.println("This is your old email ! ");
             getEmail();
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println("Email has already used for other Account");
             getEmail();
         }
     }
 
-    private void getPhone(){
+    private void getPhone() {
         System.out.println("Please Enter Your New Phone Number : ");
-        command=inputInFormat("Invalid Format !" , "(?i)[0-9]+");
+        command = inputInFormat("Invalid Format !", "(?i)[0-9]+");
         try {
             SellerController.editPhoneNumber(command);
             System.out.println("New phoneNumber submitted !");
@@ -539,15 +539,15 @@ public class SellerMenu extends Menu {
         } catch (WrongFormatException e) {
             System.out.println("Phone number has already used for other Account");
             getPhone();
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println("Invalid Format !");
             getPhone();
         }
     }
 
-    private void getBrand(){
+    private void getBrand() {
         System.out.println("Please Enter Your New Brand Name : ");
-        command=inputInFormat("Invalid Format !" , "(?i)\\w+");
+        command = inputInFormat("Invalid Format !", "(?i)\\w+");
         try {
             SellerController.editBrand(command);
             System.out.println("New brand name submitted !");

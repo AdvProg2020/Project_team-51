@@ -10,7 +10,7 @@ public class AddSellerRequest extends Request {
 
     public AddSellerRequest(String requestId, Seller seller) {
         super(requestId, "add");
-        this.seller = seller ;
+        this.seller = seller;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class AddSellerRequest extends Request {
     @Override
     public void accept() {
         Account.addSeller(seller);
-        status=(Status.APPROVED);
+        status = (Status.APPROVED);
         seller.setStatus(Status.APPROVED);
     }
 }

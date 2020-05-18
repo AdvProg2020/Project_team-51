@@ -6,11 +6,11 @@ import java.io.IOException;
 
 public class WriteIntoFiles {
 
-    public static void writeIntoFile(String yaGson , String path) throws IOException {
+    public static void writeIntoFile(String yaGson, String path) throws IOException {
         File file = new File(path);
         if (!file.exists()) {
             try {
-            file.createNewFile();
+                file.createNewFile();
             } catch (IOException e) {
                 throw new IOException();
             }

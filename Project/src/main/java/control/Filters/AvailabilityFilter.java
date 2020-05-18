@@ -9,18 +9,18 @@ public class AvailabilityFilter extends Filter {
 
     private static AvailabilityFilter instance = null;
 
-    private AvailabilityFilter(){
-        name = "Availability" ;
+    private AvailabilityFilter() {
+        name = "Availability";
+    }
+
+    public static AvailabilityFilter getInstance() {
+        if (instance == null)
+            instance = new AvailabilityFilter();
+        return instance;
     }
 
     @Override
     public List<Product> applyFilter(List<Product> products) {
         return products.stream().filter(product -> product.getTotalQuantity() > 0).collect(Collectors.toList());
-    }
-
-    public static AvailabilityFilter getInstance() {
-        if(instance==null)
-            instance=new AvailabilityFilter();
-        return instance;
     }
 }

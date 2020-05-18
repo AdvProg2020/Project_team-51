@@ -7,13 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CategoryFilter extends Filter{
+public class CategoryFilter extends Filter {
 
     private static CategoryFilter instance = null;
     public List<Category> acceptedCategories = new ArrayList<>();
 
-    private CategoryFilter(){
-        name = "Category" ;
+    private CategoryFilter() {
+        name = "Category";
+    }
+
+    public static CategoryFilter getInstance() {
+        if (instance == null)
+            instance = new CategoryFilter();
+        return instance;
     }
 
     @Override
@@ -21,11 +27,5 @@ public class CategoryFilter extends Filter{
         this.acceptedCategories = acceptedCategories;
         return products.stream().filter(product -> acceptedCategories.contains(product.getParentCategory()))
                 .collect(Collectors.toList());
-    }
-
-    public static CategoryFilter getInstance() {
-        if(instance==null)
-            instance=new CategoryFilter();
-        return instance;
     }
 }

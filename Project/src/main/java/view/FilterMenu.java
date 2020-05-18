@@ -11,6 +11,7 @@ public class FilterMenu extends Menu {
     public FilterMenu(Menu parentMenu) {
         super("Filter Menu", parentMenu);
     }
+
     @Override
     public void showMenu() {
         System.out.println("- Show Available Filters");
@@ -18,10 +19,11 @@ public class FilterMenu extends Menu {
         System.out.println("- Current Filters");
         System.out.println("- Disable Filter [Available]");
     }
+
     @Override
     public void executeMenu() {
         menusHistory.push(this);
-        command = inputInFormat("Please Enter A Valid Command" , MenusPattern.FILTER.getRegex());
+        command = inputInFormat("Please Enter A Valid Command", MenusPattern.FILTER.getRegex());
         if (command.matches(AllCommands.SHOW_AVAILABLE_FILTERS.getRegex())) {
             showAvailableFilters();
         } else if (command.matches(AllCommands.FILTER.getRegex())) {

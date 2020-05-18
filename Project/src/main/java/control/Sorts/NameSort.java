@@ -8,13 +8,18 @@ import java.util.List;
 public class NameSort extends Sort {
 
 
-    private static NameSort instance = null ;
+    private static NameSort instance = null;
 
     private NameSort() {
-        isAscending = false ;
-        name="Name";
+        isAscending = false;
+        name = "Name";
     }
 
+    public static NameSort getInstance() {
+        if (instance == null)
+            instance = new NameSort();
+        return instance;
+    }
 
     public List<Product> applyAscendingSort(List<Product> products) {
         isAscending = true;
@@ -22,17 +27,10 @@ public class NameSort extends Sort {
         return products;
     }
 
-
     public List<Product> applyDescendingSort(List<Product> products) {
         isAscending = false;
         products.sort(Comparator.comparing(Product::getName).reversed());
         return products;
-    }
-
-    public static NameSort getInstance() {
-        if (instance==null)
-            instance=new NameSort();
-        return instance;
     }
 
     @Override

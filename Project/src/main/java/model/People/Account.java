@@ -1,33 +1,58 @@
 package model.People;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Account {
-    protected String username ;
-    private String password ;
+    protected static List<Account> allAccounts = new ArrayList<Account>();
+    protected String username;
     protected String firstName;
     protected String lastName;
     protected Double balance;
     protected String email;
     protected String phoneNumber;
-    protected static ArrayList<Account> allAccounts = new ArrayList<Account>();
+    private String password;
 
-    public Account(String username,String password , String firstName, String lastName, Double balance, String email, String phoneNumber) {
+    public Account(String username, String password, String firstName, String lastName, Double balance, String email, String phoneNumber) {
         this.username = username;
-        this.password = password ;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.balance = balance;
         this.email = email;
         this.phoneNumber = phoneNumber;
         if (this instanceof Customer || this instanceof Manager)
-        allAccounts.add(this);
+            allAccounts.add(this);
+    }
+
+    public static List<Account> getAllAccounts() {
+        return allAccounts;
     }
 
     public static void setAllAccounts(ArrayList<Account> accounts) {
         allAccounts = accounts;
     }
 
+    public static void addSeller(Seller seller) {
+        allAccounts.add(seller);
+    }
+
+    public static Account getAccountById(String username) {
+
+        for (Account account : allAccounts) {
+            if (account.username.equals(username)) {
+                return account;
+            }
+        }
+        return null;
+    }
+
+    public static boolean doesManagerExist() {
+        for (Account account : allAccounts) {
+            if (account instanceof Manager) return true;
+        }
+        return false;
+    }
 
     public String getPassword() {
         return password;
@@ -83,31 +108,5 @@ public abstract class Account {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public static ArrayList<Account> getAllAccounts() {
-        return allAccounts;
-    }
-
-    public static void addSeller(Seller seller) {
-        allAccounts.add(seller);
-    }
-
-    public static Account getAccountById(String username){
-
-        for (Account account : allAccounts) {
-            if (account.username.equals(username)){
-                return account;
-            }
-        }
-        return null;
-    }
-
-    public static boolean doesManagerExist(){
-        for (Account account : allAccounts)
-        {
-            if (account instanceof Manager) return true;
-        }
-        return false;
     }
 }

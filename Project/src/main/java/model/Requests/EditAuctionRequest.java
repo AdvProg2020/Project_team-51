@@ -8,12 +8,12 @@ import model.Status;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class EditAuctionRequest extends Request{
+public class EditAuctionRequest extends Request {
     private Auction auction;
     private String field;
     private String value;
 
-    public EditAuctionRequest(String requestId , Auction auction , String field , String value) {
+    public EditAuctionRequest(String requestId, Auction auction, String field, String value) {
         super(requestId, "edit");
         this.auction = auction;
         this.field = field;
@@ -25,7 +25,7 @@ public class EditAuctionRequest extends Request{
         return "Edit Auction Request : " +
                 "\nAuctionId" + auction.getAuctionId() +
                 "\nField : " + field +
-                "\nValue : " + value ;
+                "\nValue : " + value;
     }
 
     @Override
@@ -49,6 +49,6 @@ public class EditAuctionRequest extends Request{
                 break;
         }
 
-        status= Status.APPROVED;
+        status = Status.APPROVED;
     }
 }

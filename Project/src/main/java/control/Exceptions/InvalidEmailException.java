@@ -1,7 +1,7 @@
 package control.Exceptions;
 
 public class InvalidEmailException extends Exception {
-    public InvalidEmailException( ) {
+    public InvalidEmailException() {
         super("this email is used");
     }
 }

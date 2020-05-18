@@ -8,16 +8,16 @@ import java.util.Date;
 public class Auction {
 
     private static ArrayList<Auction> allAuctions = new ArrayList<Auction>();
-    private Seller seller ;
-    private String auctionId ;
+    private Seller seller;
+    private String auctionId;
     private Date beginDate;
     private Date endDate;
     private ArrayList<Product> appliedProducts = new ArrayList<Product>();
     private int offPercentage;
-    private Status auctionStatus ;
+    private Status auctionStatus;
 
-    public Auction(Seller seller ,Date beginDate, Date endDate, ArrayList<Product> appliedProducts, int offPercentage) {
-        this.seller=seller;
+    public Auction(Seller seller, Date beginDate, Date endDate, ArrayList<Product> appliedProducts, int offPercentage) {
+        this.seller = seller;
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.appliedProducts = appliedProducts;
@@ -28,6 +28,19 @@ public class Auction {
 
     public static ArrayList<Auction> getAllAuctions() {
         return allAuctions;
+    }
+
+    public static Auction getAuctionById(String auctionId) {
+        for (Auction auction : allAuctions) {
+            if (auction.getAuctionId().equals(auctionId))
+                return auction;
+        }
+
+        return null;
+    }
+
+    public static void addAuction(Auction auction) {
+        allAuctions.add(auction);
     }
 
     public String getAuctionId() {
@@ -82,25 +95,12 @@ public class Auction {
         this.auctionStatus = auctionStatus;
     }
 
-    public static Auction getAuctionById(String auctionId){
-        for (Auction auction : allAuctions) {
-            if (auction.getAuctionId().equals(auctionId))
-                return auction;
-        }
-
-        return null;
-    }
-
-    public static void addAuction(Auction auction){
-        allAuctions.add(auction);
-    }
-
     @Override
     public String toString() {
-        return  "auctionId : " + auctionId  + "\n" +
+        return "auctionId : " + auctionId + "\n" +
                 "beginDate : " + beginDate + "\n" +
                 "endDate : " + endDate + "\n" +
                 "offPercentage : " + offPercentage + "\n" +
-                "auctionStatus : " + auctionStatus ;
+                "auctionStatus : " + auctionStatus;
     }
 }

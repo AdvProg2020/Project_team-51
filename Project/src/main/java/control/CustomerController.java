@@ -15,59 +15,59 @@ public class CustomerController extends Controller {
         return true;
     }
 
-    public static void editFirstName (String firstName) {
+    public static void editFirstName(String firstName) {
 
     }
 
-    public static void editLastName (String lastName) {
+    public static void editLastName(String lastName) {
 
     }
 
-    public static void editEmail (String email) {
+    public static void editEmail(String email) {
 
     }
 
-    public static void editPhoneNumber (String phoneNumber) {
+    public static void editPhoneNumber(String phoneNumber) {
 
     }
 
-    public static Boolean isThisPidValid(String productId){
+    public static Boolean isThisPidValid(String productId) {
         return true;
     }
 
-    public static Product viewProduct(String pid){
+    public static Product viewProduct(String pid) {
         return null;
     }
 
-    public static void increaseProduct(String productId ,Integer number){
+    public static void increaseProduct(String productId, Integer number) {
 
     }
 
-    public static void decreaseProduct(String productId ,Integer number){
+    public static void decreaseProduct(String productId, Integer number) {
 
     }
 
-    public static Double showTotalPrice(){
+    public static Double showTotalPrice() {
         return null;
     }
 
-    public static void purchase(){
+    public static void purchase() {
 
     }
 
-    public static void emptyCard(){
+    public static void emptyCard() {
 
     }
 
-    public static Double viewBalance(){
+    public static Double viewBalance() {
         return null;
     }
 
-    public static Boolean rateProduct(String productId ,Integer rate){
+    public static Boolean rateProduct(String productId, Integer rate) {
         return null;
     }
 
-    public static ArrayList<String> viewDiscountCodes(){
+    public static ArrayList<String> viewDiscountCodes() {
         return null;
     }
 

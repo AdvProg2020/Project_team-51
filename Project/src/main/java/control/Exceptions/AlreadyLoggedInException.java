@@ -5,7 +5,7 @@ public class AlreadyLoggedInException extends Exception {
 
     public AlreadyLoggedInException(String message) {
         super(message);
-        this.message = message ;
+        this.message = message;
     }
 
     @Override

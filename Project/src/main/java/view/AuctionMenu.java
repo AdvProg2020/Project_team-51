@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class AuctionMenu extends Menu{
+public class AuctionMenu extends Menu {
 
     public AuctionMenu(Menu parentMenu) {
         super("Auction Menu", parentMenu);
@@ -36,13 +36,13 @@ public class AuctionMenu extends Menu{
             productsWithOffLists.executeMenu();
         } else if (command.matches("(?i)show\\s+product\\s+(\\S+)")) {
             showProduct(command.split("\\s")[2]);
-        } else if (command.matches("(?i)back")){
+        } else if (command.matches("(?i)back")) {
             back();
-        } else if (command.matches("(?i)login") && Controller.getCurrentAccount()==null){
+        } else if (command.matches("(?i)login") && Controller.getCurrentAccount() == null) {
             var login = subMenus.get(1);
             login.showMenu();
             login.executeMenu();
-        } else if (command.matches("(?i)logout") && Controller.getCurrentAccount()!=null){
+        } else if (command.matches("(?i)logout") && Controller.getCurrentAccount() != null) {
             logout();
         }
         this.executeMenu();
@@ -50,12 +50,12 @@ public class AuctionMenu extends Menu{
 
     private void showProductsWithOffs() {
         var currentSort = ProductController.getCurrentSort().getSort();
-        var productsOfThisCategory = currentSort.applySort(getProductsWithOffs() , currentSort.getAscending());
+        var productsOfThisCategory = currentSort.applySort(getProductsWithOffs(), currentSort.getAscending());
         for (int i = 0; i < productsOfThisCategory.size(); i++) {
-            if (i!=0)
+            if (i != 0)
                 System.out.println("--------------------------");
             var product = productsOfThisCategory.get(i);
-            System.out.println((i+1) + ". " + product.getName() + " |  " + product.getPrice() + "$" + "  |  " + product.getProductId());
+            System.out.println((i + 1) + ". " + product.getName() + " |  " + product.getPrice() + "$" + "  |  " + product.getProductId());
         }
     }
 
@@ -67,7 +67,7 @@ public class AuctionMenu extends Menu{
             System.out.println(e.getMessage());
             return;
         }
-        var productPage = new ProductPageMenu(this , product);
+        var productPage = new ProductPageMenu(this, product);
         productPage.showMenu();
         productPage.executeMenu();
     }

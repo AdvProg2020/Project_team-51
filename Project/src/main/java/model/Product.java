@@ -16,43 +16,31 @@ public class Product {
     private Map<Seller, Status> status;
     private String name;
     private String brandName;
-    private Map<Seller,Double> price = new HashMap<>();
-    private Map<Seller,Integer> quantity = new HashMap<>();
+    private Map<Seller, Double> price = new HashMap<>();
+    private Map<Seller, Integer> quantity = new HashMap<>();
     private Category parentCategory;
     private String description;
-    private Map<Attributes , String> attributes= new HashMap<>();
+    private Map<Attributes, String> attributes = new HashMap<>();
     private List<Rate> rating = new ArrayList<>();
     private int views;
     private List<Comment> comments = new ArrayList<>();
 
 
     public Product(String productId, String name, String brandName,
-                   Double price,Seller seller , int quantity, Category parentCategory, String description ,
-                   Map<Attributes,String> attributes) {
+                   Double price, Seller seller, int quantity, Category parentCategory, String description,
+                   Map<Attributes, String> attributes) {
         this.productId = productId;
         this.name = name;
         this.brandName = brandName;
-        this.price.putIfAbsent(seller,price);
-        this.quantity.putIfAbsent(seller,quantity);
+        this.price.putIfAbsent(seller, price);
+        this.quantity.putIfAbsent(seller, quantity);
         this.parentCategory = parentCategory;
         this.description = description;
-        this.attributes=attributes;
+        this.attributes = attributes;
         this.status.putIfAbsent(seller, Status.PENDING_CREATE);
         sellersForThisProduct.add(seller);
         allProducts.add(this);
-        views = 0 ;
-
-    }
-
-    public Map<Attributes,String> getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(HashMap<Attributes, String> attributes) {
-        this.attributes = attributes;
-    }
-
-    public void addAttribute(String value , String Attribute){
+        views = 0;
 
     }
 
@@ -62,6 +50,30 @@ public class Product {
 
     public static void setAllProducts(ArrayList<Product> allProducts) {
         Product.allProducts = allProducts;
+    }
+
+    public static Product getProductById(String productID) throws InvalidProductIdException {
+        for (Product product : allProducts) {
+            if (product.productId.equals(productID))
+                return product;
+        }
+        throw new InvalidProductIdException();
+    }
+
+    public static void addProduct(Product product) {
+        allProducts.add(product);
+    }
+
+    public Map<Attributes, String> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(HashMap<Attributes, String> attributes) {
+        this.attributes = attributes;
+    }
+
+    public void addAttribute(String value, String Attribute) {
+
     }
 
     public String getProductId() {
@@ -84,8 +96,8 @@ public class Product {
         return status;
     }
 
-    public void setStatus(Status status , Seller seller) {
-        this.status.replace(seller,status);
+    public void setStatus(Status status, Seller seller) {
+        this.status.replace(seller, status);
     }
 
     public String getName() {
@@ -108,16 +120,16 @@ public class Product {
         return price.get(seller);
     }
 
-    public void setPrice(Double price , Seller seller) {
-        this.price.replace(seller,price);
+    public void setPrice(Double price, Seller seller) {
+        this.price.replace(seller, price);
     }
 
     public int getQuantityForSeller(Seller seller) {
         return quantity.get(seller);
     }
 
-    public void setQuantity(int quantity , Seller seller) {
-        this.quantity.replace(seller,quantity);
+    public void setQuantity(int quantity, Seller seller) {
+        this.quantity.replace(seller, quantity);
     }
 
     public Category getParentCategory() {
@@ -152,28 +164,16 @@ public class Product {
         comments.add(comment);
     }
 
-    public static Product getProductById(String productID) throws InvalidProductIdException {
-        for (Product product : allProducts) {
-            if (product.productId.equals(productID))
-                return product;
-        }
-        throw new InvalidProductIdException();
-    }
-
-    public double averageRate(){
-        return   (double) ((rating.stream().map(r -> r.getScore()).reduce((a,b) -> a+b).orElse(0)) / rating.size()) ;
+    public double averageRate() {
+        return (rating.stream().map(r -> r.getScore()).reduce((a, b) -> a + b).orElse(0)) / rating.size();
     }
 
     public int getViews() {
         return views;
     }
 
-    public void addView(){
+    public void addView() {
         views++;
-    }
-
-    public static void addProduct(Product product){
-        allProducts.add(product);
     }
 
     public Map<Seller, Double> getPrice() {
@@ -184,12 +184,12 @@ public class Product {
         return quantity;
     }
 
-    public double getAveragePrice(){
-        double total =  price.values().stream().reduce(0.00, Double::sum);
-        return (double) total/price.size() ;
+    public double getAveragePrice() {
+        double total = price.values().stream().reduce(0.00, Double::sum);
+        return total / price.size();
     }
 
-    public int getTotalQuantity(){
+    public int getTotalQuantity() {
         return quantity.values().stream().reduce(0, Integer::sum);
     }
 
@@ -199,6 +199,6 @@ public class Product {
                 " ,name : " + name + '\'' +
                 " ,price : " + price +
                 " ,rate : " + this.averageRate() +
-                " ,quantity : " + quantity ;
+                " ,quantity : " + quantity;
     }
 }

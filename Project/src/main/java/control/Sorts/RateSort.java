@@ -7,11 +7,17 @@ import java.util.List;
 
 public class RateSort extends Sort {
 
-    private static RateSort instance = null ;
+    private static RateSort instance = null;
 
     private RateSort() {
-        name = "Rate" ;
-        isAscending = false ;
+        name = "Rate";
+        isAscending = false;
+    }
+
+    public static RateSort getInstance() {
+        if (instance == null)
+            instance = new RateSort();
+        return instance;
     }
 
     protected List<Product> applyAscendingSort(List<Product> products) {
@@ -24,12 +30,6 @@ public class RateSort extends Sort {
         isAscending = false;
         products.sort(Comparator.comparing(Product::averageRate).reversed());
         return products;
-    }
-
-    public static RateSort getInstance() {
-        if (instance==null)
-            instance=new RateSort();
-        return instance;
     }
 
     @Override

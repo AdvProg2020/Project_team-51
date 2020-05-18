@@ -12,7 +12,7 @@ public class AddSellerForItemRequest extends Request {
     private int quantity;
     private double price;
 
-    public AddSellerForItemRequest(String requestId , Product product , Seller seller , int quantity , double price) {
+    public AddSellerForItemRequest(String requestId, Product product, Seller seller, int quantity, double price) {
         super(requestId, "add");
         this.product = product;
         this.seller = seller;

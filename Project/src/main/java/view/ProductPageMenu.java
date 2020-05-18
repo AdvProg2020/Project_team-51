@@ -18,13 +18,12 @@ import java.util.Map;
 public class ProductPageMenu extends Menu {
 
     private Product product;
-    private SingleProductController singleProductController ;
+    private SingleProductController singleProductController;
 
-    public ProductPageMenu(Menu parentMenu , Product product) {
+    public ProductPageMenu(Menu parentMenu, Product product) {
         super("Product Page", parentMenu);
-        this.product=product;
-        this.singleProductController = new SingleProductController(Controller.getCurrentAccount() , product);
-        this.singleProductController.setProduct(product);
+        this.product = product;
+        this.singleProductController = new SingleProductController(Controller.getCurrentAccount(), product);
     }
 
     @Override
@@ -39,7 +38,7 @@ public class ProductPageMenu extends Menu {
     @Override
     public void executeMenu() {
         menusHistory.push(this);
-        command = inputInFormat("Please Enter A Valid Command" , MenusPattern.PRODUCT.getRegex());
+        command = inputInFormat("Please Enter A Valid Command", MenusPattern.PRODUCT.getRegex());
         if (command.matches(AllCommands.DIGEST.getRegex())) {
             digest();
         } else if (command.matches(AllCommands.ATTRIBUTES.getRegex())) {
@@ -72,7 +71,7 @@ public class ProductPageMenu extends Menu {
     }
 
     private void addToCart() {
-        if (!Controller.isLoggedIn()){
+        if (!Controller.isLoggedIn()) {
             new LoginMenu(this);
         }
         try {
@@ -85,16 +84,16 @@ public class ProductPageMenu extends Menu {
     private String selectSeller() {
         System.out.println("Select Seller :");
         var sellers = product.getSellersForThisProduct();
-        for (int i = 0; i < sellers.size() ; i++) {
-            System.out.println((i+1) + ". " + sellers.get(i).getBrandName());
+        for (int i = 0; i < sellers.size(); i++) {
+            System.out.println((i + 1) + ". " + sellers.get(i).getBrandName());
         }
-        int option = 0 ;
+        int option = 0;
 
-        while ((option <= 0) && (option >sellers.size())){
+        while ((option <= 0) && (option > sellers.size())) {
             option = getOption();
         }
 
-        return sellers.get(option-1).getUsername();
+        return sellers.get(option - 1).getUsername();
     }
 
     private void attributes() {
@@ -113,7 +112,7 @@ public class ProductPageMenu extends Menu {
             return;
         }
         System.out.println("---------------------------");
-        System.out.printf("|%12s|%12s|",product.getName() , otherProduct.getName());
+        System.out.printf("|%12s|%12s|", product.getName(), otherProduct.getName());
         HashMap<String, String> comparison;
         try {
             comparison = singleProductController.compare(id);
@@ -122,7 +121,7 @@ public class ProductPageMenu extends Menu {
             return;
         }
         for (Map.Entry<String, String> compare : comparison.entrySet()) {
-            System.out.printf("|%12s|%12s|", compare.getKey() , compare.getValue());
+            System.out.printf("|%12s|%12s|", compare.getKey(), compare.getValue());
         }
         System.out.println("---------------------------");
     }
@@ -136,17 +135,17 @@ public class ProductPageMenu extends Menu {
 
     private void addComment() {
         try {
-            singleProductController.addComment(getCommentTitle(),getCommentContent());
+            singleProductController.addComment(getCommentTitle(), getCommentContent());
         } catch (NotAllowedActivityException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private String getCommentTitle(){
-        return inputInFormat("Title : " , "w+");
+    private String getCommentTitle() {
+        return inputInFormat("Title : ", "w+");
     }
 
-    private String getCommentContent(){
-        return inputInFormat("Content : " , "w+");
+    private String getCommentContent() {
+        return inputInFormat("Content : ", "w+");
     }
 }

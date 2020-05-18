@@ -7,19 +7,33 @@ import model.Status;
 
 import java.util.ArrayList;
 
-public class Seller extends Account{
+public class Seller extends Account {
 
-    private String brandName ;
+    private String brandName;
     private ArrayList<SellerLog> historyOfSells = new ArrayList<>();
     private ArrayList<Product> availableProducts = new ArrayList<Product>();
-    private ArrayList<Auction> allAuctions = new ArrayList<Auction>() ;
+    private ArrayList<Auction> allAuctions = new ArrayList<Auction>();
     private Status status;
 
-    public Seller(String username, String password ,String firstName, String lastName, Double balance,
-                  String email, String phoneNumber , String brandName) {
-        super(username,password, firstName, lastName, balance, email, phoneNumber);
-        this.brandName = brandName ;
-        this.status= Status.PENDING_CREATE;
+    public Seller(String username, String password, String firstName, String lastName, Double balance,
+                  String email, String phoneNumber, String brandName) {
+        super(username, password, firstName, lastName, balance, email, phoneNumber);
+        this.brandName = brandName;
+        this.status = Status.PENDING_CREATE;
+    }
+
+    public static void addSeller(Seller seller) {
+        allAccounts.add(seller);
+    }
+
+    public static ArrayList<Seller> getAllSellers() {
+        ArrayList<Seller> allSellers = new ArrayList<>();
+        for (Account account : allAccounts) {
+            if (account instanceof Seller)
+                allSellers.add((Seller) account);
+        }
+
+        return allSellers;
     }
 
     public String getBrandName() {
@@ -52,20 +66,6 @@ public class Seller extends Account{
 
     public void addAuction(Auction auction) {
         this.allAuctions.add(auction);
-    }
-
-    public static void  addSeller(Seller seller){
-        allAccounts.add(seller);
-    }
-
-    public static ArrayList<Seller> getAllSellers (){
-        ArrayList<Seller> allSellers = new ArrayList<>();
-        for (Account account : allAccounts) {
-            if (account instanceof Seller)
-                allSellers.add((Seller) account);
-        }
-
-        return allSellers;
     }
 
     public void setStatus(Status status) {

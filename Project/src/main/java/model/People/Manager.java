@@ -26,6 +26,14 @@ public class Manager extends Account {
         Manager.allRequests = allRequests;
     }
 
+    public static void addManager(Manager manager) {
+        allAccounts.add(manager);
+    }
+
+    public static void addCategory(Category category) {
+        allCategories.add(category);
+    }
+
     public List<OffCode> getAvailableOffCodes() {
         return availableOffCodes;
     }
@@ -40,14 +48,6 @@ public class Manager extends Account {
 
     public void setAllCategories(List<Category> allCategories) {
         Manager.allCategories = allCategories;
-    }
-
-    public static void addManager(Manager manager) {
-        allAccounts.add(manager);
-    }
-
-    public static void addCategory(Category category) {
-        allCategories.add(category);
     }
 
 }

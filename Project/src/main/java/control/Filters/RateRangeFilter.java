@@ -15,6 +15,11 @@ public class RateRangeFilter extends Filter {
         name = "RateRange";
     }
 
+    public static RateRangeFilter getInstance() {
+        if (instance == null)
+            instance = new RateRangeFilter();
+        return instance;
+    }
 
     @Override
     public List<Product> applyFilter(List<Product> products, Double from, Double to) {
@@ -22,11 +27,5 @@ public class RateRangeFilter extends Filter {
         this.to = to;
         return products.stream().filter(product -> (product.averageRate() >= from && product.averageRate() <= to))
                 .collect(Collectors.toList());
-    }
-
-    public static RateRangeFilter getInstance() {
-        if(instance==null)
-            instance=new RateRangeFilter();
-        return instance;
     }
 }

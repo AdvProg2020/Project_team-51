@@ -47,7 +47,7 @@ public enum AllCommands {
     EDIT_PID("(?i)edit\\s+(\\w+)"),
     ;
 
-    private String regex ;
+    private String regex;
 
     AllCommands(String regex) {
         this.regex = regex;

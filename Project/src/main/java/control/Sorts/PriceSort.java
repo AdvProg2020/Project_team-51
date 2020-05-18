@@ -7,13 +7,18 @@ import java.util.List;
 
 public class PriceSort extends Sort {
 
-    private static PriceSort instance = null ;
+    private static PriceSort instance = null;
 
     private PriceSort() {
         isAscending = false;
-        name="Price";
+        name = "Price";
     }
 
+    public static PriceSort getInstance() {
+        if (instance == null)
+            instance = new PriceSort();
+        return instance;
+    }
 
     public List<Product> applyAscendingSort(List<Product> products) {
         isAscending = true;
@@ -25,12 +30,6 @@ public class PriceSort extends Sort {
         isAscending = false;
         products.sort(Comparator.comparing(Product::getAveragePrice).reversed());
         return products;
-    }
-
-    public static PriceSort getInstance() {
-        if (instance==null)
-            instance = new PriceSort();
-        return instance;
     }
 
     @Override

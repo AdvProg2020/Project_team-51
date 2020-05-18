@@ -21,10 +21,6 @@ public enum MenusPattern {
         this.regex = regex;
     }
 
-    public String getRegex() {
-        return regex;
-    }
-
     private static String menuPatternBuilder(AllCommands... patterns) {
         StringBuilder regex = new StringBuilder("(");
         for (AllCommands pattern : patterns) {
@@ -33,5 +29,9 @@ public enum MenusPattern {
         regex.append("(?i)back|(?i)login|(?i)logout)");
 
         return regex.toString();
+    }
+
+    public String getRegex() {
+        return regex;
     }
 }

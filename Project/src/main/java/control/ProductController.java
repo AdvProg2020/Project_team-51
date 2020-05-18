@@ -100,7 +100,7 @@ public class ProductController extends Controller {
         return null;
     }
 
-    public  static Category getCategory() {
+    public static Category getCategory() {
         return category;
     }
 
@@ -132,8 +132,6 @@ public class ProductController extends Controller {
             throw new NoCategoriesFoundException("There is no category ! ");
         return subCategories;
     }
-
-
 
 
 }

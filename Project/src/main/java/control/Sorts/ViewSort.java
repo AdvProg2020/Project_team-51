@@ -6,12 +6,18 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ViewSort extends Sort {
-    
-    private static ViewSort instance = null ;
+
+    private static ViewSort instance = null;
 
     private ViewSort() {
-        name = "View" ;
-        isAscending = false ;
+        name = "View";
+        isAscending = false;
+    }
+
+    public static ViewSort getInstance() {
+        if (instance == null)
+            instance = new ViewSort();
+        return instance;
     }
 
     protected List<Product> applyAscendingSort(List<Product> products) {
@@ -24,12 +30,6 @@ public class ViewSort extends Sort {
         isAscending = false;
         products.sort(Comparator.comparing(Product::getViews).reversed());
         return products;
-    }
-
-    public static ViewSort getInstance() {
-        if (instance == null)
-            instance = new ViewSort();
-        return instance;
     }
 
     @Override

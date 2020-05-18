@@ -1,12 +1,11 @@
 package model.OrderLog;
 
 import model.ItemOfOrder;
-import model.People.Customer;
 import model.People.Seller;
 
 import java.util.ArrayList;
 
-public class BuyerLog extends Order{
+public class BuyerLog extends Order {
     private Seller seller;
     private ArrayList<ItemOfOrder> items = new ArrayList<ItemOfOrder>();
 
@@ -19,7 +18,7 @@ public class BuyerLog extends Order{
         return items;
     }
 
-    public void addItem(ItemOfOrder item){
+    public void addItem(ItemOfOrder item) {
         this.items.add(item);
 
     }

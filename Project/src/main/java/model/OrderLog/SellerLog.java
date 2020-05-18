@@ -5,7 +5,7 @@ import model.People.Customer;
 
 import java.util.ArrayList;
 
-public class SellerLog extends Order{
+public class SellerLog extends Order {
     private Customer buyer;
     private ArrayList<ItemOfOrder> items = new ArrayList<ItemOfOrder>();
 
@@ -17,7 +17,7 @@ public class SellerLog extends Order{
         return items;
     }
 
-    public void addItem(ItemOfOrder item){
+    public void addItem(ItemOfOrder item) {
         this.items.add(item);
 
     }

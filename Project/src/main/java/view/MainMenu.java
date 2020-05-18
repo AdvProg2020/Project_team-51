@@ -15,17 +15,17 @@ public class MainMenu extends Menu {
         super("Main Menu", null);
         var person = Controller.getCurrentAccount();
         if (person == null)
-            subMenus.put(1,new UnknownMenu("Profile Area" , this));
+            subMenus.put(1, new UnknownMenu("Profile Area", this));
         else if (person instanceof Customer)
-            subMenus.put(1,new CustomerMenu(this));
+            subMenus.put(1, new CustomerMenu(this));
         else if (person instanceof Seller)
-            subMenus.put(1,new SellerMenu(this));
+            subMenus.put(1, new SellerMenu(this));
         else if (person instanceof Manager)
-            subMenus.put(1,new ManagerMenu(this));
+            subMenus.put(1, new ManagerMenu(this));
 
-        subMenus.put(2,new ProductMenu(this , null));
-        subMenus.put(3,new AuctionMenu(this));
-        subMenus.put(4,new LoginMenu(this));
+        subMenus.put(2, new ProductMenu(this, null));
+        subMenus.put(3, new AuctionMenu(this));
+        subMenus.put(4, new LoginMenu(this));
 
         this.showMenu();
         this.executeMenu();
@@ -36,19 +36,18 @@ public class MainMenu extends Menu {
         menusHistory.push(this);
         Menu nextMenu = null;
         int size = subMenus.size();
-        int option = getOptionWithRange(1,size+1);
+        int option = getOptionWithRange(1, size + 1);
 
-        if (option == (size+1))
-          System.exit(0);
+        if (option == (size + 1))
+            System.exit(0);
         else if (option <= size) {
-          nextMenu = subMenus.get(option);
+            nextMenu = subMenus.get(option);
         }
 
 
         nextMenu.showMenu();
         nextMenu.executeMenu();
     }
-
 
 
 }

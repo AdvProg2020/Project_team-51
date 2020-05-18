@@ -4,33 +4,47 @@ import model.People.Account;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class OffCode {
 
-    private static ArrayList<OffCode> allOffCodes = new ArrayList<OffCode>();
-    private String offCode ;
+    private static List<OffCode> allOffCodes = new ArrayList<OffCode>();
+    private String offCode;
     private Date beginDate;
     private Date endDate;
-    private Double maxDiscount ;
-    private ArrayList<Account> appliedAccounts = new ArrayList<Account>();
+    private Double maxDiscount;
+    private List<Account> appliedAccounts = new ArrayList<Account>();
     private int offPercentage;
 
-    public OffCode(String offCode, Date beginDate, Date endDate, ArrayList<Account> appliedAccounts, int offPercentage , Double maxDiscount) {
+    public OffCode(String offCode, Date beginDate, Date endDate, List<Account> appliedAccounts, int offPercentage, Double maxDiscount) {
         this.offCode = offCode;
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.appliedAccounts = appliedAccounts;
         this.offPercentage = offPercentage;
-        this.maxDiscount = maxDiscount ;
+        this.maxDiscount = maxDiscount;
         allOffCodes.add(this);
     }
 
-    public static ArrayList<OffCode> getAllOffCodes() {
+    public static List<OffCode> getAllOffCodes() {
         return allOffCodes;
     }
 
-    public static void setAllOffCodes(ArrayList<OffCode> allOffCodes) {
+    public static void setAllOffCodes(List<OffCode> allOffCodes) {
         OffCode.allOffCodes = allOffCodes;
+    }
+
+    public static OffCode getOffIdById(String offId) {
+        for (OffCode offCode : allOffCodes) {
+            if (offCode.offCode.equals(offId))
+                return offCode;
+        }
+
+        return null;
+    }
+
+    public static void addOffCode(OffCode offCode) {
+        allOffCodes.add(offCode);
     }
 
     public String getOffCode() {
@@ -57,11 +71,11 @@ public class OffCode {
         this.endDate = endDate;
     }
 
-    public ArrayList<Account> getAppliedAccounts() {
+    public List<Account> getAppliedAccounts() {
         return appliedAccounts;
     }
 
-    public void setAppliedAccounts(ArrayList<Account> appliedAccounts) {
+    public void setAppliedAccounts(List<Account> appliedAccounts) {
         this.appliedAccounts = appliedAccounts;
     }
 
@@ -75,18 +89,5 @@ public class OffCode {
 
     public void setMaxDiscount(Double maxDiscount) {
         this.maxDiscount = maxDiscount;
-    }
-
-    public static OffCode getOffIdById(String offId){
-        for (OffCode offCode : allOffCodes) {
-            if (offCode.offCode.equals(offId))
-                return offCode;
-        }
-
-        return null;
-    }
-
-    public static void addOffCode(OffCode offCode){
-        allOffCodes.add(offCode);
     }
 }

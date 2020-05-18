@@ -3,13 +3,13 @@ package model.Requests;
 import model.Comment;
 import model.Status;
 
-public class AddCommentRequest extends Request{
+public class AddCommentRequest extends Request {
 
-    private Comment comment ;
+    private Comment comment;
 
-    public AddCommentRequest(String requestId , Comment comment) {
+    public AddCommentRequest(String requestId, Comment comment) {
         super(requestId, "add");
-        this.comment = comment ;
+        this.comment = comment;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class AddCommentRequest extends Request{
     @Override
     public void accept() {
         comment.getProduct().addComment(comment);
-        this.status= Status.APPROVED;
+        this.status = Status.APPROVED;
         comment.setCommentStatus(Status.APPROVED);
     }
 }

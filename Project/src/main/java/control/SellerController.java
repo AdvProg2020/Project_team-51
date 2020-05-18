@@ -21,192 +21,197 @@ public class SellerController extends Controller {
         super(currentAccount);
     }
 
-    public static Boolean isThisFieldValid(Product product,String field) {
+    public static Boolean isThisFieldValid(Product product, String field) {
         return product.getAttributes().containsKey(field);
     }
 
-    public static void editFirstName (String firstName) throws InstanceAlreadyExistsException {
+    public static void editFirstName(String firstName) throws InstanceAlreadyExistsException {
         if (currentAccount.getFirstName().equals(firstName))
             throw new InstanceAlreadyExistsException();
         currentAccount.setFirstName(firstName);
     }
 
-    public static void editLastName (String lastName) throws InstanceAlreadyExistsException  {
+    public static void editLastName(String lastName) throws InstanceAlreadyExistsException {
         if (currentAccount.getLastName().equals(lastName))
             throw new InstanceAlreadyExistsException();
         currentAccount.setLastName(lastName);
     }
 
-    public static void editEmail (String email) throws InstanceAlreadyExistsException , IllegalArgumentException{
+    public static void editEmail(String email) throws InstanceAlreadyExistsException, IllegalArgumentException {
         if (currentAccount.getEmail().equals(email))
             throw new InstanceAlreadyExistsException();
         var emails = getAllEmails();
-        if(emails.contains(email))
+        if (emails.contains(email))
             throw new IllegalArgumentException();
-        
+
         currentAccount.setEmail(email);
     }
 
-    public static void editPhoneNumber (String phoneNumber) throws InstanceAlreadyExistsException , IllegalArgumentException , WrongFormatException {
+    public static void editPhoneNumber(String phoneNumber) throws InstanceAlreadyExistsException, IllegalArgumentException, WrongFormatException {
         if (currentAccount.getPhoneNumber().equals(phoneNumber))
             throw new InstanceAlreadyExistsException();
         var phoneNumbers = getAllPhoneNumbers();
-        if(phoneNumbers.contains(phoneNumber))
+        if (phoneNumbers.contains(phoneNumber))
             throw new IllegalArgumentException();
-        if ( phoneNumber.length() != 11 || !phoneNumber.startsWith("09"))
+        if (phoneNumber.length() != 11 || !phoneNumber.startsWith("09"))
             throw new WrongFormatException("");
         currentAccount.setPhoneNumber(phoneNumber);
     }
 
-    public static void editBrand (String brand) throws InstanceAlreadyExistsException , IllegalArgumentException {
-        if (((Seller)currentAccount).getBrandName().equals(brand))
+    public static void editBrand(String brand) throws InstanceAlreadyExistsException, IllegalArgumentException {
+        if (((Seller) currentAccount).getBrandName().equals(brand))
             throw new InstanceAlreadyExistsException();
         ((Seller) currentAccount).setBrandName(brand);
     }
 
-    public String viewCompanyInfo(){
-        return "Brand name : " + ((Seller)currentAccount).getBrandName() ;
-    }
-
-    public List<String> showCategories(){
-        var allCategories = Category.getAllCategories();
-        return allCategories.stream().filter(c -> c.getSubCategories()==null).map(Category::getPathOfCategory)
-                .collect(Collectors.toList());
-    }
-
-    public List<String> showSellersProducts(){
-        return ((Seller)currentAccount).getAvailableProducts().stream().map(Product::toString).collect(Collectors.toList());
-    }
     public static Boolean isThisPidValid(String productId) throws InvalidProductIdException {
         return Product.getAllProducts().contains(Product.getProductById(productId));
     }
 
-    public static void editProduct(Product product, String field , String value ) {
+    public static void editProduct(Product product, String field, String value) {
 
-        if (currentAccount instanceof Seller){
+        if (currentAccount instanceof Seller) {
             for (Map.Entry<Attributes, String> attribute : product.getAttributes().entrySet()) {
-                if (attribute.getKey().getField().equalsIgnoreCase(field)){
-                    new EditProductRequest(TokenGenerator.generateRequestId(),product,(Seller) currentAccount
-                            , field.toLowerCase() , value);
+                if (attribute.getKey().getField().equalsIgnoreCase(field)) {
+                    new EditProductRequest(TokenGenerator.generateRequestId(), product, (Seller) currentAccount
+                            , field.toLowerCase(), value);
                 }
             }
         }
     }
 
+    public static Boolean isOffIdValid(String offId) {
+        return OffCode.getAllOffCodes().contains(OffCode.getOffIdById(offId));
+    }
+
+    public static void editAuction(String auctionId, String field, String value, String description)
+            throws InvalidAuctionIdException, InvalidFieldException {
+
+        var auction = Auction.getAuctionById(auctionId);
+        if (auction == null) throw new InvalidAuctionIdException();
+
+        if (field.equalsIgnoreCase("begin date")) {
+            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, "begin date", value);
+        } else if (field.equalsIgnoreCase("end date")) {
+            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, "end date", value);
+        } else if (field.equalsIgnoreCase("off percentage")) {
+            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, "off percentage", value);
+        } else if (field.equalsIgnoreCase("add product")) {
+            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, "add product", value);
+        } else if (field.equalsIgnoreCase("remove product")) {
+            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, "remove product", value);
+        } else throw new InvalidFieldException("Field is invalid ! ");
+
+    }
+
+    public static void addAuction(Auction auction) throws NotAllowedActivityException {
+        if (currentAccount instanceof Seller)
+            new AddAuctionRequest(TokenGenerator.generateRequestId(), auction, (Seller) currentAccount);
+        else
+            throw new NotAllowedActivityException("You are not allowed to add Auction");
+    }
+
+    private static List<String> getAllEmails() {
+        return Account.getAllAccounts().stream().map(Account::getEmail).collect(Collectors.toList());
+    }
+
+    private static List<String> getAllPhoneNumbers() {
+        return Account.getAllAccounts().stream().map(Account::getPhoneNumber).collect(Collectors.toList());
+    }
+
+    public String viewCompanyInfo() {
+        return "Brand name : " + ((Seller) currentAccount).getBrandName();
+    }
+
+    public List<String> showCategories() {
+        var allCategories = Category.getAllCategories();
+        return allCategories.stream().filter(c -> c.getSubCategories() == null).map(Category::getPathOfCategory)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> showSellersProducts() {
+        return ((Seller) currentAccount).getAvailableProducts().stream().map(Product::toString).collect(Collectors.toList());
+    }
+
     public void addProduct(Product product) throws NotAllowedActivityException {
 
-        if(currentAccount instanceof  Seller)
-           new AddItemRequest(TokenGenerator.generateRequestId(),product,(Seller) currentAccount);
-         else throw new NotAllowedActivityException("You are not allowed to add products .");
+        if (currentAccount instanceof Seller)
+            new AddItemRequest(TokenGenerator.generateRequestId(), product, (Seller) currentAccount);
+        else throw new NotAllowedActivityException("You are not allowed to add products .");
 
     }
 
     public void removeProduct(Product product) {
 
-        if (currentAccount instanceof Seller){
+        if (currentAccount instanceof Seller) {
             ((Seller) currentAccount).getAvailableProducts().remove(product);
         }
     }
 
-    public static Boolean isOffIdValid(String offId){
-        return OffCode.getAllOffCodes().contains(OffCode.getOffIdById(offId));
-    }
-
-    public static void editAuction(String auctionId , String field , String value , String description)
-            throws InvalidAuctionIdException , InvalidFieldException {
-
-        var auction = Auction.getAuctionById(auctionId);
-        if (auction==null) throw new InvalidAuctionIdException();
-
-        if (field.equalsIgnoreCase("begin date")){
-            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,"begin date",value);
-        } else if (field.equalsIgnoreCase("end date")){
-            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,"end date",value);
-        } else if (field.equalsIgnoreCase("off percentage")){
-            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,"off percentage",value);
-        } else if (field.equalsIgnoreCase("add product")){
-            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,"add product",value);
-        } else if (field.equalsIgnoreCase("remove product")){
-            new EditAuctionRequest(TokenGenerator.generateRequestId(),auction,"remove product",value);
-        } else throw new InvalidFieldException("Field is invalid ! ");
-
-    }
-
-    public List<Category> listCategories(){
+    public List<Category> listCategories() {
         var allCategories = Category.getAllCategories();
-        return allCategories.stream().filter(c -> c.getSubCategories()==null)
+        return allCategories.stream().filter(c -> c.getSubCategories() == null)
                 .collect(Collectors.toList());
     }
 
-    public static void addAuction(Auction auction) throws NotAllowedActivityException{
-        if(currentAccount instanceof  Seller)
-            new AddAuctionRequest(TokenGenerator.generateRequestId() , auction , (Seller) currentAccount);
-        else
-            throw new NotAllowedActivityException("You are not allowed to add Auction");
-    }
-
-    public String showProductDetails(Product product){
-        var productController = new SingleProductController(currentAccount,product);
+    public String showProductDetails(Product product) {
+        var productController = new SingleProductController(currentAccount, product);
         return productController.digest();
     }
 
-    public List<String> viewSalesHistory(){
-        return ((Seller)currentAccount).getHistoryOfSells().stream().map(s -> { StringBuilder builder = new StringBuilder("");
-                                                                    builder.append("order Id : " + s.getOrderID() + "\n"
-                                                                    + "Buyer : " + s.getBuyer().getFirstName() + " " +
-                                                                    s.getBuyer().getLastName() + "\n"  +
-                                                                    "Products :" + "\n" );
-                                                                    (s.getItems().stream().map(ItemOfOrder::toString))
-                                                                     .forEach(builder::append);
-                                                                     return builder.toString();})
-                                                                    .collect(Collectors.toList());
+    public List<String> viewSalesHistory() {
+        return ((Seller) currentAccount).getHistoryOfSells().stream().map(s -> {
+            StringBuilder builder = new StringBuilder();
+            builder.append("order Id : " + s.getOrderID() + "\n"
+                    + "Buyer : " + s.getBuyer().getFirstName() + " " +
+                    s.getBuyer().getLastName() + "\n" +
+                    "Products :" + "\n");
+            (s.getItems().stream().map(ItemOfOrder::toString))
+                    .forEach(builder::append);
+            return builder.toString();
+        })
+                .collect(Collectors.toList());
     }
 
-    public List<String> viewProductBuyers(Product product){
-        return ((Seller)currentAccount).getHistoryOfSells().stream()
-                .filter( a -> a.getItems().stream().map(b-> (b.getProduct())).equals(product))
+    public List<String> viewProductBuyers(Product product) {
+        return ((Seller) currentAccount).getHistoryOfSells().stream()
+                .filter(a -> a.getItems().stream().map(b -> (b.getProduct())).equals(product))
                 .map(SellerLog::getBuyer)
                 .distinct()
                 .map(Customer::getUsername)
                 .collect(Collectors.toList());
     }
 
-    public List<String> viewOffs () {
-        return ((Seller) currentAccount).getAllAuctions().stream().map(a -> { StringBuilder builder = new StringBuilder("");
-                                                                             builder.append("ID : " + a.getAuctionId() +
-                                                                                            "  Off : " + a.getOffPercentage() +
-                                                                                            "  from : " + a.getBeginDate().toString() +
-                                                                                            "  to : " + a.getEndDate().toString());
-                                                                              return builder.toString(); })
-                                                                              .collect(Collectors.toList());
+    public List<String> viewOffs() {
+        return ((Seller) currentAccount).getAllAuctions().stream().map(a -> {
+            StringBuilder builder = new StringBuilder();
+            builder.append("ID : " + a.getAuctionId() +
+                    "  Off : " + a.getOffPercentage() +
+                    "  from : " + a.getBeginDate().toString() +
+                    "  to : " + a.getEndDate().toString());
+            return builder.toString();
+        })
+                .collect(Collectors.toList());
     }
 
-    public String viewPersonalInfo(){
-        Seller seller = (Seller) currentAccount ;
+    public String viewPersonalInfo() {
+        Seller seller = (Seller) currentAccount;
         return seller.getUsername() + "\n" +
                 "First Name : " + seller.getFirstName() + "\n" +
                 "Last Name : " + seller.getLastName() + "\n" +
                 "Email : " + seller.getEmail() + "\n" +
                 "Phone : " + seller.getPhoneNumber() + "\n" +
-                "Brand : " + seller.getBrandName() ;
+                "Brand : " + seller.getBrandName();
     }
 
-    public double getBalance(){
-        return ((Seller)currentAccount).getBalance();
-    }
-    
-    private static List<String> getAllEmails(){
-        return Account.getAllAccounts().stream().map(Account::getEmail).collect(Collectors.toList());
+    public double getBalance() {
+        return currentAccount.getBalance();
     }
 
-    private static List<String> getAllPhoneNumbers(){
-        return Account.getAllAccounts().stream().map(Account::getPhoneNumber).collect(Collectors.toList());
-    }
-
-    public Auction viewOffById(String id) throws InvalidAuctionIdException{
-        Seller seller = (Seller) currentAccount ;
+    public Auction viewOffById(String id) throws InvalidAuctionIdException {
+        Seller seller = (Seller) currentAccount;
         var auction = Auction.getAuctionById(id);
-        if (auction==null || !seller.getAllAuctions().contains(auction))
+        if (auction == null || !seller.getAllAuctions().contains(auction))
             throw new InvalidAuctionIdException();
         return auction;
     }

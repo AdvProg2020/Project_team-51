@@ -18,22 +18,30 @@ public class Category {
         this.attributes = List.of(attributes);
     }
 
-    public static String getPathOfCategory(Category category){
+    public static String getPathOfCategory(Category category) {
         Stack<String> address = new Stack<>();
         var tempCategory = category;
-        while (tempCategory!=null){
+        while (tempCategory != null) {
             address.push(tempCategory.getName());
             tempCategory = tempCategory.getParentCategory();
         }
 
         StringBuilder path = new StringBuilder();
         path.append(address.pop());
-        while (!address.isEmpty()){
+        while (!address.isEmpty()) {
             path.append(" > ");
             path.append(address.pop());
         }
 
         return path.toString();
+    }
+
+    public static ArrayList<Category> getAllCategories() {
+        return allCategories;
+    }
+
+    public static void addCategory(Category category) {
+        allCategories.add(category);
     }
 
     public List<Attributes> getAttributes() {
@@ -44,16 +52,16 @@ public class Category {
         return subCategories;
     }
 
+    public void setSubCategories(Map<Integer, Category> subCategories) {
+        this.subCategories = subCategories;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setSubCategories(Map<Integer, Category> subCategories) {
-        this.subCategories = subCategories;
     }
 
     public Category getParentCategory() {
@@ -66,13 +74,5 @@ public class Category {
 
     public List<Product> getCategoryProducts() {
         return categoryProducts;
-    }
-
-    public static ArrayList<Category> getAllCategories() {
-        return allCategories;
-    }
-
-    public static void addCategory(Category category){
-        allCategories.add(category);
     }
 }

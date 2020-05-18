@@ -13,15 +13,18 @@ import model.People.Manager;
 import model.People.Seller;
 import model.Requests.AddCommentRequest;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SingleProductController extends Controller {
 
-    private Product product ;
+    private Product product;
 
-    public SingleProductController(Account currentAccount , Product product) {
+    public SingleProductController(Account currentAccount, Product product) {
         super(currentAccount);
-        this.product = product ;
+        this.product = product;
     }
 
     public Product getProduct() {
@@ -32,7 +35,7 @@ public class SingleProductController extends Controller {
         this.product = product;
     }
 
-    public String digest(){
+    public String digest() {
 
         StringBuilder digest = new StringBuilder();
         digest.append(product.getDescription()).append("\n");
@@ -45,7 +48,7 @@ public class SingleProductController extends Controller {
         }
         digest.append("Rate : ").append(averageRate()).append("\n");
 
-        return digest.toString() ;
+        return digest.toString();
     }
 
     public void addToCart(String seller) throws LackOfProductException, NotAllowedActivityException {
@@ -53,7 +56,7 @@ public class SingleProductController extends Controller {
         if (currentAccount instanceof Seller | currentAccount instanceof Manager)
             throw new NotAllowedActivityException("You are not allowed to buy product");
         for (ItemOfOrder item : cart) {
-            if(item.getProduct()== product){
+            if (item.getProduct() == product) {
                 if (product.getTotalQuantity() == 0)
                     throw new LackOfProductException("This Product Is Not Available !");
                 else
@@ -63,34 +66,33 @@ public class SingleProductController extends Controller {
         }
 
         var sellerOfProduct = Account.getAccountById(seller);
-        if (sellerOfProduct instanceof  Seller)
-        cart.add(new ItemOfOrder((Seller)sellerOfProduct,product , product.getPriceForSeller((Seller) sellerOfProduct)
-                , this.getProductDiscountAmount(seller), new Date()));
+        if (sellerOfProduct instanceof Seller)
+            cart.add(new ItemOfOrder((Seller) sellerOfProduct, product, product.getPriceForSeller((Seller) sellerOfProduct)
+                    , this.getProductDiscountAmount(seller), new Date()));
 
     }
 
-    public Map<Attributes, String> showAttributes(){
+    public Map<Attributes, String> showAttributes() {
         return product.getAttributes();
     }
 
-    public HashMap<String,String> compare(String productId) throws SameProductForComparisonException, InvalidProductIdException {
+    public HashMap<String, String> compare(String productId) throws SameProductForComparisonException, InvalidProductIdException {
         var comparedProduct = Product.getProductById(productId);
         if (comparedProduct.equals(product))
             throw new SameProductForComparisonException();
-        var comparisonHashMap = new HashMap<String,String>();
+        var comparisonHashMap = new HashMap<String, String>();
         for (Map.Entry<Attributes, String> attribute : product.getAttributes().entrySet()) {
-            String comparedProductAttribute = getProductAttribute(attribute.getKey().getField(),comparedProduct);
-            if ( comparedProduct != null){
+            String comparedProductAttribute = getProductAttribute(attribute.getKey().getField(), comparedProduct);
+            if (comparedProduct != null) {
                 comparisonHashMap.put(attribute.getValue(), comparedProductAttribute);
-            }
-            else {
+            } else {
                 comparisonHashMap.put(attribute.getValue(), "-");
             }
         }
 
         for (Map.Entry<Attributes, String> attribute : comparedProduct.getAttributes().entrySet()) {
-            String comparedProductAttribute = getProductAttribute(attribute.getKey().getField(),product);
-            if ( comparedProduct == null){
+            String comparedProductAttribute = getProductAttribute(attribute.getKey().getField(), product);
+            if (comparedProduct == null) {
                 comparisonHashMap.put("-", attribute.getValue());
             }
         }
@@ -98,21 +100,21 @@ public class SingleProductController extends Controller {
         return comparisonHashMap;
     }
 
-    public void addComment(String title ,String content) throws NotAllowedActivityException{
-        if(currentAccount==null)
+    public void addComment(String title, String content) throws NotAllowedActivityException {
+        if (currentAccount == null)
             throw new NotAllowedActivityException("You should login first !");
-        new AddCommentRequest(TokenGenerator.generateRequestId(),new Comment(currentAccount,product,content,title,
-                Status.PENDING_CREATE,isCurrentAccountBuyer()));
+        new AddCommentRequest(TokenGenerator.generateRequestId(), new Comment(currentAccount, product, content, title,
+                Status.PENDING_CREATE, isCurrentAccountBuyer()));
     }
 
-    public List<Comment> getComments (){
+    public List<Comment> getComments() {
         return product.getComments();
     }
 
-    private double getProductDiscountAmount(String seller){
+    private double getProductDiscountAmount(String seller) {
 
         var sellerOfProduct = Account.getAccountById(seller);
-        if (sellerOfProduct instanceof Seller){
+        if (sellerOfProduct instanceof Seller) {
             for (Auction auction : ((Seller) sellerOfProduct).getAllAuctions()) {
                 for (Product appliedProduct : auction.getAppliedProducts()) {
                     if (product == appliedProduct) {
@@ -122,15 +124,15 @@ public class SingleProductController extends Controller {
             }
         }
 
-        return  0;
+        return 0;
     }
 
-    private boolean isCurrentAccountBuyer(){
+    private boolean isCurrentAccountBuyer() {
 
-        if (currentAccount instanceof Customer){
+        if (currentAccount instanceof Customer) {
             for (Order historyOfOrder : ((Customer) currentAccount).getHistoryOfOrders()) {
                 for (ItemOfOrder item : ((BuyerLog) historyOfOrder).getItems()) {
-                    if (item.getProduct()==product)
+                    if (item.getProduct() == product)
                         return true;
                 }
             }
@@ -139,17 +141,17 @@ public class SingleProductController extends Controller {
         return false;
     }
 
-    private double averageRate(){
+    private double averageRate() {
 
-        double sum = 0 ;
+        double sum = 0;
         for (Rate rate : product.getRating()) {
             sum += rate.getScore();
         }
 
-        return sum/product.getRating().size() ;
+        return sum / product.getRating().size();
     }
 
-    private String getProductAttribute(String filed , Product product){
+    private String getProductAttribute(String filed, Product product) {
         for (Map.Entry<Attributes, String> attribute : product.getAttributes().entrySet()) {
             if (attribute.getKey().getField().equals(filed))
                 return attribute.getValue();
