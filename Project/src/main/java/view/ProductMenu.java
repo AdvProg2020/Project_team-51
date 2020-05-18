@@ -61,7 +61,7 @@ public class ProductMenu extends Menu {
         }
         int option = getOptionWithRange(1, size + 1);
         if (option <= size + 1) {
-            var nextMenu = subMenus.get(option - 1);
+            var nextMenu = subMenus.get(option);
             nextMenu.showMenu();
             nextMenu.executeMenu();
         } else if (option == size + 2) {
