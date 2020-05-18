@@ -184,12 +184,15 @@ public class LoginMenu extends Menu {
             double balance = Double.parseDouble(command);
             switch (type) {
                 case "customer":
-                    new Customer(username, password, firstName, lastName, balance, email, number);
+                    {new Customer(username, password, firstName, lastName, balance, email, number);
+                    break;
+                    }
                 case "seller": {
                     System.out.println("please enter your brand name");
                     String brand = scanner.nextLine();
                     Seller selller = new Seller(username, password, firstName, lastName, balance, email, number, brand);
                     new AddSellerRequest(TokenGenerator.generateRequestId(), selller);
+                    break;
                 }
                 case "manager":
                     new Manager(username, password, firstName, lastName, balance, email, number);
