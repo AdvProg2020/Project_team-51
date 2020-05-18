@@ -39,7 +39,6 @@ public class ProductPageMenu extends Menu {
     @Override
     public void executeMenu() {
         menusHistory.push(this);
-
         command = inputInFormat("Please Enter A Valid Command" , MenusPattern.PRODUCT.getRegex());
         if (command.matches(AllCommands.DIGEST.getRegex())) {
             digest();
@@ -49,27 +48,10 @@ public class ProductPageMenu extends Menu {
             compare(command.split("\\s+")[1]);
         } else if (command.matches(AllCommands.COMMENTS.getRegex())) {
             comments();
-            var commentsMenu = new Menu("Comments Menu", this) {
-
-                @Override
-                public void showMenu() {
-                    System.out.println("1. Add Comment");
-                    System.out.println("2. Back");
-                }
-
-                @Override
-                public void executeMenu() {
-                    String command = inputInFormat("Please Enter A valid Command", MenusPattern.ADD_COMMENT.getRegex());
-                    if (command.matches(AllCommands.ADD_COMMENT.getRegex())) {
-                        addComment();
-                    } else {
-                        back();
-                    }
-                }
-            };
-//            menusHistory.push(this);
-//            commentsMenu.showMenu();
-//            commentsMenu.executeMenu();
+            var commentsMenu = new CommentsMenu(this, singleProductController);
+            menusHistory.push(this);
+            commentsMenu.showMenu();
+            commentsMenu.executeMenu();
         } else if (command.matches(AllCommands.ADD_TO_CART.getRegex())) {
             addToCart();
         } else if (command.matches(AllCommands.ADD_COMMENT.getRegex())) {
@@ -101,7 +83,6 @@ public class ProductPageMenu extends Menu {
     }
 
     private String selectSeller() {
-
         System.out.println("Select Seller :");
         var sellers = product.getSellersForThisProduct();
         for (int i = 0; i < sellers.size() ; i++) {
