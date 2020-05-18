@@ -1,7 +1,6 @@
-package view.Profile.SellerMenu;
+package view.Profile.CustomerMenu;
 
 import control.Controller;
-import control.SellerController;
 import view.LoginMenu;
 import view.MainMenu;
 import view.Menu;
@@ -9,20 +8,15 @@ import view.Menu;
 public class PersonalInfoMenu extends Menu {
 
 
-    private SellerController sellerController;
-
-    public PersonalInfoMenu(Menu parentMenu, SellerController sellerController) {
+    public PersonalInfoMenu(Menu parentMenu) {
         super("View Personal Info", parentMenu);
-        this.sellerController = sellerController;
         subMenus.put(1, new EditPersonalInfo(this));
 
     }
 
     @Override
     public void executeMenu() {
-
         menusHistory.push(this);
-        System.out.println(sellerController.viewPersonalInfo());
         int size = subMenus.size();
         int option = getOptionWithRange(1, size);
 

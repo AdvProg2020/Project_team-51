@@ -1,6 +1,8 @@
 package model;
 
+import control.Controller;
 import control.Exceptions.InvalidProductIdException;
+import model.People.Customer;
 import model.People.Seller;
 
 import java.util.ArrayList;
@@ -187,6 +189,10 @@ public class Product {
     public double getAveragePrice() {
         double total = price.values().stream().reduce(0.00, Double::sum);
         return total / price.size();
+    }
+
+    public void addRate(int rate) {
+        rating.add(new Rate((Customer) Controller.getCurrentAccount(), this, rate));
     }
 
     public int getTotalQuantity() {

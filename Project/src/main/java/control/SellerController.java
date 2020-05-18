@@ -1,6 +1,9 @@
 package control;
 
-import control.Exceptions.*;
+import control.Exceptions.InvalidAuctionIdException;
+import control.Exceptions.InvalidFieldException;
+import control.Exceptions.NotAllowedActivityException;
+import control.Exceptions.WrongFormatException;
 import model.*;
 import model.OrderLog.SellerLog;
 import model.People.Account;
@@ -64,10 +67,6 @@ public class SellerController extends Controller {
         ((Seller) currentAccount).setBrandName(brand);
     }
 
-    public static Boolean isThisPidValid(String productId) throws InvalidProductIdException {
-        return Product.getAllProducts().contains(Product.getProductById(productId));
-    }
-
     public static void editProduct(Product product, String field, String value) {
 
         if (currentAccount instanceof Seller) {
@@ -78,10 +77,6 @@ public class SellerController extends Controller {
                 }
             }
         }
-    }
-
-    public static Boolean isOffIdValid(String offId) {
-        return OffCode.getAllOffCodes().contains(OffCode.getOffIdById(offId));
     }
 
     public static void editAuction(String auctionId, String field, String value, String description)

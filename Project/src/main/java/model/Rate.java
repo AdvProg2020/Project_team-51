@@ -11,7 +11,7 @@ public class Rate {
     private Product product;
     private int score;
 
-    public Rate(Customer account, Product product, short score) {
+    public Rate(Customer account, Product product, int score) {
         this.account = account;
         this.product = product;
         this.score = score;

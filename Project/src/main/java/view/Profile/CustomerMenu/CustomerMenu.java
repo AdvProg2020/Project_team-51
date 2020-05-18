@@ -1,12 +1,15 @@
-package view.Profile;
+package view.Profile.CustomerMenu;
 
 import view.Menu;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerMenu extends Menu {
-    public CustomerMenu(Menu parentMenu) {
+    private CustomerMenu customerMenu;
+
+    public CustomerMenu(Menu parentMenu, CustomerMenu customerMenu) {
         super("Customer Menu", parentMenu);
+        this.customerMenu = customerMenu;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class CustomerMenu extends Menu {
 
     }
 
-    private ArrayList<String> getReceiverInformation() {
+    private List<String> getReceiverInformation() {
         return null;
     }
 

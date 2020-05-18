@@ -9,10 +9,11 @@ import model.People.Seller;
 import model.Requests.AddSellerRequest;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
     protected static Account currentAccount;
-    protected static ArrayList<ItemOfOrder> cart = new ArrayList<>();
+    protected static List<ItemOfOrder> cart = new ArrayList<>();
 
     public Controller(Account currentAccount) {
         Controller.currentAccount = currentAccount;

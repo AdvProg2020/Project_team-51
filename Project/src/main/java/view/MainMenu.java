@@ -4,7 +4,7 @@ import control.Controller;
 import model.People.Customer;
 import model.People.Manager;
 import model.People.Seller;
-import view.Profile.CustomerMenu;
+import view.Profile.CustomerMenu.CustomerMenu;
 import view.Profile.ManagerMenu;
 import view.Profile.SellerMenu.SellerMenu;
 

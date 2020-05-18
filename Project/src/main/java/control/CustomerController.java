@@ -1,9 +1,17 @@
 package control;
 
+import control.Exceptions.InsufficientBalanceException;
+import control.Exceptions.InvalidProductIdException;
+import control.Exceptions.WrongFormatException;
+import model.ItemOfOrder;
+import model.OffCode;
 import model.People.Account;
+import model.People.Customer;
 import model.Product;
 
-import java.util.ArrayList;
+import javax.management.InstanceAlreadyExistsException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomerController extends Controller {
 
@@ -11,64 +19,95 @@ public class CustomerController extends Controller {
         super(currentAccount);
     }
 
-    public static Boolean isThisFieldValid(String field) {
-        return true;
+    public static void editPhoneNumber(String phoneNumber) throws InstanceAlreadyExistsException, IllegalArgumentException, WrongFormatException {
+        if (currentAccount.getPhoneNumber().equals(phoneNumber))
+            throw new InstanceAlreadyExistsException();
+        var phoneNumbers = getAllPhoneNumbers();
+        if (phoneNumbers.contains(phoneNumber))
+            throw new IllegalArgumentException();
+        if (phoneNumber.length() != 11 || !phoneNumber.startsWith("09"))
+            throw new WrongFormatException("");
+        currentAccount.setPhoneNumber(phoneNumber);
     }
 
-    public static void editFirstName(String firstName) {
-
+    private static List<String> getAllPhoneNumbers() {
+        return Account.getAllAccounts().stream().map(Account::getPhoneNumber).collect(Collectors.toList());
     }
 
-    public static void editLastName(String lastName) {
-
+    private static List<String> getAllEmails() {
+        return Account.getAllAccounts().stream().map(Account::getEmail).collect(Collectors.toList());
     }
 
-    public static void editEmail(String email) {
-
+    public static List<OffCode> viewDiscountCodes() {
+        var customer = ((Customer) currentAccount);
+        return OffCode.getAllOffCodes().stream()
+                .filter(a -> a.getAppliedAccounts().contains(customer))
+                .collect(Collectors.toList());
     }
 
-    public static void editPhoneNumber(String phoneNumber) {
-
+    public void editFirstName(String firstName) throws InstanceAlreadyExistsException {
+        if (currentAccount.getFirstName().equals(firstName))
+            throw new InstanceAlreadyExistsException();
+        currentAccount.setFirstName(firstName);
     }
 
-    public static Boolean isThisPidValid(String productId) {
-        return true;
+    public void editLastName(String lastName) throws InstanceAlreadyExistsException {
+        if (currentAccount.getLastName().equals(lastName))
+            throw new InstanceAlreadyExistsException();
+        currentAccount.setLastName(lastName);
     }
 
-    public static Product viewProduct(String pid) {
-        return null;
+    public void editEmail(String email) throws InstanceAlreadyExistsException {
+        if (currentAccount.getEmail().equals(email))
+            throw new InstanceAlreadyExistsException();
+        var emails = getAllEmails();
+        if (emails.contains(email))
+            throw new IllegalArgumentException();
+
+        currentAccount.setEmail(email);
     }
 
-    public static void increaseProduct(String productId, Integer number) {
+    private ItemOfOrder getItemOfOrderByProduct(Product product) throws InvalidProductIdException {
+        for (ItemOfOrder itemOfOrder : cart) {
+            if (itemOfOrder.getProduct().equals(product))
+                return itemOfOrder;
+        }
 
+        throw new InvalidProductIdException();
     }
 
-    public static void decreaseProduct(String productId, Integer number) {
 
+    public void increaseProduct(Product product) throws InvalidProductIdException {
+        getItemOfOrderByProduct(product).incrementQuantity();
     }
 
-    public static Double showTotalPrice() {
-        return null;
+    public void decreaseProduct(Product product) throws InvalidProductIdException {
+        getItemOfOrderByProduct(product).decrementQuantity();
     }
 
-    public static void purchase() {
-
+    public Double showTotalPrice() {
+        return cart.stream().map(ItemOfOrder::getTotalPrice).reduce(0.00, (a, b) -> a + b);
     }
 
-    public static void emptyCard() {
-
+    public void purchase() throws InsufficientBalanceException {
+        var customer = (Customer) currentAccount;
+        if (showTotalPrice() <= viewBalance())
+            customer.setBalance(viewBalance() - showTotalPrice());
+        throw new InsufficientBalanceException();
     }
 
-    public static Double viewBalance() {
-        return null;
+    public void emptyCard() {
+        cart.clear();
     }
 
-    public static Boolean rateProduct(String productId, Integer rate) {
-        return null;
+    public Double viewBalance() {
+        return currentAccount.getBalance();
     }
 
-    public static ArrayList<String> viewDiscountCodes() {
-        return null;
+    public void rateProduct(Product product, int rate) {
+        if (rate < 0 || rate > 5)
+            throw new IllegalArgumentException();
+        product.addRate(rate);
     }
 
 }

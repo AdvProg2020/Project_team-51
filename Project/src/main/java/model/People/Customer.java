@@ -4,11 +4,12 @@ import model.ItemOfOrder;
 import model.OrderLog.Order;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Customer extends Account {
 
-    private ArrayList<ItemOfOrder> cart = new ArrayList<ItemOfOrder>();
-    private ArrayList<Order> historyOfOrders = new ArrayList<Order>();
+    private List<ItemOfOrder> cart = new ArrayList<ItemOfOrder>();
+    private List<Order> historyOfOrders = new ArrayList<Order>();
 
 
     public Customer(String username, String password, String firstName, String lastName, Double balance, String email, String phoneNumber) {
@@ -19,15 +20,15 @@ public class Customer extends Account {
         allAccounts.add(customer);
     }
 
-    public ArrayList<Order> getHistoryOfOrders() {
+    public List<Order> getHistoryOfOrders() {
         return historyOfOrders;
     }
 
-    public ArrayList<ItemOfOrder> getCart() {
+    public List<ItemOfOrder> getCart() {
         return cart;
     }
 
-    public void setCart(ArrayList<ItemOfOrder> cart) {
+    public void setCart(List<ItemOfOrder> cart) {
         this.cart = cart;
     }
 }

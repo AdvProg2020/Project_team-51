@@ -1,5 +1,6 @@
 package model;
 
+import control.Exceptions.InvalidProductIdException;
 import model.People.Seller;
 
 import java.util.ArrayList;
@@ -34,8 +35,18 @@ public class ItemOfOrder {
         return quantity;
     }
 
-    public void addQuantity() {
+    public void incrementQuantity() {
         quantity++;
+    }
+
+    public void decrementQuantity() throws InvalidProductIdException {
+        if (quantity <= 0)
+            throw new InvalidProductIdException();
+        quantity--;
+    }
+
+    public double getTotalPrice() {
+        return quantity * price;
     }
 
     public Seller getSeller() {

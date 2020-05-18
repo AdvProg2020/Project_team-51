@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class Seller extends Account {
 
-    private String brandName;
     private ArrayList<SellerLog> historyOfSells = new ArrayList<>();
     private ArrayList<Product> availableProducts = new ArrayList<Product>();
     private ArrayList<Auction> allAuctions = new ArrayList<Auction>();
+    private String brandName;
     private Status status;
 
     public Seller(String username, String password, String firstName, String lastName, Double balance,
