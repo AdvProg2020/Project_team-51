@@ -33,4 +33,8 @@ public class TokenGenerator {
         return generateToken("", 8, false, true);
     }
 
+    public static String generateAttributeId() {
+        return generateToken("", 10, false, true);
+    }
+
 }

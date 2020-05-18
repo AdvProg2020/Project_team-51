@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class Serialize {
 
-    private YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+    private YaGson yaGson = new YaGsonBuilder().serializeNulls().enableComplexMapKeySerialization().setPrettyPrinting().create();
 
     public Serialize() {
     }
@@ -132,18 +132,32 @@ public class Serialize {
     }
 
     public void serializeOrder(Order order) throws IOException {
-        String filePath = "Project\\src\\resources\\Orders\\" + "Order_" + order.getOrderID() + ".json";
         if (order instanceof BuyerLog)
-            WriteIntoFiles.writeIntoFile(yaGson.toJson(order, BuyerLog.class), filePath);
+            serializeBuyerLog((BuyerLog) order);
         else if (order instanceof SellerLog)
-            WriteIntoFiles.writeIntoFile(yaGson.toJson(order, SellerLog.class), filePath);
+            serializeSellerLog((SellerLog) order);
 
+    }
+
+    private void serializeBuyerLog(BuyerLog buyerLog) throws IOException {
+        String filePath = "Project\\src\\resources\\Orders\\" + "BL_" + buyerLog.getOrderID() + ".json";
+        WriteIntoFiles.writeIntoFile(yaGson.toJson(buyerLog, BuyerLog.class), filePath);
+    }
+
+    private void serializeSellerLog(SellerLog sellerLog) throws IOException {
+        String filePath = "Project\\src\\resources\\Orders\\" + "sL_" + sellerLog.getOrderID() + ".json";
+        WriteIntoFiles.writeIntoFile(yaGson.toJson(sellerLog, BuyerLog.class), filePath);
     }
 
     public void serializeItemOfOrder(ItemOfOrder itemOfOrder) throws IOException {
         String filePath = "Project\\src\\resources\\ItemsOfOrders\\" + "IOO_" + itemOfOrder.getSeller().getUsername() + "_"
                 + itemOfOrder.getProduct().getProductId() + "_" + itemOfOrder.getDate() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(itemOfOrder, ItemOfOrder.class), filePath);
+    }
+
+    public void serializeAttributes(Attributes attribute) throws IOException {
+        String filePath = "Project\\src\\resources\\Attributes\\" + "ATB_" + attribute.getField() + ".json";
+        WriteIntoFiles.writeIntoFile(yaGson.toJson(attribute, Attributes.class), filePath);
     }
 
 

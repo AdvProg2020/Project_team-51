@@ -83,9 +83,16 @@ public class Build implements Runnable {
             e.printStackTrace();
         }
     };
-    public final Consumer<String> order = str -> {
+    public final Consumer<String> buyerLog = str -> {
         try {
-            deserialize.deserializeOrders(str);
+            deserialize.deserializeBuyerLog(str);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    };
+    public final Consumer<String> sellerLog = str -> {
+        try {
+            deserialize.deserializeSellerLog(str);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,7 +127,7 @@ public class Build implements Runnable {
     };
     public final Consumer<String> addItemRequest = str -> {
         try {
-            deserialize.deserializeItemsOfOrders(str);
+            deserialize.deserializeAddItemRequests(str);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -146,10 +153,13 @@ public class Build implements Runnable {
             e.printStackTrace();
         }
     };
-
-
-    public Build() throws IOException {
-    }
+    public final Consumer<String> attribute = str -> {
+        try {
+            deserialize.deserializeAddSellerForItemRequests(str);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    };
 
     @Override
     public void run() {
@@ -157,6 +167,15 @@ public class Build implements Runnable {
             initialize();
         } catch (IOException e) {
             System.out.println("failed ! ");
+        }
+        while (true) {
+            Thread thread2 = new Thread(new RuntimeDaraSaver());
+            thread2.start();
+            try {
+                thread2.join();
+            } catch (InterruptedException e) {
+                System.out.println("shit !");
+            }
         }
     }
 
@@ -178,7 +197,8 @@ public class Build implements Runnable {
         createStream().filter(file -> file.getName().startsWith("CTG")).map(File::toPath).map(readContent).forEach(category);
         createStream().filter(file -> file.getName().startsWith("RT")).map(File::toPath).map(readContent).forEach(rate);
         createStream().filter(file -> file.getName().startsWith("CM")).map(File::toPath).map(readContent).forEach(comment);
-        createStream().filter(file -> file.getName().startsWith("Order")).map(File::toPath).map(readContent).forEach(order);
+        createStream().filter(file -> file.getName().startsWith("BL")).map(File::toPath).map(readContent).forEach(buyerLog);
+        createStream().filter(file -> file.getName().startsWith("SL")).map(File::toPath).map(readContent).forEach(sellerLog);
         createStream().filter(file -> file.getName().startsWith("IOO")).map(File::toPath).map(readContent).forEach(itemOfOrder);
         createStream().filter(file -> file.getName().startsWith("AA")).map(File::toPath).map(readContent).forEach(addAuctionRequest);
         createStream().filter(file -> file.getName().startsWith("AS")).map(File::toPath).map(readContent).forEach(addSellerRequest);
@@ -186,6 +206,7 @@ public class Build implements Runnable {
         createStream().filter(file -> file.getName().startsWith("AI")).map(File::toPath).map(readContent).forEach(addItemRequest);
         createStream().filter(file -> file.getName().startsWith("EA")).map(File::toPath).map(readContent).forEach(editAuctionRequest);
         createStream().filter(file -> file.getName().startsWith("EP")).map(File::toPath).map(readContent).forEach(editProductRequest);
+        createStream().filter(file -> file.getName().startsWith("ATB")).map(File::toPath).map(readContent).forEach(attribute);
         createStream().filter(file -> file.getName().startsWith("ASI")).map(File::toPath).map(readContent).forEach(addSellerForItemRequest);
     }
 

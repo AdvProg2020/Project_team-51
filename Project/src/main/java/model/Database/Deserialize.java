@@ -3,7 +3,9 @@ package model.Database;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import model.*;
+import model.OrderLog.BuyerLog;
 import model.OrderLog.Order;
+import model.OrderLog.SellerLog;
 import model.People.Customer;
 import model.People.Manager;
 import model.People.Seller;
@@ -12,7 +14,7 @@ import model.Requests.*;
 import java.io.IOException;
 
 public class Deserialize {
-    private YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+    private YaGson yaGson = new YaGsonBuilder().serializeNulls().enableComplexMapKeySerialization().setPrettyPrinting().create();
 
     public Deserialize() {
     }
@@ -38,6 +40,11 @@ public class Deserialize {
     public void deserializeAuctions(String serializedObject) throws IOException {
         Auction.addAuction(yaGson.fromJson(serializedObject, Auction.class));
     }
+
+    public void deserializeAttributes(String serializedObject) throws IOException {
+        Attributes.addAttribute(yaGson.fromJson(serializedObject, Attributes.class));
+    }
+
 
     public void deserializeOffCodes(String serializedObject) throws IOException {
         OffCode.addOffCode(yaGson.fromJson(serializedObject, OffCode.class));
@@ -83,8 +90,12 @@ public class Deserialize {
         Request.addRequest(yaGson.fromJson(serializedObject, AddSellerForItemRequest.class));
     }
 
-    public void deserializeOrders(String serializedObject) throws IOException {
-        Order.addOrder(yaGson.fromJson(serializedObject, Order.class));
+    public void deserializeBuyerLog(String serializedObject) throws IOException {
+        Order.addOrder(yaGson.fromJson(serializedObject, BuyerLog.class));
+    }
+
+    public void deserializeSellerLog(String serializedObject) throws IOException {
+        Order.addOrder(yaGson.fromJson(serializedObject, SellerLog.class));
     }
 
     public void deserializeItemsOfOrders(String serializedObject) throws IOException {
