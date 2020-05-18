@@ -3,6 +3,7 @@ package model.Requests;
 import control.Exceptions.InvalidProductIdException;
 import model.People.Seller;
 import model.Product;
+import model.Status;
 
 public class AddSellerForItemRequest extends Request {
 
@@ -30,9 +31,9 @@ public class AddSellerForItemRequest extends Request {
 
     @Override
     public void accept() throws InvalidProductIdException {
-//
-//        product.setQuantity(quantity);
-//        product.setPrice();
-
+        product.addSellerForThisProduct(seller);
+        product.addPriceOfNewSeller(seller, price);
+        product.addQuantityOfNewSeller(seller, quantity);
+        this.status = Status.APPROVED;
     }
 }
