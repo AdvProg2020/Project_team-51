@@ -127,12 +127,12 @@ public abstract class Menu {
         while (true) {
             input = scanner.nextLine();
             if (Pattern.matches(regex, input)) {
-                if (Integer.parseInt(input) >= from && Integer.parseInt(input) <= to + 2)
-                    return Integer.parseInt(input);
-                else if (input.equalsIgnoreCase("back"))
+                if (input.equalsIgnoreCase("back"))
                     return to + 1;
                 else if (input.matches(backAndLog.substring(1)))
                     return to + 2;
+                else if (Integer.parseInt(input) >= from && Integer.parseInt(input) <= to + 2)
+                    return Integer.parseInt(input);
             }
             System.out.println("Invalid Input ! Please Enter A Valid Number : ");
         }

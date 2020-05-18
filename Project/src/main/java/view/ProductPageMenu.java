@@ -9,8 +9,6 @@ import control.SingleProductController;
 import model.Attributes;
 import model.Comment;
 import model.Product;
-import view.Enums.AllCommands;
-import view.Enums.MenusPattern;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,50 +22,69 @@ public class ProductPageMenu extends Menu {
         super("Product Page", parentMenu);
         this.product = product;
         this.singleProductController = new SingleProductController(Controller.getCurrentAccount(), product);
+        subMenus.put(1, new Menu("Digest", this) {
+            @Override
+            public void executeMenu() {
+                digest();
+            }
+        });
+        subMenus.put(2, new Menu("Attributes", this) {
+            @Override
+            public void executeMenu() {
+                attributes();
+            }
+        });
+        subMenus.put(3, new Menu("Digest", this) {
+            @Override
+            public void executeMenu() {
+                compare();
+            }
+        });
+        subMenus.put(4, new Menu("Digest", this) {
+            @Override
+            public void executeMenu() {
+                comments();
+            }
+        });
+        subMenus.put(5, new CommentsMenu(this, singleProductController));
     }
 
     @Override
     public void showMenu() {
-        System.out.println("- Digest");
-        System.out.println("- Attributes");
-        System.out.println("- Compare [PID]");
-        System.out.println("- Comments");
-        System.out.println("- Add Comment");
-        System.out.println("3. Back");
+        System.out.println("1. Digest");
+        System.out.println("2. Attributes");
+        System.out.println("3. Compare [PID]");
+        System.out.println("4. Comments");
+        System.out.println("5 Add Comment");
+        System.out.println("6. Back");
         if (Controller.getCurrentAccount() == null)
-            System.out.println("4. Login");
+            System.out.println("7. Login");
         else
-            System.out.println("4. Logout");
+            System.out.println("7. Logout");
     }
 
     @Override
     public void executeMenu() {
-        menusHistory.push(this);
-        command = inputInFormat("Please Enter A Valid Command", MenusPattern.PRODUCT.getRegex());
-        if (command.matches(AllCommands.DIGEST.getRegex())) {
-            digest();
-        } else if (command.matches(AllCommands.ATTRIBUTES.getRegex())) {
-            attributes();
-        } else if (command.matches(AllCommands.COMPARE.getRegex())) {
-            compare(command.split("\\s+")[1]);
-        } else if (command.matches(AllCommands.COMMENTS.getRegex())) {
-            comments();
-            var commentsMenu = new CommentsMenu(this, singleProductController);
-            menusHistory.push(this);
-            commentsMenu.showMenu();
-            commentsMenu.executeMenu();
-        } else if (command.matches(AllCommands.ADD_TO_CART.getRegex())) {
-            addToCart();
-        } else if (command.matches(AllCommands.ADD_COMMENT.getRegex())) {
-            addComment();
-        } else if (command.matches(AllCommands.BACK.getRegex())) {
+        int size = subMenus.size();
+        int option = getOptionWithRange(1, size);
+        if (option <= size) {
+            var nextMenu = subMenus.get(option);
+            nextMenu.showMenu();
+            nextMenu.executeMenu();
+        } else if (option == size + 1) {
             back();
-        } else if (command.matches(AllCommands.LOGIN.getRegex())) {
-            login();
-        } else if (command.matches(AllCommands.LOGOUT.getRegex())) {
-            logout();
+        } else if (option == size + 2) {
+            if (Controller.getCurrentAccount() == null) {
+                var login = new LoginMenu(this);
+                login.showMenu();
+                login.executeMenu();
+            } else {
+                logout();
+                var mainMenu = new MainMenu();
+                mainMenu.showMenu();
+                mainMenu.executeMenu();
+            }
         }
-
         this.executeMenu();
     }
 
@@ -108,13 +125,14 @@ public class ProductPageMenu extends Menu {
         }
     }
 
-    private void compare(String id) {
-        Product otherProduct;
+    private void compare() {
+        String id = inputInFormat("Please Enter A Valid PID : ", "\\w+");
+        Product otherProduct = null;
         try {
             otherProduct = Product.getProductById(id);
         } catch (InvalidProductIdException e) {
             System.out.println(e.getMessage());
-            return;
+            compare();
         }
         System.out.println("---------------------------");
         System.out.printf("|%12s|%12s|", product.getName(), otherProduct.getName());
@@ -139,6 +157,8 @@ public class ProductPageMenu extends Menu {
     }
 
     private void addComment() {
+
+
         try {
             singleProductController.addComment(getCommentTitle(), getCommentContent());
         } catch (NotAllowedActivityException e) {
