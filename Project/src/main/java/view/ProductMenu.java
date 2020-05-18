@@ -64,6 +64,19 @@ public class ProductMenu extends Menu {
             var nextMenu = subMenus.get(option - 1);
             nextMenu.showMenu();
             nextMenu.executeMenu();
+        } else if (option == size + 2) {
+            back();
+        } else if (option == size + 3) {
+            if (Controller.getCurrentAccount() == null) {
+                var login = new LoginMenu(this);
+                login.showMenu();
+                login.executeMenu();
+            } else {
+                logout();
+                var mainMenu = new MainMenu();
+                mainMenu.showMenu();
+                mainMenu.executeMenu();
+            }
         }
     }
 

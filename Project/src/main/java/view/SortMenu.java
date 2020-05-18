@@ -63,7 +63,7 @@ public class SortMenu extends Menu {
             back();
         } else if (option == size + 2) {
             if (Controller.getCurrentAccount() == null) {
-                var login = subMenus.get(option);
+                var login = new LoginMenu(this);
                 login.showMenu();
                 login.executeMenu();
             } else {
