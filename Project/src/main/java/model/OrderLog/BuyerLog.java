@@ -1,20 +1,21 @@
 package model.OrderLog;
 
 import model.ItemOfOrder;
-import model.People.Seller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BuyerLog extends Order {
-    private Seller seller;
-    private ArrayList<ItemOfOrder> items = new ArrayList<ItemOfOrder>();
 
-    public BuyerLog(Seller seller) {
+    private List<ItemOfOrder> items = new ArrayList<>();
+
+    public BuyerLog(List<ItemOfOrder> items) {
         super();
-        this.seller = seller;
+        this.items = items;
     }
 
-    public ArrayList<ItemOfOrder> getItems() {
+    @Override
+    public List<ItemOfOrder> getItems() {
         return items;
     }
 
@@ -23,7 +24,12 @@ public class BuyerLog extends Order {
 
     }
 
-    public Seller getSeller() {
-        return seller;
+    @Override
+    public String toString() {
+        return
+                "orderID : " + orderID + '\'' +
+                        "status : " + status +
+                        "items : " + "\n" + items.stream().map(ItemOfOrder::toString)
+                ;
     }
 }

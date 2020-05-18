@@ -91,10 +91,10 @@ public class ItemOfOrder {
 
     @Override
     public String toString() {
-        return "product : " + product + "\n" +
-                "price : " + price + "\n" +
-                "discount : " + discount + "\n" +
-                "date : " + date + "\n" +
-                "quantity :" + quantity + "\n";
+        return "product : " + product.getName() +
+                " ,price : " + price +
+                " ,discount : " + discount +
+                " ,date : " + date +
+                " ,quantity :" + quantity + "\n";
     }
 }

@@ -5,6 +5,7 @@ import control.Exceptions.InvalidProductIdException;
 import control.Exceptions.WrongFormatException;
 import model.ItemOfOrder;
 import model.OffCode;
+import model.OrderLog.Order;
 import model.People.Account;
 import model.People.Customer;
 import model.Product;
@@ -36,6 +37,10 @@ public class CustomerController extends Controller {
 
     private static List<String> getAllEmails() {
         return Account.getAllAccounts().stream().map(Account::getEmail).collect(Collectors.toList());
+    }
+
+    public List<Order> getOrders() {
+        return ((Customer) currentAccount).getHistoryOfOrders();
     }
 
     public List<OffCode> viewDiscountCodes() {
@@ -76,6 +81,15 @@ public class CustomerController extends Controller {
         throw new InvalidProductIdException();
     }
 
+    public String viewPersonalInfo() {
+        Customer customer = (Customer) currentAccount;
+        return customer.getUsername() + "\n" +
+                "First Name : " + customer.getFirstName() + "\n" +
+                "Last Name : " + customer.getLastName() + "\n" +
+                "Email : " + customer.getEmail() + "\n" +
+                "Phone : " + customer.getPhoneNumber() + "\n";
+    }
+
 
     public void increaseProduct(Product product) throws InvalidProductIdException {
         getItemOfOrderByProduct(product).incrementQuantity();
@@ -104,10 +118,20 @@ public class CustomerController extends Controller {
         return currentAccount.getBalance();
     }
 
-    public void rateProduct(Product product, int rate) {
+    public void rateProduct(Product product, int rate) throws InvalidProductIdException {
+        if (isBuyerOfProduct(product))
+            throw new InvalidProductIdException();
         if (rate < 0 || rate > 5)
             throw new IllegalArgumentException();
         product.addRate(rate);
+    }
+
+    private boolean isBuyerOfProduct(Product product) {
+        List<Order> logs = ((Customer) currentAccount).getHistoryOfOrders();
+        return logs.stream()
+                .flatMap(a -> a.getItems().stream())
+                .map(b -> b.getProduct())
+                .anyMatch(p -> p.equals(product));
     }
 
 }

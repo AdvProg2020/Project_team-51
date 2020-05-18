@@ -3,7 +3,6 @@ package view.Profile.CustomerMenu;
 import control.Controller;
 import control.CustomerController;
 import control.Exceptions.WrongFormatException;
-import control.SellerController;
 import view.LoginMenu;
 import view.MainMenu;
 import view.Menu;
@@ -42,12 +41,6 @@ public class EditPersonalInfo extends Menu {
                 getPhone();
             }
         });
-        subMenus.put(5, new Menu("Brand", this) {
-            @Override
-            public void executeMenu() {
-                getBrand();
-            }
-        });
 
     }
 
@@ -83,7 +76,7 @@ public class EditPersonalInfo extends Menu {
         System.out.println("Please Enter Your New First Name : ");
         command = inputInFormat("Invalid Format !", "(?i)\\w+");
         try {
-            SellerController.editFirstName(command);
+            customerController.editFirstName(command);
             System.out.println("New first name submitted !");
         } catch (InstanceAlreadyExistsException e) {
             System.out.println("This is your old first name ! ");
@@ -95,7 +88,7 @@ public class EditPersonalInfo extends Menu {
         System.out.println("Please Enter Your New Last Name : ");
         command = inputInFormat("Invalid Format !", "(?i)\\w+");
         try {
-            SellerController.editLastName(command);
+            customerController.editLastName(command);
             System.out.println("New last name submitted !");
         } catch (InstanceAlreadyExistsException e) {
             System.out.println("This is your old last name ! ");
@@ -107,7 +100,7 @@ public class EditPersonalInfo extends Menu {
         System.out.println("Please Enter Your New Email : ");
         command = inputInFormat("Invalid Format !", "(?i)\\w+@\\w+\\.\\w+");
         try {
-            SellerController.editEmail(command);
+            customerController.editEmail(command);
             System.out.println("New email submitted !");
         } catch (InstanceAlreadyExistsException e) {
             System.out.println("This is your old email ! ");
@@ -122,7 +115,7 @@ public class EditPersonalInfo extends Menu {
         System.out.println("Please Enter Your New Phone Number : ");
         command = inputInFormat("Invalid Format !", "(?i)[0-9]+");
         try {
-            SellerController.editPhoneNumber(command);
+            CustomerController.editPhoneNumber(command);
             System.out.println("New phoneNumber submitted !");
         } catch (InstanceAlreadyExistsException e) {
             System.out.println("This is your old phone number ! ");
@@ -136,16 +129,5 @@ public class EditPersonalInfo extends Menu {
         }
     }
 
-    private void getBrand() {
-        System.out.println("Please Enter Your New Brand Name : ");
-        command = inputInFormat("Invalid Format !", "(?i)\\w+");
-        try {
-            SellerController.editBrand(command);
-            System.out.println("New brand name submitted !");
-        } catch (InstanceAlreadyExistsException e) {
-            System.out.println("This is your old brand name ! ");
-            getBrand();
-        }
-    }
 
 }

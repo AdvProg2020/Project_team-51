@@ -16,4 +16,32 @@ public class CartMenu extends Menu {
     public void executeMenu() {
 
     }
+
+    private void viewCart() {
+
+    }
+
+    private void showProducts() {
+
+    }
+
+    private void viewProductById(String id) {
+
+    }
+
+    private void increaseProductQuantity(String id) {
+
+    }
+
+    private void decreaseProductQuantity(String id) {
+
+    }
+
+    private void showTotalPrice() {
+
+    }
+
+    private void purchase() {
+
+    }
 }

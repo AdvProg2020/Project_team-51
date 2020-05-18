@@ -19,6 +19,7 @@ public class PersonalInfoMenu extends Menu {
     @Override
     public void executeMenu() {
         menusHistory.push(this);
+        viewPersonaInfo();
         int size = subMenus.size();
         int option = getOptionWithRange(1, size);
 
@@ -42,6 +43,10 @@ public class PersonalInfoMenu extends Menu {
         }
 
         this.executeMenu();
+    }
+
+    public void viewPersonaInfo() {
+        System.out.println(customerController.viewPersonalInfo());
     }
 
 }

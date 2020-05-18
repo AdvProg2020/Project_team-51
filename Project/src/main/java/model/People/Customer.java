@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Customer extends Account {
 
-    private List<ItemOfOrder> cart = new ArrayList<ItemOfOrder>();
-    private List<Order> historyOfOrders = new ArrayList<Order>();
+    private List<ItemOfOrder> cart = new ArrayList<>();
+    private List<Order> historyOfOrders = new ArrayList<>();
 
 
     public Customer(String username, String password, String firstName, String lastName, Double balance, String email, String phoneNumber) {

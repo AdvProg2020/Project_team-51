@@ -4,16 +4,19 @@ import model.ItemOfOrder;
 import model.People.Customer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SellerLog extends Order {
     private Customer buyer;
-    private ArrayList<ItemOfOrder> items = new ArrayList<ItemOfOrder>();
+    private List<ItemOfOrder> items = new ArrayList<>();
 
     public SellerLog(Customer buyer) {
+        super();
         this.buyer = buyer;
     }
 
-    public ArrayList<ItemOfOrder> getItems() {
+    @Override
+    public List<ItemOfOrder> getItems() {
         return items;
     }
 
