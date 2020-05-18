@@ -10,7 +10,8 @@ import model.Category;
 import model.People.Seller;
 import model.Product;
 import model.Requests.AddSellerForItemRequest;
-import view.Enums.AllCommands;
+import view.LoginMenu;
+import view.MainMenu;
 import view.Menu;
 
 import java.util.List;
@@ -25,20 +26,43 @@ public class AddProductMenu extends Menu {
     public AddProductMenu(Menu parentMenu, SellerController sellerController) {
         super("Add Product Menu", parentMenu);
         this.sellerController = sellerController;
+        subMenus.put(1, new Menu("Add Existed Product", this) {
+            @Override
+            public void executeMenu() {
+                addExistedProduct();
+            }
+        });
+        subMenus.put(2, new Menu("Add New Product", this) {
+            @Override
+            public void executeMenu() {
+                addNewProduct();
+            }
+        });
     }
 
     @Override
     public void executeMenu() {
-        command = inputInFormat("Select a option : ", "(?i)(existed\\s+product|new\\s+product" +
-                "|back|logout)");
-        if (command.matches("existed\\s+product")) {
-            addExistedProduct();
-        } else if (command.matches("new\\s+product")) {
-            addNewProduct();
-        } else if (command.matches(AllCommands.BACK.getRegex())) {
+        menusHistory.push(this);
+        int size = subMenus.size();
+        int option = getOptionWithRange(1, size);
+
+        if (option <= size) {
+            var nextMenu = subMenus.get(option);
+            nextMenu.showMenu();
+            nextMenu.executeMenu();
+        } else if (option == size + 1) {
             back();
-        } else if (command.matches(AllCommands.LOGOUT.getRegex())) {
-            logout();
+        } else if (option == size + 2) {
+            if (Controller.getCurrentAccount() == null) {
+                var login = new LoginMenu(this);
+                login.showMenu();
+                login.executeMenu();
+            } else {
+                logout();
+                var mainMenu = new MainMenu();
+                mainMenu.showMenu();
+                mainMenu.executeMenu();
+            }
         }
 
         this.executeMenu();

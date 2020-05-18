@@ -14,7 +14,7 @@ public class MainMenu extends Menu {
         super("Main Menu", null);
         var person = Controller.getCurrentAccount();
         if (person == null)
-            subMenus.put(1, new UnknownMenu("Profile Area", this));
+            subMenus.put(1, new LoginMenu(this));
         else if (person instanceof Customer)
             subMenus.put(1, new CustomerMenu(this));
         else if (person instanceof Seller)
