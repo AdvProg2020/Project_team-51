@@ -59,20 +59,18 @@ public class Serialize {
     }
 
     public void serializeRate(Rate rate) throws IOException {
-        String filePath = "Project\\src\\resources\\Rates\\" + "RT_" + rate.getAccount().getUsername() + "_"
-                + rate.getProduct() + "_" + (int) (Math.random() * 100) + ".json";
+        String filePath = "Project\\src\\resources\\Rates\\" + "RT_" + rate.getRateId() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(rate, Rate.class), filePath);
     }
 
     public void serializeComment(Comment comment) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\Comments\\" + "CM_" + comment.getAccount().getUsername() + "_"
-                + comment.getProduct() + "_" + (int) (Math.random() * 100) + ".json";
+        String filePath = "Project\\src\\main\\resources\\Comments\\" + "CM_" + comment.getCommentId() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(comment, Comment.class), filePath);
     }
 
     public void serializeCategory(Category category) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\Categories\\" + "CTG_" + category.getName() + "_" + (int) (Math.random() * 100)
-                + (int) (Math.random() * 100) + ".json";
+        String filePath = "Project\\src\\main\\resources\\Categories\\" + "CTG_" + category.getName() + "_" +
+                category.getCategoryId() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(category, Category.class), filePath);
     }
 

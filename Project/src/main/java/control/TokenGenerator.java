@@ -33,6 +33,18 @@ public class TokenGenerator {
         return generateToken("", 8, false, true);
     }
 
+    public static String generateCommentId() {
+        return generateToken("", 9, true, true);
+    }
+
+    public static String generateRateId() {
+        return generateToken("", 9, true, true);
+    }
+
+    public static String generateCategoryId() {
+        return generateToken("", 6, true, true);
+    }
+
     public static String generateAttributeId() {
         return generateToken("", 10, false, true);
     }
