@@ -20,6 +20,9 @@ public class Attributes {
         allAttributes.add(this);
     }
 
+    public static void addAttribute(Attributes attribute) {
+        allAttributes.add(attribute);
+    }
 
     public void addAttributeValue(String value) {
         values.add(value);
@@ -39,10 +42,6 @@ public class Attributes {
 
     public void setValues(Set<String> values) {
         this.values = values;
-    }
-
-    public static void addAttribute(Attributes attribute) {
-        allAttributes.add(attribute);
     }
 
     public String getAttributeId() {

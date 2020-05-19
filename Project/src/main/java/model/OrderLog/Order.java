@@ -8,9 +8,9 @@ import java.util.List;
 
 public abstract class Order {
     public static ArrayList<Order> allOrders = new ArrayList<>();
-    private List<ItemOfOrder> items = new ArrayList<>();
     protected String orderID;
     protected ShippingStatus status;
+    private List<ItemOfOrder> items = new ArrayList<>();
 
     public Order() {
         this.orderID = TokenGenerator.generateOrderId();
@@ -20,10 +20,6 @@ public abstract class Order {
 
     public static void addOrder(Order order) {
         allOrders.add(order);
-    }
-
-    public String getOrderID() {
-        return orderID;
     }
 
     public static ArrayList<Order> getAllOrders() {
@@ -37,6 +33,10 @@ public abstract class Order {
         }
 
         return null;
+    }
+
+    public String getOrderID() {
+        return orderID;
     }
 
     public List<ItemOfOrder> getItems() {

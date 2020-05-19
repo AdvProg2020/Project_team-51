@@ -89,12 +89,12 @@ public class OffCode {
         this.offPercentage = offPercentage;
     }
 
-    public void setMaxDiscount(Double maxDiscount) {
-        this.maxDiscount = maxDiscount;
-    }
-
     public Double getMaxDiscount() {
         return maxDiscount;
+    }
+
+    public void setMaxDiscount(Double maxDiscount) {
+        this.maxDiscount = maxDiscount;
     }
 
     public Status getStatus() {
