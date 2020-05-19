@@ -6,6 +6,7 @@ import control.ProductController;
 import model.Auction;
 import model.People.Seller;
 import model.Product;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,7 +58,7 @@ public class ProductListMenu extends Menu {
             back();
         } else if (option == size + 2) {
             if (Controller.getCurrentAccount() == null) {
-                var login = new LoginMenu(this);
+                var login = new LoginAndRegisterMenu(this);
                 login.showMenu();
                 login.executeMenu();
             } else {

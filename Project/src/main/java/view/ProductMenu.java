@@ -5,6 +5,7 @@ import control.Exceptions.NoCategoriesFoundException;
 import control.ProductController;
 import model.Category;
 import model.Product;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,7 @@ public class ProductMenu extends Menu {
             back();
         } else if (option == size + 3) {
             if (Controller.getCurrentAccount() == null) {
-                var login = new LoginMenu(this);
+                var login = new LoginAndRegisterMenu(this);
                 login.showMenu();
                 login.executeMenu();
             } else {

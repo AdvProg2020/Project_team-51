@@ -3,6 +3,7 @@ package view;
 import control.Controller;
 import control.Exceptions.NotAllowedActivityException;
 import control.SingleProductController;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 
 public class CommentsMenu extends Menu {
 
@@ -42,7 +43,7 @@ public class CommentsMenu extends Menu {
             back();
         } else if (option == size + 2) {
             if (Controller.getCurrentAccount() == null) {
-                var login = new LoginMenu(this);
+                var login = new LoginAndRegisterMenu(this);
                 login.showMenu();
                 login.executeMenu();
             } else {
@@ -56,7 +57,7 @@ public class CommentsMenu extends Menu {
 
     private void addComment() {
         if (Controller.getCurrentAccount() == null) {
-            var login = new LoginMenu(this);
+            var login = new LoginAndRegisterMenu(this);
             login.showMenu();
             login.executeMenu();
             return;

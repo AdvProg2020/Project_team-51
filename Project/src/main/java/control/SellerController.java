@@ -1,9 +1,6 @@
 package control;
 
-import control.Exceptions.InvalidAuctionIdException;
-import control.Exceptions.InvalidFieldException;
-import control.Exceptions.NotAllowedActivityException;
-import control.Exceptions.WrongFormatException;
+import control.Exceptions.*;
 import model.*;
 import model.OrderLog.SellerLog;
 import model.People.Account;
@@ -72,7 +69,7 @@ public class SellerController extends Controller {
         if (currentAccount instanceof Seller) {
             for (Map.Entry<Attributes, String> attribute : product.getAttributes().entrySet()) {
                 if (attribute.getKey().getField().equalsIgnoreCase(field)) {
-                    new EditProductRequest(TokenGenerator.generateRequestId(), product, (Seller) currentAccount
+                    new EditProductRequest(product, (Seller) currentAccount
                             , field.toLowerCase(), value);
                 }
             }
@@ -86,22 +83,22 @@ public class SellerController extends Controller {
         if (auction == null) throw new InvalidAuctionIdException();
 
         if (field.equalsIgnoreCase("begin date")) {
-            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, "begin date", value);
+            new EditAuctionRequest(auction, "begin date", value);
         } else if (field.equalsIgnoreCase("end date")) {
-            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, "end date", value);
+            new EditAuctionRequest(auction, "end date", value);
         } else if (field.equalsIgnoreCase("off percentage")) {
-            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, "off percentage", value);
+            new EditAuctionRequest(auction, "off percentage", value);
         } else if (field.equalsIgnoreCase("add product")) {
-            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, "add product", value);
+            new EditAuctionRequest(auction, "add product", value);
         } else if (field.equalsIgnoreCase("remove product")) {
-            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, "remove product", value);
+            new EditAuctionRequest(auction, "remove product", value);
         } else throw new InvalidFieldException("Field is invalid ! ");
 
     }
 
     public static void addAuction(Auction auction) throws NotAllowedActivityException {
         if (currentAccount instanceof Seller)
-            new AddAuctionRequest(TokenGenerator.generateRequestId(), auction, (Seller) currentAccount);
+            new AddAuctionRequest(auction, (Seller) currentAccount);
         else
             throw new NotAllowedActivityException("You are not allowed to add Auction");
     }
@@ -131,7 +128,7 @@ public class SellerController extends Controller {
     public void addProduct(Product product) throws NotAllowedActivityException {
 
         if (currentAccount instanceof Seller)
-            new AddItemRequest(TokenGenerator.generateRequestId(), product, (Seller) currentAccount);
+            new AddItemRequest(product, (Seller) currentAccount);
         else throw new NotAllowedActivityException("You are not allowed to add products .");
 
     }
@@ -149,7 +146,7 @@ public class SellerController extends Controller {
                 .collect(Collectors.toList());
     }
 
-    public String showProductDetails(Product product) {
+    public String showProductDetails(Product product) throws InvalidUsernameException {
         var productController = new SingleProductController(currentAccount, product);
         return productController.digest();
     }

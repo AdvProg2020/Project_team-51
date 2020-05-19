@@ -1,14 +1,12 @@
 package view;
 
 import control.Controller;
-import control.Exceptions.InvalidProductIdException;
-import control.Exceptions.LackOfProductException;
-import control.Exceptions.NotAllowedActivityException;
-import control.Exceptions.SameProductForComparisonException;
+import control.Exceptions.*;
 import control.SingleProductController;
 import model.Attributes;
 import model.Comment;
 import model.Product;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,7 +73,7 @@ public class ProductPageMenu extends Menu {
             back();
         } else if (option == size + 2) {
             if (Controller.getCurrentAccount() == null) {
-                var login = new LoginMenu(this);
+                var login = new LoginAndRegisterMenu(this);
                 login.showMenu();
                 login.executeMenu();
             } else {
@@ -89,16 +87,19 @@ public class ProductPageMenu extends Menu {
     }
 
     private void digest() {
-        System.out.println(singleProductController.digest());
+        try {
+            System.out.println(singleProductController.digest());
+        } catch (InvalidUsernameException e) {
+        }
     }
 
     private void addToCart() {
         if (!Controller.isLoggedIn()) {
-            new LoginMenu(this);
+            new LoginAndRegisterMenu(this);
         }
         try {
             singleProductController.addToCart(selectSeller());
-        } catch (LackOfProductException | NotAllowedActivityException e) {
+        } catch (LackOfProductException | NotAllowedActivityException | InvalidUsernameException e) {
             System.out.println(e.getMessage());
         }
     }

@@ -10,7 +10,7 @@ import model.Category;
 import model.People.Seller;
 import model.Product;
 import model.Requests.AddSellerForItemRequest;
-import view.LoginMenu;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 import view.MainMenu;
 import view.Menu;
 
@@ -54,7 +54,7 @@ public class AddProductMenu extends Menu {
             back();
         } else if (option == size + 2) {
             if (Controller.getCurrentAccount() == null) {
-                var login = new LoginMenu(this);
+                var login = new LoginAndRegisterMenu(this);
                 login.showMenu();
                 login.executeMenu();
             } else {
@@ -82,8 +82,7 @@ public class AddProductMenu extends Menu {
         System.out.println("Enter Price : ");
         double price = getOptionWithRangeDouble(0.00, Double.MAX_VALUE);
 
-        new AddSellerForItemRequest(TokenGenerator.generateRequestId(), product,
-                (Seller) Controller.getCurrentAccount(), quantity, price);
+        new AddSellerForItemRequest(product, (Seller) Controller.getCurrentAccount(), quantity, price);
     }
 
     private void showCategories(List<Category> categories) {

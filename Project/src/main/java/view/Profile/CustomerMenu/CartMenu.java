@@ -5,7 +5,7 @@ import control.CustomerController;
 import control.Exceptions.InvalidProductIdException;
 import control.ProductController;
 import model.Product;
-import view.LoginMenu;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 import view.MainMenu;
 import view.Menu;
 import view.ProductListMenu;
@@ -66,7 +66,7 @@ public class CartMenu extends Menu {
             back();
         } else if (option == size + 2) {
             if (Controller.getCurrentAccount() == null) {
-                var login = new LoginMenu(this);
+                var login = new LoginAndRegisterMenu(this);
                 login.showMenu();
                 login.executeMenu();
             } else {

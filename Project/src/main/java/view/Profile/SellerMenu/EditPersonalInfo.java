@@ -3,7 +3,7 @@ package view.Profile.SellerMenu;
 import control.Controller;
 import control.Exceptions.WrongFormatException;
 import control.SellerController;
-import view.LoginMenu;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 import view.MainMenu;
 import view.Menu;
 
@@ -60,7 +60,7 @@ public class EditPersonalInfo extends Menu {
             back();
         } else if (option == size + 2) {
             if (Controller.getCurrentAccount() == null) {
-                var login = new LoginMenu(this);
+                var login = new LoginAndRegisterMenu(this);
                 login.showMenu();
                 login.executeMenu();
             } else {

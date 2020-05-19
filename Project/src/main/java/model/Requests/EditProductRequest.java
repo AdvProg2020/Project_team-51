@@ -11,8 +11,8 @@ public class EditProductRequest extends Request {
     private String field;
     private String value;
 
-    public EditProductRequest(String requestId, Product product, Seller seller, String field, String value) {
-        super(requestId, "edit");
+    public EditProductRequest(Product product, Seller seller, String field, String value) {
+        super("edit");
         this.product = product;
         this.seller = seller;
         this.field = field;

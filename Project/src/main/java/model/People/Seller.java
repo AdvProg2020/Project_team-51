@@ -6,12 +6,13 @@ import model.Product;
 import model.Status;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Seller extends Account {
 
-    private ArrayList<SellerLog> historyOfSells = new ArrayList<>();
-    private ArrayList<Product> availableProducts = new ArrayList<Product>();
-    private ArrayList<Auction> allAuctions = new ArrayList<Auction>();
+    private List<SellerLog> historyOfSells = new ArrayList<>();
+    private List<Product> availableProducts = new ArrayList<>();
+    private List<Auction> allAuctions = new ArrayList<>();
     private String brandName;
     private Status status;
 
@@ -44,15 +45,11 @@ public class Seller extends Account {
         this.brandName = brandName;
     }
 
-    public ArrayList<SellerLog> getHistoryOfSells() {
+    public List<SellerLog> getHistoryOfSells() {
         return historyOfSells;
     }
 
-    public void setHistoryOfSells(ArrayList<SellerLog> historyOfSells) {
-        this.historyOfSells = historyOfSells;
-    }
-
-    public ArrayList<Product> getAvailableProducts() {
+    public List<Product> getAvailableProducts() {
         return availableProducts;
     }
 
@@ -60,7 +57,7 @@ public class Seller extends Account {
         getAvailableProducts().add(product);
     }
 
-    public ArrayList<Auction> getAllAuctions() {
+    public List<Auction> getAllAuctions() {
         return allAuctions;
     }
 
@@ -70,5 +67,9 @@ public class Seller extends Account {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 }

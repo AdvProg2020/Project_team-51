@@ -2,6 +2,7 @@ package view;
 
 import control.Controller;
 import control.Exceptions.HaveNotLoggedInException;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -99,8 +100,12 @@ public abstract class Menu {
     public void logout() {
         try {
             Controller.logout();
+            System.out.println("You've logged out successfully !");
+            Thread.sleep(1000);
+            new MainMenu();
         } catch (HaveNotLoggedInException e) {
             System.out.println(e.getMessage());
+        } catch (InterruptedException e) {
         }
     }
 
@@ -108,7 +113,7 @@ public abstract class Menu {
         if (Controller.getCurrentAccount() != null)
             System.out.println("You've already logged in");
         else {
-            var login = new LoginMenu(this);
+            var login = new LoginAndRegisterMenu(this);
             login.showMenu();
             login.executeMenu();
         }
