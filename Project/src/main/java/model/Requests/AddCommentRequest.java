@@ -7,8 +7,8 @@ public class AddCommentRequest extends Request {
 
     private Comment comment;
 
-    public AddCommentRequest(String requestId, Comment comment) {
-        super(requestId, "add");
+    public AddCommentRequest(Comment comment) {
+        super("add");
         this.comment = comment;
     }
 

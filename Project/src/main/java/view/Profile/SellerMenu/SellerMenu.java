@@ -4,7 +4,7 @@ import control.Controller;
 import control.Exceptions.InvalidProductIdException;
 import control.SellerController;
 import model.Product;
-import view.LoginMenu;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 import view.MainMenu;
 import view.Menu;
 
@@ -83,7 +83,7 @@ public class SellerMenu extends Menu {
             back();
         } else if (option == size + 2) {
             if (Controller.getCurrentAccount() == null) {
-                var login = new LoginMenu(this);
+                var login = new LoginAndRegisterMenu(this);
                 login.showMenu();
                 login.executeMenu();
             } else {
@@ -111,6 +111,7 @@ public class SellerMenu extends Menu {
 
     private void removeProduct() {
         String id = inputInFormat("Enter a Product id : ", "\\w+");
+        if (command.equalsIgnoreCase("back")) return;
         Product product = null;
         try {
             product = Product.getProductById(id);

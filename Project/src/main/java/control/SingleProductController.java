@@ -1,11 +1,7 @@
 package control;
 
-import control.Exceptions.InvalidProductIdException;
-import control.Exceptions.LackOfProductException;
-import control.Exceptions.NotAllowedActivityException;
-import control.Exceptions.SameProductForComparisonException;
+import control.Exceptions.*;
 import model.*;
-import model.OrderLog.BuyerLog;
 import model.OrderLog.Order;
 import model.People.Account;
 import model.People.Customer;
@@ -35,7 +31,7 @@ public class SingleProductController extends Controller {
         this.product = product;
     }
 
-    public String digest() {
+    public String digest() throws InvalidUsernameException {
 
         StringBuilder digest = new StringBuilder();
         digest.append(product.getDescription()).append("\n");
@@ -51,7 +47,7 @@ public class SingleProductController extends Controller {
         return digest.toString();
     }
 
-    public void addToCart(String seller) throws LackOfProductException, NotAllowedActivityException {
+    public void addToCart(String seller) throws LackOfProductException, NotAllowedActivityException, InvalidUsernameException {
 
         if (currentAccount instanceof Seller | currentAccount instanceof Manager)
             throw new NotAllowedActivityException("You are not allowed to buy product");
@@ -103,7 +99,7 @@ public class SingleProductController extends Controller {
     public void addComment(String title, String content) throws NotAllowedActivityException {
         if (currentAccount == null)
             throw new NotAllowedActivityException("You should login first !");
-        new AddCommentRequest(TokenGenerator.generateRequestId(), new Comment(currentAccount, product, content, title,
+        new AddCommentRequest(new Comment(currentAccount, product, content, title,
                 Status.PENDING_CREATE, isCurrentAccountBuyer()));
     }
 
@@ -111,7 +107,7 @@ public class SingleProductController extends Controller {
         return product.getComments();
     }
 
-    private double getProductDiscountAmount(String seller) {
+    private int getProductDiscountAmount(String seller) throws InvalidUsernameException {
 
         var sellerOfProduct = Account.getAccountById(seller);
         if (sellerOfProduct instanceof Seller) {
@@ -131,7 +127,7 @@ public class SingleProductController extends Controller {
 
         if (currentAccount instanceof Customer) {
             for (Order historyOfOrder : ((Customer) currentAccount).getHistoryOfOrders()) {
-                for (ItemOfOrder item : ((BuyerLog) historyOfOrder).getItems()) {
+                for (ItemOfOrder item : historyOfOrder.getItems()) {
                     if (item.getProduct() == product)
                         return true;
                 }

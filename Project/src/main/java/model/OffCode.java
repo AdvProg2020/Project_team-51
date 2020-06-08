@@ -15,6 +15,7 @@ public class OffCode {
     private Double maxDiscount;
     private List<Account> appliedAccounts = new ArrayList<Account>();
     private int offPercentage;
+    private Status status;
 
     public OffCode(String offCode, Date beginDate, Date endDate, List<Account> appliedAccounts, int offPercentage, Double maxDiscount) {
         this.offCode = offCode;
@@ -24,6 +25,7 @@ public class OffCode {
         this.offPercentage = offPercentage;
         this.maxDiscount = maxDiscount;
         allOffCodes.add(this);
+        status = Status.APPROVED;
     }
 
     public static List<OffCode> getAllOffCodes() {
@@ -87,7 +89,19 @@ public class OffCode {
         this.offPercentage = offPercentage;
     }
 
+    public Double getMaxDiscount() {
+        return maxDiscount;
+    }
+
     public void setMaxDiscount(Double maxDiscount) {
         this.maxDiscount = maxDiscount;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

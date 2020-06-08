@@ -1,0 +1,19 @@
+{
+  "seller": {
+    "historyOfSells": [],
+    "availableProducts": [],
+    "allAuctions": [],
+    "brandName": "AmazonCo",
+    "status": "PENDING_CREATE",
+    "username": "Amazon",
+    "firstName": "Amazon",
+    "lastName": "Amazoni",
+    "balance": 3.1745893674352E9,
+    "email": "Amzon@Amazon.com",
+    "phoneNumber": "09112223344",
+    "password": "ImAmazon"
+  },
+  "status": "PENDING_CREATE",
+  "requestId": "31045777",
+  "date": "May 19, 2020, 4:52:13 AM"
+}

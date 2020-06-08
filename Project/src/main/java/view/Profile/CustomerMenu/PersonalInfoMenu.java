@@ -2,7 +2,7 @@ package view.Profile.CustomerMenu;
 
 import control.Controller;
 import control.CustomerController;
-import view.LoginMenu;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 import view.MainMenu;
 import view.Menu;
 
@@ -31,7 +31,7 @@ public class PersonalInfoMenu extends Menu {
             back();
         } else if (option == size + 2) {
             if (Controller.getCurrentAccount() == null) {
-                var login = new LoginMenu(this);
+                var login = new LoginAndRegisterMenu(this);
                 login.showMenu();
                 login.executeMenu();
             } else {
@@ -48,5 +48,4 @@ public class PersonalInfoMenu extends Menu {
     public void viewPersonaInfo() {
         System.out.println(customerController.viewPersonalInfo());
     }
-
 }

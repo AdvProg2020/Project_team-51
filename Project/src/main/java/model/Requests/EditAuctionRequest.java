@@ -13,8 +13,8 @@ public class EditAuctionRequest extends Request {
     private String field;
     private String value;
 
-    public EditAuctionRequest(String requestId, Auction auction, String field, String value) {
-        super(requestId, "edit");
+    public EditAuctionRequest(Auction auction, String field, String value) {
+        super("edit");
         this.auction = auction;
         this.field = field;
         this.value = value;

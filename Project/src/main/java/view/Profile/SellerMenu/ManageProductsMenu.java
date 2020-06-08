@@ -2,9 +2,10 @@ package view.Profile.SellerMenu;
 
 import control.Controller;
 import control.Exceptions.InvalidProductIdException;
+import control.Exceptions.InvalidUsernameException;
 import control.SellerController;
 import model.Product;
-import view.LoginMenu;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 import view.MainMenu;
 import view.Menu;
 
@@ -50,7 +51,7 @@ public class ManageProductsMenu extends Menu {
             back();
         } else if (option == size + 2) {
             if (Controller.getCurrentAccount() == null) {
-                var login = new LoginMenu(this);
+                var login = new LoginAndRegisterMenu(this);
                 login.showMenu();
                 login.executeMenu();
             } else {
@@ -67,6 +68,7 @@ public class ManageProductsMenu extends Menu {
 
     private void viewProductBuyers() {
         String id = inputInFormat("Enter a Product id : ", "\\w+");
+        if (command.equalsIgnoreCase("back")) return;
         Product product = null;
         try {
             product = Product.getProductById(id);
@@ -81,11 +83,12 @@ public class ManageProductsMenu extends Menu {
     private void viwProductDetails() {
 
         String id = inputInFormat("Enter a Product id : ", "\\w+");
+        if (command.equalsIgnoreCase("back")) return;
         Product product;
         try {
             product = Product.getProductById(id);
             System.out.println(sellerController.showProductDetails(product));
-        } catch (InvalidProductIdException e) {
+        } catch (InvalidProductIdException | InvalidUsernameException e) {
             System.out.println("invalid product id");
             viwProductDetails();
         }
@@ -94,6 +97,7 @@ public class ManageProductsMenu extends Menu {
 
     private void editProduct() {
         String id = inputInFormat("Enter a Product id : ", "\\w+");
+        if (command.equalsIgnoreCase("back")) return;
         Product product;
         try {
             product = Product.getProductById(id);

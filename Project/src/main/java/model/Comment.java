@@ -1,5 +1,6 @@
 package model;
 
+import control.TokenGenerator;
 import model.People.Account;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class Comment {
     private String context;
     private Status commentStatus;
     private Boolean isBuyer;
+    private String commentId;
 
     public Comment(Account account, Product product, String context, String title, Status commentStatus, Boolean isBuyer) {
         this.account = account;
@@ -20,6 +22,7 @@ public class Comment {
         this.title = title;
         this.commentStatus = commentStatus;
         this.isBuyer = isBuyer;
+        this.commentId = TokenGenerator.generateCommentId();
         allComments.add(this);
     }
 
@@ -57,6 +60,14 @@ public class Comment {
 
     public void setCommentStatus(Status commentStatus) {
         this.commentStatus = commentStatus;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getCommentId() {
+        return commentId;
     }
 
     public Boolean getBuyer() {

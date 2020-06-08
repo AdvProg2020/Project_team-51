@@ -1,6 +1,7 @@
 package model.Requests;
 
 import control.Exceptions.InvalidProductIdException;
+import control.TokenGenerator;
 import model.Status;
 
 import java.text.ParseException;
@@ -14,14 +15,15 @@ public abstract class Request {
     private String requestId;
     private Date date;
 
-    public Request(String requestId, String kind) {
-        this.requestId = requestId;
+    public Request(String kind) {
+        this.requestId = TokenGenerator.generateRequestId();
         if (kind.equals("add"))
             status = Status.PENDING_CREATE;
         else if (kind.equals("edit")) {
             status = Status.PENDING_EDIT;
         }
         this.date = new Date();
+        allRequests.add(this);
     }
 
 

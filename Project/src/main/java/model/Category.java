@@ -1,11 +1,14 @@
 package model;
 
+import control.TokenGenerator;
+
 import java.util.*;
 
 public class Category {
 
     private static ArrayList<Category> allCategories = new ArrayList<>();
     private String name;
+    private String categoryId;
     private Map<Integer, Category> subCategories = new LinkedHashMap<>();
     private Category parentCategory;
     private List<Product> categoryProducts = new ArrayList<>();
@@ -16,6 +19,7 @@ public class Category {
         this.parentCategory = parentCategory;
         allCategories.add(this);
         this.attributes = List.of(attributes);
+        categoryId = TokenGenerator.generateCategoryId();
     }
 
     public static String getPathOfCategory(Category category) {
@@ -74,5 +78,9 @@ public class Category {
 
     public List<Product> getCategoryProducts() {
         return categoryProducts;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
     }
 }

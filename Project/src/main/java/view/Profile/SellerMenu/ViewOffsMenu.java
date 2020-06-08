@@ -4,13 +4,12 @@ import control.Controller;
 import control.Exceptions.InvalidAuctionIdException;
 import control.Exceptions.InvalidProductIdException;
 import control.SellerController;
-import control.TokenGenerator;
 import model.Auction;
 import model.People.Seller;
 import model.Product;
 import model.Requests.AddAuctionRequest;
 import model.Requests.EditAuctionRequest;
-import view.LoginMenu;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 import view.MainMenu;
 import view.Menu;
 
@@ -61,7 +60,7 @@ public class ViewOffsMenu extends Menu {
             back();
         } else if (option == size + 2) {
             if (Controller.getCurrentAccount() == null) {
-                var login = new LoginMenu(this);
+                var login = new LoginAndRegisterMenu(this);
                 login.showMenu();
                 login.executeMenu();
             } else {
@@ -79,9 +78,8 @@ public class ViewOffsMenu extends Menu {
         Date endDate = getEndDate(beginDate);
         ArrayList<Product> appliedProducts = new ArrayList<>(getAppliedProducts());
         int offPercentage = getOffPercentage();
-        new AddAuctionRequest(TokenGenerator.generateRequestId(),
-                new Auction(seller, beginDate, endDate,
-                        appliedProducts, offPercentage), seller);
+        new AddAuctionRequest(new Auction(seller, beginDate, endDate,
+                appliedProducts, offPercentage), seller);
     }
 
     private Date getBeginDate() {
@@ -140,15 +138,15 @@ public class ViewOffsMenu extends Menu {
         var auction = getAuctionToEdit();
         command = getAttribute();
         if (command.matches("(?i)begin\\s+date")) {
-            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, command, getBeginDateForEdit());
+            new EditAuctionRequest(auction, command, getBeginDateForEdit());
         } else if (command.matches("(?i)end\\s+date")) {
-            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, command, getEndDateForEdit());
+            new EditAuctionRequest(auction, command, getEndDateForEdit());
         } else if (command.matches("(?i)off\\s+percentage")) {
-            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, command, Integer.toString(getOffPercentage()));
+            new EditAuctionRequest(auction, command, Integer.toString(getOffPercentage()));
         } else if (command.matches("(?i)add\\s+product")) {
-            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, command, getProductToAddForEdit(auction));
+            new EditAuctionRequest(auction, command, getProductToAddForEdit(auction));
         } else if (command.matches("(?i)remove\\s+product")) {
-            new EditAuctionRequest(TokenGenerator.generateRequestId(), auction, command, getProductToRemoveForEdit(auction));
+            new EditAuctionRequest(auction, command, getProductToRemoveForEdit(auction));
         }
     }
 

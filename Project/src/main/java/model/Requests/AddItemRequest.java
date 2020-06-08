@@ -10,8 +10,8 @@ public class AddItemRequest extends Request {
     private Product product;
     private Seller seller;
 
-    public AddItemRequest(String requestId, Product product, Seller seller) {
-        super(requestId, "add");
+    public AddItemRequest(Product product, Seller seller) {
+        super("add");
         this.product = product;
         this.seller = seller;
     }

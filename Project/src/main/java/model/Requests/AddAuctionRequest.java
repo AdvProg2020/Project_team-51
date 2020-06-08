@@ -9,8 +9,8 @@ public class AddAuctionRequest extends Request {
     private Auction auction;
     private Seller seller;
 
-    public AddAuctionRequest(String requestId, Auction auction, Seller seller) {
-        super(requestId, "add");
+    public AddAuctionRequest(Auction auction, Seller seller) {
+        super("add");
         this.auction = auction;
         this.seller = seller;
     }

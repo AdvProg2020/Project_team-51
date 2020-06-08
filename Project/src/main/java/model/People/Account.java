@@ -1,5 +1,7 @@
 package model.People;
 
+import control.Exceptions.InvalidUsernameException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,14 +39,15 @@ public abstract class Account {
         allAccounts.add(seller);
     }
 
-    public static Account getAccountById(String username) {
+    public static Account getAccountById(String username) throws InvalidUsernameException {
 
         for (Account account : allAccounts) {
             if (account.username.equals(username)) {
                 return account;
             }
         }
-        return null;
+
+        throw new InvalidUsernameException();
     }
 
     public static boolean doesManagerExist() {
@@ -108,5 +111,18 @@ public abstract class Account {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", balance=" + balance +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

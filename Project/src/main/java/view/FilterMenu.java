@@ -4,6 +4,7 @@ import control.Controller;
 import control.Filters.Filter;
 import control.ProductController;
 import model.FilterTypes;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 
 public class FilterMenu extends Menu {
 
@@ -62,7 +63,7 @@ public class FilterMenu extends Menu {
             back();
         } else if (option == size + 2) {
             if (Controller.getCurrentAccount() == null) {
-                var login = new LoginMenu(this);
+                var login = new LoginAndRegisterMenu(this);
                 login.showMenu();
                 login.executeMenu();
             } else {

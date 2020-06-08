@@ -41,22 +41,10 @@ public class ManagerController extends Controller {
         Account.setAllAccounts(allAccounts);
     }
 
-    public static void createManager(String[] info) {
-        new Manager(info[0], info[1], info[2], info[3], Double.valueOf(info[4]), info[5], info[6]);
-    }
-
     public static Boolean isHeAbleToCreateManger() throws Exception {
         if (currentAccount instanceof Manager) return true;
         if (!Account.doesManagerExist()) return true;
         throw new NotAllowedActivityException("only managers are able to create manager");
-    }
-
-    public static Boolean isThisPidValid(String productId) {
-        ArrayList<Product> products = model.Product.getAllProducts();
-        for (Product product : products) {
-            if (product.getProductId().equals(productId)) return true;
-        }
-        return false;
     }
 
     public static void removeProduct(String productId) {

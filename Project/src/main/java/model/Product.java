@@ -182,6 +182,14 @@ public class Product {
         return price;
     }
 
+    public void addPriceOfNewSeller(Seller seller, double price) {
+        this.price.putIfAbsent(seller, price);
+    }
+
+    public void addQuantityOfNewSeller(Seller seller, int quantity) {
+        this.quantity.putIfAbsent(seller, quantity);
+    }
+
     public Map<Seller, Integer> getQuantity() {
         return quantity;
     }

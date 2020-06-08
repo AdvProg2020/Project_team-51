@@ -6,7 +6,7 @@ import model.People.Account;
 import model.People.Customer;
 import model.People.Manager;
 import model.People.Seller;
-import model.Requests.AddSellerRequest;
+import model.Status;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class Controller {
         Controller.currentAccount = currentAccount;
     }
 
-    public static boolean hasUserWithThisUsername(String username) {
+    public static boolean hasUserWithThisUsername(String username) throws InvalidUsernameException {
         return Account.getAccountById(username) != null;
     }
 
@@ -27,47 +27,21 @@ public class Controller {
         return currentAccount != null;
     }
 
-    // String [String type , String username,String password , String firstName, String lastName,
-    // Double balance, String email, String phoneNumber , String brand name]
-    public static void register(String[] registerInfo) {
-
-        switch (registerInfo[0]) {
-            case "customer":
-                new Customer(registerInfo[1], registerInfo[2], registerInfo[3],
-                        registerInfo[4], Double.parseDouble(registerInfo[5]),
-                        registerInfo[6], registerInfo[7]);
-
-                break;
-            case "seller":
-                var newSeller = new Seller(registerInfo[1], registerInfo[2], registerInfo[3],
-                        registerInfo[4], Double.parseDouble(registerInfo[5]),
-                        registerInfo[6], registerInfo[7], registerInfo[8]);
-                new AddSellerRequest("sth", newSeller);
-
-                break;
-            case "manager":
-                new Manager(registerInfo[1], registerInfo[2], registerInfo[3],
-                        registerInfo[4], Double.parseDouble(registerInfo[5]),
-                        registerInfo[6], registerInfo[7]);
-                break;
-        }
-    }
-
-
-    public static void login(String username, String password) throws WrongPasswordException {
-        if (doesPasswordMatches(username, password)) {
+    public static void login(String username, String password) throws WrongPasswordException, InvalidUsernameException {
+        var account = Account.getAccountById(username);
+        if (doesPasswordMatches(username, password)
+                && (!(account instanceof Seller) || ((((Seller) account).getStatus().equals(Status.APPROVED))))) {
             currentAccount = Account.getAccountById(username);
             if (currentAccount instanceof Customer)
                 ((Customer) currentAccount).setCart(cart);
+            if (currentAccount == null) throw new InvalidUsernameException();
         } else {
             throw new WrongPasswordException();
         }
     }
 
-    public static boolean doesPasswordMatches(String user, String password) {
-
-        assert Account.getAccountById(user) != null;
-        return !hasUserWithThisUsername(user) && Account.getAccountById(user).getPassword().equals(password);
+    public static boolean doesPasswordMatches(String user, String password) throws InvalidUsernameException {
+        return hasUserWithThisUsername(user) && Account.getAccountById(user).getPassword().equals(password);
     }
 
     public static void logout() throws HaveNotLoggedInException {
@@ -83,8 +57,12 @@ public class Controller {
         return currentAccount;
     }
 
-    public static void setCurrentAccount(String username) {
+    public static void setCurrentAccount(String username) throws InvalidUsernameException {
         currentAccount = Manager.getAccountById(username);
+    }
+
+    public static void setCurrentAccount(Account account) {
+        currentAccount = account;
     }
 
     public static void isEmailUsed(String Email) throws InvalidEmailException {
@@ -93,15 +71,30 @@ public class Controller {
         }
     }
 
-    public static void isNumberUsed(String number) throws Exception {
+    public static void isNumberUsed(String number) throws InvalidPhoneNumberException {
         for (Account account : model.People.Account.getAllAccounts()) {
             if (account.getPhoneNumber().equalsIgnoreCase(number)) throw new InvalidPhoneNumberException();
         }
     }
 
-    public static void isUserNameUsed(String username) throws Exception {
-        for (Account account : model.People.Account.getAllAccounts()) {
+    public static boolean isUserNameUsed(String username) throws InvalidUsernameException {
+        for (Account account : Account.getAllAccounts()) {
             if (account.getUsername().equalsIgnoreCase(username)) throw new InvalidUsernameException();
         }
+
+        return false;
+    }
+
+    public static boolean isThereAnyManager() {
+        for (Account account : Account.getAllAccounts()) {
+            if (account instanceof Manager)
+                return true;
+        }
+
+        return false;
+    }
+
+    public static List<ItemOfOrder> getCart() {
+        return cart;
     }
 }

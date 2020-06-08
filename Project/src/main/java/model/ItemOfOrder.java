@@ -13,11 +13,11 @@ public class ItemOfOrder {
     private Seller seller;
     private Product product;
     private Double price;
-    private Double discount;
+    private int discount;
     private Date date;
     private int quantity;
 
-    public ItemOfOrder(Seller seller, Product product, Double price, Double discount, Date date) {
+    public ItemOfOrder(Seller seller, Product product, Double price, int discount, Date date) {
         this.seller = seller;
         this.product = product;
         this.price = price;
@@ -47,6 +47,10 @@ public class ItemOfOrder {
 
     public double getTotalPrice() {
         return quantity * price;
+    }
+
+    public double getTotalPriceWithDiscount() {
+        return (quantity * price) * (1 - discount / 100);
     }
 
     public Seller getSeller() {
@@ -81,11 +85,11 @@ public class ItemOfOrder {
         this.date = date;
     }
 
-    public Double getDiscount() {
+    public int getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Double discount) {
+    public void setDiscount(int discount) {
         this.discount = discount;
     }
 

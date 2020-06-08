@@ -8,8 +8,8 @@ public class AddSellerRequest extends Request {
 
     private Seller seller;
 
-    public AddSellerRequest(String requestId, Seller seller) {
-        super(requestId, "add");
+    public AddSellerRequest(Seller seller) {
+        super("add");
         this.seller = seller;
     }
 

@@ -4,6 +4,7 @@ import control.Controller;
 import model.People.Customer;
 import model.People.Manager;
 import model.People.Seller;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 import view.Profile.CustomerMenu.CustomerMenu;
 import view.Profile.ManagerMenu;
 import view.Profile.SellerMenu.SellerMenu;
@@ -29,7 +30,16 @@ public class MainMenu extends Menu {
 
         subMenus.put(2, new ProductMenu(this, null));
         subMenus.put(3, new AuctionMenu(this));
-        subMenus.put(4, new LoginMenu(this));
+
+        if (Controller.getCurrentAccount() == null)
+            subMenus.put(4, new LoginAndRegisterMenu(this));
+        else
+            subMenus.put(4, new Menu("Logout", this) {
+                @Override
+                public void executeMenu() {
+                    logout();
+                }
+            });
 
         this.showMenu();
         this.executeMenu();

@@ -14,8 +14,8 @@ public class Manager extends Account {
     private static List<Category> allCategories = new ArrayList<Category>();
 
 
-    public Manager(String username, String password, String firstName, String lastName, Double balance, String email, String phoneNumber) {
-        super(username, password, firstName, lastName, balance, email, phoneNumber);
+    public Manager(String username, String password, String firstName, String lastName, String email, String phoneNumber) {
+        super(username, password, firstName, lastName, null, email, phoneNumber);
     }
 
     public static List<Request> getAllRequests() {

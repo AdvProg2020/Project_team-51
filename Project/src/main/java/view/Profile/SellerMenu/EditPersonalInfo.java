@@ -3,7 +3,7 @@ package view.Profile.SellerMenu;
 import control.Controller;
 import control.Exceptions.WrongFormatException;
 import control.SellerController;
-import view.LoginMenu;
+import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 import view.MainMenu;
 import view.Menu;
 
@@ -52,7 +52,6 @@ public class EditPersonalInfo extends Menu {
         menusHistory.push(this);
         int size = subMenus.size();
         int option = getOptionWithRange(1, size);
-
         if (option <= size) {
             var nextMenu = subMenus.get(option);
             nextMenu.showMenu();
@@ -61,7 +60,7 @@ public class EditPersonalInfo extends Menu {
             back();
         } else if (option == size + 2) {
             if (Controller.getCurrentAccount() == null) {
-                var login = new LoginMenu(this);
+                var login = new LoginAndRegisterMenu(this);
                 login.showMenu();
                 login.executeMenu();
             } else {
@@ -78,6 +77,7 @@ public class EditPersonalInfo extends Menu {
     private void getFirstName() {
         System.out.println("Please Enter Your New First Name : ");
         command = inputInFormat("Invalid Format !", "(?i)\\w+");
+        if (command.equalsIgnoreCase("back")) return;
         try {
             SellerController.editFirstName(command);
             System.out.println("New first name submitted !");
@@ -90,6 +90,7 @@ public class EditPersonalInfo extends Menu {
     private void getLastName() {
         System.out.println("Please Enter Your New Last Name : ");
         command = inputInFormat("Invalid Format !", "(?i)\\w+");
+        if (command.equalsIgnoreCase("back")) return;
         try {
             SellerController.editLastName(command);
             System.out.println("New last name submitted !");
@@ -102,6 +103,7 @@ public class EditPersonalInfo extends Menu {
     private void getEmail() {
         System.out.println("Please Enter Your New Email : ");
         command = inputInFormat("Invalid Format !", "(?i)\\w+@\\w+\\.\\w+");
+        if (command.equalsIgnoreCase("back")) return;
         try {
             SellerController.editEmail(command);
             System.out.println("New email submitted !");
@@ -117,6 +119,7 @@ public class EditPersonalInfo extends Menu {
     private void getPhone() {
         System.out.println("Please Enter Your New Phone Number : ");
         command = inputInFormat("Invalid Format !", "(?i)[0-9]+");
+        if (command.equalsIgnoreCase("back")) return;
         try {
             SellerController.editPhoneNumber(command);
             System.out.println("New phoneNumber submitted !");
@@ -135,6 +138,7 @@ public class EditPersonalInfo extends Menu {
     private void getBrand() {
         System.out.println("Please Enter Your New Brand Name : ");
         command = inputInFormat("Invalid Format !", "(?i)\\w+");
+        if (command.equalsIgnoreCase("back")) return;
         try {
             SellerController.editBrand(command);
             System.out.println("New brand name submitted !");
