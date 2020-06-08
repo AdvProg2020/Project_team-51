@@ -73,7 +73,7 @@ public abstract class Menu {
             if (matcher.find())
                 return command;
             if (!error.equals(""))
-                System.out.println(error);
+                System.err.println(error);
         } while (true);
     }
 

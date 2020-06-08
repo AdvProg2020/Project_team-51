@@ -197,8 +197,8 @@ public class LoginMenu extends Menu {
                 case "manager":
                     new Manager(username, password, firstName, lastName, balance, email, number);
             }
-            this.showMenu();
-            this.executeMenu();
+            System.out.println("account created successfully");
+            goToNextMenu ();
         } catch (Exception e) {
             System.err.println(e.getMessage());
             getBalance();
@@ -226,7 +226,6 @@ public class LoginMenu extends Menu {
         }
     }
 
-    // not completed
     private void enterPass() {
         System.out.println("please enter password or back");
         if ((pass = scanner.nextLine()).equalsIgnoreCase("back")) {
@@ -235,12 +234,17 @@ public class LoginMenu extends Menu {
         try {
             if (!Controller.doesPasswordMatches(user, pass)) throw new InvalidPasswordException();
             Controller.setCurrentAccount(username);
-// which menu should it open now ?
+            goToNextMenu ();
         } catch (Exception e) {
             System.err.println(e.getMessage());
             enterPass();
         }
     }
 
+    private void goToNextMenu (){
+        Menu nextMenu = menusHistory.pop();
+        nextMenu.showMenu();
+        nextMenu.executeMenu();
+    }
 
 }
