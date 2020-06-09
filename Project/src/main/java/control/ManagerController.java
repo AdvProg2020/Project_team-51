@@ -1,6 +1,7 @@
 package control;
 
 import control.Exceptions.*;
+import model.Attributes;
 import model.Category;
 import model.OffCode;
 import model.People.Account;
@@ -10,15 +11,16 @@ import model.Requests.Request;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ManagerController extends Controller {
 
     public ManagerController(Account currentAccount) {
         super(currentAccount);
+    }
+
+    public static Attributes getAttributeById(String id) throws Exception {
+        return Attributes.getAttributeById(id);
     }
 
     public Boolean isThisFieldValid(Product product, String field) {
@@ -157,9 +159,9 @@ public class ManagerController extends Controller {
         return getCategoryByName(categoryName) != null;
     }
 
-    public void addCategory(String[] info) {
+    public void addCategory(String name , String parentName , Attributes... attributes) {
         if (!(currentAccount instanceof Manager)) return;
-        Category newCategory = new Category(info[0], getCategoryByName(info[1]));
+        Category newCategory = new Category(name, getCategoryByName(parentName) , attributes);
         List<Category> allCategories = ((Manager) currentAccount).getAllCategories();
         allCategories.add(newCategory);
         ((Manager) currentAccount).setAllCategories(allCategories);
@@ -184,7 +186,38 @@ public class ManagerController extends Controller {
         }
     }
 
-    public static void removeCategory(String categoryName) {
+    public void addProductToCategory(String categoryId , String pid) throws Exception {
+        Product product = Product.getProductById(pid);
+        Category category1 = Category.getCategoryById(categoryId);
+        category1.getCategoryProducts().add(product);
+    }
+
+    public void removeProductFromCategory(String categoryId , String pid) throws Exception{
+        Product product = Product.getProductById(pid);
+        Category category1 = Category.getCategoryById(categoryId);
+        if (!category1.getCategoryProducts().contains(product)) throw new Exception("category does not contaon the product");
+        category1.getCategoryProducts().remove(product);
+    }
+
+    public void addChildCategory(String categoryName , String childCategoryName) throws Exception{
+        Category parent = getCategoryByName(categoryName);
+        Category child = getCategoryByName(childCategoryName);
+        if (parent.getParentCategory().equals(child)) throw new Exception("a category's parent cannot be its child");
+        if (parent.equals(child))throw new Exception("a category cannot be its own child");
+        if (!parent.getSubCategories().containsValue(child)) parent.setSubCategories((Map<Integer, Category>) parent.getSubCategories()
+                .put(parent.getSubCategories().size() , child));
+    }
+
+    public void removeChildCategory (String categoryName , String childCategoryName) throws Exception {
+        Category parent = getCategoryByName(categoryName);
+        Category child = getCategoryByName(childCategoryName);
+        if (parent.getSubCategories().containsValue(child)){
+            Integer key = getKeyByValue(parent.getSubCategories() , child);
+            parent.setSubCategories(parent.getSubCategories().remove(key , child));
+        }
+    }
+
+    public void removeCategory(String categoryName) {
         Category category = getCategoryByName(categoryName);
         Manager manager = (Manager) currentAccount;
         List<Category> allCategories = manager.getAllCategories();
@@ -192,14 +225,24 @@ public class ManagerController extends Controller {
         manager.setAllCategories(allCategories);
     }
 
-    public static Category getCategoryByName(String name) {
+    public Category getCategoryByName(String name) {
         Manager manager = (Manager) currentAccount;
         for (Category category1 : manager.getAllCategories()) {
             if (category1.getName().equals(name)) return category1;
         }
         return null;
     }
+
+    public Category getCategoryById(String id) {
+        Manager manager = (Manager) currentAccount;
+        for (Category category1 : manager.getAllCategories()) {
+            if (category1.getCategoryId().equals(id)) return category1;
+        }
+        return null;
+    }
+
 //incomplete
+
     public void editCategoryName (String beforeName , String afterName) throws Exception{
         Category c2 = getCategoryByName(afterName);
         Category c = getCategoryByName(beforeName);
@@ -279,6 +322,15 @@ public class ManagerController extends Controller {
 //        throw new Exception("invlaid Request id");
 //    }
 
+    public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+        for (Map.Entry<T, E> entry : map.entrySet()) {
+            if (Objects.equals(value, entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
     public Product getProductById (String id) throws InvalidProductIdException{
         return Product.getProductById(id);
     }
@@ -287,4 +339,5 @@ public class ManagerController extends Controller {
         if (Account.getAccountById(id)!=null) return Account.getAccountById(id);
         throw new InvalidUsernameException();
     }
+
 }
