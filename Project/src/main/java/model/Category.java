@@ -80,6 +80,13 @@ public class Category {
         return categoryProducts;
     }
 
+    public static Category getCategoryById(String id) throws Exception {
+        for (Category c : allCategories){
+            if (c.getName().equals(id)) return c;
+        }
+        throw new Exception("category is invalid");
+    }
+
     public String getCategoryId() {
         return categoryId;
     }
