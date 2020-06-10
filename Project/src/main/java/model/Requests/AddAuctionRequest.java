@@ -17,7 +17,7 @@ public class AddAuctionRequest extends Request {
 
     @Override
     public String toString() {
-        return "Add Auction Request :\n" +
+        return "" + getRequestId() + " Add Auction Request :\n" +
                 auction.getAuctionId() + " | " + auction.getOffPercentage() + "% | from : " + auction.getBeginDate()
                 + " to : " + auction.getEndDate();
 

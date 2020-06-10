@@ -136,11 +136,11 @@ public class ManagerController extends Controller {
         return false;
     }
 
-    public Request getRequestById(String id) {
-        for (Request request : Manager.getAllRequests()) {
+    public Request getRequestById(String id) throws Exception{
+        for (Request request : model.Requests.Request.getAllRequests()) {
             if (request.getRequestId().equals(id)) return request;
         }
-        return null;
+        throw new Exception("request id is invalid");
     }
 
     public String getRequestDetail(String requestId) throws Exception {

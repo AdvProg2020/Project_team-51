@@ -21,7 +21,7 @@ public class EditProductRequest extends Request {
 
     @Override
     public String toString() {
-        return "Edit Product Request : " +
+        return "" + getRequestId() +" Edit Product Request : " +
                 "Product : " + product.getName() +
                 "\nSeller : " + seller.getUsername() +
                 "\nField : " + field + '\'' +
