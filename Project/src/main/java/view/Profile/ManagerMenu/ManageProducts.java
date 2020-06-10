@@ -49,7 +49,7 @@ public class ManageProducts extends Menu {
     }
 
     void deleteProduct(){
-        String id = inputInFormat("please enter product id" , ""); //todo get the regex for id
+        String id = inputInFormat("please enter product id" , "^PID\\w+$");
         try {
             managerController.removeProduct(id);
         } catch (InvalidProductIdException e) {

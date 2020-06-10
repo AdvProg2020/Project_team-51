@@ -217,17 +217,16 @@ public class ManagerController extends Controller {
         Category child = getCategoryByName(childCategoryName);
         if (parent.getSubCategories().containsValue(child)){
             Integer key = getKeyByValue(parent.getSubCategories() , child);
-            //todo
-            //parent.setSubCategories(parent.getSubCategories().remove(key , child));
+            parent.getSubCategories().remove(key ,child);
         }
     }
 
-    public void removeCategory(String categoryName) {
-        Category category = getCategoryByName(categoryName);
-        Manager manager = (Manager) currentAccount;
-        List<Category> allCategories = manager.getAllCategories();
-        allCategories.remove(getCategoryByName(categoryName));
-        manager.setAllCategories(allCategories);
+    public void removeCategory(String categoryName) throws Exception{
+        Category category;
+        if ((category = getCategoryByName(categoryName))==null) throw new NoCategoriesFoundException(
+                "category is invalid"
+        );
+        Category.getAllCategories().remove(category);
     }
 
     public Category getCategoryByName(String name) {

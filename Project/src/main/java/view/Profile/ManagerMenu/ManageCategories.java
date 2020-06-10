@@ -117,7 +117,7 @@ public class ManageCategories extends Menu {
     }
 
     void editCategoryRemoveAttribute(){
-        //todo
+        //todo i really dont have an idea about attributes
     }
 
     void editCategoryAddChildCategory(Category category){
@@ -131,7 +131,11 @@ public class ManageCategories extends Menu {
 
     void editCategoryRemoveChildCategory(Category category){
         String childCategoryName = inputInFormat("please enter child category name" , "^\\w+$");
-        //todo
+        try {
+            managerController.removeChildCategory(category.getName() , childCategoryName);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     void addCategory(){
@@ -153,8 +157,9 @@ public class ManageCategories extends Menu {
     }
 
     void removeCategory(){
-        String id = inputInFormat("please input id to remove" , "");// format must be set. couldnt find the format
-        try{managerController.removeCategory(id);}catch (Exception e){
+        System.out.println("please enter category name");
+        String name = scanner.nextLine();
+        try{managerController.removeCategory(name);}catch (Exception e){
             System.err.println(e.getMessage());
         }
     }
