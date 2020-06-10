@@ -47,4 +47,11 @@ public class Attributes {
     public String getAttributeId() {
         return attributeId;
     }
+
+    public static Attributes getAttributeById (String attributeId) throws Exception{
+        for (Attributes a : allAttributes){
+            if (a.getAttributeId().equals(attributeId))return a;
+        }
+        throw new Exception("attribute not found");
+    }
 }

@@ -6,7 +6,7 @@ import model.People.Manager;
 import model.People.Seller;
 import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 import view.Profile.CustomerMenu.CustomerMenu;
-import view.Profile.ManagerMenu;
+import view.Profile.ManagerMenu.*;
 import view.Profile.SellerMenu.SellerMenu;
 
 public class MainMenu extends Menu {

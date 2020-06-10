@@ -32,6 +32,10 @@ public class ManagerController extends Controller {
         if (currentAccount != null) currentAccount.setPhoneNumber(phoneNumber);
     }
 
+    public List<Account> getAllProfiles (){
+        return Account.getAllAccounts();
+    }
+
     public void deleteUser(String username) throws Exception {
         if (hasUserWithThisUsername(username))throw new InvalidUsernameException();
         if (currentAccount.getUsername().equals(username)) throw new Exception("cant delete logged in account");
@@ -47,13 +51,13 @@ public class ManagerController extends Controller {
     }
 // what is this used for
     public void createManager(String[] info) {
-        new Manager(info[0], info[1], info[2], info[3], Double.valueOf(info[4]), info[5], info[6]);
+        //new Manager(info[0], info[1], info[2], info[3], Double.valueOf(info[4]), info[5], info[6]);
     }
 
-    public Boolean isHeAbleToCreateManger() throws Exception {
+    public static Boolean isHeAbleToCreateManger() {
         if (currentAccount instanceof Manager) return true;
         if (!Account.doesManagerExist()) return true;
-        throw new NotAllowedActivityException("only managers are able to create manager");
+        return false;
     }
 
     public Boolean isThisPidValid(String productId) {
@@ -213,7 +217,8 @@ public class ManagerController extends Controller {
         Category child = getCategoryByName(childCategoryName);
         if (parent.getSubCategories().containsValue(child)){
             Integer key = getKeyByValue(parent.getSubCategories() , child);
-            parent.setSubCategories(parent.getSubCategories().remove(key , child));
+            //todo
+            //parent.setSubCategories(parent.getSubCategories().remove(key , child));
         }
     }
 

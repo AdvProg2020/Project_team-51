@@ -191,11 +191,11 @@ public class LoginMenu extends Menu {
                     System.out.println("please enter your brand name");
                     String brand = scanner.nextLine();
                     Seller selller = new Seller(username, password, firstName, lastName, balance, email, number, brand);
-                    new AddSellerRequest(TokenGenerator.generateRequestId(), selller);
+                    new AddSellerRequest(selller);
                     break;
                 }
                 case "manager":
-                    new Manager(username, password, firstName, lastName, balance, email, number);
+                    new Manager(username, password, firstName, lastName, email, number);
             }
             System.out.println("account created successfully");
             goToNextMenu ();
