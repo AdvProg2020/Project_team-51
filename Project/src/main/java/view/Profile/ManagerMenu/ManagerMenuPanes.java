@@ -3,20 +3,28 @@ package view.Profile.ManagerMenu;
 import control.Controller;
 import control.Exceptions.WrongFormatException;
 import control.ManagerController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
+import model.Category;
 import model.People.Account;
 import model.People.Manager;
+import model.Requests.Request;
 import view.Menu;
+
+import java.text.ParseException;
 
 public class ManagerMenuPanes{
     ManagerController managerController = new ManagerController(Controller.getCurrentAccount());
     Account currentAccount = Controller.getCurrentAccount();
-    //
+
     public Pane getPersonalInfoPane (){
         final int X = 300;
         Pane pane = new Pane();
@@ -134,6 +142,94 @@ public class ManagerMenuPanes{
                 submit
         );
         return pane;
+    }
+
+    public TableView getRequestsTebleView (){
+        TableView<Request> table = new TableView<>();
+        ObservableList<Request> data
+                = FXCollections.observableArrayList(
+                Request.getAllRequests());
+
+        TableColumn requestDetail = new TableColumn("Detail");
+        requestDetail.setCellValueFactory(new PropertyValueFactory<>("detail"));
+
+        TableColumn accept = new TableColumn("accept");
+        accept.setCellValueFactory(new PropertyValueFactory<>("noUse"));
+
+        TableColumn decline = new TableColumn("decline");
+        decline.setCellValueFactory(new PropertyValueFactory<>("noUse"));
+
+
+        Callback<TableColumn<Request, String>, TableCell<Request, String>> cellFactory
+                = //
+                new Callback<TableColumn<Request, String>, TableCell<Request, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Request, String> param) {
+                        final TableCell<Request, String> cell = new TableCell<Request, String>() {
+
+                            final Button btn = new Button("accept");
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    btn.setOnAction(event -> {
+                                        Request request = getTableView().getItems().get(getIndex());
+                                        try {request.accept(); //todo allRequests remove this
+                                        table.getItems().remove(request);}catch (Exception e){
+                                            //todo handle this error better: can reject automatically and show popup error
+                                            if (e instanceof ParseException) System.err.println("parse exception");
+                                            else System.err.println(e.getMessage());
+                                        }
+                                    });
+                                    setGraphic(btn);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        Callback<TableColumn<Request, String>, TableCell<Request, String>> cellFactorysec
+                = //
+                new Callback<TableColumn<Request, String>, TableCell<Request, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Request, String> param) {
+                        final TableCell<Request, String> cell = new TableCell<Request, String>() {
+
+                            final Button btn = new Button("decline");
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    btn.setOnAction(event -> {
+                                        Request request = getTableView().getItems().get(getIndex());
+                                        request.delete();
+                                        table.getItems().remove(request);
+                                    });
+                                    setGraphic(btn);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        accept.setCellFactory(cellFactory);
+        decline.setCellFactory(cellFactorysec);
+
+        table.setItems(data);
+        table.getColumns().addAll(requestDetail, accept, decline);
+        return table;
     }
 
     private TextField getTextFieldDefault(String Default , double x , double y){
