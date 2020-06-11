@@ -18,7 +18,7 @@ public class ManagerMenu extends Menu {
         subMenus.put(3,new ManageProducts(this));
         subMenus.put(4,new ManageRequests(this,managerController));
         subMenus.put(5,new ManageUsers(this , managerController));
-
+        subMenus.put(6,new ManagerEditPersonalInfo(this , managerController));
     }
 
     @Override
@@ -28,7 +28,8 @@ public class ManagerMenu extends Menu {
         System.out.println("3. manage products");
         System.out.println("4. manage requests");
         System.out.println("5. manage users");
-        System.out.println("6. back");
+        System.out.println("6. edit personal info");
+        System.out.println("7. back");
         // do i have to put login here?
         System.out.println("");
 
