@@ -33,16 +33,16 @@ public class ManagerMenuPanes{
         TextField     confirmPasswordFieldLabel= getTextFieldDefault("confirm new pass" , X , 280);
         Label     nameLabel             = getLabel("name" , X , 330);
         Label     nameError             = getErrorLabel("" , X , 350);
-        TextField nameTextField         = getTextFieldDefault("" , X , 370);
+        TextField nameTextField         = getTextFieldDefault(currentAccount.getFirstName() , X , 370);
         Label     lastNameLabel         = getLabel("last name" , X , 420);
         Label     lastNameError         = getErrorLabel("" , X , 440);
-        TextField lastNameTextField     = getTextFieldDefault("" , X , 460);
+        TextField lastNameTextField     = getTextFieldDefault(currentAccount.getLastName() , X , 460);
         Label     emailLabel            = getLabel("email" , X , 510);
         Label     emailError            = getErrorLabel("" , X , 530);
-        TextField emailTextField        = getTextFieldDefault("" , X , 550);
+        TextField emailTextField        = getTextFieldDefault(currentAccount.getEmail() , X , 550);
         Label     phoneNumberLabel      = getLabel("phone number" , X , 600);
         Label     phoneNumberError      = getErrorLabel("" , X , 620);
-        TextField phoneNumberTextField  = getTextFieldDefault("" , X , 640);
+        TextField phoneNumberTextField  = getTextFieldDefault(currentAccount.getPhoneNumber() , X , 640);
         Button submit = new Button("submit");
         EventHandler submitButtonAction = new EventHandler() {
             @Override
