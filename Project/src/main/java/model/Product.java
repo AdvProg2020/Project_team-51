@@ -26,7 +26,11 @@ public class Product {
     private List<Rate> rating = new ArrayList<>();
     private int views;
     private List<Comment> comments = new ArrayList<>();
+    String uselessString;
 
+    public String getUselessString() {
+        return uselessString;
+    }
 
     public Product(String productId, String name, String brandName,
                    Double price, Seller seller, int quantity, Category parentCategory, String description,
@@ -43,7 +47,7 @@ public class Product {
         sellersForThisProduct.add(seller);
         allProducts.add(this);
         views = 0;
-
+        uselessString = "";
     }
 
     public static ArrayList<Product> getAllProducts() {

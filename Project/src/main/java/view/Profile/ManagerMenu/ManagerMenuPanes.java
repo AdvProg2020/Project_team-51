@@ -16,6 +16,7 @@ import javafx.util.Callback;
 import model.Category;
 import model.People.Account;
 import model.People.Manager;
+import model.Product;
 import model.Requests.Request;
 import view.Menu;
 
@@ -229,6 +230,59 @@ public class ManagerMenuPanes{
 
         table.setItems(data);
         table.getColumns().addAll(requestDetail, accept, decline);
+        return table;
+    }
+
+    public TableView getManageProductsTableView (){
+
+        TableView<Product> table = new TableView<>();
+        ObservableList<Product> data
+                = FXCollections.observableArrayList(
+                Product.getAllProducts());
+
+        TableColumn productName = new TableColumn("name");
+        productName.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn delete = new TableColumn("delete");
+        delete.setCellValueFactory(new PropertyValueFactory<>("uselessString"));
+
+
+        Callback<TableColumn<Product, String>, TableCell<Product, String>> cellFactory
+                = //
+                new Callback<TableColumn<Product, String>, TableCell<Product, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Product, String> param) {
+                        final TableCell<Product, String> cell = new TableCell<Product, String>() {
+
+                            final Button btn = new Button("delete");
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    btn.setOnAction(event -> {
+                                        Product product = getTableView().getItems().get(getIndex());
+                                        try {managerController.removeProduct(product.getProductId()); //todo allProducts remove this
+                                            table.getItems().remove(product);}catch (Exception e){
+                                            //todo handle this error better: can reject automatically and show popup error
+                                            System.err.println(e.getMessage());
+                                        }
+                                    });
+                                    setGraphic(btn);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+        delete.setCellFactory(cellFactory);
+
+        table.setItems(data);
+        table.getColumns().addAll(productName,delete);
         return table;
     }
 
