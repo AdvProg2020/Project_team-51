@@ -6,7 +6,6 @@ import control.Exceptions.InvalidUsernameException;
 import control.Exceptions.WeakPasswordException;
 import control.Exceptions.WrongFormatException;
 import control.ManagerController;
-import control.TokenGenerator;
 import model.People.Customer;
 import model.People.Manager;
 import model.People.Seller;
@@ -183,10 +182,10 @@ public class LoginMenu extends Menu {
             checkBalance(command);
             double balance = Double.parseDouble(command);
             switch (type) {
-                case "customer":
-                    {new Customer(username, password, firstName, lastName, balance, email, number);
+                case "customer": {
+                    new Customer(username, password, firstName, lastName, balance, email, number);
                     break;
-                    }
+                }
                 case "seller": {
                     System.out.println("please enter your brand name");
                     String brand = scanner.nextLine();
@@ -198,7 +197,7 @@ public class LoginMenu extends Menu {
                     new Manager(username, password, firstName, lastName, email, number);
             }
             System.out.println("account created successfully");
-            goToNextMenu ();
+            goToNextMenu();
         } catch (Exception e) {
             System.err.println(e.getMessage());
             getBalance();
@@ -234,14 +233,14 @@ public class LoginMenu extends Menu {
         try {
             if (!Controller.doesPasswordMatches(user, pass)) throw new InvalidPasswordException();
             Controller.setCurrentAccount(username);
-            goToNextMenu ();
+            goToNextMenu();
         } catch (Exception e) {
             System.err.println(e.getMessage());
             enterPass();
         }
     }
 
-    private void goToNextMenu (){
+    private void goToNextMenu() {
         Menu nextMenu = menusHistory.pop();
         nextMenu.showMenu();
         nextMenu.executeMenu();

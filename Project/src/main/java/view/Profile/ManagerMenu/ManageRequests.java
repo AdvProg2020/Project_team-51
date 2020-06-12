@@ -10,16 +10,16 @@ import view.Menu;
 public class ManageRequests extends Menu {
     ManagerController managerController;
 
-    public ManageRequests(Menu parentMenu , ManagerController mc) {
+    public ManageRequests(Menu parentMenu, ManagerController mc) {
         super("manage requests", parentMenu);
         managerController = mc;
-        subMenus.put(1, new Menu("show all requests" , this) {
+        subMenus.put(1, new Menu("show all requests", this) {
             @Override
             public void executeMenu() {
                 showAllRequests();
             }
         });
-        subMenus.put(2, new Menu("answer request" , this) {
+        subMenus.put(2, new Menu("answer request", this) {
             @Override
             public void executeMenu() {
                 answerRequest();
@@ -55,7 +55,7 @@ public class ManageRequests extends Menu {
         this.executeMenu();
     }
 
-    private void showAllRequests(){
+    private void showAllRequests() {
         for (Request r : managerController.getAllRequests()) System.out.println(r);
     }
 
@@ -94,25 +94,28 @@ public class ManageRequests extends Menu {
             r = managerController.getRequestById(inputInFormat("enter request id",
                     "\\d+"));
             System.out.println("1.accept\n2.decline\n3.back");
-            int answer = getOptionWithRange(1 , 3);
-            switch (answer){
-                case 1 : {
+            int answer = getOptionWithRange(1, 3);
+            switch (answer) {
+                case 1: {
                     acceptRequest(r);
-                } case 2 : {
+                }
+                case 2: {
                     declineRequest(r);
                     break;
-                } case 3 :{
+                }
+                case 3: {
                     return;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
     private void acceptRequest(Request r) {
-        try { managerController.acceptRequest(r.getRequestId());
-        }catch (Exception e){
+        try {
+            managerController.acceptRequest(r.getRequestId());
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
@@ -120,7 +123,7 @@ public class ManageRequests extends Menu {
     private void declineRequest(Request r) {
         try {
             managerController.rejectRequest(r.getRequestId());
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }

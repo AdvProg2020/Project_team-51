@@ -8,29 +8,30 @@ import view.MainMenu;
 import view.Menu;
 
 public class ManageUsers extends Menu {
-    ManagerController managerController ;
-    public ManageUsers(Menu parentMenu , ManagerController mc) {
+    ManagerController managerController;
+
+    public ManageUsers(Menu parentMenu, ManagerController mc) {
         super("manage users", parentMenu);
         managerController = mc;
-        subMenus.put(1, new Menu("view all profiles" , this ) {
+        subMenus.put(1, new Menu("view all profiles", this) {
             @Override
             public void executeMenu() {
                 viewAllProfiles();
             }
         });
-        subMenus.put(2, new Menu("view profile" , this) {
+        subMenus.put(2, new Menu("view profile", this) {
             @Override
             public void executeMenu() {
                 viewProfile();
             }
         });
-        subMenus.put(3, new Menu("editProfile" , this) {
+        subMenus.put(3, new Menu("editProfile", this) {
             @Override
             public void executeMenu() {
                 editProfile();
             }
         });
-        subMenus.put(4, new Menu("delete profile" , this) {
+        subMenus.put(4, new Menu("delete profile", this) {
             @Override
             public void executeMenu() {
                 deleteProfile();
@@ -65,44 +66,45 @@ public class ManageUsers extends Menu {
         this.executeMenu();
     }
 
-    private void viewAllProfiles(){
-        for (Account a : managerController.getAllProfiles()){
+    private void viewAllProfiles() {
+        for (Account a : managerController.getAllProfiles()) {
             System.out.print(a.getUsername() + " name : " + a.getFirstName()
-                    +" " + a.getLastName() + " phone : " + a.getPhoneNumber() +
-                    " email: " + a.getEmail() );
-            if (a.getBalance()!=null) System.out.println(" balence : " + a.getBalance());
+                    + " " + a.getLastName() + " phone : " + a.getPhoneNumber() +
+                    " email: " + a.getEmail());
+            if (a.getBalance() != null) System.out.println(" balence : " + a.getBalance());
             System.out.println();
         }
     }
 
-    private void viewProfile(){
-        String id = inputInFormat( "enter id" , "^\\w+$");
+    private void viewProfile() {
+        String id = inputInFormat("enter id", "^\\w+$");
         try {
             Account a = managerController.getAccountById(id);
             System.out.println(a.getUsername() + " name : " + a.getFirstName()
-            +" " + a.getLastName() + " phone : " + a.getPhoneNumber() +
+                    + " " + a.getLastName() + " phone : " + a.getPhoneNumber() +
                     " email: " + a.getEmail() + " balence : " + a.getBalance());
-        }catch (Exception e) {
-            System.err.println( e.getMessage());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
             viewProfile();
         }
     }
+
     //todo
-    private void editProfile (){
-        String id = inputInFormat( "enter id : " , "^\\w+$");
-        Menu m = new Menu("edit profile menu" , this) {
+    private void editProfile() {
+        String id = inputInFormat("enter id : ", "^\\w+$");
+        Menu m = new Menu("edit profile menu", this) {
 
             @Override
             public void executeMenu() {
             }
         };
     }
-    
-    private void deleteProfile(){
+
+    private void deleteProfile() {
         try {
-            String id = inputInFormat( "enter id" , "^\\w+$");
+            String id = inputInFormat("enter id", "^\\w+$");
             managerController.deleteUser(command);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             deleteProfile();
         }

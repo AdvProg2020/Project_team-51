@@ -23,6 +23,20 @@ public class ManagerController extends Controller {
         return Attributes.getAttributeById(id);
     }
 
+    public static Boolean isHeAbleToCreateManger() {
+        if (currentAccount instanceof Manager) return true;
+        return !Account.doesManagerExist();
+    }
+
+    public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+        for (Map.Entry<T, E> entry : map.entrySet()) {
+            if (Objects.equals(value, entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
     public Boolean isThisFieldValid(Product product, String field) {
         return product.getAttributes().containsKey(field);
     }
@@ -32,12 +46,12 @@ public class ManagerController extends Controller {
         if (currentAccount != null) currentAccount.setPhoneNumber(phoneNumber);
     }
 
-    public List<Account> getAllProfiles (){
+    public List<Account> getAllProfiles() {
         return Account.getAllAccounts();
     }
 
     public void deleteUser(String username) throws Exception {
-        if (hasUserWithThisUsername(username))throw new InvalidUsernameException();
+        if (hasUserWithThisUsername(username)) throw new InvalidUsernameException();
         if (currentAccount.getUsername().equals(username)) throw new Exception("cant delete logged in account");
         List<Account> allAccounts;
         allAccounts = Account.getAllAccounts();
@@ -49,14 +63,10 @@ public class ManagerController extends Controller {
         }
         Account.setAllAccounts(allAccounts);
     }
-// what is this used for
+
+    // what is this used for
     public void createManager(String[] info) {
         //new Manager(info[0], info[1], info[2], info[3], Double.valueOf(info[4]), info[5], info[6]);
-    }
-
-    public static Boolean isHeAbleToCreateManger() {
-        if (currentAccount instanceof Manager) return true;
-        return !Account.doesManagerExist();
     }
 
     public Boolean isThisPidValid(String productId) {
@@ -89,12 +99,12 @@ public class ManagerController extends Controller {
         return false;
     }
 
-    public void tryCreateOffcode (String code) throws InvalidOffCodeException {
+    public void tryCreateOffcode(String code) throws InvalidOffCodeException {
         if (isThisCodeValid(code)) throw new InvalidOffCodeException();
     }
 
     public void createDiscountCode(ArrayList<Account> appliedAccounts,
-                                          String startDate, String endDate
+                                   String startDate, String endDate
             , int offPercent, Double maxDiscount) throws ParseException {
         new OffCode(TokenGenerator.generateOffCode(), new SimpleDateFormat("dd/MM/yyyy").parse(startDate),
                 new SimpleDateFormat("dd/MM/yyyy").parse(endDate),
@@ -105,10 +115,10 @@ public class ManagerController extends Controller {
     }
 
     public void editDiscountCode(String code, ArrayList<Account> appliedAccounts,
-                                        String startDate, String endDate
+                                 String startDate, String endDate
             , int offPercent, Double maxDiscount) throws Exception {
         OffCode offCode = OffCode.getOffIdById(code);
-        if (offCode==null) throw new InvalidOffCodeException();
+        if (offCode == null) throw new InvalidOffCodeException();
         if (appliedAccounts != null) offCode.setAppliedAccounts(appliedAccounts);
         if (startDate != null) offCode.setBeginDate(new SimpleDateFormat("dd/MM/yyyy").parse(startDate));
         if (endDate != null) offCode.setEndDate(new SimpleDateFormat("dd/MM/yyyy").parse(endDate));
@@ -129,13 +139,13 @@ public class ManagerController extends Controller {
     }
 
     public Boolean isRequestValid(String requestId) {
-        for (Request r : Request.getAllRequests()){
+        for (Request r : Request.getAllRequests()) {
             if (r.getRequestId().equals(requestId)) return true;
         }
         return false;
     }
 
-    public Request getRequestById(String id) throws Exception{
+    public Request getRequestById(String id) throws Exception {
         for (Request request : model.Requests.Request.getAllRequests()) {
             if (request.getRequestId().equals(id)) return request;
         }
@@ -149,22 +159,23 @@ public class ManagerController extends Controller {
 
     public void acceptRequest(String requestId) throws Exception {
         Request request = getRequestById(requestId);
-        if (request==null) throw new Exception("request is invalid");
+        if (request == null) throw new Exception("request is invalid");
         request.accept();
     }
-//not done
-    public void rejectRequest(String requestId) throws Exception{
+
+    //not done
+    public void rejectRequest(String requestId) throws Exception {
         Request r = getRequestById(requestId);
-        if (r==null) throw new Exception("request id is invalid");
+        if (r == null) throw new Exception("request id is invalid");
     }
 
     public Boolean isCategoryValid(String categoryName) {
         return getCategoryByName(categoryName) != null;
     }
 
-    public void addCategory(String name , String parentName , Attributes... attributes) {
+    public void addCategory(String name, String parentName, Attributes... attributes) {
         if (!(currentAccount instanceof Manager)) return;
-        Category newCategory = new Category(name, getCategoryByName(parentName) , attributes);
+        Category newCategory = new Category(name, getCategoryByName(parentName), attributes);
         List<Category> allCategories = ((Manager) currentAccount).getAllCategories();
         allCategories.add(newCategory);
         ((Manager) currentAccount).setAllCategories(allCategories);
@@ -189,40 +200,42 @@ public class ManagerController extends Controller {
         }
     }
 
-    public void addProductToCategory(String categoryId , String pid) throws Exception {
+    public void addProductToCategory(String categoryId, String pid) throws Exception {
         Product product = Product.getProductById(pid);
         Category category1 = Category.getCategoryById(categoryId);
         category1.getCategoryProducts().add(product);
     }
 
-    public void removeProductFromCategory(String categoryId , String pid) throws Exception{
+    public void removeProductFromCategory(String categoryId, String pid) throws Exception {
         Product product = Product.getProductById(pid);
         Category category1 = Category.getCategoryById(categoryId);
-        if (!category1.getCategoryProducts().contains(product)) throw new Exception("category does not contaon the product");
+        if (!category1.getCategoryProducts().contains(product))
+            throw new Exception("category does not contaon the product");
         category1.getCategoryProducts().remove(product);
     }
 
-    public void addChildCategory(String categoryName , String childCategoryName) throws Exception{
+    public void addChildCategory(String categoryName, String childCategoryName) throws Exception {
         Category parent = getCategoryByName(categoryName);
         Category child = getCategoryByName(childCategoryName);
         if (parent.getParentCategory().equals(child)) throw new Exception("a category's parent cannot be its child");
-        if (parent.equals(child))throw new Exception("a category cannot be its own child");
-        if (!parent.getSubCategories().containsValue(child)) parent.setSubCategories((Map<Integer, Category>) parent.getSubCategories()
-                .put(parent.getSubCategories().size() , child));
+        if (parent.equals(child)) throw new Exception("a category cannot be its own child");
+        if (!parent.getSubCategories().containsValue(child))
+            parent.setSubCategories((Map<Integer, Category>) parent.getSubCategories()
+                    .put(parent.getSubCategories().size(), child));
     }
 
-    public void removeChildCategory (String categoryName , String childCategoryName) throws Exception {
+    public void removeChildCategory(String categoryName, String childCategoryName) throws Exception {
         Category parent = getCategoryByName(categoryName);
         Category child = getCategoryByName(childCategoryName);
-        if (parent.getSubCategories().containsValue(child)){
-            Integer key = getKeyByValue(parent.getSubCategories() , child);
-            parent.getSubCategories().remove(key ,child);
+        if (parent.getSubCategories().containsValue(child)) {
+            Integer key = getKeyByValue(parent.getSubCategories(), child);
+            parent.getSubCategories().remove(key, child);
         }
     }
 
-    public void removeCategory(String categoryName) throws Exception{
+    public void removeCategory(String categoryName) throws Exception {
         Category category;
-        if ((category = getCategoryByName(categoryName))==null) throw new NoCategoriesFoundException(
+        if ((category = getCategoryByName(categoryName)) == null) throw new NoCategoriesFoundException(
                 "category is invalid"
         );
         Category.getAllCategories().remove(category);
@@ -236,6 +249,8 @@ public class ManagerController extends Controller {
         return null;
     }
 
+//incomplete
+
     public Category getCategoryById(String id) {
         Manager manager = (Manager) currentAccount;
         for (Category category1 : manager.getAllCategories()) {
@@ -244,13 +259,11 @@ public class ManagerController extends Controller {
         return null;
     }
 
-//incomplete
-
-    public void editCategoryName (String beforeName , String afterName) throws Exception{
+    public void editCategoryName(String beforeName, String afterName) throws Exception {
         Category c2 = getCategoryByName(afterName);
         Category c = getCategoryByName(beforeName);
-        if (c==null) throw new Exception("category is invalid");
-        if (c2!=null) throw new Exception("this name is taken");
+        if (c == null) throw new Exception("category is invalid");
+        if (c2 != null) throw new Exception("this name is taken");
         c.setName(afterName);
     }
 
@@ -278,44 +291,40 @@ public class ManagerController extends Controller {
 
     private void checkEmail(String email) throws Exception {
         if (!email.matches("$\\w+@[a-zA-Z]+\\.\\w+^")) throw new WrongFormatException("email");
-        for (Account a : model.People.Account.getAllAccounts()){
+        for (Account a : model.People.Account.getAllAccounts()) {
             if (a.getEmail().equals(email)) throw new Exception("email is used before");
         }
     }
 
     public void checkPhoneNumber(String number) throws Exception {
         if (!number.matches("^\\d{10}$")) throw new WrongFormatException("phone number");
-        for (Account account : Account.getAllAccounts()){
+        for (Account account : Account.getAllAccounts()) {
             if (account.getPhoneNumber().equals(number)) throw new Exception("number is used before");
         }
     }
 
-    public void addAccountToOffcode (String code,String id)throws Exception{
+    public void addAccountToOffcode(String code, String id) throws Exception {
         Account a = Account.getAccountById(id);
-        if (a==null) throw new InvalidUsernameException();
+        if (a == null) throw new InvalidUsernameException();
         OffCode o = OffCode.getOffIdById(code);
-        if (o==null) throw new InvalidOffCodeException();
-        List <Account> accounts = o.getAppliedAccounts();
+        if (o == null) throw new InvalidOffCodeException();
+        List<Account> accounts = o.getAppliedAccounts();
         accounts.add(a);
         o.setAppliedAccounts(accounts);
     }
 
-    public void removeAccountFromOffcode (String code , String id) throws Exception{
+    public void removeAccountFromOffcode(String code, String id) throws Exception {
         Account a = Account.getAccountById(id);
-        if (a==null) throw new InvalidUsernameException();
+        if (a == null) throw new InvalidUsernameException();
         OffCode o = OffCode.getOffIdById(code);
-        if (o==null) throw new InvalidOffCodeException();
-        List <Account> accounts = o.getAppliedAccounts();
+        if (o == null) throw new InvalidOffCodeException();
+        List<Account> accounts = o.getAppliedAccounts();
         accounts.remove(a);
         o.setAppliedAccounts(accounts);
     }
 
-    public List<OffCode> getAllOffcodes (){
+    public List<OffCode> getAllOffcodes() {
         return OffCode.getAllOffCodes();
-    }
-
-    public ArrayList<Request> getAllRequests (){
-        return model.Requests.Request.getAllRequests();
     }
 
 //    public Request getRequestById(String id) throws Exception {
@@ -325,21 +334,16 @@ public class ManagerController extends Controller {
 //        throw new Exception("invlaid Request id");
 //    }
 
-    public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
-        for (Map.Entry<T, E> entry : map.entrySet()) {
-            if (Objects.equals(value, entry.getValue())) {
-                return entry.getKey();
-            }
-        }
-        return null;
+    public ArrayList<Request> getAllRequests() {
+        return model.Requests.Request.getAllRequests();
     }
 
-    public Product getProductById (String id) throws InvalidProductIdException{
+    public Product getProductById(String id) throws InvalidProductIdException {
         return Product.getProductById(id);
     }
 
-    public Account getAccountById(String id) throws Exception{
-        if (Account.getAccountById(id)!=null) return Account.getAccountById(id);
+    public Account getAccountById(String id) throws Exception {
+        if (Account.getAccountById(id) != null) return Account.getAccountById(id);
         throw new InvalidUsernameException();
     }
 

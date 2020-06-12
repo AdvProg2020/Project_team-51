@@ -1,4 +1,3 @@
-
 package view.Profile.ManagerMenu;
 
 import control.Controller;
@@ -13,8 +12,8 @@ import javax.management.InstanceAlreadyExistsException;
 public class ManagerEditPersonalInfo extends Menu {
 
     ManagerController managerController;
-    
-    public ManagerEditPersonalInfo(Menu parentMenu , ManagerController managerController) {
+
+    public ManagerEditPersonalInfo(Menu parentMenu, ManagerController managerController) {
         super("Edit Personal Info", parentMenu);
         managerController = managerController;
         subMenus.put(1, new Menu("First Name", this) {
@@ -103,7 +102,7 @@ public class ManagerEditPersonalInfo extends Menu {
         try {
             managerController.editEmail(command);
             System.out.println("New email submitted !");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             getEmail();
         }

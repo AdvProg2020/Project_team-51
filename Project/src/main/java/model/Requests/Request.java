@@ -55,7 +55,7 @@ public abstract class Request {
         return "Request ID : " + requestId;
     }
 
-    public String getDetail (){
+    public String getDetail() {
         return toString();
     }
 
@@ -63,7 +63,7 @@ public abstract class Request {
 
     }
 
-    public void delete(){
+    public void delete() {
         allRequests.remove(this);
     }
 }

@@ -5,12 +5,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <fx:root xmlns:fx="http://javafx.com/fxml/1" type="Pane" xmlns="http://javafx.com/javafx/11.0.1">
-   <children>
-      <JFXButton fx:id="button" prefHeight="50.0" prefWidth="50.0"
-                 style="-fx-background-color: #cfc6c1; -fx-background-radius: 12;" text="1" textFill="WHITE">
-         <font>
-            <Font size="18.0"/>
-         </font>
-      </JFXButton>
-   </children>
+    <children>
+        <JFXButton fx:id="button" prefHeight="50.0" prefWidth="50.0"
+                   style="-fx-background-color: #cfc6c1; -fx-background-radius: 12;" text="1" textFill="WHITE">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </JFXButton>
+    </children>
 </fx:root>

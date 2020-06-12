@@ -4,12 +4,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <fx:root xmlns:fx="http://javafx.com/fxml/1" type="Pane" xmlns="http://javafx.com/javafx/11.0.1">
-   <children>
-      <JFXToggleButton fx:id="toggleButton" alignment="CENTER_LEFT" prefHeight="81.0" prefWidth="383.0" size="13.0"
-                       text="Filter Name" textFill="#494949" toggleColor="#f2837c" toggleLineColor="#f2837c">
-         <font>
-            <Font size="24.0"/>
-         </font>
-      </JFXToggleButton>
-   </children>
+    <children>
+        <JFXToggleButton fx:id="toggleButton" alignment="CENTER_LEFT" prefHeight="81.0" prefWidth="383.0" size="13.0"
+                         text="Filter Name" textFill="#494949" toggleColor="#f2837c" toggleLineColor="#f2837c">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </JFXToggleButton>
+    </children>
 </fx:root>

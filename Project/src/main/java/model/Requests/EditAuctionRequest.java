@@ -22,7 +22,7 @@ public class EditAuctionRequest extends Request {
 
     @Override
     public String toString() {
-        return "" + getRequestId() +" Edit Auction Request : " +
+        return "" + getRequestId() + " Edit Auction Request : " +
                 "\nAuctionId" + auction.getAuctionId() +
                 "\nField : " + field +
                 "\nValue : " + value;

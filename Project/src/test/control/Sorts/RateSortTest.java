@@ -17,19 +17,19 @@ class RateSortTest {
     Product p2;
     Product p3;
     Product p4;
-    Rate r1 = new Rate(null , p1 , (short) 2);
-    Rate r2 = new Rate(null , p2 , (short) 5);
-    Rate r3 = new Rate(null , p3 , (short) 3);
-    Rate r4 = new Rate(null , p4 , (short) 1);
+    Rate r1 = new Rate(null, p1, (short) 2);
+    Rate r2 = new Rate(null, p2, (short) 5);
+    Rate r3 = new Rate(null, p3, (short) 3);
+    Rate r4 = new Rate(null, p4, (short) 1);
 
 
     @BeforeEach
-    void setup(){
+    void setup() {
         rateSort = RateSort.getInstance();
-        p1 = new Product(" ", "a" , "" , 0.00 , null , 10 , null , "", null);
-        p2 = new Product(" ", "e" , "" , 0.00 , null , 10 , null , "", null);
-        p3 = new Product(" ", "c" , "" , 0.00 , null , 10 , null , "", null);
-        p4 = new Product(" ", "f" , "" , 0.00 , null , 10 , null , "", null);
+        p1 = new Product(" ", "a", "", 0.00, null, 10, null, "", null);
+        p2 = new Product(" ", "e", "", 0.00, null, 10, null, "", null);
+        p3 = new Product(" ", "c", "", 0.00, null, 10, null, "", null);
+        p4 = new Product(" ", "f", "", 0.00, null, 10, null, "", null);
         p1.setRating(new ArrayList<>(Arrays.asList(r1)));
         p2.setRating(new ArrayList<>(Arrays.asList(r2)));
         p3.setRating(new ArrayList<>(Arrays.asList(r3)));

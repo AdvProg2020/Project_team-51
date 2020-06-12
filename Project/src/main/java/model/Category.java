@@ -48,6 +48,13 @@ public class Category {
         allCategories.add(category);
     }
 
+    public static Category getCategoryById(String id) throws Exception {
+        for (Category c : allCategories) {
+            if (c.getName().equals(id)) return c;
+        }
+        throw new Exception("category is invalid");
+    }
+
     public List<Attributes> getAttributes() {
         return attributes;
     }
@@ -78,13 +85,6 @@ public class Category {
 
     public List<Product> getCategoryProducts() {
         return categoryProducts;
-    }
-
-    public static Category getCategoryById(String id) throws Exception {
-        for (Category c : allCategories){
-            if (c.getName().equals(id)) return c;
-        }
-        throw new Exception("category is invalid");
     }
 
     public String getCategoryId() {

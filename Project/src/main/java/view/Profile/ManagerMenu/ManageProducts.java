@@ -10,9 +10,9 @@ import view.Menu;
 public class ManageProducts extends Menu {
     ManagerController managerController;
 
-    public ManageProducts( Menu parentMenu) {
+    public ManageProducts(Menu parentMenu) {
         super("manage products", parentMenu);
-        subMenus.put(1, new Menu("delete product" , this) {
+        subMenus.put(1, new Menu("delete product", this) {
             @Override
             public void executeMenu() {
                 deleteProduct();
@@ -48,8 +48,8 @@ public class ManageProducts extends Menu {
         this.executeMenu();
     }
 
-    void deleteProduct(){
-        String id = inputInFormat("please enter product id" , "^PID\\w+$");
+    void deleteProduct() {
+        String id = inputInFormat("please enter product id", "^PID\\w+$");
         try {
             managerController.removeProduct(id);
         } catch (InvalidProductIdException e) {

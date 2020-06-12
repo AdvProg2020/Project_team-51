@@ -9,19 +9,20 @@ import view.Menu;
 public class ManagerMenu extends Menu {
 
     public ManagerController managerController;
+
     public ManagerMenu(Menu parentMenu) {
         super("manager Menu", parentMenu);
         managerController = new ManagerController(Controller.getCurrentAccount());
-        subMenus.put(1,new ManageCategories(this));
-        subMenus.put(2,new ManageOffCodes(this , managerController));
-        subMenus.put(3,new ManageProducts(this));
-        subMenus.put(4,new ManageRequests(this,managerController));
-        subMenus.put(5,new ManageUsers(this , managerController));
-        subMenus.put(6,new ManagerEditPersonalInfo(this , managerController));
+        subMenus.put(1, new ManageCategories(this));
+        subMenus.put(2, new ManageOffCodes(this, managerController));
+        subMenus.put(3, new ManageProducts(this));
+        subMenus.put(4, new ManageRequests(this, managerController));
+        subMenus.put(5, new ManageUsers(this, managerController));
+        subMenus.put(6, new ManagerEditPersonalInfo(this, managerController));
     }
 
     @Override
-    public void showMenu(){
+    public void showMenu() {
         System.out.println("1. manage categories");
         System.out.println("2. manage off codes");  //humanity
         System.out.println("3. manage products");

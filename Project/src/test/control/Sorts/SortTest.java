@@ -19,11 +19,11 @@ class SortTest {
 
 
     @BeforeEach
-    void setup(){
-        p1 = new Product(" ", "a" , "" , 0.00 , null , 10 , null , "", null);
-        p2 = new Product(" ", "e" , "" , 0.00 , null , 10 , null , "", null);
-        p3 = new Product(" ", "c" , "" , 0.00 , null , 10 , null , "", null);
-        p4 = new Product(" ", "f" , "" , 0.00 , null , 10 , null , "", null);
+    void setup() {
+        p1 = new Product(" ", "a", "", 0.00, null, 10, null, "", null);
+        p2 = new Product(" ", "e", "", 0.00, null, 10, null, "", null);
+        p3 = new Product(" ", "c", "", 0.00, null, 10, null, "", null);
+        p4 = new Product(" ", "f", "", 0.00, null, 10, null, "", null);
     }
 
 //    @Test
@@ -33,14 +33,14 @@ class SortTest {
     @Test
     void getName() {
         String test = p1.getName();
-        assertEquals("a" , test);
+        assertEquals("a", test);
     }
 
     @Test
     void getAscending() {
         boolean test = NameSort.getInstance().getAscending();
         Sort sample = NameSort.getInstance();
-        sample.applySort(new ArrayList<>(Arrays.asList(p1,p2,p3,p4)) , false);
-        assertTrue(test==false);
+        sample.applySort(new ArrayList<>(Arrays.asList(p1, p2, p3, p4)), false);
+        assertTrue(test == false);
     }
 }

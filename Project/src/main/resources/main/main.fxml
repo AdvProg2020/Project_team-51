@@ -10,481 +10,535 @@
 <StackPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
            minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/11.0.1"
            fx:controller="main.mainController">
-   <children>
-      <BorderPane prefHeight="970.0" prefWidth="1720.0">
-         <left>
-            <Pane prefHeight="970.0" prefWidth="100.0" style="-fx-background-color: #f2837c;"
-                  BorderPane.alignment="CENTER">
-               <children>
-                  <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="3.0" prefHeight="970.0" prefWidth="100.0">
-                     <children>
-                        <JFXButton prefHeight="98.0" prefWidth="109.0" text="​">
-                           <graphic>
-                              <ImageView fitHeight="58.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@person(1).png"/>
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                        <JFXButton prefHeight="98.0" prefWidth="109.0" text="​">
-                           <graphic>
-                              <ImageView fitHeight="58.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@logout.png"/>
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                     </children>
-                  </VBox>
-               </children>
-            </Pane>
-         </left>
-         <center>
-            <ScrollPane focusTraversable="false" hbarPolicy="NEVER" hmax="0.95" prefWidth="1639.0" vmax="0.85"
-                        BorderPane.alignment="CENTER">
-               <content>
-                  <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="1440.0"
-                              style="-fx-background-color: #fcd0ab;">
-                     <children>
-                        <VBox alignment="TOP_CENTER" layoutY="-66.0" prefHeight="1911.0" prefWidth="1612.0"
-                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                              AnchorPane.topAnchor="0.0">
-                           <children>
-                              <ImageView fitHeight="144.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@JShop.png"/>
-                                 </image>
-                              </ImageView>
-                              <HBox alignment="CENTER_LEFT" maxHeight="100.0" prefHeight="250.0" prefWidth="1611.0"
-                                    style="-fx-background-color: #746d63;" VBox.vgrow="ALWAYS">
-                                 <VBox.margin>
-                                    <Insets top="40.0"/>
-                                 </VBox.margin>
-                                 <children>
-                                    <JFXButton prefHeight="100.0" prefWidth="149.0" text="Home" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="20.0"/>
-                                       </font>
-                                    </JFXButton>
-                                    <MenuButton accessibleRole="BUTTON" alignment="CENTER_RIGHT" contentDisplay="BOTTOM"
-                                                mnemonicParsing="false" prefHeight="118.0" prefWidth="168.0"
-                                                style="-fx-background-color: #746d63;" text="Categories"
-                                                textFill="WHITE">
-                                       <items>
-                                          <CustomMenuItem mnemonicParsing="false"
-                                                          style="-fx-padding: 0 120 0 0; -fx-background-color: black;"
-                                                          text="Unspecified Action">
-                                             <content>
-                                                <TreeView style="-fx-background-color: #746d63;"/>
-                                             </content>
-                                          </CustomMenuItem>
-                                       </items>
-                                       <font>
-                                          <Font name="System Bold" size="20.0"/>
-                                       </font>
-                                    </MenuButton>
-                                    <JFXButton prefHeight="124.0" prefWidth="160.0" text="About us" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="20.0"/>
-                                       </font>
-                                    </JFXButton>
-                                    <JFXButton prefHeight="124.0" prefWidth="160.0" text="Contact us" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="20.0"/>
-                                       </font>
-                                    </JFXButton>
-                                    <ImageView fitHeight="46.0" fitWidth="50.0" pickOnBounds="true"
-                                               preserveRatio="true">
-                                       <HBox.margin>
-                                          <Insets left="280.0"/>
-                                       </HBox.margin>
-                                       <image>
-                                          <Image url="@buy.png"/>
-                                       </image>
-                                    </ImageView>
-                                    <JFXTextField focusColor="#f2837c" prefHeight="56.0" prefWidth="270.0"
-                                                  promptText="Serach ..."
-                                                  style="-fx-background-color: #ebebeb; -fx-background-radius: 15;"
-                                                  unFocusColor="#646161">
-                                       <HBox.margin>
-                                          <Insets left="50.0"/>
-                                       </HBox.margin>
-                                       <font>
-                                          <Font size="20.0"/>
-                                       </font>
-                                       <padding>
-                                          <Insets left="25.0"/>
-                                       </padding>
-                                    </JFXTextField>
-                                    <JFXButton prefHeight="58.0" prefWidth="61.0"
-                                               style="-fx-background-color: #f2837c; -fx-background-radius: 14;"
-                                               text=" " textFill="WHITE">
-                                       <font>
-                                          <Font size="20.0"/>
-                                       </font>
-                                       <graphic>
-                                          <ImageView fitHeight="31.0" fitWidth="31.0" pickOnBounds="true"
-                                                     preserveRatio="true">
-                                             <image>
-                                                <Image url="@search.png"/>
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <HBox.margin>
-                                          <Insets left="10.0"/>
-                                       </HBox.margin>
-                                    </JFXButton>
-                                 </children>
-                              </HBox>
-                              <ImageView fitHeight="378.0" fitWidth="1459.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@banner2.png"/>
-                                 </image>
-                              </ImageView>
-                              <VBox maxWidth="1600.0" prefHeight="507.0" prefWidth="1736.0">
-                                 <VBox.margin>
-                                    <Insets top="30.0"/>
-                                 </VBox.margin>
-                                 <children>
-                                    <Label prefHeight="104.0" prefWidth="233.0" text="Best Sellers" textFill="#a4522c">
-                                       <font>
-                                          <Font name="System Bold" size="41.0"/>
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="120.0"/>
-                                       </VBox.margin>
-                                    </Label>
-                                    <GridPane alignment="CENTER" prefHeight="336.0" prefWidth="1514.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                       </rowConstraints>
-                                       <VBox.margin>
-                                          <Insets left="70.0" right="70.0"/>
-                                       </VBox.margin>
-                                       <children>
-                                          <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b" height="282.0"
-                                                     stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="292.0"
-                                                     GridPane.halignment="CENTER" GridPane.hgrow="NEVER"
-                                                     GridPane.valignment="CENTER" GridPane.vgrow="NEVER"/>
-                                          <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
-                                                GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                             <children>
-                                                <ImageView fitHeight="217.0" fitWidth="205.0" pickOnBounds="true"
-                                                           preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@laundry_p-v2-500x500.png"/>
-                                                   </image>
-                                                </ImageView>
-                                                <HBox alignment="CENTER" prefHeight="66.0" prefWidth="298.0"
-                                                      spacing="90.0">
-                                                   <children>
-                                                      <Label text="Name" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                      <Label text="Price" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="35.0" right="35.0"/>
-                                                   </VBox.margin>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                          <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b" height="282.0"
-                                                     stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="292.0"
-                                                     GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                                                     GridPane.valignment="CENTER"/>
-                                          <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
-                                                GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                                                GridPane.valignment="CENTER">
-                                             <children>
-                                                <ImageView fitHeight="217.0" fitWidth="205.0" pickOnBounds="true"
-                                                           preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@laundry_p-v2-500x500.png"/>
-                                                   </image>
-                                                </ImageView>
-                                                <HBox alignment="CENTER" prefHeight="66.0" prefWidth="298.0"
-                                                      spacing="90.0">
-                                                   <children>
-                                                      <Label text="Name" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                      <Label text="Price" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="35.0" right="35.0"/>
-                                                   </VBox.margin>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                          <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b" height="282.0"
-                                                     stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="292.0"
-                                                     GridPane.columnIndex="3" GridPane.halignment="CENTER"
-                                                     GridPane.valignment="CENTER"/>
-                                          <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
-                                                GridPane.columnIndex="3" GridPane.halignment="CENTER"
-                                                GridPane.valignment="CENTER">
-                                             <children>
-                                                <ImageView fitHeight="217.0" fitWidth="205.0" pickOnBounds="true"
-                                                           preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@laundry_p-v2-500x500.png"/>
-                                                   </image>
-                                                </ImageView>
-                                                <HBox alignment="CENTER" prefHeight="66.0" prefWidth="298.0"
-                                                      spacing="90.0">
-                                                   <children>
-                                                      <Label text="Name" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                      <Label text="Price" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="35.0" right="35.0"/>
-                                                   </VBox.margin>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                          <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b" height="282.0"
-                                                     stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="292.0"
-                                                     GridPane.columnIndex="2" GridPane.halignment="CENTER"
-                                                     GridPane.valignment="CENTER"/>
-                                          <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
-                                                GridPane.columnIndex="2" GridPane.halignment="CENTER"
-                                                GridPane.valignment="CENTER">
-                                             <children>
-                                                <ImageView fitHeight="217.0" fitWidth="205.0" pickOnBounds="true"
-                                                           preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@laundry_p-v2-500x500.png"/>
-                                                   </image>
-                                                </ImageView>
-                                                <HBox alignment="CENTER" prefHeight="66.0" prefWidth="298.0"
-                                                      spacing="90.0">
-                                                   <children>
-                                                      <Label text="Name" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                      <Label text="Price" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="35.0" right="35.0"/>
-                                                   </VBox.margin>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </VBox>
-                              <VBox prefHeight="507.0" prefWidth="1611.0">
-                                 <children>
-                                    <Label prefHeight="104.0" prefWidth="233.0" text="Most Viewd" textFill="#a4522c">
-                                       <font>
-                                          <Font name="System Bold" size="41.0"/>
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="120.0"/>
-                                       </VBox.margin>
-                                    </Label>
-                                    <GridPane alignment="CENTER" prefHeight="336.0" prefWidth="1514.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                       </rowConstraints>
-                                       <VBox.margin>
-                                          <Insets left="70.0" right="70.0"/>
-                                       </VBox.margin>
-                                       <children>
-                                          <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b" height="282.0"
-                                                     stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="292.0"
-                                                     GridPane.halignment="CENTER" GridPane.hgrow="NEVER"
-                                                     GridPane.valignment="CENTER" GridPane.vgrow="NEVER"/>
-                                          <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
-                                                GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                             <children>
-                                                <ImageView fitHeight="217.0" fitWidth="205.0" pickOnBounds="true"
-                                                           preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@laundry_p-v2-500x500.png"/>
-                                                   </image>
-                                                </ImageView>
-                                                <HBox alignment="CENTER" prefHeight="66.0" prefWidth="298.0"
-                                                      spacing="90.0">
-                                                   <children>
-                                                      <Label text="Name" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                      <Label text="Price" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="35.0" right="35.0"/>
-                                                   </VBox.margin>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                          <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b" height="282.0"
-                                                     stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="292.0"
-                                                     GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                                                     GridPane.valignment="CENTER"/>
-                                          <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
-                                                GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                                                GridPane.valignment="CENTER">
-                                             <children>
-                                                <ImageView fitHeight="217.0" fitWidth="205.0" pickOnBounds="true"
-                                                           preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@laundry_p-v2-500x500.png"/>
-                                                   </image>
-                                                </ImageView>
-                                                <HBox alignment="CENTER" prefHeight="66.0" prefWidth="298.0"
-                                                      spacing="90.0">
-                                                   <children>
-                                                      <Label text="Name" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                      <Label text="Price" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="35.0" right="35.0"/>
-                                                   </VBox.margin>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                          <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b" height="282.0"
-                                                     stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="292.0"
-                                                     GridPane.columnIndex="3" GridPane.halignment="CENTER"
-                                                     GridPane.valignment="CENTER"/>
-                                          <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
-                                                GridPane.columnIndex="3" GridPane.halignment="CENTER"
-                                                GridPane.valignment="CENTER">
-                                             <children>
-                                                <ImageView fitHeight="217.0" fitWidth="205.0" pickOnBounds="true"
-                                                           preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@laundry_p-v2-500x500.png"/>
-                                                   </image>
-                                                </ImageView>
-                                                <HBox alignment="CENTER" prefHeight="66.0" prefWidth="298.0"
-                                                      spacing="90.0">
-                                                   <children>
-                                                      <Label text="Name" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                      <Label text="Price" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="35.0" right="35.0"/>
-                                                   </VBox.margin>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                          <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b" height="282.0"
-                                                     stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="292.0"
-                                                     GridPane.columnIndex="2" GridPane.halignment="CENTER"
-                                                     GridPane.valignment="CENTER"/>
-                                          <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
-                                                GridPane.columnIndex="2" GridPane.halignment="CENTER"
-                                                GridPane.valignment="CENTER">
-                                             <children>
-                                                <ImageView fitHeight="217.0" fitWidth="205.0" pickOnBounds="true"
-                                                           preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@laundry_p-v2-500x500.png"/>
-                                                   </image>
-                                                </ImageView>
-                                                <HBox alignment="CENTER" prefHeight="66.0" prefWidth="298.0"
-                                                      spacing="90.0">
-                                                   <children>
-                                                      <Label text="Name" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                      <Label text="Price" textFill="WHITE">
-                                                         <font>
-                                                            <Font name="System Bold" size="28.0"/>
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="35.0" right="35.0"/>
-                                                   </VBox.margin>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </VBox>
-                           </children>
-                           <opaqueInsets>
-                              <Insets/>
-                           </opaqueInsets>
-                           <padding>
-                              <Insets top="40.0"/>
-                           </padding>
+    <children>
+        <BorderPane prefHeight="970.0" prefWidth="1720.0">
+            <left>
+                <Pane prefHeight="970.0" prefWidth="100.0" style="-fx-background-color: #f2837c;"
+                      BorderPane.alignment="CENTER">
+                    <children>
+                        <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="3.0" prefHeight="970.0" prefWidth="100.0">
+                            <children>
+                                <JFXButton prefHeight="98.0" prefWidth="109.0" text="​">
+                                    <graphic>
+                                        <ImageView fitHeight="58.0" fitWidth="49.0" pickOnBounds="true"
+                                                   preserveRatio="true">
+                                            <image>
+                                                <Image url="@person(1).png"/>
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </JFXButton>
+                                <JFXButton prefHeight="98.0" prefWidth="109.0" text="​">
+                                    <graphic>
+                                        <ImageView fitHeight="58.0" fitWidth="49.0" pickOnBounds="true"
+                                                   preserveRatio="true">
+                                            <image>
+                                                <Image url="@logout.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </JFXButton>
+                            </children>
                         </VBox>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </ScrollPane>
-         </center>
-      </BorderPane>
-   </children>
+                    </children>
+                </Pane>
+            </left>
+            <center>
+                <ScrollPane focusTraversable="false" hbarPolicy="NEVER" hmax="0.95" prefWidth="1639.0" vmax="0.85"
+                            BorderPane.alignment="CENTER">
+                    <content>
+                        <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="1440.0"
+                                    style="-fx-background-color: #fcd0ab;">
+                            <children>
+                                <VBox alignment="TOP_CENTER" layoutY="-66.0" prefHeight="1911.0" prefWidth="1612.0"
+                                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                      AnchorPane.rightAnchor="0.0"
+                                      AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <ImageView fitHeight="144.0" fitWidth="139.0" pickOnBounds="true"
+                                                   preserveRatio="true">
+                                            <image>
+                                                <Image url="@JShop.png"/>
+                                            </image>
+                                        </ImageView>
+                                        <HBox alignment="CENTER_LEFT" maxHeight="100.0" prefHeight="250.0"
+                                              prefWidth="1611.0"
+                                              style="-fx-background-color: #746d63;" VBox.vgrow="ALWAYS">
+                                            <VBox.margin>
+                                                <Insets top="40.0"/>
+                                            </VBox.margin>
+                                            <children>
+                                                <JFXButton prefHeight="100.0" prefWidth="149.0" text="Home"
+                                                           textFill="WHITE">
+                                                    <font>
+                                                        <Font name="System Bold" size="20.0"/>
+                                                    </font>
+                                                </JFXButton>
+                                                <MenuButton accessibleRole="BUTTON" alignment="CENTER_RIGHT"
+                                                            contentDisplay="BOTTOM"
+                                                            mnemonicParsing="false" prefHeight="118.0" prefWidth="168.0"
+                                                            style="-fx-background-color: #746d63;" text="Categories"
+                                                            textFill="WHITE">
+                                                    <items>
+                                                        <CustomMenuItem mnemonicParsing="false"
+                                                                        style="-fx-padding: 0 120 0 0; -fx-background-color: black;"
+                                                                        text="Unspecified Action">
+                                                            <content>
+                                                                <TreeView style="-fx-background-color: #746d63;"/>
+                                                            </content>
+                                                        </CustomMenuItem>
+                                                    </items>
+                                                    <font>
+                                                        <Font name="System Bold" size="20.0"/>
+                                                    </font>
+                                                </MenuButton>
+                                                <JFXButton prefHeight="124.0" prefWidth="160.0" text="About us"
+                                                           textFill="WHITE">
+                                                    <font>
+                                                        <Font name="System Bold" size="20.0"/>
+                                                    </font>
+                                                </JFXButton>
+                                                <JFXButton prefHeight="124.0" prefWidth="160.0" text="Contact us"
+                                                           textFill="WHITE">
+                                                    <font>
+                                                        <Font name="System Bold" size="20.0"/>
+                                                    </font>
+                                                </JFXButton>
+                                                <ImageView fitHeight="46.0" fitWidth="50.0" pickOnBounds="true"
+                                                           preserveRatio="true">
+                                                    <HBox.margin>
+                                                        <Insets left="280.0"/>
+                                                    </HBox.margin>
+                                                    <image>
+                                                        <Image url="@buy.png"/>
+                                                    </image>
+                                                </ImageView>
+                                                <JFXTextField focusColor="#f2837c" prefHeight="56.0" prefWidth="270.0"
+                                                              promptText="Serach ..."
+                                                              style="-fx-background-color: #ebebeb; -fx-background-radius: 15;"
+                                                              unFocusColor="#646161">
+                                                    <HBox.margin>
+                                                        <Insets left="50.0"/>
+                                                    </HBox.margin>
+                                                    <font>
+                                                        <Font size="20.0"/>
+                                                    </font>
+                                                    <padding>
+                                                        <Insets left="25.0"/>
+                                                    </padding>
+                                                </JFXTextField>
+                                                <JFXButton prefHeight="58.0" prefWidth="61.0"
+                                                           style="-fx-background-color: #f2837c; -fx-background-radius: 14;"
+                                                           text=" " textFill="WHITE">
+                                                    <font>
+                                                        <Font size="20.0"/>
+                                                    </font>
+                                                    <graphic>
+                                                        <ImageView fitHeight="31.0" fitWidth="31.0" pickOnBounds="true"
+                                                                   preserveRatio="true">
+                                                            <image>
+                                                                <Image url="@search.png"/>
+                                                            </image>
+                                                        </ImageView>
+                                                    </graphic>
+                                                    <HBox.margin>
+                                                        <Insets left="10.0"/>
+                                                    </HBox.margin>
+                                                </JFXButton>
+                                            </children>
+                                        </HBox>
+                                        <ImageView fitHeight="378.0" fitWidth="1459.0" pickOnBounds="true"
+                                                   preserveRatio="true">
+                                            <image>
+                                                <Image url="@banner2.png"/>
+                                            </image>
+                                        </ImageView>
+                                        <VBox maxWidth="1600.0" prefHeight="507.0" prefWidth="1736.0">
+                                            <VBox.margin>
+                                                <Insets top="30.0"/>
+                                            </VBox.margin>
+                                            <children>
+                                                <Label prefHeight="104.0" prefWidth="233.0" text="Best Sellers"
+                                                       textFill="#a4522c">
+                                                    <font>
+                                                        <Font name="System Bold" size="41.0"/>
+                                                    </font>
+                                                    <VBox.margin>
+                                                        <Insets left="120.0"/>
+                                                    </VBox.margin>
+                                                </Label>
+                                                <GridPane alignment="CENTER" prefHeight="336.0" prefWidth="1514.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+                                                                           prefWidth="100.0"/>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+                                                                           prefWidth="100.0"/>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+                                                                           prefWidth="100.0"/>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+                                                                           prefWidth="100.0"/>
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                        vgrow="SOMETIMES"/>
+                                                    </rowConstraints>
+                                                    <VBox.margin>
+                                                        <Insets left="70.0" right="70.0"/>
+                                                    </VBox.margin>
+                                                    <children>
+                                                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
+                                                                   height="282.0"
+                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
+                                                                   width="292.0"
+                                                                   GridPane.halignment="CENTER" GridPane.hgrow="NEVER"
+                                                                   GridPane.valignment="CENTER" GridPane.vgrow="NEVER"/>
+                                                        <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
+                                                              GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                            <children>
+                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                           pickOnBounds="true"
+                                                                           preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@laundry_p-v2-500x500.png"/>
+                                                                    </image>
+                                                                </ImageView>
+                                                                <HBox alignment="CENTER" prefHeight="66.0"
+                                                                      prefWidth="298.0"
+                                                                      spacing="90.0">
+                                                                    <children>
+                                                                        <Label text="Name" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Label text="Price" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                    </children>
+                                                                    <VBox.margin>
+                                                                        <Insets left="35.0" right="35.0"/>
+                                                                    </VBox.margin>
+                                                                </HBox>
+                                                            </children>
+                                                        </VBox>
+                                                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
+                                                                   height="282.0"
+                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
+                                                                   width="292.0"
+                                                                   GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                                                                   GridPane.valignment="CENTER"/>
+                                                        <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
+                                                              GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                                                              GridPane.valignment="CENTER">
+                                                            <children>
+                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                           pickOnBounds="true"
+                                                                           preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@laundry_p-v2-500x500.png"/>
+                                                                    </image>
+                                                                </ImageView>
+                                                                <HBox alignment="CENTER" prefHeight="66.0"
+                                                                      prefWidth="298.0"
+                                                                      spacing="90.0">
+                                                                    <children>
+                                                                        <Label text="Name" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Label text="Price" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                    </children>
+                                                                    <VBox.margin>
+                                                                        <Insets left="35.0" right="35.0"/>
+                                                                    </VBox.margin>
+                                                                </HBox>
+                                                            </children>
+                                                        </VBox>
+                                                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
+                                                                   height="282.0"
+                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
+                                                                   width="292.0"
+                                                                   GridPane.columnIndex="3" GridPane.halignment="CENTER"
+                                                                   GridPane.valignment="CENTER"/>
+                                                        <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
+                                                              GridPane.columnIndex="3" GridPane.halignment="CENTER"
+                                                              GridPane.valignment="CENTER">
+                                                            <children>
+                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                           pickOnBounds="true"
+                                                                           preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@laundry_p-v2-500x500.png"/>
+                                                                    </image>
+                                                                </ImageView>
+                                                                <HBox alignment="CENTER" prefHeight="66.0"
+                                                                      prefWidth="298.0"
+                                                                      spacing="90.0">
+                                                                    <children>
+                                                                        <Label text="Name" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Label text="Price" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                    </children>
+                                                                    <VBox.margin>
+                                                                        <Insets left="35.0" right="35.0"/>
+                                                                    </VBox.margin>
+                                                                </HBox>
+                                                            </children>
+                                                        </VBox>
+                                                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
+                                                                   height="282.0"
+                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
+                                                                   width="292.0"
+                                                                   GridPane.columnIndex="2" GridPane.halignment="CENTER"
+                                                                   GridPane.valignment="CENTER"/>
+                                                        <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
+                                                              GridPane.columnIndex="2" GridPane.halignment="CENTER"
+                                                              GridPane.valignment="CENTER">
+                                                            <children>
+                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                           pickOnBounds="true"
+                                                                           preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@laundry_p-v2-500x500.png"/>
+                                                                    </image>
+                                                                </ImageView>
+                                                                <HBox alignment="CENTER" prefHeight="66.0"
+                                                                      prefWidth="298.0"
+                                                                      spacing="90.0">
+                                                                    <children>
+                                                                        <Label text="Name" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Label text="Price" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                    </children>
+                                                                    <VBox.margin>
+                                                                        <Insets left="35.0" right="35.0"/>
+                                                                    </VBox.margin>
+                                                                </HBox>
+                                                            </children>
+                                                        </VBox>
+                                                    </children>
+                                                </GridPane>
+                                            </children>
+                                        </VBox>
+                                        <VBox prefHeight="507.0" prefWidth="1611.0">
+                                            <children>
+                                                <Label prefHeight="104.0" prefWidth="233.0" text="Most Viewd"
+                                                       textFill="#a4522c">
+                                                    <font>
+                                                        <Font name="System Bold" size="41.0"/>
+                                                    </font>
+                                                    <VBox.margin>
+                                                        <Insets left="120.0"/>
+                                                    </VBox.margin>
+                                                </Label>
+                                                <GridPane alignment="CENTER" prefHeight="336.0" prefWidth="1514.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+                                                                           prefWidth="100.0"/>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+                                                                           prefWidth="100.0"/>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+                                                                           prefWidth="100.0"/>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+                                                                           prefWidth="100.0"/>
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                        vgrow="SOMETIMES"/>
+                                                    </rowConstraints>
+                                                    <VBox.margin>
+                                                        <Insets left="70.0" right="70.0"/>
+                                                    </VBox.margin>
+                                                    <children>
+                                                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
+                                                                   height="282.0"
+                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
+                                                                   width="292.0"
+                                                                   GridPane.halignment="CENTER" GridPane.hgrow="NEVER"
+                                                                   GridPane.valignment="CENTER" GridPane.vgrow="NEVER"/>
+                                                        <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
+                                                              GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                            <children>
+                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                           pickOnBounds="true"
+                                                                           preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@laundry_p-v2-500x500.png"/>
+                                                                    </image>
+                                                                </ImageView>
+                                                                <HBox alignment="CENTER" prefHeight="66.0"
+                                                                      prefWidth="298.0"
+                                                                      spacing="90.0">
+                                                                    <children>
+                                                                        <Label text="Name" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Label text="Price" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                    </children>
+                                                                    <VBox.margin>
+                                                                        <Insets left="35.0" right="35.0"/>
+                                                                    </VBox.margin>
+                                                                </HBox>
+                                                            </children>
+                                                        </VBox>
+                                                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
+                                                                   height="282.0"
+                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
+                                                                   width="292.0"
+                                                                   GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                                                                   GridPane.valignment="CENTER"/>
+                                                        <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
+                                                              GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                                                              GridPane.valignment="CENTER">
+                                                            <children>
+                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                           pickOnBounds="true"
+                                                                           preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@laundry_p-v2-500x500.png"/>
+                                                                    </image>
+                                                                </ImageView>
+                                                                <HBox alignment="CENTER" prefHeight="66.0"
+                                                                      prefWidth="298.0"
+                                                                      spacing="90.0">
+                                                                    <children>
+                                                                        <Label text="Name" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Label text="Price" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                    </children>
+                                                                    <VBox.margin>
+                                                                        <Insets left="35.0" right="35.0"/>
+                                                                    </VBox.margin>
+                                                                </HBox>
+                                                            </children>
+                                                        </VBox>
+                                                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
+                                                                   height="282.0"
+                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
+                                                                   width="292.0"
+                                                                   GridPane.columnIndex="3" GridPane.halignment="CENTER"
+                                                                   GridPane.valignment="CENTER"/>
+                                                        <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
+                                                              GridPane.columnIndex="3" GridPane.halignment="CENTER"
+                                                              GridPane.valignment="CENTER">
+                                                            <children>
+                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                           pickOnBounds="true"
+                                                                           preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@laundry_p-v2-500x500.png"/>
+                                                                    </image>
+                                                                </ImageView>
+                                                                <HBox alignment="CENTER" prefHeight="66.0"
+                                                                      prefWidth="298.0"
+                                                                      spacing="90.0">
+                                                                    <children>
+                                                                        <Label text="Name" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Label text="Price" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                    </children>
+                                                                    <VBox.margin>
+                                                                        <Insets left="35.0" right="35.0"/>
+                                                                    </VBox.margin>
+                                                                </HBox>
+                                                            </children>
+                                                        </VBox>
+                                                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
+                                                                   height="282.0"
+                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
+                                                                   width="292.0"
+                                                                   GridPane.columnIndex="2" GridPane.halignment="CENTER"
+                                                                   GridPane.valignment="CENTER"/>
+                                                        <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
+                                                              GridPane.columnIndex="2" GridPane.halignment="CENTER"
+                                                              GridPane.valignment="CENTER">
+                                                            <children>
+                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                           pickOnBounds="true"
+                                                                           preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@laundry_p-v2-500x500.png"/>
+                                                                    </image>
+                                                                </ImageView>
+                                                                <HBox alignment="CENTER" prefHeight="66.0"
+                                                                      prefWidth="298.0"
+                                                                      spacing="90.0">
+                                                                    <children>
+                                                                        <Label text="Name" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Label text="Price" textFill="WHITE">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="28.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                    </children>
+                                                                    <VBox.margin>
+                                                                        <Insets left="35.0" right="35.0"/>
+                                                                    </VBox.margin>
+                                                                </HBox>
+                                                            </children>
+                                                        </VBox>
+                                                    </children>
+                                                </GridPane>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                    <opaqueInsets>
+                                        <Insets/>
+                                    </opaqueInsets>
+                                    <padding>
+                                        <Insets top="40.0"/>
+                                    </padding>
+                                </VBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </ScrollPane>
+            </center>
+        </BorderPane>
+    </children>
 </StackPane>

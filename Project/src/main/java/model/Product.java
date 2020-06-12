@@ -13,6 +13,7 @@ import java.util.Map;
 public class Product {
 
     private static ArrayList<Product> allProducts = new ArrayList<Product>();
+    String uselessString;
     private String productId;
     private ArrayList<Seller> sellersForThisProduct = new ArrayList<Seller>();
     private Map<Seller, Status> status;
@@ -26,11 +27,6 @@ public class Product {
     private List<Rate> rating = new ArrayList<>();
     private int views;
     private List<Comment> comments = new ArrayList<>();
-    String uselessString;
-
-    public String getUselessString() {
-        return uselessString;
-    }
 
     public Product(String productId, String name, String brandName,
                    Double price, Seller seller, int quantity, Category parentCategory, String description,
@@ -68,6 +64,10 @@ public class Product {
 
     public static void addProduct(Product product) {
         allProducts.add(product);
+    }
+
+    public String getUselessString() {
+        return uselessString;
     }
 
     public Map<Attributes, String> getAttributes() {

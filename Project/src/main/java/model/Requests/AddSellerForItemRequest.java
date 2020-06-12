@@ -23,7 +23,7 @@ public class AddSellerForItemRequest extends Request {
 
     @Override
     public String toString() {
-        return "" + getRequestId() +" Add Item Request :" +
+        return "" + getRequestId() + " Add Item Request :" +
                 "Product : " + product.getName() +
                 "\nSeller : " + seller.getUsername() + " | " + seller.getBrandName()
                 ;

@@ -14,7 +14,7 @@ public class AddCommentRequest extends Request {
 
     @Override
     public String toString() {
-        return "" + getRequestId() +" Add Comment Request : " +
+        return "" + getRequestId() + " Add Comment Request : " +
                 "\nSender : " + comment.getAccount().getUsername() + "\n" +
                 "comment :\n" + comment.getContext()
                 ;

@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class NameSortTest {
 
-    public Sort nameSort ;
+    public Sort nameSort;
     Product p1;
     Product p2;
     Product p3;
@@ -20,12 +20,12 @@ class NameSortTest {
 
 
     @BeforeEach
-    void setup(){
+    void setup() {
         nameSort = NameSort.getInstance();
-        p1 = new Product(" ", "a" , "" , 0.00 , null , 10 , null , "", null);
-        p2 = new Product(" ", "e" , "" , 0.00 , null , 10 , null , "", null);
-        p3 = new Product(" ", "c" , "" , 0.00 , null , 10 , null , "", null);
-        p4 = new Product(" ", "f" , "" , 0.00 , null , 10 , null , "", null);
+        p1 = new Product(" ", "a", "", 0.00, null, 10, null, "", null);
+        p2 = new Product(" ", "e", "", 0.00, null, 10, null, "", null);
+        p3 = new Product(" ", "c", "", 0.00, null, 10, null, "", null);
+        p4 = new Product(" ", "f", "", 0.00, null, 10, null, "", null);
     }
 
     @Test
@@ -49,7 +49,7 @@ class NameSortTest {
     @Test
     void getInstance() {
         nameSort = NameSort.getInstance();
-        assertEquals(NameSort.getInstance(),nameSort);
+        assertEquals(NameSort.getInstance(), nameSort);
     }
 
 

@@ -1,11 +1,8 @@
 package control;
 
-import model.People.Account;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class SellerControllerTest  {
+class SellerControllerTest {
 
     @Test
     void isThisFieldValid() {
