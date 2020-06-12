@@ -2,6 +2,7 @@ package model;
 
 import control.Controller;
 import control.Exceptions.InvalidProductIdException;
+import javafx.scene.image.ImageView;
 import model.People.Customer;
 import model.People.Seller;
 
@@ -27,6 +28,8 @@ public class Product {
     private List<Rate> rating = new ArrayList<>();
     private int views;
     private List<Comment> comments = new ArrayList<>();
+    private ImageView imageView;
+
 
     public Product(String productId, String name, String brandName,
                    Double price, Seller seller, int quantity, Category parentCategory, String description,
