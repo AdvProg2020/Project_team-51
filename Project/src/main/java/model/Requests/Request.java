@@ -55,7 +55,15 @@ public abstract class Request {
         return "Request ID : " + requestId;
     }
 
+    public String getDetail (){
+        return toString();
+    }
+
     public void accept() throws InvalidProductIdException, ParseException {
 
+    }
+
+    public void delete(){
+        allRequests.remove(this);
     }
 }

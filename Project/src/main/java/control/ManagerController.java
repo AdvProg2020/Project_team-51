@@ -343,4 +343,7 @@ public class ManagerController extends Controller {
         throw new InvalidUsernameException();
     }
 
+    public void changePassword(String text) {
+        currentAccount.setPassword(text);
+    }
 }
