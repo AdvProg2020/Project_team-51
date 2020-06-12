@@ -4,43 +4,44 @@ import control.Controller;
 import control.ManagerController;
 import model.Attributes;
 import model.Category;
-import model.People.Account;
 import view.LoginMenu;
 import view.MainMenu;
 import view.Menu;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ManageCategories extends Menu {
     ManagerController managerController;
 
     public ManageCategories(Menu parentMenu) {
         super("manage categories", parentMenu);
-        subMenus.put(1, new Menu("edit category menu" , this) {
+        subMenus.put(1, new Menu("edit category menu", this) {
             @Override
             public void executeMenu() {
                 editCategory();
             }
         });
-        subMenus.put(2, new Menu("add category menu" , this) {
+        subMenus.put(2, new Menu("add category menu", this) {
             @Override
             public void executeMenu() {
                 addCategory();
             }
         });
 
-        subMenus.put(3, new Menu("remove category menu" , this) {
+        subMenus.put(3, new Menu("remove category menu", this) {
             @Override
             public void executeMenu() {
                 removeCategory();
             }
         });
+        managerController = new ManagerController(Controller.getCurrentAccount());
     }
 
-    void editCategory(){
+    void editCategory() {
         System.out.println("please enter category id to edit");
         String categoryId;
-        while (true){
+        while (true) {
             categoryId = scanner.nextLine();
             if (!managerController.getCategoryById(categoryId).equals(null)) break;
             System.err.println("please enter correct category id");
@@ -56,110 +57,124 @@ public class ManageCategories extends Menu {
                 "6. remove child category\n" +
                 "7. add child category\n" +
                 "8. back");
-        int option = Integer.parseInt(inputInFormat("" , "^[1-8]$"));
-        switch (option){
-            case 1:{
+        int option = Integer.parseInt(inputInFormat("", "^[1-8]$"));
+        switch (option) {
+            case 1: {
                 editCategoryAddProduct(category);
-            break;
-            }case 2:{
+                break;
+            }
+            case 2: {
                 editCategoryRemoveProduct(category);
                 break;
-            }case 3:{
+            }
+            case 3: {
                 editCategoryName(category);
                 break;
-            }case 4:{
+            }
+            case 4: {
                 editCategoryAddAttribute();
                 break;
-            }case 5:{
+            }
+            case 5: {
                 editCategoryRemoveAttribute();
                 break;
-            }case 6:{
+            }
+            case 6: {
                 editCategoryRemoveChildCategory(category);
                 break;
-            }case 7:{
+            }
+            case 7: {
                 editCategoryAddChildCategory(category);
                 break;
-            }case 8:{
+            }
+            case 8: {
                 return;
             }
         }
     }
 
-    void editCategoryAddProduct(Category category){
-        String id = inputInFormat("plese enter productId" , "^\\w+$");
+    void editCategoryAddProduct(Category category) {
+        String id = inputInFormat("please enter productId", "^\\w+$");
         try {
-            managerController.addProductToCategory(category.getCategoryId() , id);
+            managerController.addProductToCategory(category.getCategoryId(), id);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
-    void editCategoryRemoveProduct(Category category){
-        String id = inputInFormat("plese enter productId" , "^\\w+$");
+    void editCategoryRemoveProduct(Category category) {
+        String id = inputInFormat("please enter productId", "^\\w+$");
         try {
-            managerController.addProductToCategory(category.getCategoryId() , id);
+            managerController.addProductToCategory(category.getCategoryId(), id);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
-    void editCategoryName (Category category){
-        String newName = inputInFormat("please enter new name" , "^\\w+$");
+    void editCategoryName(Category category) {
+        String newName = inputInFormat("please enter new name", "^\\w+$");
         try {
-            managerController.editCategoryName(category.getName() , newName);
-        }catch (Exception e){
+            managerController.editCategoryName(category.getName(), newName);
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
-    void editCategoryAddAttribute(){
+    void editCategoryAddAttribute() {
         //todo i really dont have an idea about attributes
     }
 
-    void editCategoryRemoveAttribute(){
+    void editCategoryRemoveAttribute() {
         //todo i really dont have an idea about attributes
     }
 
-    void editCategoryAddChildCategory(Category category){
-        String childCategoryName = inputInFormat("please enter child category name" , "^\\w+$");
+    void editCategoryAddChildCategory(Category category) {
+        String childCategoryName = inputInFormat("please enter child category name", "^\\w+$");
         try {
-            managerController.addChildCategory(category.getName() , childCategoryName);
+            managerController.addChildCategory(category.getName(), childCategoryName);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
-    void editCategoryRemoveChildCategory(Category category){
-        String childCategoryName = inputInFormat("please enter child category name" , "^\\w+$");
+    void editCategoryRemoveChildCategory(Category category) {
+        String childCategoryName = inputInFormat("please enter child category name", "^\\w+$");
         try {
-            managerController.removeChildCategory(category.getName() , childCategoryName);
+            managerController.removeChildCategory(category.getName(), childCategoryName);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
-    void addCategory(){
-        String name = inputInFormat("please enter category name " , "^\\w+$");
-        String parentName = inputInFormat("please enter parent category name" , "^\\w+$");
+    void addCategory() {
+        String name = inputInFormat("please enter category name ", "\\w+");
+        List<Category> categories = Category.getAllCategories();
+        String parentName = "";
+        if (!categories.isEmpty())
+            parentName = inputInFormat("please enter parent category name", "\\w+");
+
         System.out.println("please enter attribute names for category. enter @ to end");
-        ArrayList<String > attributeNames = new ArrayList<>();
-        ArrayList <Attributes> attributes = new ArrayList<>();
+        ArrayList<String> attributeNames = new ArrayList<>();
+        ArrayList<Attributes> attributes = new ArrayList<>();
         String attributeName;
-        while (!(attributeName = MainMenu.scanner.nextLine()).equals("@")){
+        while (!(attributeName = MainMenu.scanner.nextLine()).equals("@")) {
             try {
-                Attributes a = managerController.getAttributeById(attributeName);
-                attributes.add(a);
+//                Attributes a = managerController.getAttributeById(attributeName);
+                attributes.add(new Attributes(attributeName));
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
         }
-        managerController.addCategory(name , parentName , attributes.toArray(new Attributes[attributes.size()]));
+        managerController.addCategory(name, parentName, attributes.toArray(new Attributes[attributes.size()]));
+
     }
 
-    void removeCategory(){
+    void removeCategory() {
         System.out.println("please enter category name");
         String name = scanner.nextLine();
-        try{managerController.removeCategory(name);}catch (Exception e){
+        try {
+            managerController.removeCategory(name);
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }

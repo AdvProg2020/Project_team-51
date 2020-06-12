@@ -29,8 +29,8 @@ public class ProductMenu extends Menu {
                 e.getMessage();
             }
         }
-        subMenus.put(subCategories.size() + 1,
-                new ProductListMenu(this, ProductController.showProductsOfThisCategory(category)));
+//        subMenus.put(subCategories.size() + 1,
+//                new ProductListMenu(this, ProductController.showProductsOfThisCategory(category)));
     }
 
     @Override

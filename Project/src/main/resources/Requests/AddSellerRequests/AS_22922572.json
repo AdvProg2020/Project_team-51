@@ -1,0 +1,19 @@
+{
+  "seller": {
+    "historyOfSells": [],
+    "availableProducts": [],
+    "allAuctions": [],
+    "brandName": "Amzon",
+    "status": "PENDING_CREATE",
+    "username": "amazon",
+    "firstName": "amazon",
+    "lastName": "amazoni",
+    "balance": 1.213243455E7,
+    "email": "amazon@amazon.com",
+    "phoneNumber": "09123456798",
+    "password": "amazon zadeh"
+  },
+  "status": "PENDING_CREATE",
+  "requestId": "22922572",
+  "date": "Jun 11, 2020, 6:09:59 PM"
+}

@@ -1,0 +1,105 @@
+{
+  "name": "Clothes",
+  "categoryId": "neJqoq",
+  "subCategories": {
+    "@type": "java.util.LinkedHashMap",
+    "@val": {}
+  },
+  "parentCategory": {
+    "name": "Main",
+    "categoryId": "B5ujD6",
+    "subCategories": {
+      "@type": "java.util.LinkedHashMap",
+      "@val": {}
+    },
+    "parentCategory": null,
+    "categoryProducts": [],
+    "attributes": {
+      "@type": "java.util.ImmutableCollections$ListN",
+      "@val": {
+        "elements": {
+          "@type": "[Ljava.lang.Object;",
+          "@val": [
+            {
+              "@type": "model.Attributes",
+              "@val": {
+                "attributeId": "9055299226",
+                "field": "Color",
+                "values": {
+                  "@type": "java.util.HashSet",
+                  "@val": []
+                }
+              }
+            },
+            {
+              "@type": "model.Attributes",
+              "@val": {
+                "attributeId": "6278697474",
+                "field": "Material",
+                "values": {
+                  "@type": "java.util.HashSet",
+                  "@val": []
+                }
+              }
+            },
+            {
+              "@type": "model.Attributes",
+              "@val": {
+                "attributeId": "4044555818",
+                "field": "Size",
+                "values": {
+                  "@type": "java.util.HashSet",
+                  "@val": []
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "categoryProducts": [],
+  "attributes": {
+    "@type": "java.util.ImmutableCollections$ListN",
+    "@val": {
+      "elements": {
+        "@type": "[Ljava.lang.Object;",
+        "@val": [
+          {
+            "@type": "model.Attributes",
+            "@val": {
+              "attributeId": "3924401035",
+              "field": "Material",
+              "values": {
+                "@type": "java.util.HashSet",
+                "@val": []
+              }
+            }
+          },
+          {
+            "@type": "model.Attributes",
+            "@val": {
+              "attributeId": "7301158576",
+              "field": "Color",
+              "values": {
+                "@type": "java.util.HashSet",
+                "@val": []
+              }
+            }
+          },
+          {
+            "@type": "model.Attributes",
+            "@val": {
+              "attributeId": "6600373186",
+              "field": "Brand",
+              "values": {
+                "@type": "java.util.HashSet",
+                "@val": []
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

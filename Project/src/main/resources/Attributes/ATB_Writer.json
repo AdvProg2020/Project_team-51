@@ -1,0 +1,8 @@
+{
+  "attributeId": "8237238077",
+  "field": "Writer",
+  "values": {
+    "@type": "java.util.HashSet",
+    "@val": []
+  }
+}

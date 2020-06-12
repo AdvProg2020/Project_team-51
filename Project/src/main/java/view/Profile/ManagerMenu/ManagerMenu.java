@@ -12,7 +12,6 @@ public class ManagerMenu extends Menu {
     public ManagerMenu(Menu parentMenu) {
         super("manager Menu", parentMenu);
         managerController = new ManagerController(Controller.getCurrentAccount());
-
         subMenus.put(1,new ManageCategories(this));
         subMenus.put(2,new ManageOffCodes(this , managerController));
         subMenus.put(3,new ManageProducts(this));
@@ -31,7 +30,7 @@ public class ManagerMenu extends Menu {
         System.out.println("6. edit personal info");
         System.out.println("7. back");
         // do i have to put login here?
-        System.out.println("");
+        System.out.println();
 
     }
 
