@@ -11,7 +11,8 @@
     "balance": 3.1745893674352E9,
     "email": "Amzon@Amazon.com",
     "phoneNumber": "09112223344",
-    "password": "ImAmazon"
+    "password": "ImAmazon",
+    "image": null
   },
   "status": "APPROVED",
   "requestId": "31045777",

@@ -10,6 +10,7 @@ module Project {
     requires java.management;
     requires org.apache.commons.lang3;
     requires yagson;
+    requires com.google.gson;
     requires org.junit.jupiter.api;
     requires org.junit.jupiter;
     requires org.junit.jupiter.engine;

@@ -7,5 +7,6 @@
   "balance": 1000000.82,
   "email": "John@Smith.com",
   "phoneNumber": "09131112233",
-  "password": "10101010"
+  "password": "10101010",
+  "image": null
 }

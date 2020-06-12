@@ -20,8 +20,8 @@
                             <children>
                                 <JFXButton prefHeight="98.0" prefWidth="109.0" text="​">
                                     <graphic>
-                                        <ImageView fx:id="dashbord" fitHeight="58.0" fitWidth="49.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fx:id="dashboard" fitHeight="58.0" fitWidth="49.0"
+                                                   pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@person(1).png"/>
                                             </image>

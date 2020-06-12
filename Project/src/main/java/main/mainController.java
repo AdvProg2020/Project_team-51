@@ -5,10 +5,14 @@ import com.jfoenix.controls.JFXTextField;
 import control.Controller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import model.Category;
 import model.Product;
 
@@ -139,6 +143,7 @@ public class mainController {
 
     @FXML
     public void initialize() {
+
         bestSellerProducts = Product.getBestSellerProducts();
         mostViewedProducts = Product.getMostViewedProducts();
         allCategories = Category.getAllCategories();
@@ -177,24 +182,47 @@ public class mainController {
         });
 
         //Populate categories
-        Category root = allCategories.stream().findAny().filter(c -> c.getParentCategory() == null).orElse(null);
+        Category root = allCategories.stream().filter(c -> c.getParentCategory() == null).findAny().orElse(null);
         categoriesTreeView = new TreeView<String>(populateCategories(root, new TreeItem<String>("Main")));
+        categoriesTreeView.getSelectionModel().selectionModeProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println(((TreeItem<String>) newValue).getValue());
+        });
+        EventHandler<MouseEvent> mouseEventHandle = (MouseEvent event) -> {
+            handleMouseClicked(event);
+        };
+
+        categoriesTreeView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventHandle);
+
+        customItem.setHideOnClick(false);
         customItem.setContent(categoriesTreeView);
-        categoriesTreeView.setShowRoot(true);
+        categoriesTreeView.setShowRoot(false);
 
 
+    }
+
+    private void handleMouseClicked(MouseEvent event) {
+        Node node = event.getPickResult().getIntersectedNode();
+        // Accept clicks only on node cells, and not on empty spaces of the TreeView
+        if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
+            String name = (String) ((TreeItem) categoriesTreeView.getSelectionModel().getSelectedItem()).getValue();
+            Category category = allCategories.stream().filter(c -> c.getName().equals(name)).findAny().orElse(null);
+            System.out.println(category.getName());
+        }
     }
 
 
     private TreeItem<String> populateCategories(Category parent, TreeItem parentItem) {
 
         for (Category category : allCategories) {
-            TreeItem<String> treeItem = new TreeItem(category.getName());
-            parentItem.getChildren().add(treeItem);
-            if (category.getSubCategories() != null)
-                for (Integer subCategory : category.getSubCategories().keySet()) {
-                    populateCategories(category, treeItem);
-                }
+            if (category.getParentCategory() != null && category.getParentCategory().getName().equals(parent.getName())) {
+                TreeItem<String> treeItem = new TreeItem(category.getName());
+                parentItem.getChildren().add(treeItem);
+                if (category.getSubCategories() != null)
+                    for (Integer subCategory : category.getSubCategories().keySet()) {
+                        if (subCategory != null)
+                            populateCategories(category, treeItem);
+                    }
+            }
         }
         return parentItem;
     }

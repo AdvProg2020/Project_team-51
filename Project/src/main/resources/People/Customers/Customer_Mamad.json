@@ -7,5 +7,6 @@
   "balance": 300000.0,
   "email": "m@g.com",
   "phoneNumber": "09131111111",
-  "password": "12345678"
+  "password": "12345678",
+  "image": null
 }
