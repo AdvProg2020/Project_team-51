@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">-->
+<!--</fx:root>-->
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<fx:root xmlns:fx="http://javafx.com/fxml/1" type="javafx.scene.layout.AnchorPane"
+         xmlns="http://javafx.com/javafx/11.0.1">
+    <children>
+        <GridPane fx:id="productBox" alignment="CENTER" prefHeight="306.0" prefWidth="960.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <Rectangle fx:id="productRectangle" arcHeight="40.0" arcWidth="40.0" fill="#dbcec5" height="270.0"
+                       stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="900.0" GridPane.halignment="CENTER"
+                       GridPane.valignment="CENTER"/>
+            <HBox fx:id="productHBox" alignment="CENTER_LEFT" prefHeight="286.0" prefWidth="799.0"
+                  GridPane.hgrow="NEVER" GridPane.vgrow="NEVER">
+                <GridPane.margin>
+                    <Insets left="60.0" right="40.0"/>
+                </GridPane.margin>
+                <Pane maxHeight="220.0" maxWidth="220.0" prefHeight="286.0" prefWidth="220.0"
+                      style="-fx-background-color: #cfc6c1; -fx-background-radius: 40;">
+                    <ImageView fx:id="productImage" fitHeight="220.0" fitWidth="220.0" layoutX="-2.0"
+                               pickOnBounds="true" preserveRatio="true">
+                        <viewport>
+                            <Rectangle2D/>
+                        </viewport>
+                    </ImageView>
+                </Pane>
+                <VBox prefHeight="286.0" prefWidth="647.0">
+                    <HBox alignment="CENTER_LEFT">
+                        <VBox.margin>
+                            <Insets left="30.0" top="30.0"/>
+                        </VBox.margin>
+                        <Label fx:id="productName" prefHeight="72.0" prefWidth="254.0" text="Product Name"
+                               textFill="#83807e">
+                            <font>
+                                <Font size="26.0"/>
+                            </font>
+                        </Label>
+                        <ImageView fx:id="rateImage" fitHeight="48.0" fitWidth="43.0" pickOnBounds="true"
+                                   preserveRatio="true" HBox.hgrow="NEVER">
+                            <HBox.margin>
+                                <Insets left="300.0"/>
+                            </HBox.margin>
+                        </ImageView>
+                    </HBox>
+                    <Label fx:id="productDescription" prefHeight="113.0" prefWidth="613.0"
+                           text="This is Product description. This is Product description. This is Product description. This is Product description. This is Product description. This is Product description.This is Product description. This is Product description."
+                           wrapText="true">
+                        <VBox.margin>
+                            <Insets left="20.0"/>
+                        </VBox.margin>
+                        <font>
+                            <Font size="16.0"/>
+                        </font>
+                    </Label>
+                    <HBox fx:id="offIcon" alignment="CENTER_LEFT" maxHeight="50.0">
+                        <VBox.margin>
+                            <Insets left="20.0" right="10.0"/>
+                        </VBox.margin>
+                        <ImageView fx:id="price" fitHeight="46.0" fitWidth="61.0" pickOnBounds="true"
+                                   preserveRatio="true">
+                            <image>
+                            </image>
+                        </ImageView>
+                        <Label fx:id="productPrice" prefHeight="50.0" prefWidth="349.0" text="179.00 $"
+                               textFill="#887878">
+                            <font>
+                                <Font name="System Bold Italic" size="26.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets left="20.0"/>
+                            </HBox.margin>
+                        </Label>
+                        <ImageView fx:id="off" fitHeight="54.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true"
+                                   HBox.hgrow="NEVER">
+                            <HBox.margin>
+                                <Insets left="100.0"/>
+                            </HBox.margin>
+                        </ImageView>
+                        <Label fx:id="offPercent" prefHeight="50.0" prefWidth="80.0" text="30" textFill="#ff1212">
+                            <font>
+                                <Font name="System Bold" size="34.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets left="10.0"/>
+                            </HBox.margin>
+                        </Label>
+                    </HBox>
+                </VBox>
+            </HBox>
+        </GridPane>
+    </children>
+</fx:root>

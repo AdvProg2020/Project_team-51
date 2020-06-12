@@ -6,13 +6,13 @@ import model.People.Manager;
 import model.People.Seller;
 import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 import view.Profile.CustomerMenu.CustomerMenu;
-import view.Profile.ManagerMenu.*;
+import view.Profile.ManagerMenu.ManagerMenu;
 import view.Profile.SellerMenu.SellerMenu;
 
 public class MainMenu extends Menu {
 
     public MainMenu() {
-        super("Main Menu", null);
+        super("main.Main Menu", null);
         var person = Controller.getCurrentAccount();
         if (person == null)
             subMenus.put(1, new Menu("Profile", this) {
