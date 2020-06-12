@@ -5,7 +5,9 @@ import model.Attributes;
 import model.Category;
 import model.OffCode;
 import model.People.Account;
+import model.People.Customer;
 import model.People.Manager;
+import model.People.Seller;
 import model.Product;
 import model.Requests.Request;
 
@@ -80,6 +82,10 @@ public class ManagerController extends Controller {
         model.Product.setAllProducts(allProducts);
     }
 
+    public ArrayList<Category> getAllCategories (){
+        return Category.getAllCategories();
+    }
+
     public Boolean isThisCodeValid(String code) {
         List<OffCode> offCodes = model.OffCode.getAllOffCodes();
         for (OffCode offCode : offCodes) {
@@ -103,6 +109,60 @@ public class ManagerController extends Controller {
                 offPercent,
                 maxDiscount
         );
+    }
+
+    public void setAccountType (Account a , String type){
+        if (type.equals("Manager")) changeTypeToManager(a);
+        if (type.equals("Customer")) changeTypeToCustomer(a);
+        if (type.equals("Seller")) changeTypeToSeller(a);
+    }
+
+    public void changeTypeToManager(Account a){
+        if (a instanceof Manager) return;
+        try {
+            deleteUser(a.getUsername());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        new Manager(a.getUsername(),
+                    a.getPassword(),
+                    a.getFirstName(),
+                    a.getLastName(),
+                    a.getEmail(),
+                    a.getPhoneNumber());
+    }
+
+    public void changeTypeToSeller(Account a){
+        if (a instanceof Seller) return;
+        try {
+            deleteUser(a.getUsername());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        new Seller(a.getUsername(),
+                a.getPassword(),
+                a.getFirstName(),
+                a.getLastName(),
+                1000.0,
+                a.getEmail(),
+                a.getPhoneNumber(),
+                "not Specified");
+    }
+
+    public void changeTypeToCustomer(Account a){
+        if (a instanceof Customer) return;
+        try {
+            deleteUser(a.getUsername());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        new Customer(a.getUsername(),
+                a.getPassword(),
+                a.getFirstName(),
+                a.getLastName(),
+                1000.0,
+                a.getEmail(),
+                a.getPhoneNumber());
     }
 
     public void editDiscountCode(String code, ArrayList<Account> appliedAccounts,

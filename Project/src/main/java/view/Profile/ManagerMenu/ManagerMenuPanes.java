@@ -21,6 +21,8 @@ import model.Requests.Request;
 import view.Menu;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ManagerMenuPanes{
     ManagerController managerController = new ManagerController(Controller.getCurrentAccount());
@@ -286,6 +288,127 @@ public class ManagerMenuPanes{
         return table;
     }
 
+    public TableView getManageUsersTableView (){
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll("Manager" , "Customer" , "Seller");
+        List<Account> accounts = managerController.getAllProfiles();
+        TableView<Account> table = new TableView<>();
+        ObservableList<Account> data
+                = FXCollections.observableArrayList(
+                accounts
+        );
+
+        TableColumn username = new TableColumn("username");
+        username.setCellValueFactory(new PropertyValueFactory<>("userName"));
+
+        TableColumn firstName = new TableColumn("first name");
+        firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+
+        TableColumn lastName = new TableColumn("last name");
+        lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+
+        TableColumn balance = new TableColumn("balance");
+        balance.setCellValueFactory(new PropertyValueFactory<>("balanceString")); // todo create method in account
+
+        TableColumn type = new TableColumn("type");
+        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        TableColumn delete = new TableColumn("delete");
+        delete.setCellValueFactory(new PropertyValueFactory<>("noUse"));
+
+
+        Callback<TableColumn<Account, String>, TableCell<Account, String>> cellFactoryDeleteAccount
+                = //
+                new Callback<TableColumn<Account, String>, TableCell<Account, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Account, String> param) {
+                        final TableCell<Account, String> cell = new TableCell<Account, String>() {
+
+                            final Button btn = new Button("delete");
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    btn.setOnAction(ev->{
+                                        Account account = getTableView().getItems().get(getIndex());
+                                        table.getItems().remove(account);
+                                        try {
+                                            managerController.deleteUser(account.getUsername()); //todo replace with manager delete account method
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    });
+                                    setGraphic(btn);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        Callback<TableColumn<Account, String>, TableCell<Account, String>> cellFactorysecChangeType
+                = //
+                new Callback<TableColumn<Account, String>, TableCell<Account, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Account, String> param) {
+                        final TableCell<Account, String> cell = new TableCell<Account, String>() {
+
+                            final ComboBox comboBox = getCombobox();
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item!=null)comboBox.getSelectionModel().select(item);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    comboBox.setOnAction(event -> {
+                                        Account account = getTableView().getItems().get(getIndex());
+                                        if (!comboBox.getValue().equals(account.getType())){managerController.setAccountType (account,(String) comboBox.getValue() );
+                                            System.out.println("combo" + Account.getAllAccounts());}
+                                    });
+                                    setGraphic(comboBox);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        delete.setCellFactory(cellFactoryDeleteAccount);
+        type.setCellFactory(cellFactorysecChangeType);
+
+        table.setItems(data);
+        table.getColumns().addAll(username,firstName , lastName , balance ,delete, type);
+        return table;
+    }
+
+    public ComboBox getCombobox(){
+        ComboBox comboBox = new ComboBox();
+        comboBox.getItems().addAll("Manager" , "Customer" , "Seller");
+        return comboBox;
+    }
+
+
+    private int getSelectionForCategory(String s){
+        switch (s){
+            case "Manager" : return 1;
+            case "Customer" : return 2;
+            case "Seller" : return 3;
+            default:
+                System.err.println("getSelectionForCategory error" + s);
+        }
+        return 0;
+    }
+
     private TextField getTextFieldDefault(String Default , double x , double y){
         TextField textField = new TextField();
         textField.setText(Default);
@@ -328,4 +451,5 @@ public class ManagerMenuPanes{
         w.setLayoutX(x);
         return w;
     }
+
 }
