@@ -91,8 +91,8 @@ public class ManageRequests extends Menu {
 //            System.err.println(e.getMessage());
 //        }
         try {
-            r = managerController.getRequestById(inputInFormat("enter request id" ,
-                    ""));
+            r = managerController.getRequestById(inputInFormat("enter request id",
+                    "\\d+"));
             System.out.println("1.accept\n2.decline\n3.back");
             int answer = getOptionWithRange(1 , 3);
             switch (answer){

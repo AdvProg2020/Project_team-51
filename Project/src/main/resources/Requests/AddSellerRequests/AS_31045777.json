@@ -4,7 +4,7 @@
     "availableProducts": [],
     "allAuctions": [],
     "brandName": "AmazonCo",
-    "status": "PENDING_CREATE",
+    "status": "APPROVED",
     "username": "Amazon",
     "firstName": "Amazon",
     "lastName": "Amazoni",
@@ -13,7 +13,7 @@
     "phoneNumber": "09112223344",
     "password": "ImAmazon"
   },
-  "status": "PENDING_CREATE",
+  "status": "APPROVED",
   "requestId": "31045777",
   "date": "May 19, 2020, 4:52:13 AM"
 }

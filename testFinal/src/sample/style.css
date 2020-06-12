@@ -1,0 +1,20 @@
+/*$ruler: 16px;*/
+/*$color-red: #AE1100;*/
+/*$color-bg: #EBECF0;*/
+/*$color-shadow: #BABECC;*/
+/*$color-white: #FFF;*/
+
+
+.background {
+    -fx-background-color: #AE1100;
+}
+
+.button {
+    -fx-font-family: 'Montserrat', sans-serif;
+    -fx-letter-spacing: -0.2px;
+    -fx-font-size: 16px;
+    -fx-background-color: white;
+    -fx-border-width: 0;
+    -fx-border-radius: 14;
+}
+

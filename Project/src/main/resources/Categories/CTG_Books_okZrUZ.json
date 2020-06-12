@@ -1,0 +1,83 @@
+{
+  "name": "Books",
+  "categoryId": "okZrUZ",
+  "subCategories": {
+    "@type": "java.util.LinkedHashMap",
+    "@val": {}
+  },
+  "parentCategory": {
+    "name": "Main",
+    "categoryId": "B5ujD6",
+    "subCategories": {
+      "@type": "java.util.LinkedHashMap",
+      "@val": {}
+    },
+    "parentCategory": null,
+    "categoryProducts": [],
+    "attributes": {
+      "@type": "java.util.ImmutableCollections$ListN",
+      "@val": {
+        "elements": {
+          "@type": "[Ljava.lang.Object;",
+          "@val": [
+            {
+              "@type": "model.Attributes",
+              "@val": {
+                "attributeId": "9055299226",
+                "field": "Color",
+                "values": {
+                  "@type": "java.util.HashSet",
+                  "@val": []
+                }
+              }
+            },
+            {
+              "@type": "model.Attributes",
+              "@val": {
+                "attributeId": "6278697474",
+                "field": "Material",
+                "values": {
+                  "@type": "java.util.HashSet",
+                  "@val": []
+                }
+              }
+            },
+            {
+              "@type": "model.Attributes",
+              "@val": {
+                "attributeId": "4044555818",
+                "field": "Size",
+                "values": {
+                  "@type": "java.util.HashSet",
+                  "@val": []
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "categoryProducts": [],
+  "attributes": {
+    "@type": "java.util.ImmutableCollections$List12",
+    "@val": {
+      "e0": {
+        "attributeId": "8237238077",
+        "field": "Writer",
+        "values": {
+          "@type": "java.util.HashSet",
+          "@val": []
+        }
+      },
+      "e1": {
+        "attributeId": "8616518250",
+        "field": "Publisher",
+        "values": {
+          "@type": "java.util.HashSet",
+          "@val": []
+        }
+      }
+    }
+  }
+}

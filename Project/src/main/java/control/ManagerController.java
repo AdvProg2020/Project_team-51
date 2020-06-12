@@ -56,8 +56,7 @@ public class ManagerController extends Controller {
 
     public static Boolean isHeAbleToCreateManger() {
         if (currentAccount instanceof Manager) return true;
-        if (!Account.doesManagerExist()) return true;
-        return false;
+        return !Account.doesManagerExist();
     }
 
     public Boolean isThisPidValid(String productId) {
@@ -231,8 +230,8 @@ public class ManagerController extends Controller {
 
     public Category getCategoryByName(String name) {
         Manager manager = (Manager) currentAccount;
-        for (Category category1 : manager.getAllCategories()) {
-            if (category1.getName().equals(name)) return category1;
+        for (Category category : Category.getAllCategories()) {
+            if (category.getName().equals(name)) return category;
         }
         return null;
     }

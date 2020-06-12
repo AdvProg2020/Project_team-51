@@ -1,0 +1,135 @@
+{
+  "name": "Phone",
+  "categoryId": "I492yf",
+  "subCategories": {
+    "@type": "java.util.LinkedHashMap",
+    "@val": {}
+  },
+  "parentCategory": {
+    "name": "Digital Devices",
+    "categoryId": "ui9pE8",
+    "subCategories": {
+      "@type": "java.util.LinkedHashMap",
+      "@val": {}
+    },
+    "parentCategory": {
+      "name": "Main",
+      "categoryId": "B5ujD6",
+      "subCategories": {
+        "@type": "java.util.LinkedHashMap",
+        "@val": {}
+      },
+      "parentCategory": null,
+      "categoryProducts": [],
+      "attributes": {
+        "@type": "java.util.ImmutableCollections$ListN",
+        "@val": {
+          "elements": {
+            "@type": "[Ljava.lang.Object;",
+            "@val": [
+              {
+                "@type": "model.Attributes",
+                "@val": {
+                  "attributeId": "9055299226",
+                  "field": "Color",
+                  "values": {
+                    "@type": "java.util.HashSet",
+                    "@val": []
+                  }
+                }
+              },
+              {
+                "@type": "model.Attributes",
+                "@val": {
+                  "attributeId": "6278697474",
+                  "field": "Material",
+                  "values": {
+                    "@type": "java.util.HashSet",
+                    "@val": []
+                  }
+                }
+              },
+              {
+                "@type": "model.Attributes",
+                "@val": {
+                  "attributeId": "4044555818",
+                  "field": "Size",
+                  "values": {
+                    "@type": "java.util.HashSet",
+                    "@val": []
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "categoryProducts": [],
+    "attributes": {
+      "@type": "java.util.ImmutableCollections$List12",
+      "@val": {
+        "e0": {
+          "attributeId": "0518345095",
+          "field": "Color",
+          "values": {
+            "@type": "java.util.HashSet",
+            "@val": []
+          }
+        },
+        "e1": {
+          "attributeId": "1573303882",
+          "field": "Brand",
+          "values": {
+            "@type": "java.util.HashSet",
+            "@val": []
+          }
+        }
+      }
+    }
+  },
+  "categoryProducts": [],
+  "attributes": {
+    "@type": "java.util.ImmutableCollections$ListN",
+    "@val": {
+      "elements": {
+        "@type": "[Ljava.lang.Object;",
+        "@val": [
+          {
+            "@type": "model.Attributes",
+            "@val": {
+              "attributeId": "4144736175",
+              "field": "Brand",
+              "values": {
+                "@type": "java.util.HashSet",
+                "@val": []
+              }
+            }
+          },
+          {
+            "@type": "model.Attributes",
+            "@val": {
+              "attributeId": "7104373168",
+              "field": "Material",
+              "values": {
+                "@type": "java.util.HashSet",
+                "@val": []
+              }
+            }
+          },
+          {
+            "@type": "model.Attributes",
+            "@val": {
+              "attributeId": "9967093784",
+              "field": "Camera",
+              "values": {
+                "@type": "java.util.HashSet",
+                "@val": []
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

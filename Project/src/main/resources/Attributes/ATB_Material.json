@@ -1,0 +1,8 @@
+{
+  "attributeId": "7104373168",
+  "field": "Material",
+  "values": {
+    "@type": "java.util.HashSet",
+    "@val": []
+  }
+}

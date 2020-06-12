@@ -38,7 +38,8 @@ public class ProductController extends Controller {
                 showProductsOfThisCategory(subCategory);
             }
         } catch (NoCategoriesFoundException e) {
-            return category.getCategoryProducts();
+            if (!category.getCategoryProducts().isEmpty())
+                return category.getCategoryProducts();
         }
 
         return products;

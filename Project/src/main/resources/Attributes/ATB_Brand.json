@@ -1,0 +1,8 @@
+{
+  "attributeId": "4144736175",
+  "field": "Brand",
+  "values": {
+    "@type": "java.util.HashSet",
+    "@val": []
+  }
+}
