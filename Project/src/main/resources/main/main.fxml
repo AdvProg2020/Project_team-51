@@ -7,8 +7,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-           minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" stylesheets="main.css"
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity"
+           minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" stylesheets="main.css"
            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.mainController">
     <children>
         <BorderPane prefHeight="970.0" prefWidth="1720.0">
@@ -20,7 +20,7 @@
                             <children>
                                 <JFXButton prefHeight="98.0" prefWidth="109.0" text="​">
                                     <graphic>
-                                        <ImageView fitHeight="58.0" fitWidth="49.0" pickOnBounds="true"
+                                        <ImageView fx:id="dashbord" fitHeight="58.0" fitWidth="49.0" pickOnBounds="true"
                                                    preserveRatio="true">
                                             <image>
                                                 <Image url="@person(1).png"/>
@@ -30,7 +30,7 @@
                                 </JFXButton>
                                 <JFXButton prefHeight="98.0" prefWidth="109.0" text="​">
                                     <graphic>
-                                        <ImageView fitHeight="58.0" fitWidth="49.0" pickOnBounds="true"
+                                        <ImageView fx:id="logout" fitHeight="58.0" fitWidth="49.0" pickOnBounds="true"
                                                    preserveRatio="true">
                                             <image>
                                                 <Image url="@logout.png"/>
@@ -67,23 +67,24 @@
                                                 <Insets top="40.0"/>
                                             </VBox.margin>
                                             <children>
-                                                <JFXButton prefHeight="100.0" prefWidth="149.0" text="Home"
-                                                           textFill="WHITE">
+                                                <JFXButton fx:id="homeButton" prefHeight="100.0" prefWidth="149.0"
+                                                           text="Home" textFill="WHITE">
                                                     <font>
                                                         <Font name="System Bold" size="20.0"/>
                                                     </font>
                                                 </JFXButton>
-                                                <MenuButton accessibleRole="BUTTON" alignment="CENTER_RIGHT"
-                                                            contentDisplay="BOTTOM" mnemonicParsing="false"
-                                                            prefHeight="118.0" prefWidth="168.0"
+                                                <MenuButton fx:id="categoriesButton" accessibleRole="BUTTON"
+                                                            alignment="CENTER_RIGHT" contentDisplay="BOTTOM"
+                                                            mnemonicParsing="false" prefHeight="118.0" prefWidth="168.0"
                                                             style="-fx-background-color: #746d63;" text="Categories"
                                                             textFill="WHITE">
                                                     <items>
-                                                        <CustomMenuItem mnemonicParsing="false"
+                                                        <CustomMenuItem fx:id="customItem" mnemonicParsing="false"
                                                                         style="-fx-padding: 0 120 0 0; -fx-background-color: black;"
                                                                         text="Unspecified Action">
                                                             <content>
-                                                                <TreeView style="-fx-background-color: #746d63;"/>
+                                                                <TreeView fx:id="categoriesTreeView"
+                                                                          style="-fx-background-color: #746d63;"/>
                                                             </content>
                                                         </CustomMenuItem>
                                                     </items>
@@ -91,20 +92,20 @@
                                                         <Font name="System Bold" size="20.0"/>
                                                     </font>
                                                 </MenuButton>
-                                                <JFXButton prefHeight="124.0" prefWidth="160.0" text="About us"
-                                                           textFill="WHITE">
+                                                <JFXButton fx:id="aboutUsButton" prefHeight="124.0" prefWidth="160.0"
+                                                           text="About us" textFill="WHITE">
                                                     <font>
                                                         <Font name="System Bold" size="20.0"/>
                                                     </font>
                                                 </JFXButton>
-                                                <JFXButton prefHeight="124.0" prefWidth="160.0" text="Contact us"
-                                                           textFill="WHITE">
+                                                <JFXButton fx:id="contactUsButton" prefHeight="124.0" prefWidth="160.0"
+                                                           text="Contact us" textFill="WHITE">
                                                     <font>
                                                         <Font name="System Bold" size="20.0"/>
                                                     </font>
                                                 </JFXButton>
-                                                <ImageView fitHeight="46.0" fitWidth="50.0" pickOnBounds="true"
-                                                           preserveRatio="true">
+                                                <ImageView fx:id="cartButton" fitHeight="46.0" fitWidth="50.0"
+                                                           pickOnBounds="true" preserveRatio="true">
                                                     <HBox.margin>
                                                         <Insets left="280.0"/>
                                                     </HBox.margin>
@@ -112,8 +113,8 @@
                                                         <Image url="@buy.png"/>
                                                     </image>
                                                 </ImageView>
-                                                <JFXTextField focusColor="#f2837c" prefHeight="56.0" prefWidth="270.0"
-                                                              promptText="Serach ..."
+                                                <JFXTextField fx:id="searchField" focusColor="#f2837c" prefHeight="56.0"
+                                                              prefWidth="270.0" promptText="Serach ..."
                                                               style="-fx-background-color: #ebebeb; -fx-background-radius: 15;"
                                                               unFocusColor="#646161">
                                                     <HBox.margin>
@@ -126,7 +127,7 @@
                                                         <Insets left="25.0"/>
                                                     </padding>
                                                 </JFXTextField>
-                                                <JFXButton prefHeight="58.0" prefWidth="61.0"
+                                                <JFXButton fx:id="searchButton" prefHeight="58.0" prefWidth="61.0"
                                                            style="-fx-background-color: #f2837c; -fx-background-radius: 14;"
                                                            text=" " textFill="WHITE">
                                                     <font>
@@ -193,7 +194,8 @@
                                                         <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
                                                               GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                                             <children>
-                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                <ImageView fx:id="BestSellerProductImage1"
+                                                                           fitHeight="217.0" fitWidth="205.0"
                                                                            pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
@@ -202,12 +204,14 @@
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
                                                                       prefWidth="298.0" spacing="90.0">
                                                                     <children>
-                                                                        <Label text="Name" textFill="WHITE">
+                                                                        <Label fx:id="BestSellerProductName1"
+                                                                               text="Name" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
                                                                         </Label>
-                                                                        <Label text="Price" textFill="WHITE">
+                                                                        <Label fx:id="BestSellerProductPrice1"
+                                                                               text="Price" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
@@ -228,7 +232,8 @@
                                                               GridPane.columnIndex="1" GridPane.halignment="CENTER"
                                                               GridPane.valignment="CENTER">
                                                             <children>
-                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                <ImageView fx:id="BestSellerProductImage2"
+                                                                           fitHeight="217.0" fitWidth="205.0"
                                                                            pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
@@ -237,12 +242,14 @@
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
                                                                       prefWidth="298.0" spacing="90.0">
                                                                     <children>
-                                                                        <Label text="Name" textFill="WHITE">
+                                                                        <Label fx:id="BestSellerProductName2"
+                                                                               text="Name" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
                                                                         </Label>
-                                                                        <Label text="Price" textFill="WHITE">
+                                                                        <Label fx:id="BestSellerProductPrice2"
+                                                                               text="Price" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
@@ -263,7 +270,8 @@
                                                               GridPane.columnIndex="3" GridPane.halignment="CENTER"
                                                               GridPane.valignment="CENTER">
                                                             <children>
-                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                <ImageView fx:id="BestSellerProductImage4"
+                                                                           fitHeight="217.0" fitWidth="205.0"
                                                                            pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
@@ -272,12 +280,14 @@
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
                                                                       prefWidth="298.0" spacing="90.0">
                                                                     <children>
-                                                                        <Label text="Name" textFill="WHITE">
+                                                                        <Label fx:id="BestSellerProductName4"
+                                                                               text="Name" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
                                                                         </Label>
-                                                                        <Label text="Price" textFill="WHITE">
+                                                                        <Label fx:id="BestSellerProductPrice4"
+                                                                               text="Price" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
@@ -298,7 +308,8 @@
                                                               GridPane.columnIndex="2" GridPane.halignment="CENTER"
                                                               GridPane.valignment="CENTER">
                                                             <children>
-                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                <ImageView fx:id="BestSellerProductImage3"
+                                                                           fitHeight="217.0" fitWidth="205.0"
                                                                            pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
@@ -307,12 +318,14 @@
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
                                                                       prefWidth="298.0" spacing="90.0">
                                                                     <children>
-                                                                        <Label text="Name" textFill="WHITE">
+                                                                        <Label fx:id="BestSellerProductName3"
+                                                                               text="Name" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
                                                                         </Label>
-                                                                        <Label text="Price" textFill="WHITE">
+                                                                        <Label fx:id="BestSellerProductPrice3"
+                                                                               text="Price" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
@@ -330,7 +343,7 @@
                                         </VBox>
                                         <VBox prefHeight="507.0" prefWidth="1611.0">
                                             <children>
-                                                <Label prefHeight="104.0" prefWidth="233.0" text="Most Viewd"
+                                                <Label prefHeight="104.0" prefWidth="233.0" text="Most Viewed"
                                                        textFill="#a4522c">
                                                     <font>
                                                         <Font name="System Bold" size="41.0"/>
@@ -366,7 +379,8 @@
                                                         <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
                                                               GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                                             <children>
-                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                <ImageView fx:id="mostViewedProductImage1"
+                                                                           fitHeight="217.0" fitWidth="205.0"
                                                                            pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
@@ -375,12 +389,14 @@
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
                                                                       prefWidth="298.0" spacing="90.0">
                                                                     <children>
-                                                                        <Label text="Name" textFill="WHITE">
+                                                                        <Label fx:id="mostViewedProductName1"
+                                                                               text="Name" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
                                                                         </Label>
-                                                                        <Label text="Price" textFill="WHITE">
+                                                                        <Label fx:id="mostViewedProductPrice1"
+                                                                               text="Price" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
@@ -401,7 +417,8 @@
                                                               GridPane.columnIndex="1" GridPane.halignment="CENTER"
                                                               GridPane.valignment="CENTER">
                                                             <children>
-                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                <ImageView fx:id="mostViewedProductImage2"
+                                                                           fitHeight="217.0" fitWidth="205.0"
                                                                            pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
@@ -410,12 +427,14 @@
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
                                                                       prefWidth="298.0" spacing="90.0">
                                                                     <children>
-                                                                        <Label text="Name" textFill="WHITE">
+                                                                        <Label fx:id="mostViewedProductName2"
+                                                                               text="Name" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
                                                                         </Label>
-                                                                        <Label text="Price" textFill="WHITE">
+                                                                        <Label fx:id="mostViewedProductIPrice2"
+                                                                               text="Price" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
@@ -436,7 +455,8 @@
                                                               GridPane.columnIndex="3" GridPane.halignment="CENTER"
                                                               GridPane.valignment="CENTER">
                                                             <children>
-                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                <ImageView fx:id="mostViewedProductImage4"
+                                                                           fitHeight="217.0" fitWidth="205.0"
                                                                            pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
@@ -445,12 +465,14 @@
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
                                                                       prefWidth="298.0" spacing="90.0">
                                                                     <children>
-                                                                        <Label text="Name" textFill="WHITE">
+                                                                        <Label fx:id="mostViewedProductName4"
+                                                                               text="Name" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
                                                                         </Label>
-                                                                        <Label text="Price" textFill="WHITE">
+                                                                        <Label fx:id="mostViewedProductPrice4"
+                                                                               text="Price" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
@@ -471,7 +493,8 @@
                                                               GridPane.columnIndex="2" GridPane.halignment="CENTER"
                                                               GridPane.valignment="CENTER">
                                                             <children>
-                                                                <ImageView fitHeight="217.0" fitWidth="205.0"
+                                                                <ImageView fx:id="mostViewedProductImage3"
+                                                                           fitHeight="217.0" fitWidth="205.0"
                                                                            pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
@@ -480,12 +503,14 @@
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
                                                                       prefWidth="298.0" spacing="90.0">
                                                                     <children>
-                                                                        <Label text="Name" textFill="WHITE">
+                                                                        <Label fx:id="mostViewedProductName3"
+                                                                               text="Name" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
                                                                         </Label>
-                                                                        <Label text="Price" textFill="WHITE">
+                                                                        <Label fx:id="mostViewedProductPrice3"
+                                                                               text="Price" textFill="WHITE">
                                                                             <font>
                                                                                 <Font name="System Bold" size="28.0"/>
                                                                             </font>
