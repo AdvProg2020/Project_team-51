@@ -23,10 +23,10 @@ public class Main extends Application {
 
     public static void main(String[] args) throws IOException {
 //        Thread buildThread = new Thread(new Build());
-////        Thread statusUpdaterThread = new Thread(new StatusUpdater());
-////        buildThread.start();
-////        statusUpdaterThread.start();
-//////        new MainMenu();
+//        Thread statusUpdaterThread = new Thread(new StatusUpdater());
+//        buildThread.start();
+//        statusUpdaterThread.start();
+//        new MainMenu();
         launch();
     }
 
@@ -34,6 +34,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("main"));
         stage.setScene(scene);
+        scene.getStylesheets().add(Main.class.getResource("main.css").toExternalForm());
         stage.show();
     }
 }

@@ -8,8 +8,8 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-           minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="main.mainController">
+           minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" stylesheets="main.css"
+           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.mainController">
     <children>
         <BorderPane prefHeight="970.0" prefWidth="1720.0">
             <left>
@@ -52,8 +52,7 @@
                             <children>
                                 <VBox alignment="TOP_CENTER" layoutY="-66.0" prefHeight="1911.0" prefWidth="1612.0"
                                       AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                      AnchorPane.rightAnchor="0.0"
-                                      AnchorPane.topAnchor="0.0">
+                                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <ImageView fitHeight="144.0" fitWidth="139.0" pickOnBounds="true"
                                                    preserveRatio="true">
@@ -62,8 +61,8 @@
                                             </image>
                                         </ImageView>
                                         <HBox alignment="CENTER_LEFT" maxHeight="100.0" prefHeight="250.0"
-                                              prefWidth="1611.0"
-                                              style="-fx-background-color: #746d63;" VBox.vgrow="ALWAYS">
+                                              prefWidth="1611.0" style="-fx-background-color: #746d63;"
+                                              VBox.vgrow="ALWAYS">
                                             <VBox.margin>
                                                 <Insets top="40.0"/>
                                             </VBox.margin>
@@ -75,8 +74,8 @@
                                                     </font>
                                                 </JFXButton>
                                                 <MenuButton accessibleRole="BUTTON" alignment="CENTER_RIGHT"
-                                                            contentDisplay="BOTTOM"
-                                                            mnemonicParsing="false" prefHeight="118.0" prefWidth="168.0"
+                                                            contentDisplay="BOTTOM" mnemonicParsing="false"
+                                                            prefHeight="118.0" prefWidth="168.0"
                                                             style="-fx-background-color: #746d63;" text="Categories"
                                                             textFill="WHITE">
                                                     <items>
@@ -187,24 +186,21 @@
                                                     </VBox.margin>
                                                     <children>
                                                         <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
-                                                                   height="282.0"
-                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
-                                                                   width="292.0"
+                                                                   height="282.0" stroke="BLACK" strokeType="INSIDE"
+                                                                   strokeWidth="0.0" width="292.0"
                                                                    GridPane.halignment="CENTER" GridPane.hgrow="NEVER"
                                                                    GridPane.valignment="CENTER" GridPane.vgrow="NEVER"/>
                                                         <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
                                                               GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                                             <children>
                                                                 <ImageView fitHeight="217.0" fitWidth="205.0"
-                                                                           pickOnBounds="true"
-                                                                           preserveRatio="true">
+                                                                           pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
                                                                     </image>
                                                                 </ImageView>
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
-                                                                      prefWidth="298.0"
-                                                                      spacing="90.0">
+                                                                      prefWidth="298.0" spacing="90.0">
                                                                     <children>
                                                                         <Label text="Name" textFill="WHITE">
                                                                             <font>
@@ -224,9 +220,8 @@
                                                             </children>
                                                         </VBox>
                                                         <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
-                                                                   height="282.0"
-                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
-                                                                   width="292.0"
+                                                                   height="282.0" stroke="BLACK" strokeType="INSIDE"
+                                                                   strokeWidth="0.0" width="292.0"
                                                                    GridPane.columnIndex="1" GridPane.halignment="CENTER"
                                                                    GridPane.valignment="CENTER"/>
                                                         <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
@@ -234,15 +229,13 @@
                                                               GridPane.valignment="CENTER">
                                                             <children>
                                                                 <ImageView fitHeight="217.0" fitWidth="205.0"
-                                                                           pickOnBounds="true"
-                                                                           preserveRatio="true">
+                                                                           pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
                                                                     </image>
                                                                 </ImageView>
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
-                                                                      prefWidth="298.0"
-                                                                      spacing="90.0">
+                                                                      prefWidth="298.0" spacing="90.0">
                                                                     <children>
                                                                         <Label text="Name" textFill="WHITE">
                                                                             <font>
@@ -262,9 +255,8 @@
                                                             </children>
                                                         </VBox>
                                                         <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
-                                                                   height="282.0"
-                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
-                                                                   width="292.0"
+                                                                   height="282.0" stroke="BLACK" strokeType="INSIDE"
+                                                                   strokeWidth="0.0" width="292.0"
                                                                    GridPane.columnIndex="3" GridPane.halignment="CENTER"
                                                                    GridPane.valignment="CENTER"/>
                                                         <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
@@ -272,15 +264,13 @@
                                                               GridPane.valignment="CENTER">
                                                             <children>
                                                                 <ImageView fitHeight="217.0" fitWidth="205.0"
-                                                                           pickOnBounds="true"
-                                                                           preserveRatio="true">
+                                                                           pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
                                                                     </image>
                                                                 </ImageView>
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
-                                                                      prefWidth="298.0"
-                                                                      spacing="90.0">
+                                                                      prefWidth="298.0" spacing="90.0">
                                                                     <children>
                                                                         <Label text="Name" textFill="WHITE">
                                                                             <font>
@@ -300,9 +290,8 @@
                                                             </children>
                                                         </VBox>
                                                         <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
-                                                                   height="282.0"
-                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
-                                                                   width="292.0"
+                                                                   height="282.0" stroke="BLACK" strokeType="INSIDE"
+                                                                   strokeWidth="0.0" width="292.0"
                                                                    GridPane.columnIndex="2" GridPane.halignment="CENTER"
                                                                    GridPane.valignment="CENTER"/>
                                                         <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
@@ -310,15 +299,13 @@
                                                               GridPane.valignment="CENTER">
                                                             <children>
                                                                 <ImageView fitHeight="217.0" fitWidth="205.0"
-                                                                           pickOnBounds="true"
-                                                                           preserveRatio="true">
+                                                                           pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
                                                                     </image>
                                                                 </ImageView>
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
-                                                                      prefWidth="298.0"
-                                                                      spacing="90.0">
+                                                                      prefWidth="298.0" spacing="90.0">
                                                                     <children>
                                                                         <Label text="Name" textFill="WHITE">
                                                                             <font>
@@ -372,24 +359,21 @@
                                                     </VBox.margin>
                                                     <children>
                                                         <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
-                                                                   height="282.0"
-                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
-                                                                   width="292.0"
+                                                                   height="282.0" stroke="BLACK" strokeType="INSIDE"
+                                                                   strokeWidth="0.0" width="292.0"
                                                                    GridPane.halignment="CENTER" GridPane.hgrow="NEVER"
                                                                    GridPane.valignment="CENTER" GridPane.vgrow="NEVER"/>
                                                         <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
                                                               GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                                             <children>
                                                                 <ImageView fitHeight="217.0" fitWidth="205.0"
-                                                                           pickOnBounds="true"
-                                                                           preserveRatio="true">
+                                                                           pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
                                                                     </image>
                                                                 </ImageView>
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
-                                                                      prefWidth="298.0"
-                                                                      spacing="90.0">
+                                                                      prefWidth="298.0" spacing="90.0">
                                                                     <children>
                                                                         <Label text="Name" textFill="WHITE">
                                                                             <font>
@@ -409,9 +393,8 @@
                                                             </children>
                                                         </VBox>
                                                         <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
-                                                                   height="282.0"
-                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
-                                                                   width="292.0"
+                                                                   height="282.0" stroke="BLACK" strokeType="INSIDE"
+                                                                   strokeWidth="0.0" width="292.0"
                                                                    GridPane.columnIndex="1" GridPane.halignment="CENTER"
                                                                    GridPane.valignment="CENTER"/>
                                                         <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
@@ -419,15 +402,13 @@
                                                               GridPane.valignment="CENTER">
                                                             <children>
                                                                 <ImageView fitHeight="217.0" fitWidth="205.0"
-                                                                           pickOnBounds="true"
-                                                                           preserveRatio="true">
+                                                                           pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
                                                                     </image>
                                                                 </ImageView>
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
-                                                                      prefWidth="298.0"
-                                                                      spacing="90.0">
+                                                                      prefWidth="298.0" spacing="90.0">
                                                                     <children>
                                                                         <Label text="Name" textFill="WHITE">
                                                                             <font>
@@ -447,9 +428,8 @@
                                                             </children>
                                                         </VBox>
                                                         <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
-                                                                   height="282.0"
-                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
-                                                                   width="292.0"
+                                                                   height="282.0" stroke="BLACK" strokeType="INSIDE"
+                                                                   strokeWidth="0.0" width="292.0"
                                                                    GridPane.columnIndex="3" GridPane.halignment="CENTER"
                                                                    GridPane.valignment="CENTER"/>
                                                         <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
@@ -457,15 +437,13 @@
                                                               GridPane.valignment="CENTER">
                                                             <children>
                                                                 <ImageView fitHeight="217.0" fitWidth="205.0"
-                                                                           pickOnBounds="true"
-                                                                           preserveRatio="true">
+                                                                           pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
                                                                     </image>
                                                                 </ImageView>
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
-                                                                      prefWidth="298.0"
-                                                                      spacing="90.0">
+                                                                      prefWidth="298.0" spacing="90.0">
                                                                     <children>
                                                                         <Label text="Name" textFill="WHITE">
                                                                             <font>
@@ -485,9 +463,8 @@
                                                             </children>
                                                         </VBox>
                                                         <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ed9f7b"
-                                                                   height="282.0"
-                                                                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
-                                                                   width="292.0"
+                                                                   height="282.0" stroke="BLACK" strokeType="INSIDE"
+                                                                   strokeWidth="0.0" width="292.0"
                                                                    GridPane.columnIndex="2" GridPane.halignment="CENTER"
                                                                    GridPane.valignment="CENTER"/>
                                                         <VBox alignment="CENTER" prefHeight="316.0" prefWidth="271.0"
@@ -495,15 +472,13 @@
                                                               GridPane.valignment="CENTER">
                                                             <children>
                                                                 <ImageView fitHeight="217.0" fitWidth="205.0"
-                                                                           pickOnBounds="true"
-                                                                           preserveRatio="true">
+                                                                           pickOnBounds="true" preserveRatio="true">
                                                                     <image>
                                                                         <Image url="@laundry_p-v2-500x500.png"/>
                                                                     </image>
                                                                 </ImageView>
                                                                 <HBox alignment="CENTER" prefHeight="66.0"
-                                                                      prefWidth="298.0"
-                                                                      spacing="90.0">
+                                                                      prefWidth="298.0" spacing="90.0">
                                                                     <children>
                                                                         <Label text="Name" textFill="WHITE">
                                                                             <font>
