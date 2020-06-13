@@ -109,11 +109,21 @@ public class ManagerController extends Controller {
         if (isThisCodeValid(code)) throw new InvalidOffCodeException();
     }
 
+    public boolean isCodeUsedBefore(String code){
+        List<OffCode> offCodes = model.OffCode.getAllOffCodes();
+        for (OffCode offCode : offCodes) {
+            if (offCode.getOffCode().equals(code)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void createDiscountCode(ArrayList<Account> appliedAccounts,
-                                   String startDate, String endDate
-            , int offPercent, Double maxDiscount) throws ParseException {
-        new OffCode(TokenGenerator.generateOffCode(), new SimpleDateFormat("dd/MM/yyyy").parse(startDate),
-                new SimpleDateFormat("dd/MM/yyyy").parse(endDate),
+                                   Date startDate, Date endDate
+            , int offPercent, Double maxDiscount){
+        new OffCode(TokenGenerator.generateOffCode(), startDate,
+                endDate,
                 appliedAccounts,
                 offPercent,
                 maxDiscount
@@ -124,6 +134,18 @@ public class ManagerController extends Controller {
         if (type.equals("Manager")) changeTypeToManager(a);
         if (type.equals("Customer")) changeTypeToCustomer(a);
         if (type.equals("Seller")) changeTypeToSeller(a);
+    }
+
+    public List<Product> getAllProducts (){
+        return Product.getAllProducts();
+    }
+
+    public List<Customer> getAllCustomers (){
+        List<Customer> customers = new ArrayList<>();
+        for (Account a : Account.getAllAccounts()){
+            if (a instanceof Customer) customers.add((Customer) a);
+        }
+        return customers;
     }
 
     public void changeTypeToManager(Account a){
