@@ -11,7 +11,8 @@
     "balance": 1.213243455E7,
     "email": "amazon@amazon.com",
     "phoneNumber": "09123456798",
-    "password": "amazon zadeh"
+    "password": "amazon zadeh",
+    "image": null
   },
   "status": "PENDING_CREATE",
   "requestId": "22922572",

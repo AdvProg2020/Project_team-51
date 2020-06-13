@@ -1,6 +1,7 @@
 package model.People;
 
 import control.Exceptions.InvalidUsernameException;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public abstract class Account {
     protected String email;
     protected String phoneNumber;
     private String password;
+    private ImageView image;
 
     public Account(String username, String password, String firstName, String lastName, Double balance, String email, String phoneNumber) {
         this.username = username;

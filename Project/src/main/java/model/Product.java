@@ -2,13 +2,12 @@ package model;
 
 import control.Controller;
 import control.Exceptions.InvalidProductIdException;
+import javafx.scene.image.Image;
 import model.People.Customer;
 import model.People.Seller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Product {
 
@@ -26,7 +25,10 @@ public class Product {
     private Map<Attributes, String> attributes = new HashMap<>();
     private List<Rate> rating = new ArrayList<>();
     private int views;
+    private int sellNumber;
     private List<Comment> comments = new ArrayList<>();
+    private Image image;
+
 
     public Product(String productId, String name, String brandName,
                    Double price, Seller seller, int quantity, Category parentCategory, String description,
@@ -211,6 +213,30 @@ public class Product {
         return quantity.values().stream().reduce(0, Integer::sum);
     }
 
+    public static List<Product> getMostViewedProducts() {
+        return allProducts.stream().sorted((Comparator.comparing(Product::getViews))).limit(4).collect(Collectors.toList());
+    }
+
+    public static List<Product> getBestSellerProducts() {
+        return allProducts.stream().sorted((Comparator.comparing(Product::getSellNumber))).limit(4).collect(Collectors.toList());
+    }
+
+    public int getSellNumber() {
+        return sellNumber;
+    }
+
+    public void setSellNumber(int sellNumber) {
+        this.sellNumber = sellNumber;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "productId : " + productId + '\'' +
@@ -219,4 +245,5 @@ public class Product {
                 " ,rate : " + this.averageRate() +
                 " ,quantity : " + quantity;
     }
+
 }
