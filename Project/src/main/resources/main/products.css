@@ -148,33 +148,3 @@
 
 }
 
-.accordion {
-    -fx-background-color: #f3decb;
-}
-
-.titled-pane {
-    -fx-background-color: #f3decb;
-}
-
-.titled-pane > *.content {
-    -fx-background-color: red;
-    -fx-background-radius: 20;
-    -fx-background-insets: 0, 0 1 1 1;
-    -fx-padding: 0.167em;
-}
-
-.accordion .titled-pane .title {
-    -fx-background-color: red;
-}
-
-.titled-pane > .title {
-    -fx-background-color: -fx-box-border, -fx-inner-border, -fx-body-color;
-    -fx-background-radius: 10;
-    -fx-background-insets: 0, 1, 2;
-    -fx-padding: 0.166667em 0.833333em 0.25em 0.833333em; /* 2 10 3 10 */
-}
-
-
-.titled-pane:collapsed > .title > .arrow-button .arrow {
-    -fx-rotate: -30;
-}

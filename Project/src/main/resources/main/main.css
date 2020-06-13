@@ -10,8 +10,7 @@
     -fx-font-family: "Bookman Old Style";
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-padding: 10.0px;
-
+    -fx-padding: 10.0;
 }
 
 .menu-item {
@@ -53,7 +52,6 @@
 .tree-view, .tree-cell {
     -fx-background-color: #746d63;
     -fx-text-fill: white;
-    -fx-font: "Bookman Old Style";
 }
 
 .tree-cell:selected {
