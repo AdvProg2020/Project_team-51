@@ -11,7 +11,6 @@ import model.People.Seller;
 import model.Product;
 import model.Requests.Request;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -91,7 +90,7 @@ public class ManagerController extends Controller {
         model.Product.setAllProducts(allProducts);
     }
 
-    public ArrayList<Category> getAllCategories (){
+    public ArrayList<Category> getAllCategories() {
         return Category.getAllCategories();
     }
 
@@ -109,7 +108,7 @@ public class ManagerController extends Controller {
         if (isThisCodeValid(code)) throw new InvalidOffCodeException();
     }
 
-    public boolean isCodeUsedBefore(String code){
+    public boolean isCodeUsedBefore(String code) {
         List<OffCode> offCodes = model.OffCode.getAllOffCodes();
         for (OffCode offCode : offCodes) {
             if (offCode.getOffCode().equals(code)) {
@@ -121,7 +120,7 @@ public class ManagerController extends Controller {
 
     public void createDiscountCode(ArrayList<Account> appliedAccounts,
                                    Date startDate, Date endDate
-            , int offPercent, Double maxDiscount){
+            , int offPercent, Double maxDiscount) {
         new OffCode(TokenGenerator.generateOffCode(), startDate,
                 endDate,
                 appliedAccounts,
@@ -130,25 +129,25 @@ public class ManagerController extends Controller {
         );
     }
 
-    public void setAccountType (Account a , String type){
+    public void setAccountType(Account a, String type) {
         if (type.equals("Manager")) changeTypeToManager(a);
         if (type.equals("Customer")) changeTypeToCustomer(a);
         if (type.equals("Seller")) changeTypeToSeller(a);
     }
 
-    public List<Product> getAllProducts (){
+    public List<Product> getAllProducts() {
         return Product.getAllProducts();
     }
 
-    public List<Customer> getAllCustomers (){
+    public List<Customer> getAllCustomers() {
         List<Customer> customers = new ArrayList<>();
-        for (Account a : Account.getAllAccounts()){
+        for (Account a : Account.getAllAccounts()) {
             if (a instanceof Customer) customers.add((Customer) a);
         }
         return customers;
     }
 
-    public void changeTypeToManager(Account a){
+    public void changeTypeToManager(Account a) {
         if (a instanceof Manager) return;
         try {
             deleteUser(a.getUsername());
@@ -156,14 +155,14 @@ public class ManagerController extends Controller {
             e.printStackTrace();
         }
         new Manager(a.getUsername(),
-                    a.getPassword(),
-                    a.getFirstName(),
-                    a.getLastName(),
-                    a.getEmail(),
-                    a.getPhoneNumber());
+                a.getPassword(),
+                a.getFirstName(),
+                a.getLastName(),
+                a.getEmail(),
+                a.getPhoneNumber());
     }
 
-    public void changeTypeToSeller(Account a){
+    public void changeTypeToSeller(Account a) {
         if (a instanceof Seller) return;
         try {
             deleteUser(a.getUsername());
@@ -180,7 +179,7 @@ public class ManagerController extends Controller {
                 "not Specified");
     }
 
-    public void changeTypeToCustomer(Account a){
+    public void changeTypeToCustomer(Account a) {
         if (a instanceof Customer) return;
         try {
             deleteUser(a.getUsername());

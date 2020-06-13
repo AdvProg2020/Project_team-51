@@ -84,7 +84,7 @@ public class SortMenu extends Menu {
     private void sort() {
         String sortName = inputInFormat("Enter A Valid Sort Name: ", "(?i)(rate|name|view|price)");
         var sort = Sort.getSortType(sortName);
-        ProductController.applySort(sort);
+//        ProductController.applySort(sort);
     }
 
     private void currentSort() {

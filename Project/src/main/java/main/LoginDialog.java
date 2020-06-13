@@ -87,10 +87,9 @@ public class LoginDialog extends AnchorPane {
     private String companyName;
 
     private StackPane rootPane;
-    private JFXDialog jfxDialog;
 
 
-    public LoginDialog(StackPane stackPane, JFXDialog jfxDialog) {
+    public LoginDialog(StackPane stackPane) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login_dialog.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -145,7 +144,6 @@ public class LoginDialog extends AnchorPane {
                 try {
                     Controller.login(loginUsername, loginPassword);
                     showConfirmation("You logged in successfully!");
-                    jfxDialog.close();
                 } catch (WrongPasswordException ex) {
                     showError("Wrong Password");
                 } catch (InvalidUsernameException ex) {
@@ -209,18 +207,15 @@ public class LoginDialog extends AnchorPane {
                     Controller.setCurrentAccount(new Customer(registerUsername, registerPassword, firstNameText, lastNameText,
                             Double.parseDouble(balanceText), emailText, phoneNumberText));
                     showConfirmation("You registered successfully");
-                    jfxDialog.close();
                 } else if (type.equals("Seller")) {
                     new AddSellerRequest(new Seller(registerUsername, registerPassword, firstNameText, lastNameText,
                             Double.parseDouble(balanceText), emailText, phoneNumberText, companyName));
                     showConfirmation("You registered successfully! Request sent to Manager !");
-                    jfxDialog.close();
                 }
                 if (type.equals("Manager")) {
                     Controller.setCurrentAccount(new Manager(registerUsername, registerPassword, firstNameText, lastNameText
                             , emailText, phoneNumberText));
                     showConfirmation("Manager account has created successfully!");
-                    jfxDialog.close();
                 }
             }
         });

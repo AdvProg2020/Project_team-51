@@ -111,14 +111,14 @@ public abstract class Account {
         return phoneNumber;
     }
 
-    public String getType (){
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getType() {
         if (this instanceof Customer) return "Customer";
         if (this instanceof Manager) return "Manager";
         return "Seller";
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     @Override

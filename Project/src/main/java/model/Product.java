@@ -41,7 +41,7 @@ public class Product {
         this.parentCategory = parentCategory;
         this.description = description;
         this.attributes = attributes;
-        this.status.putIfAbsent(seller, Status.PENDING_CREATE);
+//        this.status.putIfAbsent(seller, Status.PENDING_CREATE);
         sellersForThisProduct.add(seller);
         allProducts.add(this);
         views = 0;
@@ -66,6 +66,14 @@ public class Product {
 
     public static void addProduct(Product product) {
         allProducts.add(product);
+    }
+
+    public static List<Product> getMostViewedProducts() {
+        return allProducts.stream().sorted((Comparator.comparing(Product::getViews))).limit(4).collect(Collectors.toList());
+    }
+
+    public static List<Product> getBestSellerProducts() {
+        return allProducts.stream().sorted((Comparator.comparing(Product::getSellNumber))).limit(4).collect(Collectors.toList());
     }
 
     public String getUselessString() {
@@ -211,14 +219,6 @@ public class Product {
 
     public int getTotalQuantity() {
         return quantity.values().stream().reduce(0, Integer::sum);
-    }
-
-    public static List<Product> getMostViewedProducts() {
-        return allProducts.stream().sorted((Comparator.comparing(Product::getViews))).limit(4).collect(Collectors.toList());
-    }
-
-    public static List<Product> getBestSellerProducts() {
-        return allProducts.stream().sorted((Comparator.comparing(Product::getSellNumber))).limit(4).collect(Collectors.toList());
     }
 
     public int getSellNumber() {

@@ -209,6 +209,6 @@ public class SellerController extends Controller {
     }
 
     public void changePassword(String text) {
-        if (text.length()>4) currentAccount.setPassword(text);
+        if (text.length() > 4) currentAccount.setPassword(text);
     }
 }

@@ -219,9 +219,6 @@ public class mainController {
             // implement search
         });
 
-        cartButton.setOnMouseClicked(event -> {
-            // load Cart page
-        });
 
         //Populate categories
         Category root = allCategories.stream().filter(c -> c.getParentCategory() == null).findAny().orElse(null);
@@ -243,7 +240,7 @@ public class mainController {
                 BoxBlur boxBlur = new BoxBlur(6, 6, 6);
                 JFXDialogLayout dialogLayout = new JFXDialogLayout();
                 JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
-                dialogLayout.setActions(new LoginDialog(stackPane, dialog));
+                dialogLayout.setActions(new LoginDialog(stackPane));
                 dialog.show();
                 mainPane.setEffect(boxBlur);
                 dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));

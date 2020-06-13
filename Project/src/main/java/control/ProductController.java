@@ -79,11 +79,12 @@ public class ProductController extends Controller {
 
 
     public static ArrayList<String> showAvailableSort() {
-        return null;
+        return new ArrayList<String>(Arrays.asList("Name", "Price", "Rate", "View"));
     }
 
-    public static void applySort(SortTypes sort) {
+    public static List<Product> applySort(SortTypes sort, List<Product> products) {
         currentSort = sort;
+        return currentSort().getSort().applySort(products, true);
     }
 
     public static SortTypes currentSort() {

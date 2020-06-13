@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<fx:root xmlns:fx="http://javafx.com/fxml/1" type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1">
+    <children>
+        <TitledPane fx:id="titledPane" prefWidth="340.0" text="untitled">
+            <font>
+                <Font size="22.0"/>
+            </font>
+            <content>
+                <VBox fx:id="vBox" prefWidth="100.0" style="-fx-background-color: #f3decb;"/>
+            </content>
+        </TitledPane>
+    </children>
+</fx:root>

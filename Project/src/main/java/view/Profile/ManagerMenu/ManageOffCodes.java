@@ -238,7 +238,7 @@ public class ManageOffCodes extends Menu {
         int offPercentage = Integer.parseInt(inputInFormat("enter off percentage", "^\\d{1,2}$"));
         double maxOff = Double.parseDouble(inputInFormat("enter maximum off amount", "^\\d+\\.?\\d*$"));
         try {
-            managerController.createDiscountCode(accounts, startDateString, endDateString, offPercentage, maxOff);
+//            managerController.createDiscountCode(accounts, startDateString, endDateString, offPercentage, maxOff);
             System.out.println("code created successfully!");
         } catch (Exception e) {
             System.err.println(e.getMessage());
