@@ -80,3 +80,13 @@
 
 }
 
+.jfx-dialog {
+    -fx-background-color: transparent;
+}
+
+
+.jfx-dialog-layout {
+    -fx-background-color: #f3c669;
+    -fx-opacity: 80;
+}
+

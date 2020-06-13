@@ -1,7 +1,10 @@
 package main;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.events.JFXDialogEvent;
 import control.Controller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -9,8 +12,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import model.Category;
@@ -33,7 +38,7 @@ public class mainController {
     private StackPane stackPane;
 
     @FXML
-    private ImageView dashboard;
+    private JFXButton dashboard;
 
     @FXML
     private ImageView logout;
@@ -140,6 +145,9 @@ public class mainController {
     @FXML
     private CustomMenuItem customItem;
 
+    @FXML
+    private BorderPane mainPane;
+
 
     @FXML
     public void initialize() {
@@ -196,7 +204,15 @@ public class mainController {
         customItem.setHideOnClick(false);
         customItem.setContent(categoriesTreeView);
         categoriesTreeView.setShowRoot(false);
-
+        dashboard.setOnMouseClicked(e -> {
+            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+            dialogLayout.setActions(new LoginDialog());
+            dialog.show();
+            mainPane.setEffect(boxBlur);
+            dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
+        });
 
     }
 
