@@ -6,7 +6,10 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import control.Controller;
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -41,7 +44,7 @@ public class mainController {
     private JFXButton dashboard;
 
     @FXML
-    private ImageView logout;
+    private JFXButton logout;
 
     @FXML
     private JFXButton homeButton;
@@ -162,7 +165,6 @@ public class mainController {
             initializeMostViewed();
 
         if (Controller.getCurrentAccount() == null) {
-            logout.setVisible(false);
             // call login
         }
 
@@ -172,6 +174,38 @@ public class mainController {
 
         contactUsButton.setOnMouseClicked((Event) -> {
             //load contact us page
+        });
+
+        logout.visibleProperty().bind(new ObservableBooleanValue() {
+            @Override
+            public boolean get() {
+                return Controller.isLoggedIn();
+            }
+
+            @Override
+            public void addListener(ChangeListener<? super Boolean> listener) {
+
+            }
+
+            @Override
+            public void removeListener(ChangeListener<? super Boolean> listener) {
+
+            }
+
+            @Override
+            public Boolean getValue() {
+                return Controller.isLoggedIn();
+            }
+
+            @Override
+            public void addListener(InvalidationListener listener) {
+
+            }
+
+            @Override
+            public void removeListener(InvalidationListener listener) {
+
+            }
         });
 
         searchField.textProperty().addListener(new ChangeListener<String>() {
@@ -205,13 +239,16 @@ public class mainController {
         customItem.setContent(categoriesTreeView);
         categoriesTreeView.setShowRoot(false);
         dashboard.setOnMouseClicked(e -> {
-            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
-            JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
-            dialogLayout.setActions(new LoginDialog());
-            dialog.show();
-            mainPane.setEffect(boxBlur);
-            dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
+            if (!Controller.isLoggedIn()) {
+                BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                dialogLayout.setActions(new LoginDialog(stackPane, dialog));
+                dialog.show();
+                mainPane.setEffect(boxBlur);
+                dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
+                dialog.overlayCloseProperty().bindBidirectional(new SimpleBooleanProperty(!Controller.isLoggedIn()));
+            }
         });
 
     }

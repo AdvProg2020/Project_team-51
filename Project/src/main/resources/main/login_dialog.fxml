@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import com.jfoenix.controls.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -9,237 +8,233 @@
 <?import javafx.scene.text.*?>
 <fx:root xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="1200.0"
          style="-fx-background-color: #f3c669;" type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1">
-    <children>
-        <HBox prefHeight="550.0" prefWidth="1200.0">
-            <children>
-                <VBox alignment="TOP_CENTER" prefHeight="550.0" prefWidth="825.0">
-                    <children>
-                        <Label prefHeight="100.0" text="Register" textFill="#9d9996">
-                            <font>
-                                <Font name="System Bold" size="41.0"/>
-                            </font>
-                            <VBox.margin>
-                                <Insets/>
-                            </VBox.margin>
-                        </Label>
-                        <HBox alignment="CENTER" prefWidth="200.0" spacing="50.0">
-                            <VBox.margin>
-                                <Insets left="40.0" right="40.0" top="20.0"/>
-                            </VBox.margin>
-                            <children>
-                                <ComboBox fx:id="accountType" prefHeight="45.0" prefWidth="257.0"
-                                          promptText="Account Type">
-                                    <padding>
-                                        <Insets left="10.0"/>
-                                    </padding>
-                                    <HBox.margin>
-                                        <Insets/>
-                                    </HBox.margin>
-                                </ComboBox>
-                            </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefWidth="200.0" spacing="50.0">
-                            <children>
-                                <JFXTextField fx:id="firstName" focusColor="#757575" prefHeight="45.0" prefWidth="220.0"
-                                              promptText="First Name"
-                                              style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
-                                              unFocusColor="#4d4d4d00">
-                                    <padding>
-                                        <Insets left="20.0" right="20.0"/>
-                                    </padding>
-                                    <font>
-                                        <Font size="14.0"/>
-                                    </font>
-                                </JFXTextField>
-                                <JFXTextField fx:id="lastName" focusColor="#757575" prefHeight="45.0" prefWidth="220.0"
-                                              promptText="Last Name"
-                                              style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
-                                              unFocusColor="#4d4d4d00">
-                                    <padding>
-                                        <Insets left="20.0" right="20.0"/>
-                                    </padding>
-                                    <font>
-                                        <Font size="14.0"/>
-                                    </font>
-                                </JFXTextField>
-                            </children>
-                            <VBox.margin>
-                                <Insets left="40.0" right="40.0" top="20.0"/>
-                            </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER" prefWidth="200.0" spacing="50.0">
-                            <children>
-                                <JFXTextField fx:id="usernameRegister" focusColor="#757575" prefHeight="45.0"
-                                              prefWidth="220.0" promptText="Username"
-                                              style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
-                                              unFocusColor="#4d4d4d00">
-                                    <padding>
-                                        <Insets left="20.0" right="20.0"/>
-                                    </padding>
-                                    <font>
-                                        <Font size="14.0"/>
-                                    </font>
-                                </JFXTextField>
-                                <JFXTextField fx:id="passwordRegister" focusColor="#757575" prefHeight="45.0"
-                                              prefWidth="220.0" promptText="Username"
-                                              style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
-                                              text="Password" unFocusColor="#4d4d4d00">
-                                    <padding>
-                                        <Insets left="20.0" right="20.0"/>
-                                    </padding>
-                                    <font>
-                                        <Font size="14.0"/>
-                                    </font>
-                                </JFXTextField>
-                            </children>
-                            <VBox.margin>
-                                <Insets left="40.0" right="40.0" top="20.0"/>
-                            </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER" prefWidth="200.0" spacing="50.0">
-                            <children>
-                                <JFXTextField fx:id="email" focusColor="#757575" prefHeight="45.0" prefWidth="220.0"
-                                              promptText="Last Name"
-                                              style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
-                                              text="Email" unFocusColor="#4d4d4d00">
-                                    <padding>
-                                        <Insets left="20.0" right="20.0"/>
-                                    </padding>
-                                    <font>
-                                        <Font size="14.0"/>
-                                    </font>
-                                </JFXTextField>
-                                <JFXTextField fx:id="phoneNumber" focusColor="#757575" prefHeight="45.0"
-                                              prefWidth="220.0" promptText="First Name"
-                                              style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
-                                              text="Phone Number" unFocusColor="#4d4d4d00">
-                                    <padding>
-                                        <Insets left="20.0" right="20.0"/>
-                                    </padding>
-                                    <font>
-                                        <Font size="14.0"/>
-                                    </font>
-                                </JFXTextField>
-                            </children>
-                            <VBox.margin>
-                                <Insets left="40.0" right="40.0" top="20.0"/>
-                            </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER" prefWidth="200.0" spacing="50.0">
-                            <children>
-                                <JFXTextField fx:id="balance" focusColor="#757575" prefHeight="45.0" prefWidth="220.0"
-                                              promptText="Last Name"
-                                              style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
-                                              text="Balance" unFocusColor="#4d4d4d00">
-                                    <padding>
-                                        <Insets left="20.0" right="20.0"/>
-                                    </padding>
-                                    <font>
-                                        <Font size="14.0"/>
-                                    </font>
-                                </JFXTextField>
-                                <JFXTextField fx:id="company" focusColor="#757575" prefHeight="45.0" prefWidth="220.0"
-                                              promptText="First Name"
-                                              style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
-                                              text="Company" unFocusColor="#4d4d4d00" visible="false">
-                                    <padding>
-                                        <Insets left="20.0" right="20.0"/>
-                                    </padding>
-                                    <font>
-                                        <Font size="14.0"/>
-                                    </font>
-                                </JFXTextField>
-                            </children>
-                            <VBox.margin>
-                                <Insets left="40.0" right="40.0" top="20.0"/>
-                            </VBox.margin>
-                        </HBox>
-                        <JFXButton fx:id="registerButton" prefHeight="45.0" prefWidth="90.0"
-                                   style="-fx-background-color: #a6a548; -fx-background-radius: 10;" text="Register"
-                                   textFill="WHITE">
-                            <font>
-                                <Font name="System Bold" size="15.0"/>
-                            </font>
-                            <VBox.margin>
-                                <Insets top="20.0"/>
-                            </VBox.margin>
-                        </JFXButton>
-                        <Label fx:id="registerError" alignment="CENTER" prefHeight="25.0" prefWidth="357.0"
-                               text="Register Error" textAlignment="CENTER" textFill="#c74d4d" visible="false"
-                               wrapText="true">
-                            <font>
-                                <Font size="15.0"/>
-                            </font>
-                        </Label>
-                    </children>
-                </VBox>
-                <Rectangle arcHeight="10.0" arcWidth="10.0" fill="WHITE" height="415.0" stroke="WHITE"
-                           strokeType="INSIDE" width="7.0">
-                    <HBox.margin>
-                        <Insets top="45.0"/>
-                    </HBox.margin>
-                </Rectangle>
-                <VBox alignment="TOP_CENTER" prefHeight="550.0" prefWidth="375.0">
-                    <children>
-                        <Label prefHeight="100.0" text="Login" textFill="#9d9996">
-                            <font>
-                                <Font name="System Bold" size="41.0"/>
-                            </font>
-                            <VBox.margin>
-                                <Insets/>
-                            </VBox.margin>
-                        </Label>
-                        <JFXTextField fx:id="usernameLogin" focusColor="#757575" prefHeight="45.0" prefWidth="250.0"
+   <children>
+      <HBox prefHeight="550.0" prefWidth="1200.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="550.0" prefWidth="825.0">
+               <children>
+                  <Label prefHeight="100.0" text="Register" textFill="#9d9996">
+                     <font>
+                        <Font name="System Bold" size="41.0"/>
+                     </font>
+                     <VBox.margin>
+                        <Insets/>
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER" prefWidth="200.0" spacing="50.0">
+                     <VBox.margin>
+                        <Insets left="40.0" right="40.0" top="20.0"/>
+                     </VBox.margin>
+                     <children>
+                        <ComboBox fx:id="accountType" prefHeight="45.0" prefWidth="257.0" promptText="Account Type">
+                           <padding>
+                              <Insets left="10.0"/>
+                           </padding>
+                           <HBox.margin>
+                              <Insets/>
+                           </HBox.margin>
+                        </ComboBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <JFXTextField fx:id="firstName" focusColor="#757575" prefHeight="45.0" prefWidth="220.0"
+                                      promptText="First Name"
+                                      style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
+                                      unFocusColor="#4d4d4d00">
+                           <padding>
+                              <Insets left="20.0" right="20.0"/>
+                           </padding>
+                           <font>
+                              <Font size="14.0"/>
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="lastName" focusColor="#757575" prefHeight="45.0" prefWidth="220.0"
+                                      promptText="Last Name"
+                                      style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
+                                      unFocusColor="#4d4d4d00">
+                           <padding>
+                              <Insets left="20.0" right="20.0"/>
+                           </padding>
+                           <font>
+                              <Font size="14.0"/>
+                           </font>
+                        </JFXTextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="40.0" right="40.0" top="20.0"/>
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <JFXTextField fx:id="usernameRegister" focusColor="#757575" prefHeight="45.0" prefWidth="220.0"
                                       promptText="Username"
                                       style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
                                       unFocusColor="#4d4d4d00">
-                            <VBox.margin>
-                                <Insets left="50.0" right="50.0" top="105.0"/>
-                            </VBox.margin>
-                            <padding>
-                                <Insets left="20.0" right="20.0"/>
-                            </padding>
-                            <font>
-                                <Font size="14.0"/>
-                            </font>
+                           <padding>
+                              <Insets left="20.0" right="20.0"/>
+                           </padding>
+                           <font>
+                              <Font size="14.0"/>
+                           </font>
                         </JFXTextField>
-                        <JFXPasswordField fx:id="passwordLogin" focusColor="#757575" prefHeight="45.0"
-                                          promptText="Password"
-                                          style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
-                                          unFocusColor="#4d4d4d00">
-                            <VBox.margin>
-                                <Insets left="50.0" right="50.0" top="20.0"/>
-                            </VBox.margin>
-                            <padding>
-                                <Insets left="20.0" right="20.0"/>
-                            </padding>
-                            <font>
-                                <Font size="14.0"/>
-                            </font>
-                        </JFXPasswordField>
-                        <Label fx:id="loginError" alignment="CENTER" prefHeight="25.0" prefWidth="357.0"
-                               text="Login Error" textAlignment="CENTER" textFill="#c74d4d" visible="false"
-                               wrapText="true">
-                            <font>
-                                <Font size="15.0"/>
-                            </font>
-                            <VBox.margin>
-                                <Insets top="30.0"/>
-                            </VBox.margin>
-                        </Label>
-                        <JFXButton fx:id="loginButton" prefHeight="45.0" prefWidth="90.0"
-                                   style="-fx-background-color: #a6a548; -fx-background-radius: 10;" text="Login"
-                                   textFill="WHITE">
-                            <VBox.margin>
-                                <Insets top="70.0"/>
-                            </VBox.margin>
-                            <font>
-                                <Font name="System Bold" size="15.0"/>
-                            </font>
-                        </JFXButton>
-                    </children>
-                </VBox>
-            </children>
-        </HBox>
-    </children>
+                        <JFXTextField fx:id="passwordRegister" focusColor="#757575" prefHeight="45.0" prefWidth="220.0"
+                                      promptText="Password"
+                                      style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
+                                      unFocusColor="#4d4d4d00">
+                           <padding>
+                              <Insets left="20.0" right="20.0"/>
+                           </padding>
+                           <font>
+                              <Font size="14.0"/>
+                           </font>
+                        </JFXTextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="40.0" right="40.0" top="20.0"/>
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <JFXTextField fx:id="email" focusColor="#757575" prefHeight="45.0" prefWidth="220.0"
+                                      promptText="Email"
+                                      style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
+                                      unFocusColor="#4d4d4d00">
+                           <padding>
+                              <Insets left="20.0" right="20.0"/>
+                           </padding>
+                           <font>
+                              <Font size="14.0"/>
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="phoneNumber" focusColor="#757575" prefHeight="45.0" prefWidth="220.0"
+                                      promptText="Phone Number"
+                                      style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
+                                      unFocusColor="#4d4d4d00">
+                           <padding>
+                              <Insets left="20.0" right="20.0"/>
+                           </padding>
+                           <font>
+                              <Font size="14.0"/>
+                           </font>
+                        </JFXTextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="40.0" right="40.0" top="20.0"/>
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <JFXTextField fx:id="balance" focusColor="#757575" prefHeight="45.0" prefWidth="220.0"
+                                      promptText="Balance"
+                                      style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
+                                      unFocusColor="#4d4d4d00">
+                           <padding>
+                              <Insets left="20.0" right="20.0"/>
+                           </padding>
+                           <font>
+                              <Font size="14.0"/>
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="company" focusColor="#757575" prefHeight="45.0" prefWidth="220.0"
+                                      promptText="Company"
+                                      style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
+                                      unFocusColor="#4d4d4d00" visible="false">
+                           <padding>
+                              <Insets left="20.0" right="20.0"/>
+                           </padding>
+                           <font>
+                              <Font size="14.0"/>
+                           </font>
+                        </JFXTextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="40.0" right="40.0" top="20.0"/>
+                     </VBox.margin>
+                  </HBox>
+                  <JFXButton fx:id="registerButton" prefHeight="45.0" prefWidth="90.0"
+                             style="-fx-background-color: #a6a548; -fx-background-radius: 10;" text="Register"
+                             textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0"/>
+                     </font>
+                     <VBox.margin>
+                        <Insets top="20.0"/>
+                     </VBox.margin>
+                  </JFXButton>
+                  <Label fx:id="registerError" alignment="CENTER" prefHeight="25.0" prefWidth="357.0"
+                         text="Register Error" textAlignment="CENTER" textFill="#c74d4d" visible="false"
+                         wrapText="true">
+                     <font>
+                        <Font size="15.0"/>
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Rectangle arcHeight="10.0" arcWidth="10.0" fill="WHITE" height="415.0" stroke="WHITE" strokeType="INSIDE"
+                       width="7.0">
+               <HBox.margin>
+                  <Insets top="45.0"/>
+               </HBox.margin>
+            </Rectangle>
+            <VBox alignment="TOP_CENTER" prefHeight="550.0" prefWidth="375.0">
+               <children>
+                  <Label prefHeight="100.0" text="Login" textFill="#9d9996">
+                     <font>
+                        <Font name="System Bold" size="41.0"/>
+                     </font>
+                     <VBox.margin>
+                        <Insets/>
+                     </VBox.margin>
+                  </Label>
+                  <JFXTextField fx:id="usernameLogin" focusColor="#757575" prefHeight="45.0" prefWidth="250.0"
+                                promptText="Username" style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
+                                unFocusColor="#4d4d4d00">
+                     <VBox.margin>
+                        <Insets left="50.0" right="50.0" top="105.0"/>
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="20.0" right="20.0"/>
+                     </padding>
+                     <font>
+                        <Font size="14.0"/>
+                     </font>
+                  </JFXTextField>
+                  <JFXPasswordField fx:id="passwordLogin" focusColor="#757575" prefHeight="45.0" promptText="Password"
+                                    style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
+                                    unFocusColor="#4d4d4d00">
+                     <VBox.margin>
+                        <Insets left="50.0" right="50.0" top="20.0"/>
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="20.0" right="20.0"/>
+                     </padding>
+                     <font>
+                        <Font size="14.0"/>
+                     </font>
+                  </JFXPasswordField>
+                  <Label fx:id="loginError" alignment="CENTER" prefHeight="25.0" prefWidth="357.0" text="Login Error"
+                         textAlignment="CENTER" textFill="#c74d4d" visible="false" wrapText="true">
+                     <font>
+                        <Font size="15.0"/>
+                     </font>
+                     <VBox.margin>
+                        <Insets top="30.0"/>
+                     </VBox.margin>
+                  </Label>
+                  <JFXButton fx:id="loginButton" prefHeight="45.0" prefWidth="90.0"
+                             style="-fx-background-color: #a6a548; -fx-background-radius: 10;" text="Login"
+                             textFill="WHITE">
+                     <VBox.margin>
+                        <Insets top="70.0"/>
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="15.0"/>
+                     </font>
+                  </JFXButton>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
 </fx:root>

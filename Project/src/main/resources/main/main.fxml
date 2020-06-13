@@ -29,9 +29,10 @@
                                         </ImageView>
                                     </graphic>
                                 </JFXButton>
-                                <JFXButton focusTraversable="false" prefHeight="98.0" prefWidth="109.0" text="​">
+                                <JFXButton fx:id="logout" focusTraversable="false" prefHeight="98.0" prefWidth="109.0"
+                                           text="​">
                                     <graphic>
-                                        <ImageView fx:id="logout" fitHeight="58.0" fitWidth="49.0" pickOnBounds="true"
+                                        <ImageView fitHeight="58.0" fitWidth="49.0" pickOnBounds="true"
                                                    preserveRatio="true">
                                             <image>
                                                 <Image url="@logout.png"/>
@@ -344,8 +345,7 @@
                                         </VBox>
                                         <VBox prefHeight="507.0" prefWidth="1611.0">
                                             <children>
-                                                <Label prefHeight="104.0" prefWidth="233.0" text="Most Viewed"
-                                                       textFill="#a4522c">
+                                                <Label prefHeight="104.0" text="Most Viewed" textFill="#a4522c">
                                                     <font>
                                                         <Font name="System Bold" size="41.0"/>
                                                     </font>
