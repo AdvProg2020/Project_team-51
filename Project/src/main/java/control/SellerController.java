@@ -207,4 +207,8 @@ public class SellerController extends Controller {
             throw new InvalidAuctionIdException();
         return auction;
     }
+
+    public void changePassword(String text) {
+        if (text.length()>4) currentAccount.setPassword(text);
+    }
 }
