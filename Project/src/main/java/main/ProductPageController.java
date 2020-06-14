@@ -77,6 +77,8 @@ public class ProductPageController {
         product = controller.getProduct();
         allComments = controller.getComments();
 
+        initializeProduct();
+        initializeComments();
 
     }
 
@@ -94,6 +96,7 @@ public class ProductPageController {
         for (Map.Entry<Seller, Double> seller : sellers.entrySet()) {
             sellerComboBox.getItems().add(seller.getKey());
         }
+
         sellerComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Seller>() {
             @Override
             public void changed(ObservableValue<? extends Seller> observable, Seller oldValue, Seller newValue) {
@@ -106,6 +109,21 @@ public class ProductPageController {
                 quantityText = newValue;
             }
         });
+    }
+
+    private void initializeComments() {
+
+        for (Comment comment : allComments) {
+            CommentController commentController = new CommentController();
+            commentsBox.getChildren().add(commentController);
+            commentController.getTitle().setText(comment.getTitle());
+            commentController.getComment().setText(comment.getContext());
+//            commentController.getRate().setImage("STH");
+        }
+
+        commentsBox.getChildren().add(addButton);
+        addButton.setText("Add");
+        addButton.setStyle("-fx-background-color: #4a804a; -fx-background-radius: 15");
 
     }
 }
