@@ -10,6 +10,7 @@ import control.Exceptions.InvalidUsernameException;
 import control.Exceptions.LackOfProductException;
 import control.Exceptions.NotAllowedActivityException;
 import control.SingleProductController;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -107,7 +108,14 @@ public class ProductPageController {
             }
         });
         addComment.setOnMouseClicked(e -> {
-
+            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            JFXDialog dialog = new JFXDialog(rootPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+            dialogLayout.setActions(new NewCommentDialog(rootPane, controller));
+            dialog.show();
+            mainPane.setEffect(boxBlur);
+            dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
+            dialog.overlayCloseProperty().bindBidirectional(new SimpleBooleanProperty(!Controller.isLoggedIn()));
         });
     }
 
