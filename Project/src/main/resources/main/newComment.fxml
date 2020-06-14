@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<fx:root xmlns:fx="http://javafx.com/fxml/1" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #f3c669;"
+         type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1">
+    <children>
+        <VBox alignment="TOP_CENTER" layoutX="12.0" layoutY="-4.0" prefHeight="550.0" prefWidth="375.0">
+            <children>
+                <Label prefHeight="100.0" text="Add Comment" textFill="#9d9996">
+                    <font>
+                        <Font name="System Bold" size="41.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </Label>
+                <JFXTextField fx:id="title" focusColor="#757575" focusTraversable="false" prefHeight="45.0"
+                              prefWidth="250.0" promptText="Title"
+                              style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
+                              unFocusColor="#4d4d4d00">
+                    <VBox.margin>
+                        <Insets left="50.0" right="50.0" top="50.0"/>
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="20.0" right="20.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </JFXTextField>
+                <JFXTextArea fx:id="comment" focusColor="#757575" focusTraversable="false" promptText="Comment"
+                             style="-fx-background-color: #ceb175; -fx-background-radius: 15;">
+                    <VBox.margin>
+                        <Insets left="50.0" right="50.0" top="20.0"/>
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </JFXTextArea>
+                <JFXButton fx:id="add" prefHeight="45.0" prefWidth="90.0"
+                           style="-fx-background-color: #a6a548; -fx-background-radius: 10;" text="Add"
+                           textFill="WHITE">
+                    <VBox.margin>
+                        <Insets top="70.0"/>
+                    </VBox.margin>
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </JFXButton>
+            </children>
+        </VBox>
+    </children>
+</fx:root>
