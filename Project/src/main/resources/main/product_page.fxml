@@ -8,7 +8,7 @@
 <?import javafx.scene.text.*?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
            minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="org.example.ProductsController">
+           fx:controller="main.ProductPageController">
     <children>
         <BorderPane prefHeight="970.0" prefWidth="1720.0">
             <left>
@@ -17,7 +17,8 @@
                     <children>
                         <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="3.0" prefHeight="970.0" prefWidth="100.0">
                             <children>
-                                <JFXButton focusTraversable="false" prefHeight="98.0" prefWidth="109.0" text="​">
+                                <JFXButton fx:id="dashboard" focusTraversable="false" prefHeight="98.0"
+                                           prefWidth="109.0" text="​">
                                     <graphic>
                                         <ImageView fitHeight="58.0" fitWidth="49.0" pickOnBounds="true"
                                                    preserveRatio="true">
@@ -27,7 +28,7 @@
                                         </ImageView>
                                     </graphic>
                                 </JFXButton>
-                                <JFXButton prefHeight="98.0" prefWidth="109.0" text="​">
+                                <JFXButton fx:id="logout" prefHeight="98.0" prefWidth="109.0" text="​">
                                     <graphic>
                                         <ImageView fitHeight="58.0" fitWidth="49.0" pickOnBounds="true"
                                                    preserveRatio="true">
@@ -66,15 +67,15 @@
                                                 <Insets top="40.0"/>
                                             </VBox.margin>
                                             <children>
-                                                <JFXButton prefHeight="125.0" prefWidth="160.0" text="Home"
-                                                           textFill="WHITE">
+                                                <JFXButton fx:id="homeButton" prefHeight="125.0" prefWidth="160.0"
+                                                           text="Home" textFill="WHITE">
                                                     <font>
                                                         <Font name="System Bold" size="20.0"/>
                                                     </font>
                                                 </JFXButton>
-                                                <MenuButton accessibleRole="BUTTON" alignment="CENTER_RIGHT"
-                                                            contentDisplay="BOTTOM" mnemonicParsing="false"
-                                                            prefHeight="118.0" prefWidth="168.0"
+                                                <MenuButton fx:id="categoriesButton" accessibleRole="BUTTON"
+                                                            alignment="CENTER_RIGHT" contentDisplay="BOTTOM"
+                                                            mnemonicParsing="false" prefHeight="118.0" prefWidth="168.0"
                                                             style="-fx-background-color: #746d63;" text="Categories"
                                                             textFill="WHITE">
                                                     <items>
@@ -90,33 +91,30 @@
                                                         <Font name="System Bold" size="20.0"/>
                                                     </font>
                                                 </MenuButton>
-                                                <JFXButton prefHeight="124.0" prefWidth="160.0" text="About us"
-                                                           textFill="WHITE">
+                                                <JFXButton fx:id="cartButton" prefHeight="60.0" prefWidth="58.0"
+                                                           style="-fx-background-color: #746d63; -fx-background-radius: 14;"
+                                                           text=" " textFill="WHITE">
                                                     <font>
-                                                        <Font name="System Bold" size="20.0"/>
+                                                        <Font size="20.0"/>
                                                     </font>
-                                                </JFXButton>
-                                                <JFXButton prefHeight="124.0" prefWidth="160.0" text="Contact us"
-                                                           textFill="WHITE">
-                                                    <font>
-                                                        <Font name="System Bold" size="20.0"/>
-                                                    </font>
-                                                </JFXButton>
-                                                <ImageView fitHeight="46.0" fitWidth="50.0" pickOnBounds="true"
-                                                           preserveRatio="true">
+                                                    <graphic>
+                                                        <ImageView fitHeight="46.0" fitWidth="50.0" pickOnBounds="true"
+                                                                   preserveRatio="true">
+                                                            <image>
+                                                                <Image url="@../../../../../../Design/src/main/resources/org/example/buy.png"/>
+                                                            </image>
+                                                        </ImageView>
+                                                    </graphic>
                                                     <HBox.margin>
-                                                        <Insets left="280.0"/>
+                                                        <Insets left="650.0"/>
                                                     </HBox.margin>
-                                                    <image>
-                                                        <Image url="@buy.png"/>
-                                                    </image>
-                                                </ImageView>
+                                                </JFXButton>
                                                 <JFXTextField focusColor="#f2837c" prefHeight="56.0" prefWidth="270.0"
                                                               promptText="Serach ..."
                                                               style="-fx-background-color: #ebebeb; -fx-background-radius: 15;"
                                                               unFocusColor="#646161">
                                                     <HBox.margin>
-                                                        <Insets left="50.0"/>
+                                                        <Insets left="10.0"/>
                                                     </HBox.margin>
                                                     <font>
                                                         <Font size="20.0"/>
@@ -166,8 +164,9 @@
                                                                                 vgrow="SOMETIMES"/>
                                                             </rowConstraints>
                                                             <children>
-                                                                <ImageView fitHeight="360.0" fitWidth="360.0"
-                                                                           pickOnBounds="true" preserveRatio="true"
+                                                                <ImageView fx:id="productImage" fitHeight="360.0"
+                                                                           fitWidth="360.0" pickOnBounds="true"
+                                                                           preserveRatio="true"
                                                                            GridPane.halignment="CENTER"
                                                                            GridPane.valignment="CENTER">
                                                                     <image>
@@ -181,8 +180,9 @@
                                                                 <Insets left="20.0"/>
                                                             </HBox.margin>
                                                             <children>
-                                                                <Label prefHeight="101.0" prefWidth="350.0"
-                                                                       text="Product Name" textFill="#a4522c">
+                                                                <Label fx:id="productName" prefHeight="101.0"
+                                                                       prefWidth="350.0" text="Product Name"
+                                                                       textFill="#a4522c">
                                                                     <font>
                                                                         <Font name="System Bold" size="41.0"/>
                                                                     </font>
@@ -209,7 +209,8 @@
                                                                                 <Font size="29.0"/>
                                                                             </font>
                                                                         </Label>
-                                                                        <ComboBox prefHeight="40.0" prefWidth="195.0"
+                                                                        <ComboBox fx:id="sellerComboBox"
+                                                                                  prefHeight="40.0" prefWidth="195.0"
                                                                                   promptText="Seller">
                                                                             <padding>
                                                                                 <Insets left="10.0"/>
@@ -239,8 +240,8 @@
                                                                                 <Image url="@price.png"/>
                                                                             </image>
                                                                         </ImageView>
-                                                                        <Label prefHeight="79.0" prefWidth="537.0"
-                                                                               text="443.99 $">
+                                                                        <Label fx:id="productPrice" prefHeight="79.0"
+                                                                               prefWidth="537.0" text="443.99 $">
                                                                             <font>
                                                                                 <Font name="System Bold" size="45.0"/>
                                                                             </font>
@@ -248,7 +249,8 @@
                                                                                 <Insets left="30.0"/>
                                                                             </padding>
                                                                         </Label>
-                                                                        <JFXTextField focusColor="#f2837c"
+                                                                        <JFXTextField fx:id="quantity"
+                                                                                      focusColor="#f2837c"
                                                                                       prefHeight="60.0"
                                                                                       prefWidth="166.0"
                                                                                       promptText="Quantity ..."
@@ -260,7 +262,8 @@
                                                                                 <Insets left="10.0" right="10.0"/>
                                                                             </padding>
                                                                         </JFXTextField>
-                                                                        <JFXButton prefHeight="60.0" prefWidth="136.0"
+                                                                        <JFXButton fx:id="addButton" prefHeight="60.0"
+                                                                                   prefWidth="136.0"
                                                                                    style="-fx-background-color: #a6b179; -fx-background-radius: 15;"
                                                                                    text="Add" textFill="WHITE">
                                                                             <font>
@@ -284,7 +287,8 @@
                                                 <Insets left="40.0" right="40.0" top="35.0"/>
                                             </VBox.margin>
                                             <children>
-                                                <VBox layoutX="-1.0" layoutY="3.0" prefWidth="1368.0" spacing="15.0">
+                                                <VBox fx:id="commentsBox" layoutX="-1.0" layoutY="3.0"
+                                                      prefWidth="1368.0" spacing="15.0">
                                                     <children>
                                                         <Label prefHeight="101.0" prefWidth="350.0" text="Comments"
                                                                textFill="#a4522c">
@@ -327,8 +331,8 @@
                                                                                 </ImageView>
                                                                             </children>
                                                                         </HBox>
-                                                                        <Label fx:id="productDescription11"
-                                                                               alignment="TOP_LEFT" prefWidth="1384.0"
+                                                                        <Label fx:id="comment" alignment="TOP_LEFT"
+                                                                               prefWidth="1384.0"
                                                                                text="This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment. This is Comment."
                                                                                textFill="#4c4c4c" wrapText="true">
                                                                             <font>
