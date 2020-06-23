@@ -138,7 +138,8 @@ public class ManageOffCodes extends Menu {
     private void changeBeginDate(String code) {
         try {
             command = inputInFormat("enter new begin date in format dd/MM/yyyy", "^\\d{2}/\\d{2}/\\d{4}$");
-            managerController.editDiscountCode(code, null, command, null, 0, null);
+            //managerController.editDiscountCode(code, null, command, null, 0, null);
+            System.err.println("this function is not useful anymore");
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -147,7 +148,8 @@ public class ManageOffCodes extends Menu {
     private void changeEndDate(String code) {
         try {
             inputInFormat("enter end date in formad dd/MM/yyyy : ", "\\d{2}/d{2}/d{4}");
-            managerController.editDiscountCode(code, null, null, command, 0, null);
+            System.err.println("this function is not useful anymore");
+            //managerController.editDiscountCode(code, null, null, command, 0, null);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -156,7 +158,8 @@ public class ManageOffCodes extends Menu {
     private void changeMaxOff(String code) {
         try {
             command = inputInFormat("plesae enter new maximum off amount : ", "^\\+?\\d+\\.?\\d*$");
-            managerController.editDiscountCode(code, null, null, null, 0, Double.parseDouble(command));
+            System.err.println("this function is not useful anymore");
+            //managerController.editDiscountCode(code, null, null, null, 0, Double.parseDouble(command));
         } catch (Exception e) {
             System.err.println("must enter a positive double");
         }
@@ -165,7 +168,8 @@ public class ManageOffCodes extends Menu {
     private void changeOffPercent(String code) {
         try {
             command = inputInFormat("please enter new off percent", "\\d+");
-            managerController.editDiscountCode(code, null, null, null, Integer.parseInt(command), null);
+            //managerController.editDiscountCode(code, null, null, null, Integer.parseInt(command), null);
+            System.err.println("this function is not useful anymore");
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

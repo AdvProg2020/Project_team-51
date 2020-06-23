@@ -15,6 +15,7 @@ module Project {
     requires org.junit.jupiter;
     requires org.junit.jupiter.engine;
     requires com.jfoenix;
+    requires java.desktop;
     opens main to javafx.fxml;
     exports main;
 }
