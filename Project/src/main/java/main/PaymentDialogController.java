@@ -1,31 +1,25 @@
 package main;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextArea;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
-public class addressController extends AnchorPane {
+public class PaymentDialogController extends AnchorPane {
 
     @FXML
-    private JFXTextArea addressField;
+    private AnchorPane anchorPane;
 
     @FXML
-    private JFXButton nextButton;
-
-    @FXML
-    private Label registerError;
+    private JFXButton payButton;
 
 
     private StackPane stackPane;
 
-
-    public addressController(StackPane stackPane) {
+    public PaymentDialogController(StackPane stackPane) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("address.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -37,28 +31,21 @@ public class addressController extends AnchorPane {
         }
     }
 
-    public JFXTextArea getAddressField() {
-        return addressField;
+
+    public AnchorPane getAnchorPane() {
+        return anchorPane;
     }
 
-    public void setAddressField(JFXTextArea addressField) {
-        this.addressField = addressField;
+    public void setAnchorPane(AnchorPane anchorPane) {
+        this.anchorPane = anchorPane;
     }
 
-    public JFXButton getNextButton() {
-        return nextButton;
+    public JFXButton getPayButton() {
+        return payButton;
     }
 
-    public void setNextButton(JFXButton nextButton) {
-        this.nextButton = nextButton;
-    }
-
-    public Label getRegisterError() {
-        return registerError;
-    }
-
-    public void setRegisterError(Label registerError) {
-        this.registerError = registerError;
+    public void setPayButton(JFXButton payButton) {
+        this.payButton = payButton;
     }
 
     public StackPane getStackPane() {

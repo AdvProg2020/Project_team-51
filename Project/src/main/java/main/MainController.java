@@ -27,7 +27,7 @@ import model.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class mainController {
+public class MainController {
 
     private List<Product> bestSellerProducts = new ArrayList<>();
     private List<Product> mostViewedProducts = new ArrayList<>();
@@ -56,13 +56,7 @@ public class mainController {
     private TreeView categoriesTreeView;
 
     @FXML
-    private JFXButton aboutUsButton;
-
-    @FXML
-    private JFXButton contactUsButton;
-
-    @FXML
-    private ImageView cartButton;
+    private JFXButton cartButton;
 
     @FXML
     private JFXTextField searchField;
@@ -168,14 +162,6 @@ public class mainController {
             // call login
         }
 
-        aboutUsButton.setOnMouseClicked((Event) -> {
-            //load about us page
-        });
-
-        contactUsButton.setOnMouseClicked((Event) -> {
-            //load contact us page
-        });
-
         logout.visibleProperty().bind(new ObservableBooleanValue() {
             @Override
             public boolean get() {
@@ -219,6 +205,17 @@ public class mainController {
             // implement search
         });
 
+        cartButton.setOnMouseClicked(event -> {
+            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+            dialogLayout.setActions(new PaymentDialogController(stackPane));
+            dialogLayout.setStyle("-fx-background-color: #886488");
+            dialog.show();
+            mainPane.setEffect(boxBlur);
+            dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
+            dialog.overlayCloseProperty().bindBidirectional(new SimpleBooleanProperty(!Controller.isLoggedIn()));
+        });
 
         //Populate categories
         Category root = allCategories.stream().filter(c -> c.getParentCategory() == null).findAny().orElse(null);
