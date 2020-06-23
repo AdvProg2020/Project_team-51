@@ -26,6 +26,8 @@ public class OffCode {
         this.maxDiscount = maxDiscount;
         allOffCodes.add(this);
         status = Status.APPROVED;
+
+
     }
 
     public static List<OffCode> getAllOffCodes() {
@@ -61,12 +63,20 @@ public class OffCode {
         return beginDate;
     }
 
+    public String getBeginDateString (){
+        return beginDate.toString();
+    }
+
     public void setBeginDate(Date beginDate) {
         this.beginDate = beginDate;
     }
 
     public Date getEndDate() {
         return endDate;
+    }
+
+    public String getEndDateString(){
+        return endDate.toString();
     }
 
     public void setEndDate(Date endDate) {
@@ -101,7 +111,18 @@ public class OffCode {
         return status;
     }
 
+    public String getStatusString (){
+        if (status.equals(Status.APPROVED)) return "approved";
+        else if (status.equals(Status.PENDING_CREATE)) return "pending create";
+        else if (status.equals(Status.ENDED)) return "ended";
+        else return "pending edit";
+    }
+
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getUselessString (){
+        return "";
     }
 }
