@@ -20,7 +20,7 @@ public class PaymentDialogController extends AnchorPane {
     private StackPane stackPane;
 
     public PaymentDialogController(StackPane stackPane) {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("address.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("payment.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         this.stackPane = stackPane;

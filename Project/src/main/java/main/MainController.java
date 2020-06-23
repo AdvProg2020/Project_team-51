@@ -24,6 +24,7 @@ import javafx.scene.text.Text;
 import model.Category;
 import model.Product;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,6 +149,10 @@ public class MainController {
 
     @FXML
     public void initialize() {
+        var cartDialog = new CartDialogController(stackPane);
+        var addressDialog = new AddressController(stackPane);
+        var offCodeDialog = new TakeOffCodeController(stackPane);
+        var paymentDialog = new PaymentDialogController(stackPane);
 
         bestSellerProducts = Product.getBestSellerProducts();
         mostViewedProducts = Product.getMostViewedProducts();
@@ -209,13 +214,54 @@ public class MainController {
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
-            dialogLayout.setActions(new PaymentDialogController(stackPane));
-            dialogLayout.setStyle("-fx-background-color: #886488");
+            dialogLayout.setActions(cartDialog);
+            dialogLayout.setStyle("-fx-background-color:  #db5e5c");
             dialog.show();
             mainPane.setEffect(boxBlur);
             dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
-            dialog.overlayCloseProperty().bindBidirectional(new SimpleBooleanProperty(!Controller.isLoggedIn()));
         });
+
+        cartDialog.getPayButton().setOnMouseClicked(event -> {
+            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+            dialogLayout.setActions(addressDialog);
+            dialogLayout.setStyle("-fx-background-color:   #886488");
+            dialog.show();
+            cartDialog.setEffect(boxBlur);
+            dialog.setOnDialogClosed((JFXDialogEvent e) -> cartDialog.setEffect(null));
+        });
+
+        addressDialog.getNextButton().setOnMouseClicked(event -> {
+            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+            dialogLayout.setActions(offCodeDialog);
+            dialogLayout.setStyle("-fx-background-color:   #f3c669");
+            dialog.show();
+            addressDialog.setEffect(boxBlur);
+            dialog.setOnDialogClosed((JFXDialogEvent e) -> addressDialog.setEffect(null));
+        });
+
+        offCodeDialog.getNextButton().setOnMouseClicked(event -> {
+            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+            dialogLayout.setActions(paymentDialog);
+            dialogLayout.setStyle("-fx-background-color:    #b2aa72");
+            dialog.show();
+            offCodeDialog.setEffect(boxBlur);
+            dialog.setOnDialogClosed((JFXDialogEvent e) -> offCodeDialog.setEffect(null));
+        });
+
+        paymentDialog.getPayButton().setOnMouseClicked(event -> {
+            try {
+                Main.setRoot("main");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
 
         //Populate categories
         Category root = allCategories.stream().filter(c -> c.getParentCategory() == null).findAny().orElse(null);

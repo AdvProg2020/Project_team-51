@@ -51,7 +51,7 @@ public class CartDialogController extends AnchorPane {
 
 
     public CartDialogController(StackPane stackPane) {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("address.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("cart.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         this.stackPane = stackPane;
