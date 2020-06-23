@@ -11,7 +11,6 @@ import model.People.Seller;
 import model.Product;
 import model.Requests.Request;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ManagerController extends Controller {
@@ -120,7 +119,7 @@ public class ManagerController extends Controller {
 
     public void createDiscountCode(ArrayList<Account> appliedAccounts,
                                    Date startDate, Date endDate
-            , int offPercent, Double maxDiscount , int repeat) {
+            , int offPercent, Double maxDiscount, int repeat) {
         new OffCode(TokenGenerator.generateOffCode(), startDate,
                 endDate,
                 appliedAccounts,
@@ -198,7 +197,7 @@ public class ManagerController extends Controller {
 
     public void editDiscountCode(OffCode offCode, List<Account> appliedAccounts,
                                  Date startDate, Date endDate
-            , int offPercent, Double maxDiscount , int repeat){
+            , int offPercent, Double maxDiscount, int repeat) {
         offCode.setAppliedAccounts(appliedAccounts);
         offCode.setBeginDate(startDate);
         offCode.setEndDate(endDate);

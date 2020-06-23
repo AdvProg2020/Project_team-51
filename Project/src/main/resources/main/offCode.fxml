@@ -29,7 +29,8 @@
                      </font>
                   </JFXToggleButton>
                   <JFXTextField fx:id="codeField" focusColor="#757575" prefHeight="45.0" prefWidth="413.0"
-                                promptText="Code" style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
+                                promptText="Code"
+                                style="-fx-background-color: #ceb175; -fx-background-radius: 15;"
                                 unFocusColor="#4d4d4d00">
                      <padding>
                         <Insets left="20.0" right="20.0"/>

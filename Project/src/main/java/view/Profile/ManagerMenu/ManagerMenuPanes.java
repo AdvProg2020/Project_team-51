@@ -2,7 +2,6 @@ package view.Profile.ManagerMenu;
 
 import control.Controller;
 import control.Exceptions.InvalidOffCodeException;
-import control.Exceptions.WrongFormatException;
 import control.ManagerController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,17 +14,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextBoundsType;
 import javafx.util.Callback;
-import model.Category;
 import model.OffCode;
 import model.People.Account;
 import model.People.Customer;
-import model.People.Manager;
 import model.Product;
 import model.Requests.Request;
-import view.Menu;
 
 import java.text.ParseException;
 import java.time.Instant;
@@ -35,95 +29,101 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ManagerMenuPanes{
+public class ManagerMenuPanes {
     ManagerController managerController = new ManagerController(Controller.getCurrentAccount());
     Account currentAccount = Controller.getCurrentAccount();
 
-    public Pane getPersonalInfoPane (){
+    public Pane getPersonalInfoPane() {
         final int X = 300;
         Pane pane = new Pane();
-        pane.setPrefSize(1540 , 800);
-        Label usernameLabel = getLabel("username" , X , 60);
-        Label userNameError = getErrorLabel("" , X , 80);
-        TextField username = getTextFieldDefault( currentAccount.getUsername(), 300 , 100);
-        Label passwordLabel = getLabel("password" , X , 150);
-        Label passwordFieldError = getErrorLabel("" , X , 170);
+        pane.setPrefSize(1540, 800);
+        Label usernameLabel = getLabel("username", X, 60);
+        Label userNameError = getErrorLabel("", X, 80);
+        TextField username = getTextFieldDefault(currentAccount.getUsername(), 300, 100);
+        Label passwordLabel = getLabel("password", X, 150);
+        Label passwordFieldError = getErrorLabel("", X, 170);
         PasswordField passwordField = new PasswordField();
-        setPlace(passwordField , X , 190);
-        PasswordField confirmPasswordField     = new PasswordField();
-        Label         confirmPasswordFieldError= getErrorLabel("" , X , 260);
-        TextField     confirmPasswordFieldLabel= getTextFieldDefault("confirm new pass" , X , 280);
-        Label     nameLabel             = getLabel("name" , X , 330);
-        Label     nameError             = getErrorLabel("" , X , 350);
-        TextField nameTextField         = getTextFieldDefault(currentAccount.getFirstName() , X , 370);
-        Label     lastNameLabel         = getLabel("last name" , X , 420);
-        Label     lastNameError         = getErrorLabel("" , X , 440);
-        TextField lastNameTextField     = getTextFieldDefault(currentAccount.getLastName() , X , 460);
-        Label     emailLabel            = getLabel("email" , X , 510);
-        Label     emailError            = getErrorLabel("" , X , 530);
-        TextField emailTextField        = getTextFieldDefault(currentAccount.getEmail() , X , 550);
-        Label     phoneNumberLabel      = getLabel("phone number" , X , 600);
-        Label     phoneNumberError      = getErrorLabel("" , X , 620);
-        TextField phoneNumberTextField  = getTextFieldDefault(currentAccount.getPhoneNumber() , X , 640);
+        setPlace(passwordField, X, 190);
+        PasswordField confirmPasswordField = new PasswordField();
+        Label confirmPasswordFieldError = getErrorLabel("", X, 260);
+        TextField confirmPasswordFieldLabel = getTextFieldDefault("confirm new pass", X, 280);
+        Label nameLabel = getLabel("name", X, 330);
+        Label nameError = getErrorLabel("", X, 350);
+        TextField nameTextField = getTextFieldDefault(currentAccount.getFirstName(), X, 370);
+        Label lastNameLabel = getLabel("last name", X, 420);
+        Label lastNameError = getErrorLabel("", X, 440);
+        TextField lastNameTextField = getTextFieldDefault(currentAccount.getLastName(), X, 460);
+        Label emailLabel = getLabel("email", X, 510);
+        Label emailError = getErrorLabel("", X, 530);
+        TextField emailTextField = getTextFieldDefault(currentAccount.getEmail(), X, 550);
+        Label phoneNumberLabel = getLabel("phone number", X, 600);
+        Label phoneNumberError = getErrorLabel("", X, 620);
+        TextField phoneNumberTextField = getTextFieldDefault(currentAccount.getPhoneNumber(), X, 640);
         Button submit = new Button("submit");
         EventHandler submitButtonAction = new EventHandler() {
             @Override
             public void handle(Event event) {
-                if (!nameTextField.getText().equals(currentAccount.getFirstName())){
+                if (!nameTextField.getText().equals(currentAccount.getFirstName())) {
                     if (nameTextField.getText().equals("")) nameError.setText("");
                     else {
                         try {
-                        managerController.editFirstName(nameTextField.getText());
-                        nameError.setText("");
-                    } catch (Exception e) {
-                        nameError.setText(e.getMessage());
-                    }}
+                            managerController.editFirstName(nameTextField.getText());
+                            nameError.setText("");
+                        } catch (Exception e) {
+                            nameError.setText(e.getMessage());
+                        }
+                    }
                 }
-                if (!passwordField.getText().equals(confirmPasswordField.getText())){
+                if (!passwordField.getText().equals(confirmPasswordField.getText())) {
                     confirmPasswordFieldError.setText("passwords don't match");
                 }
-                if (passwordField.getText().equals(confirmPasswordField.getText())){
+                if (passwordField.getText().equals(confirmPasswordField.getText())) {
                     confirmPasswordFieldError.setText("");
-                    if (passwordField.getText().equals("")){
+                    if (passwordField.getText().equals("")) {
                         passwordFieldError.setText("");
-                    }
-                    else if (passwordField.getText().length()<4) passwordFieldError.setText("password too short");
+                    } else if (passwordField.getText().length() < 4) passwordFieldError.setText("password too short");
                     else {
                         passwordFieldError.setText("");
-                        managerController.changePassword (passwordField.getText());
+                        managerController.changePassword(passwordField.getText());
                     }
                 }
-                if (!lastNameTextField.getText().equals(currentAccount.getLastName())){
+                if (!lastNameTextField.getText().equals(currentAccount.getLastName())) {
                     if (lastNameTextField.getText().equals("")) lastNameError.setText("");
-                    else {try {
-                        managerController.editLastName(lastNameTextField.getText());
-                        lastNameError.setText("");
-                    } catch (Exception e) {
-                        lastNameError.setText(e.getMessage());
-                    }}
+                    else {
+                        try {
+                            managerController.editLastName(lastNameTextField.getText());
+                            lastNameError.setText("");
+                        } catch (Exception e) {
+                            lastNameError.setText(e.getMessage());
+                        }
+                    }
                 }
-                if (!emailTextField.getText().equals(currentAccount.getEmail())){
+                if (!emailTextField.getText().equals(currentAccount.getEmail())) {
                     if (emailTextField.getText().equals("")) emailError.setText("");
-                    else {try {
-                        managerController.editEmail(emailTextField.getText());
-                        emailError.setText("");
-                    } catch (Exception e) {
-                        emailError.setText(e.getMessage());
-                    }}
+                    else {
+                        try {
+                            managerController.editEmail(emailTextField.getText());
+                            emailError.setText("");
+                        } catch (Exception e) {
+                            emailError.setText(e.getMessage());
+                        }
+                    }
                 }
-                if (!phoneNumberTextField.getText().equals(currentAccount.getPhoneNumber())){
+                if (!phoneNumberTextField.getText().equals(currentAccount.getPhoneNumber())) {
                     if (phoneNumberTextField.getText().equals("")) phoneNumberError.setText("");
-                    else {try {
-                        managerController.editPhoneNumber(nameTextField.getText());
-                        phoneNumberError.setText("");
-                    } catch (Exception e) {
-                        phoneNumberError.setText(e.getMessage());
-                    }}
+                    else {
+                        try {
+                            managerController.editPhoneNumber(nameTextField.getText());
+                            phoneNumberError.setText("");
+                        } catch (Exception e) {
+                            phoneNumberError.setText(e.getMessage());
+                        }
+                    }
                 }
             }
         };
         Button back = new Button("back");
-        back.setOnAction(ev->{
+        back.setOnAction(ev -> {
             //todo go back
         });
         back.setLayoutX(300);
@@ -158,7 +158,7 @@ public class ManagerMenuPanes{
         return pane;
     }
 
-    public TableView getRequestsTebleView (){
+    public TableView getRequestsTebleView() {
         TableView<Request> table = new TableView<>();
         ObservableList<Request> data
                 = FXCollections.observableArrayList(
@@ -192,8 +192,10 @@ public class ManagerMenuPanes{
                                 } else {
                                     btn.setOnAction(event -> {
                                         Request request = getTableView().getItems().get(getIndex());
-                                        try {request.accept(); //todo allRequests remove this
-                                        table.getItems().remove(request);}catch (Exception e){
+                                        try {
+                                            request.accept(); //todo allRequests remove this
+                                            table.getItems().remove(request);
+                                        } catch (Exception e) {
                                             //todo handle this error better: can reject automatically and show popup error
                                             if (e instanceof ParseException) System.err.println("parse exception");
                                             else System.err.println(e.getMessage());
@@ -246,7 +248,7 @@ public class ManagerMenuPanes{
         return table;
     }
 
-    public TableView getManageProductsTableView (){
+    public TableView getManageProductsTableView() {
 
         TableView<Product> table = new TableView<>();
         ObservableList<Product> data
@@ -278,8 +280,10 @@ public class ManagerMenuPanes{
                                 } else {
                                     btn.setOnAction(event -> {
                                         Product product = getTableView().getItems().get(getIndex());
-                                        try {managerController.removeProduct(product.getProductId()); //todo allProducts remove this
-                                            table.getItems().remove(product);}catch (Exception e){
+                                        try {
+                                            managerController.removeProduct(product.getProductId()); //todo allProducts remove this
+                                            table.getItems().remove(product);
+                                        } catch (Exception e) {
                                             //todo handle this error better: can reject automatically and show popup error
                                             System.err.println(e.getMessage());
                                         }
@@ -295,11 +299,12 @@ public class ManagerMenuPanes{
         delete.setCellFactory(cellFactory);
 
         table.setItems(data);
-        table.getColumns().addAll(productName,delete);
+        table.getColumns().addAll(productName, delete);
         return table;
     }
+
     // note that this arraylist can be empty but will get filled by the table
-    public TableView getProductsTableViewForOffCode (ArrayList<Product> selection){
+    public TableView getProductsTableViewForOffCode(ArrayList<Product> selection) {
         TableView<Product> table = new TableView<>();
         ObservableList<Product> data
                 = FXCollections.observableArrayList(
@@ -345,11 +350,11 @@ public class ManagerMenuPanes{
         select.setCellFactory(cellFactory);
 
         table.setItems(data);
-        table.getColumns().addAll(productName,select);
+        table.getColumns().addAll(productName, select);
         return table;
     }
 
-    public TableView getPeopleTableViewForOffCode (List<Customer> selection){
+    public TableView getPeopleTableViewForOffCode(List<Customer> selection) {
         TableView<Account> table = new TableView<>();
         ObservableList<Account> data
                 = FXCollections.observableArrayList(
@@ -394,11 +399,11 @@ public class ManagerMenuPanes{
         select.setCellFactory(cellFactory);
 
         table.setItems(data);
-        table.getColumns().addAll(productName,select);
+        table.getColumns().addAll(productName, select);
         return table;
     }
 
-    public TableView<OffCode> getAllOffCodesTableView(){
+    public TableView<OffCode> getAllOffCodesTableView() {
         List<OffCode> offCodes = managerController.getAllOffcodes();
         TableView<OffCode> table = new TableView<>();
         ObservableList<OffCode> data
@@ -494,38 +499,38 @@ public class ManagerMenuPanes{
 
 
         table.setItems(data);
-        table.getColumns().addAll(productName,beginDate , endDate , status , delete , open);
+        table.getColumns().addAll(productName, beginDate, endDate, status, delete, open);
         return table;
     }
 
-    public Pane getEditDiscountCodePane(OffCode offCode){
+    public Pane getEditDiscountCodePane(OffCode offCode) {
         Pane pane = new Pane();
-        List <Account> selectedAccounts;
+        List<Account> selectedAccounts;
         selectedAccounts = offCode.getAppliedAccounts();
-        pane.setPrefSize(1540 , 800);
+        pane.setPrefSize(1540, 800);
         final int X = 300;
-        Label       codeLabel    = getLabel("code:", X, 200);
-        Label       codeError    = getErrorLabel("", X, 220);
-        TextField   codeTextField = getTextFieldDefault(offCode.getOffCode(), X, 240);
+        Label codeLabel = getLabel("code:", X, 200);
+        Label codeError = getErrorLabel("", X, 220);
+        TextField codeTextField = getTextFieldDefault(offCode.getOffCode(), X, 240);
         codeTextField.setText(offCode.getOffCode());
 
-        Label       beginDateLabel = getLabel("begin date" , X , 290);
-        Label       beginDateError = getErrorLabel("" , X ,310);
-        DatePicker  beginDatePicker = new DatePicker();
+        Label beginDateLabel = getLabel("begin date", X, 290);
+        Label beginDateError = getErrorLabel("", X, 310);
+        DatePicker beginDatePicker = new DatePicker();
         beginDatePicker.setValue(toLocalDate(offCode.getBeginDate()));
-        setPlace(beginDatePicker , X , 330);
+        setPlace(beginDatePicker, X, 330);
 
-        Label       endDateLabel = getLabel("end date" , X ,380);
-        Label       endDateError = getErrorLabel("" , X,400);
-        DatePicker  endDatePicker= new DatePicker();
+        Label endDateLabel = getLabel("end date", X, 380);
+        Label endDateError = getErrorLabel("", X, 400);
+        DatePicker endDatePicker = new DatePicker();
         endDatePicker.setValue(toLocalDate(offCode.getEndDate()));
-        setPlace(endDatePicker , X , 420);
+        setPlace(endDatePicker, X, 420);
 
-        Label       percentLabel     = getLabel("percent" , X , 470);
-        Slider      percentSlider   = new Slider(1,99,1);
+        Label percentLabel = getLabel("percent", X, 470);
+        Slider percentSlider = new Slider(1, 99, 1);
         Label percentSliderAmount = new Label("");
-        setPlace(percentSliderAmount , X +120, 490);
-        setPlace(percentSlider , X , 510);
+        setPlace(percentSliderAmount, X + 120, 490);
+        setPlace(percentSlider, X, 510);
         percentSlider.valueProperty().addListener(new ChangeListener<Number>() {
 
             @Override
@@ -540,12 +545,12 @@ public class ManagerMenuPanes{
         percentSlider.setValue(offCode.getOffPercentage());
         percentSliderAmount.setText(Integer.toString(offCode.getOffPercentage()));
 
-        Label       maxOffLabel     = getLabel("max off" , X , 560);
-        Slider      maxOffSlider    =new Slider(250,100000,250);
+        Label maxOffLabel = getLabel("max off", X, 560);
+        Slider maxOffSlider = new Slider(250, 100000, 250);
         maxOffSlider.setMajorTickUnit(1000);
         maxOffSlider.setSnapToTicks(true);
-        setPlace(maxOffSlider , X , 580);
-        Label       maxOffAmount = new Label ("");
+        setPlace(maxOffSlider, X, 580);
+        Label maxOffAmount = new Label("");
         maxOffSlider.valueProperty().addListener(new ChangeListener<Number>() {
 
             @Override
@@ -557,54 +562,53 @@ public class ManagerMenuPanes{
                         String.valueOf(newValue.intValue()));
             }
         });
-        setPlace(maxOffAmount,400 , 600);
+        setPlace(maxOffAmount, 400, 600);
         maxOffSlider.setValue(offCode.getMaxDiscount());
         maxOffAmount.setText(Double.toString(offCode.getMaxDiscount()));
 
-        Label       repeat          = getLabel("repeatTimes" , X , 650);
-        ComboBox<Integer>    repeatCombobox  = new ComboBox();
-        repeatCombobox.getItems().addAll(1,2,3,4,5,6,7,8,9,10); // modify to infinite times?
+        Label repeat = getLabel("repeatTimes", X, 650);
+        ComboBox<Integer> repeatCombobox = new ComboBox();
+        repeatCombobox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10); // modify to infinite times?
         repeatCombobox.getSelectionModel().select(0);
-        setPlace(repeatCombobox , X , 670);
-        repeatCombobox.getSelectionModel().select(offCode.getRepeat()-1); //note : index works like array-index
+        setPlace(repeatCombobox, X, 670);
+        repeatCombobox.getSelectionModel().select(offCode.getRepeat() - 1); //note : index works like array-index
 
         TableView tv = getPeopleTableViewForDiscountCode((ArrayList<Account>) offCode.getAppliedAccounts());
         tv.setLayoutX(500);
         tv.setLayoutY(200);
-        Label       accountsError = getErrorLabel("" , 860 , 180);
+        Label accountsError = getErrorLabel("", 860, 180);
 
-        Label       accountsLabel = getLabel("applied accounts", 500 , 180 );
+        Label accountsLabel = getLabel("applied accounts", 500, 180);
 
         Button back = new Button("back");
-        setPlace(back , 500 , 670);
+        setPlace(back, 500, 670);
         back.setOnAction(actionEvent -> {
             //todo
         });
 
         Button confirm = new Button("confirm");
-        setPlace(confirm , 580 , 670);
+        setPlace(confirm, 580, 670);
         confirm.setOnAction(actionEvent -> {
-            Date startDate=null;
+            Date startDate = null;
             LocalDate localStartDate = beginDatePicker.getValue();
-            if(localStartDate!=null) {
+            if (localStartDate != null) {
                 Instant instant = Instant.from(localStartDate.atStartOfDay(ZoneId.systemDefault()));
                 startDate = Date.from(instant);
                 beginDateError.setText("");
-            }
-            else {
+            } else {
                 beginDateError.setText("please select start date");
             }
-            Date endDate=null;
+            Date endDate = null;
             LocalDate localEndDate = endDatePicker.getValue();
-            if(localEndDate!=null) {Instant instant = Instant.from(localEndDate.atStartOfDay(ZoneId.systemDefault()));
+            if (localEndDate != null) {
+                Instant instant = Instant.from(localEndDate.atStartOfDay(ZoneId.systemDefault()));
                 endDate = Date.from(instant);
                 endDateError.setText("");
-            }
-            else {
+            } else {
                 endDateError.setText("please select end date");
             }
 
-            if (endDate!=null && startDate!=null) {
+            if (endDate != null && startDate != null) {
                 if (!endDate.after(startDate)) endDateError.setText("end date must be after start date");
                 else {
                     beginDateError.setText("");
@@ -612,44 +616,41 @@ public class ManagerMenuPanes{
                 }
             }
 
-            if (codeTextField.getText().equals("")){
+            if (codeTextField.getText().equals("")) {
                 codeError.setText("");
-            }
-            else {
-                if (managerController.isCodeUsedBefore(codeTextField.getText())){
+            } else {
+                if (managerController.isCodeUsedBefore(codeTextField.getText())) {
                     codeError.setText("this code is taken before");
-                }
-                else codeLabel.setText("");
+                } else codeLabel.setText("");
             }
 
-            if (selectedAccounts.size()==0)accountsError.setText("must choose at lease 1 person");
+            if (selectedAccounts.size() == 0) accountsError.setText("must choose at lease 1 person");
             else accountsError.setText("");
 
-            if (accountsError.equals("")&&
-                    codeError.equals("")&&
-                    endDateError.equals("")&&
-                    beginDateError.equals(""))
-            {
+            if (accountsError.equals("") &&
+                    codeError.equals("") &&
+                    endDateError.equals("") &&
+                    beginDateError.equals("")) {
                 managerController.editDiscountCode
                         (offCode,
                                 selectedAccounts,
                                 startDate,
                                 endDate,
-                                (int)percentSlider.getValue(),
+                                (int) percentSlider.getValue(),
                                 maxOffSlider.getValue(),
                                 repeatCombobox.getValue()
                         );
             }
         });
         pane.getChildren().addAll(
-                codeLabel    ,
-                codeError    ,
+                codeLabel,
+                codeError,
                 codeTextField,
-                beginDateLabel ,
-                beginDateError ,
+                beginDateLabel,
+                beginDateError,
                 beginDatePicker,
-                endDateLabel ,
-                endDateError ,
+                endDateLabel,
+                endDateError,
                 endDatePicker,
                 percentLabel,
                 percentSlider,
@@ -705,33 +706,33 @@ public class ManagerMenuPanes{
 //        return pane;
 //    }
 
-    public Pane getCreateDiscountCodePane (){
+    public Pane getCreateDiscountCodePane() {
         ArrayList<Account> selectedAccounts = new ArrayList<>();
         Pane pane = new Pane();
-        pane.setPrefSize(1500,800);
+        pane.setPrefSize(1500, 800);
         final int X = 300;
-        Label       codeLabel     = getLabel("discount code" , X , 200);
-        Label       codeError     = getErrorLabel("" , X , 220);
-        TextField   codeTextField = getTextFieldDefault("" , X , 240);
+        Label codeLabel = getLabel("discount code", X, 200);
+        Label codeError = getErrorLabel("", X, 220);
+        TextField codeTextField = getTextFieldDefault("", X, 240);
 
-        Label       startDateLabel= getLabel("start date: " , X , 290);
-        Label       startDateError=getErrorLabel("" , X , 310);
-        DatePicker  startDatePicker=new DatePicker();
-        setPlace(startDatePicker , X , 330);
+        Label startDateLabel = getLabel("start date: ", X, 290);
+        Label startDateError = getErrorLabel("", X, 310);
+        DatePicker startDatePicker = new DatePicker();
+        setPlace(startDatePicker, X, 330);
         startDatePicker.setEditable(false);
 
-        Label       endDateLabel = getLabel("end date: " , X , 380);
-        Label       endDateError = getErrorLabel("" , X , 400);
+        Label endDateLabel = getLabel("end date: ", X, 380);
+        Label endDateError = getErrorLabel("", X, 400);
         DatePicker endDatePicker = new DatePicker();
-        setPlace(endDatePicker , X , 420);
+        setPlace(endDatePicker, X, 420);
         endDatePicker.setEditable(false);
 
-        Label       percentLabel     = getLabel("percent" , X , 450);
-        Slider      percentSlider   = new Slider(1,99,1);
+        Label percentLabel = getLabel("percent", X, 450);
+        Slider percentSlider = new Slider(1, 99, 1);
 
         Label percentSliderAmount = new Label("");
-        setPlace(percentSliderAmount , X +120, 450);
-        setPlace(percentSlider , X , 470);
+        setPlace(percentSliderAmount, X + 120, 450);
+        setPlace(percentSlider, X, 470);
         percentSlider.valueProperty().addListener(new ChangeListener<Number>() {
 
             @Override
@@ -744,12 +745,12 @@ public class ManagerMenuPanes{
             }
         });
 
-        Label       maxOffLabel     = getLabel("max off" , X , 540);
-        Slider      maxOffSlider    =new Slider(250,100000,250);
+        Label maxOffLabel = getLabel("max off", X, 540);
+        Slider maxOffSlider = new Slider(250, 100000, 250);
         maxOffSlider.setMajorTickUnit(1000);
         maxOffSlider.setSnapToTicks(true);
-        setPlace(maxOffSlider , X , 560);
-        Label       maxOffAmount = new Label ("");
+        setPlace(maxOffSlider, X, 560);
+        Label maxOffAmount = new Label("");
         maxOffSlider.valueProperty().addListener(new ChangeListener<Number>() {
 
             @Override
@@ -761,53 +762,52 @@ public class ManagerMenuPanes{
                         String.valueOf(newValue.intValue()));
             }
         });
-        setPlace(maxOffAmount,400 , 540);
+        setPlace(maxOffAmount, 400, 540);
 
-        Label       repeat          = getLabel("repeatTimes" , X , 620);
-        ComboBox<Integer>    repeatCombobox  = new ComboBox();
-        repeatCombobox.getItems().addAll(1,2,3,4,5,6,7,8,9,10); // modify to infinite times?
+        Label repeat = getLabel("repeatTimes", X, 620);
+        ComboBox<Integer> repeatCombobox = new ComboBox();
+        repeatCombobox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10); // modify to infinite times?
         repeatCombobox.getSelectionModel().select(0);
-        setPlace(repeatCombobox , X , 640);
+        setPlace(repeatCombobox, X, 640);
 
-        Label       accountsLabel = getLabel("accounts" , 800 , 180);
+        Label accountsLabel = getLabel("accounts", 800, 180);
         TableView tv = getPeopleTableViewForDiscountCode(selectedAccounts);
         tv.setLayoutX(500);
         tv.setLayoutY(200);
-        Label       accountsError = getErrorLabel("" , 860 , 180);
+        Label accountsError = getErrorLabel("", 860, 180);
 
-        Label       productsLabel = getLabel("products", 500 , 180 );
+        Label productsLabel = getLabel("products", 500, 180);
 
         Button back = new Button("back");
-        setPlace(back , 500 , 670);
-        back.setOnAction(ev->{
+        setPlace(back, 500, 670);
+        back.setOnAction(ev -> {
             //todo just go to the privious scene
         });//todo
 
         Button confirm = new Button("confirm");
-        setPlace(confirm , 580 , 670);
-        confirm.setOnAction(ev->{
-            Date startDate=null;
+        setPlace(confirm, 580, 670);
+        confirm.setOnAction(ev -> {
+            Date startDate = null;
             LocalDate localStartDate = startDatePicker.getValue();
-            if(localStartDate!=null) {
+            if (localStartDate != null) {
                 Instant instant = Instant.from(localStartDate.atStartOfDay(ZoneId.systemDefault()));
                 startDate = Date.from(instant);
                 startDateError.setText("");
-            }
-            else {
+            } else {
                 startDateError.setText("please select start date");
             }
 
-            Date endDate=null;
+            Date endDate = null;
             LocalDate localEndDate = endDatePicker.getValue();
-            if(localEndDate!=null) {Instant instant = Instant.from(localEndDate.atStartOfDay(ZoneId.systemDefault()));
+            if (localEndDate != null) {
+                Instant instant = Instant.from(localEndDate.atStartOfDay(ZoneId.systemDefault()));
                 endDate = Date.from(instant);
                 endDateError.setText("");
-            }
-            else {
+            } else {
                 endDateError.setText("please select end date");
             }
 
-            if (endDate!=null && startDate!=null) {
+            if (endDate != null && startDate != null) {
                 if (!endDate.after(startDate)) endDateError.setText("end date must be after start date");
                 else {
                     startDateError.setText("");
@@ -815,33 +815,30 @@ public class ManagerMenuPanes{
                 }
             }
 
-            if (codeTextField.getText().equals("")){
+            if (codeTextField.getText().equals("")) {
                 codeError.setText("this field cannot be empty");
-            }
-            else {
-                if (managerController.isCodeUsedBefore(codeTextField.getText())){
+            } else {
+                if (managerController.isCodeUsedBefore(codeTextField.getText())) {
                     codeError.setText("this code is taken before");
-                }
-                else codeLabel.setText("");
+                } else codeLabel.setText("");
             }
 
-            if (selectedAccounts.size()==0)accountsError.setText("must choose at lease 1 person");
+            if (selectedAccounts.size() == 0) accountsError.setText("must choose at lease 1 person");
             else accountsError.setText("");
 
             if (
-                accountsError.equals("")&&
-                codeError.equals("")&&
-                endDateError.equals("")&&
-                startDateError.equals(""))
-            {
+                    accountsError.equals("") &&
+                            codeError.equals("") &&
+                            endDateError.equals("") &&
+                            startDateError.equals("")) {
                 managerController.createDiscountCode
                         (selectedAccounts,
                                 startDate,
                                 endDate,
-                                (int)percentSlider.getValue(),
+                                (int) percentSlider.getValue(),
                                 maxOffSlider.getValue(),
                                 repeatCombobox.getValue()
-                                );
+                        );
             }
         });
 
@@ -874,7 +871,7 @@ public class ManagerMenuPanes{
     }
 
 
-/*private TableView getProductsTableViewForDiscountCode(ArrayList <Product> products) {*/
+    /*private TableView getProductsTableViewForDiscountCode(ArrayList <Product> products) {*/
 
 //        TableView<Product> table = new TableView<>();
 //        ObservableList<Product> data
@@ -925,7 +922,7 @@ public class ManagerMenuPanes{
 //        return table;
 //    }
 
-    public TableView getPeopleTableViewForDiscountCode(ArrayList<Account> selectedAccounts){
+    public TableView getPeopleTableViewForDiscountCode(ArrayList<Account> selectedAccounts) {
         ArrayList<Product> selection = new ArrayList<>();
         TableView<Product> table = new TableView<>();
         ObservableList<Product> data
@@ -972,11 +969,11 @@ public class ManagerMenuPanes{
         select.setCellFactory(cellFactory);
 
         table.setItems(data);
-        table.getColumns().addAll(productName,select);
+        table.getColumns().addAll(productName, select);
         return table;
     }
 
-    private TextField getTextFieldDefault(String Default , double x , double y){
+    private TextField getTextFieldDefault(String Default, double x, double y) {
         TextField textField = new TextField();
         textField.setText(Default);
         textField.setLayoutY(y);
@@ -984,14 +981,14 @@ public class ManagerMenuPanes{
         return textField;
     }
 
-    private Label getLabel (String text , double x , double y){
+    private Label getLabel(String text, double x, double y) {
         Label label = new Label(text);
         label.setLayoutX(x);
         label.setLayoutY(y);
         return label;
     }
 
-    private Label getLabel (String text , double x , double y , Color color){
+    private Label getLabel(String text, double x, double y, Color color) {
         Label label = new Label(text);
         label.setTextFill(color);
         label.setLayoutX(x);
@@ -999,7 +996,7 @@ public class ManagerMenuPanes{
         return label;
     }
 
-    private Label getErrorLabel (String text , double x , double y){
+    private Label getErrorLabel(String text, double x, double y) {
         Label label = new Label(text);
         label.setTextFill(Color.RED);
         label.setLayoutX(x);
@@ -1007,19 +1004,19 @@ public class ManagerMenuPanes{
         return label;
     }
 
-    private Button getButton(String text, EventHandler ev){
+    private Button getButton(String text, EventHandler ev) {
         Button button = new Button(text);
         button.setOnAction(ev);
         return button;
     }
 
-    private Node setPlace (Node w , double x , double y){
+    private Node setPlace(Node w, double x, double y) {
         w.setLayoutY(y);
         w.setLayoutX(x);
         return w;
     }
 
-    private LocalDate toLocalDate(Date date){
+    private LocalDate toLocalDate(Date date) {
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 }
