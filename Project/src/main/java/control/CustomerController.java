@@ -2,6 +2,7 @@ package control;
 
 import control.Exceptions.InsufficientBalanceException;
 import control.Exceptions.InvalidProductIdException;
+import control.Exceptions.WeakPasswordException;
 import control.Exceptions.WrongFormatException;
 import model.ItemOfOrder;
 import model.OffCode;
@@ -128,6 +129,10 @@ public class CustomerController extends Controller {
         if (rate < 0 || rate > 5)
             throw new IllegalArgumentException();
         product.addRate(rate);
+    }
+
+    public void changePassword(String newPass ){
+        currentAccount.setPassword(newPass);
     }
 
     private boolean isBuyerOfProduct(Product product) {
