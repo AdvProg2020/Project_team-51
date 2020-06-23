@@ -120,12 +120,13 @@ public class ManagerController extends Controller {
 
     public void createDiscountCode(ArrayList<Account> appliedAccounts,
                                    Date startDate, Date endDate
-            , int offPercent, Double maxDiscount) {
+            , int offPercent, Double maxDiscount , int repeat) {
         new OffCode(TokenGenerator.generateOffCode(), startDate,
                 endDate,
                 appliedAccounts,
                 offPercent,
-                maxDiscount
+                maxDiscount,
+                repeat
         );
     }
 
@@ -195,16 +196,15 @@ public class ManagerController extends Controller {
                 a.getPhoneNumber());
     }
 
-    public void editDiscountCode(String code, ArrayList<Account> appliedAccounts,
-                                 String startDate, String endDate
-            , int offPercent, Double maxDiscount) throws Exception {
-        OffCode offCode = OffCode.getOffIdById(code);
-        if (offCode == null) throw new InvalidOffCodeException();
-        if (appliedAccounts != null) offCode.setAppliedAccounts(appliedAccounts);
-        if (startDate != null) offCode.setBeginDate(new SimpleDateFormat("dd/MM/yyyy").parse(startDate));
-        if (endDate != null) offCode.setEndDate(new SimpleDateFormat("dd/MM/yyyy").parse(endDate));
-        if (offPercent != 0) offCode.setOffPercentage(offPercent);
-        if (maxDiscount != null) offCode.setMaxDiscount(maxDiscount);
+    public void editDiscountCode(OffCode offCode, List<Account> appliedAccounts,
+                                 Date startDate, Date endDate
+            , int offPercent, Double maxDiscount , int repeat){
+        offCode.setAppliedAccounts(appliedAccounts);
+        offCode.setBeginDate(startDate);
+        offCode.setEndDate(endDate);
+        offCode.setOffPercentage(offPercent);
+        offCode.setMaxDiscount(maxDiscount);
+        offCode.setRepeat(repeat);
     }
 
     public void removeDiscountCode(String code) throws InvalidOffCodeException {

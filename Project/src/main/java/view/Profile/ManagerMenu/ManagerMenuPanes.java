@@ -15,6 +15,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 import javafx.util.Callback;
 import model.Category;
 import model.OffCode;
@@ -496,7 +498,175 @@ public class ManagerMenuPanes{
         return table;
     }
 
-//    public Pane getCreateOffCodePane(){
+    public Pane getEditDiscountCodePane(OffCode offCode){
+        Pane pane = new Pane();
+        List <Account> selectedAccounts;
+        selectedAccounts = offCode.getAppliedAccounts();
+        pane.setPrefSize(1540 , 800);
+        final int X = 300;
+        Label       codeLabel    = getLabel("code:", X, 200);
+        Label       codeError    = getErrorLabel("", X, 220);
+        TextField   codeTextField = getTextFieldDefault(offCode.getOffCode(), X, 240);
+        codeTextField.setText(offCode.getOffCode());
+
+        Label       beginDateLabel = getLabel("begin date" , X , 290);
+        Label       beginDateError = getErrorLabel("" , X ,310);
+        DatePicker  beginDatePicker = new DatePicker();
+        beginDatePicker.setValue(toLocalDate(offCode.getBeginDate()));
+        setPlace(beginDatePicker , X , 330);
+
+        Label       endDateLabel = getLabel("end date" , X ,380);
+        Label       endDateError = getErrorLabel("" , X,400);
+        DatePicker  endDatePicker= new DatePicker();
+        endDatePicker.setValue(toLocalDate(offCode.getEndDate()));
+        setPlace(endDatePicker , X , 420);
+
+        Label       percentLabel     = getLabel("percent" , X , 470);
+        Slider      percentSlider   = new Slider(1,99,1);
+        Label percentSliderAmount = new Label("");
+        setPlace(percentSliderAmount , X +120, 490);
+        setPlace(percentSlider , X , 510);
+        percentSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(
+                    ObservableValue<? extends Number> observableValue,
+                    Number oldValue,
+                    Number newValue) {
+                percentSliderAmount.textProperty().setValue(
+                        String.valueOf(newValue.intValue()));
+            }
+        });
+        percentSlider.setValue(offCode.getOffPercentage());
+        percentSliderAmount.setText(Integer.toString(offCode.getOffPercentage()));
+
+        Label       maxOffLabel     = getLabel("max off" , X , 560);
+        Slider      maxOffSlider    =new Slider(250,100000,250);
+        maxOffSlider.setMajorTickUnit(1000);
+        maxOffSlider.setSnapToTicks(true);
+        setPlace(maxOffSlider , X , 580);
+        Label       maxOffAmount = new Label ("");
+        maxOffSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(
+                    ObservableValue<? extends Number> observableValue,
+                    Number oldValue,
+                    Number newValue) {
+                maxOffAmount.textProperty().setValue(
+                        String.valueOf(newValue.intValue()));
+            }
+        });
+        setPlace(maxOffAmount,400 , 600);
+        maxOffSlider.setValue(offCode.getMaxDiscount());
+        maxOffAmount.setText(Double.toString(offCode.getMaxDiscount()));
+
+        Label       repeat          = getLabel("repeatTimes" , X , 650);
+        ComboBox<Integer>    repeatCombobox  = new ComboBox();
+        repeatCombobox.getItems().addAll(1,2,3,4,5,6,7,8,9,10); // modify to infinite times?
+        repeatCombobox.getSelectionModel().select(0);
+        setPlace(repeatCombobox , X , 670);
+        repeatCombobox.getSelectionModel().select(offCode.getRepeat()-1); //note : index works like array-index
+
+        TableView tv = getPeopleTableViewForDiscountCode((ArrayList<Account>) offCode.getAppliedAccounts());
+        tv.setLayoutX(500);
+        tv.setLayoutY(200);
+        Label       accountsError = getErrorLabel("" , 860 , 180);
+
+        Label       accountsLabel = getLabel("applied accounts", 500 , 180 );
+
+        Button back = new Button("back");
+        setPlace(back , 500 , 670);
+        back.setOnAction(actionEvent -> {
+            //todo
+        });
+
+        Button confirm = new Button("confirm");
+        setPlace(confirm , 580 , 670);
+        confirm.setOnAction(actionEvent -> {
+            Date startDate=null;
+            LocalDate localStartDate = beginDatePicker.getValue();
+            if(localStartDate!=null) {
+                Instant instant = Instant.from(localStartDate.atStartOfDay(ZoneId.systemDefault()));
+                startDate = Date.from(instant);
+                beginDateError.setText("");
+            }
+            else {
+                beginDateError.setText("please select start date");
+            }
+            Date endDate=null;
+            LocalDate localEndDate = endDatePicker.getValue();
+            if(localEndDate!=null) {Instant instant = Instant.from(localEndDate.atStartOfDay(ZoneId.systemDefault()));
+                endDate = Date.from(instant);
+                endDateError.setText("");
+            }
+            else {
+                endDateError.setText("please select end date");
+            }
+
+            if (endDate!=null && startDate!=null) {
+                if (!endDate.after(startDate)) endDateError.setText("end date must be after start date");
+                else {
+                    beginDateError.setText("");
+                    endDateError.setText("");
+                }
+            }
+
+            if (codeTextField.getText().equals("")){
+                codeError.setText("");
+            }
+            else {
+                if (managerController.isCodeUsedBefore(codeTextField.getText())){
+                    codeError.setText("this code is taken before");
+                }
+                else codeLabel.setText("");
+            }
+
+            if (selectedAccounts.size()==0)accountsError.setText("must choose at lease 1 person");
+            else accountsError.setText("");
+
+            if (accountsError.equals("")&&
+                    codeError.equals("")&&
+                    endDateError.equals("")&&
+                    beginDateError.equals(""))
+            {
+                managerController.editDiscountCode
+                        (offCode,
+                                selectedAccounts,
+                                startDate,
+                                endDate,
+                                (int)percentSlider.getValue(),
+                                maxOffSlider.getValue(),
+                                repeatCombobox.getValue()
+                        );
+            }
+        });
+        pane.getChildren().addAll(
+                codeLabel    ,
+                codeError    ,
+                codeTextField,
+                beginDateLabel ,
+                beginDateError ,
+                beginDatePicker,
+                endDateLabel ,
+                endDateError ,
+                endDatePicker,
+                percentLabel,
+                percentSlider,
+                maxOffLabel,
+                maxOffSlider,
+                repeat,
+                repeatCombobox,
+                accountsError,
+                accountsLabel,
+                tv,
+                back,
+                confirm
+        );
+        return pane;
+    }
+
+    /*public Pane getCreateOffCodePane(){*/
 //        ArrayList<Product> selectedProducts = new ArrayList<>();
 //        List<Customer> selectedCustomers = managerController.getAllCustomers();
 //        final int X = 300;
@@ -669,7 +839,8 @@ public class ManagerMenuPanes{
                                 startDate,
                                 endDate,
                                 (int)percentSlider.getValue(),
-                                maxOffSlider.getValue()
+                                maxOffSlider.getValue(),
+                                repeatCombobox.getValue()
                                 );
             }
         });
@@ -702,8 +873,9 @@ public class ManagerMenuPanes{
         return pane;
     }
 
-//    private TableView getProductsTableViewForDiscountCode(ArrayList <Product> products) {
-//
+
+/*private TableView getProductsTableViewForDiscountCode(ArrayList <Product> products) {*/
+
 //        TableView<Product> table = new TableView<>();
 //        ObservableList<Product> data
 //                = FXCollections.observableArrayList(
@@ -845,5 +1017,9 @@ public class ManagerMenuPanes{
         w.setLayoutY(y);
         w.setLayoutX(x);
         return w;
+    }
+
+    private LocalDate toLocalDate(Date date){
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 }
