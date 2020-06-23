@@ -6,9 +6,9 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<fx:root xmlns:fx="http://javafx.com/fxml/1" prefWidth="500.0" style="-fx-background-color: #f3c669;" type="AnchorPane"
-         xmlns="http://javafx.com/javafx/11.0.1">
+<?import javafx.scene.text.Font?>
+<fx:root xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane" prefWidth="500.0" style="-fx-background-color: #f3c669;"
+         type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1">
    <children>
       <HBox prefWidth="500.0">
          <children>
@@ -41,11 +41,6 @@
                         <Insets left="150.0" right="150.0" top="30.0"/>
                      </VBox.margin>
                   </JFXTextField>
-                  <HBox alignment="CENTER" prefWidth="200.0" spacing="50.0">
-                     <VBox.margin>
-                        <Insets left="40.0" right="40.0" top="20.0"/>
-                     </VBox.margin>
-                  </HBox>
                   <JFXButton fx:id="nextButton" prefHeight="45.0" prefWidth="90.0"
                              style="-fx-background-color: #a6a548; -fx-background-radius: 10;" text="Next"
                              textFill="WHITE">
@@ -56,13 +51,6 @@
                         <Insets top="20.0"/>
                      </VBox.margin>
                   </JFXButton>
-                  <Label fx:id="registerError" alignment="CENTER" prefHeight="25.0" prefWidth="357.0"
-                         text="Register Error" textAlignment="CENTER" textFill="#c74d4d" visible="false"
-                         wrapText="true">
-                     <font>
-                        <Font size="15.0"/>
-                     </font>
-                  </Label>
                </children>
             </VBox>
          </children>
