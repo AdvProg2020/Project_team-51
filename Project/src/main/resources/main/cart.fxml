@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<fx:root xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane" prefWidth="900.0" style="-fx-background-color: #db5e5c;"
+         type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1">
+    <children>
+        <VBox layoutX="50.0" layoutY="19.799999237060547" maxHeight="600.0" AnchorPane.bottomAnchor="20.0"
+              AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="20.0">
+            <children>
+                <ScrollPane fx:id="cartPane" hbarPolicy="NEVER" prefWidth="1100.0"
+                            style="-fx-background-color: #db5e5c;">
+                    <content>
+                        <TableView fx:id="table" focusTraversable="false" minWidth="300.0" prefWidth="800.0">
+                            <columns>
+                                <TableColumn fx:id="productIdColumn" prefWidth="114.40006637573242" text="Product Id"/>
+                                <TableColumn fx:id="nameColumn" prefWidth="216.53335571289062" text="Name"/>
+                                <TableColumn fx:id="priceColumn" prefWidth="117.06668090820312" text="Price"/>
+                                <TableColumn fx:id="quantityColumn" prefWidth="106.13345336914062" text="Quantity"/>
+                                <TableColumn fx:id="amountColumn" prefWidth="152.13330078125" text="Amount"/>
+                                <TableColumn fx:id="removeColumn" prefWidth="76.53338623046875" text="Remove"/>
+                            </columns>
+                        </TableView>
+                    </content>
+                </ScrollPane>
+                <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="800.0">
+                    <children>
+                        <Label prefHeight="27.0" prefWidth="135.0" text="Total Price :" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="18.0"/>
+                            </font>
+                            <padding>
+                                <Insets left="10.0"/>
+                            </padding>
+                        </Label>
+                        <Label fx:id="priceLabel" prefHeight="31.0" prefWidth="220.0" text="Price" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="18.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets left="20.0"/>
+                            </HBox.margin>
+                        </Label>
+                        <JFXButton fx:id="payButton" prefHeight="42.0" prefWidth="88.0"
+                                   style="-fx-background-color: #a6a548; -fx-background-radius: 10;" text="Pay"
+                                   textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="15.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets left="330.0"/>
+                            </HBox.margin>
+                        </JFXButton>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</fx:root>

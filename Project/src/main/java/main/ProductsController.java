@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ProductsController {
+public class ProductsController extends StackPane {
 
     @FXML
     private JFXButton dashboard;

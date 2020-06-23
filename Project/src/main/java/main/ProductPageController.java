@@ -119,7 +119,6 @@ public class ProductPageController {
         });
     }
 
-
     private void initializeProduct() {
         productImage.setImage(product.getImage());
         productName.setText(product.getName());
