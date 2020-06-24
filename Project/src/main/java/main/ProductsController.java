@@ -1,9 +1,6 @@
 package main;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import control.Controller;
 import control.ProductController;
@@ -30,7 +27,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ProductsController extends StackPane {
+public class ProductsController {
+
 
     @FXML
     private JFXButton dashboard;
@@ -42,10 +40,13 @@ public class ProductsController extends StackPane {
     private JFXButton home;
 
     @FXML
+    private MenuButton categoriesButton;
+
+    @FXML
     private CustomMenuItem customMenuItem;
 
     @FXML
-    private TreeView<String> categoriesTreeView;
+    private TreeView<?> categoriesTreeView;
 
     @FXML
     private JFXButton cartButton;
@@ -60,7 +61,7 @@ public class ProductsController extends StackPane {
     private Label categoryName;
 
     @FXML
-    private ComboBox<String> comboBox;
+    private ComboBox<?> comboBox;
 
     @FXML
     private VBox productsBox;
@@ -69,14 +70,16 @@ public class ProductsController extends StackPane {
     private VBox filterBox;
 
     @FXML
-    private JFXButton aboutUsButton;
+    private JFXSlider minPriceSlider;
 
     @FXML
-    private JFXButton contactUsButton;
-
+    private JFXSlider maxPriceSlider;
 
     @FXML
-    private VBox subCategories;
+    private JFXSlider minRateSlider;
+
+    @FXML
+    private JFXSlider maxRateSlider;
 
     @FXML
     private TreeView<?> treeView;
@@ -92,7 +95,6 @@ public class ProductsController extends StackPane {
 
     private HashMap<Product, SingleProduct> allProducts = new LinkedHashMap<>();
     private List<Product> products;
-    private List<String> filters;
     private List<String> sorts;
     private String search;
 
@@ -101,7 +103,6 @@ public class ProductsController extends StackPane {
     public void initialize() {
 
         currentCategory = ProductController.getCategory();
-        filters = ProductController.showAvailableFilters();
         sorts = ProductController.showAvailableSort();
 
 //        products = ProductController.showProductsOfThisCategory(currentCategory);
@@ -174,13 +175,6 @@ public class ProductsController extends StackPane {
         cartButton.setOnMouseClicked(event -> {
             // load Cart page
         });
-        aboutUsButton.setOnMouseClicked((Event) -> {
-            //load about us page
-        });
-
-        contactUsButton.setOnMouseClicked((Event) -> {
-            //load contact us page
-        });
     }
 
     private void initializeCategories() {
@@ -235,13 +229,6 @@ public class ProductsController extends StackPane {
             pageNumberBox.getChildren().add(pageNumber);
         }
         productsBox.getChildren().add(pageNumberBox);
-    }
-
-
-    private void initializeFilters() {
-        for (String filter : filters) {
-            filterBox.getChildren().add(new FilterTitledPane(filter));
-        }
     }
 
     private void initializeSorts() {

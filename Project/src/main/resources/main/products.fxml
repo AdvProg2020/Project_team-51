@@ -7,11 +7,11 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-           minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="main.ProductsController">
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity"
+           minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0"
+           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.ProductsController">
     <children>
-        <BorderPane prefHeight="970.0" prefWidth="1720.0">
+        <BorderPane fx:id="mainPane" prefHeight="970.0" prefWidth="1720.0">
             <left>
                 <Pane prefHeight="970.0" prefWidth="100.0" style="-fx-background-color: #f2837c;"
                       BorderPane.alignment="CENTER">
@@ -20,15 +20,15 @@
                             <children>
                                 <JFXButton focusTraversable="false" prefHeight="98.0" prefWidth="109.0" text="​">
                                     <graphic>
-                                        <ImageView fitHeight="58.0" fitWidth="49.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fx:id="dashboard" fitHeight="58.0" fitWidth="49.0"
+                                                   pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@person(1).png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
                                 </JFXButton>
-                                <JFXButton prefHeight="98.0" prefWidth="109.0" text="​">
+                                <JFXButton fx:id="logout" prefHeight="98.0" prefWidth="109.0" text="​">
                                     <graphic>
                                         <ImageView fitHeight="58.0" fitWidth="49.0" pickOnBounds="true"
                                                    preserveRatio="true">
@@ -67,23 +67,24 @@
                                                 <Insets top="40.0"/>
                                             </VBox.margin>
                                             <children>
-                                                <JFXButton prefHeight="125.0" prefWidth="160.0" text="Home"
+                                                <JFXButton fx:id="home" prefHeight="125.0" prefWidth="160.0" text="Home"
                                                            textFill="WHITE">
                                                     <font>
                                                         <Font name="System Bold" size="20.0"/>
                                                     </font>
                                                 </JFXButton>
-                                                <MenuButton accessibleRole="BUTTON" alignment="CENTER_RIGHT"
-                                                            contentDisplay="BOTTOM" mnemonicParsing="false"
-                                                            prefHeight="118.0" prefWidth="168.0"
+                                                <MenuButton fx:id="categoriesButton" accessibleRole="BUTTON"
+                                                            alignment="CENTER_RIGHT" contentDisplay="BOTTOM"
+                                                            mnemonicParsing="false" prefHeight="118.0" prefWidth="168.0"
                                                             style="-fx-background-color: #746d63;" text="Categories"
                                                             textFill="WHITE">
                                                     <items>
-                                                        <CustomMenuItem mnemonicParsing="false"
+                                                        <CustomMenuItem fx:id="customMenuItem" mnemonicParsing="false"
                                                                         style="-fx-padding: 0 120 0 0; -fx-background-color: black;"
                                                                         text="Unspecified Action">
                                                             <content>
-                                                                <TreeView style="-fx-background-color: #746d63;"/>
+                                                                <TreeView fx:id="categoriesTreeView"
+                                                                          style="-fx-background-color: #746d63;"/>
                                                             </content>
                                                         </CustomMenuItem>
                                                     </items>
@@ -91,29 +92,21 @@
                                                         <Font name="System Bold" size="20.0"/>
                                                     </font>
                                                 </MenuButton>
-                                                <JFXButton prefHeight="124.0" prefWidth="160.0" text="About us"
-                                                           textFill="WHITE">
-                                                    <font>
-                                                        <Font name="System Bold" size="20.0"/>
-                                                    </font>
-                                                </JFXButton>
-                                                <JFXButton prefHeight="124.0" prefWidth="160.0" text="Contact us"
-                                                           textFill="WHITE">
-                                                    <font>
-                                                        <Font name="System Bold" size="20.0"/>
-                                                    </font>
-                                                </JFXButton>
-                                                <ImageView fitHeight="46.0" fitWidth="50.0" pickOnBounds="true"
-                                                           preserveRatio="true">
+                                                <JFXButton fx:id="cartButton" text=" ">
+                                                    <graphic>
+                                                        <ImageView fitHeight="46.0" fitWidth="50.0" pickOnBounds="true"
+                                                                   preserveRatio="true">
+                                                            <image>
+                                                                <Image url="@buy.png"/>
+                                                            </image>
+                                                        </ImageView>
+                                                    </graphic>
                                                     <HBox.margin>
-                                                        <Insets left="280.0"/>
+                                                        <Insets left="620.0"/>
                                                     </HBox.margin>
-                                                    <image>
-                                                        <Image url="@buy.png"/>
-                                                    </image>
-                                                </ImageView>
-                                                <JFXTextField focusColor="#f2837c" prefHeight="56.0" prefWidth="270.0"
-                                                              promptText="Serach ..."
+                                                </JFXButton>
+                                                <JFXTextField fx:id="searchField" focusColor="#f2837c" prefHeight="56.0"
+                                                              prefWidth="270.0" promptText="Serach ..."
                                                               style="-fx-background-color: #ebebeb; -fx-background-radius: 15;"
                                                               unFocusColor="#646161">
                                                     <HBox.margin>
@@ -126,7 +119,7 @@
                                                         <Insets left="25.0"/>
                                                     </padding>
                                                 </JFXTextField>
-                                                <JFXButton prefHeight="58.0" prefWidth="61.0"
+                                                <JFXButton fx:id="searchButton" prefHeight="58.0" prefWidth="61.0"
                                                            style="-fx-background-color: #f2837c; -fx-background-radius: 14;"
                                                            text=" " textFill="WHITE">
                                                     <font>
@@ -158,13 +151,15 @@
                                                                         <Insets left="120.0" top="20.0"/>
                                                                     </VBox.margin>
                                                                     <children>
-                                                                        <Label prefHeight="101.0" prefWidth="350.0"
-                                                                               text="Catagory Name" textFill="#a4522c">
+                                                                        <Label fx:id="categoryName" prefHeight="101.0"
+                                                                               prefWidth="350.0" text="Catagory Name"
+                                                                               textFill="#a4522c">
                                                                             <font>
                                                                                 <Font name="System Bold" size="41.0"/>
                                                                             </font>
                                                                         </Label>
-                                                                        <ComboBox focusTraversable="false"
+                                                                        <ComboBox fx:id="comboBox"
+                                                                                  focusTraversable="false"
                                                                                   opacity="0.85" prefHeight="50.0"
                                                                                   prefWidth="200.0" promptText="Sort"
                                                                                   style="-fx-background-color: #f3decb; -fx-background-radius: 15;">
@@ -199,7 +194,7 @@
                                                         </VBox>
                                                     </children>
                                                 </Pane>
-                                                <VBox>
+                                                <VBox fx:id="productsBox">
                                                     <HBox.margin>
                                                         <Insets left="15.0" right="30.0" top="20.0"/>
                                                     </HBox.margin>
@@ -218,6 +213,15 @@
                                                                                 <Insets left="40.0" top="10.0"/>
                                                                             </VBox.margin>
                                                                         </Label>
+                                                                        <Label prefHeight="72.0" prefWidth="80.0"
+                                                                               text="Price :" textFill="#83807e">
+                                                                            <font>
+                                                                                <Font size="22.0"/>
+                                                                            </font>
+                                                                            <VBox.margin>
+                                                                                <Insets left="20.0"/>
+                                                                            </VBox.margin>
+                                                                        </Label>
                                                                         <HBox alignment="CENTER_LEFT" spacing="20.0">
                                                                             <children>
                                                                                 <Label prefHeight="60.0"
@@ -227,9 +231,11 @@
                                                                                         <Font size="24.0"/>
                                                                                     </font>
                                                                                 </Label>
-                                                                                <JFXSlider max="500.0" prefHeight="52.0"
+                                                                                <JFXSlider fx:id="minPriceSlider"
+                                                                                           max="500.0" prefHeight="52.0"
                                                                                            prefWidth="269.0"
-                                                                                           snapToTicks="true">
+                                                                                           snapToTicks="true"
+                                                                                           value="1.0E-5">
                                                                                     <cursor>
                                                                                         <Cursor fx:constant="HAND"/>
                                                                                     </cursor>
@@ -248,7 +254,8 @@
                                                                                         <Font size="24.0"/>
                                                                                     </font>
                                                                                 </Label>
-                                                                                <JFXSlider max="500.0" prefHeight="45.0"
+                                                                                <JFXSlider fx:id="maxPriceSlider"
+                                                                                           max="500.0" prefHeight="45.0"
                                                                                            prefWidth="269.0"
                                                                                            snapToTicks="true"
                                                                                            value="500.0">
@@ -261,10 +268,71 @@
                                                                                 <Insets left="20.0" right="20.0"/>
                                                                             </padding>
                                                                         </HBox>
+                                                                        <Label prefHeight="72.0" prefWidth="80.0"
+                                                                               text="Rate :" textFill="#83807e">
+                                                                            <font>
+                                                                                <Font size="22.0"/>
+                                                                            </font>
+                                                                            <VBox.margin>
+                                                                                <Insets left="20.0"/>
+                                                                            </VBox.margin>
+                                                                        </Label>
+                                                                        <HBox alignment="CENTER_LEFT" spacing="20.0">
+                                                                            <children>
+                                                                                <Label prefHeight="60.0"
+                                                                                       prefWidth="52.0" text="Min"
+                                                                                       textFill="#494949">
+                                                                                    <font>
+                                                                                        <Font size="24.0"/>
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <JFXSlider fx:id="minRateSlider"
+                                                                                           blockIncrement="5.0"
+                                                                                           majorTickUnit="1.0" max="5.0"
+                                                                                           minorTickCount="1"
+                                                                                           prefHeight="52.0"
+                                                                                           prefWidth="269.0"
+                                                                                           snapToTicks="true"
+                                                                                           value="1.0E-6">
+                                                                                    <cursor>
+                                                                                        <Cursor fx:constant="HAND"/>
+                                                                                    </cursor>
+                                                                                </JFXSlider>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets left="20.0" right="20.0"/>
+                                                                            </padding>
+                                                                        </HBox>
+                                                                        <HBox alignment="CENTER_LEFT" spacing="20.0">
+                                                                            <children>
+                                                                                <Label prefHeight="60.0"
+                                                                                       prefWidth="52.0" text="Max"
+                                                                                       textFill="#494949">
+                                                                                    <font>
+                                                                                        <Font size="24.0"/>
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <JFXSlider fx:id="maxRateSlider"
+                                                                                           blockIncrement="5.0"
+                                                                                           majorTickUnit="1.0" max="5.0"
+                                                                                           minorTickCount="1"
+                                                                                           prefHeight="45.0"
+                                                                                           prefWidth="269.0"
+                                                                                           snapToTicks="true"
+                                                                                           value="5.0">
+                                                                                    <cursor>
+                                                                                        <Cursor fx:constant="HAND"/>
+                                                                                    </cursor>
+                                                                                </JFXSlider>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets left="20.0" right="20.0"/>
+                                                                            </padding>
+                                                                        </HBox>
                                                                         <JFXToggleButton alignment="CENTER_LEFT"
                                                                                          prefHeight="81.0"
                                                                                          prefWidth="383.0" size="13.0"
-                                                                                         text="Filter Name"
+                                                                                         text="Available"
                                                                                          textFill="#494949"
                                                                                          toggleColor="#f2837c"
                                                                                          toggleLineColor="#f2837c">
@@ -274,6 +342,17 @@
                                                                             <VBox.margin>
                                                                                 <Insets/>
                                                                             </VBox.margin>
+                                                                        </JFXToggleButton>
+                                                                        <JFXToggleButton alignment="CENTER_LEFT"
+                                                                                         prefHeight="81.0"
+                                                                                         prefWidth="383.0" size="13.0"
+                                                                                         text="Discount"
+                                                                                         textFill="#494949"
+                                                                                         toggleColor="#f2837c"
+                                                                                         toggleLineColor="#f2837c">
+                                                                            <font>
+                                                                                <Font size="24.0"/>
+                                                                            </font>
                                                                         </JFXToggleButton>
                                                                     </children>
                                                                     <padding>
@@ -296,7 +375,8 @@
                                                                                 <Insets left="40.0" top="10.0"/>
                                                                             </VBox.margin>
                                                                         </Label>
-                                                                        <TreeView id="myListView" prefWidth="200.0">
+                                                                        <TreeView id="myListView" fx:id="treeView"
+                                                                                  prefWidth="200.0">
                                                                             <VBox.margin>
                                                                                 <Insets left="20.0" right="20.0"/>
                                                                             </VBox.margin>
