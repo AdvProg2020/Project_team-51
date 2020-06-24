@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import model.Auction;
+import model.OffCode;
 import model.People.Account;
 import model.People.Manager;
 import model.People.Seller;
@@ -155,14 +156,12 @@ public class SellerMenuPanes {
         return pane;
     }
 
-    public Pane getProductsForOffPane (List<Product> productList){
+    public Pane getCreateAuctionPane(){
         Pane pane = new Pane();
         pane.setPrefSize(1540,800);
 
         final int X = 300;
-        TableView tableView = new TableView();
         ArrayList<Product> selected = new ArrayList<>();
-        List<Product> availableProducts = sellerController.getProductsForAuction();
         Label nameLabel = getLabel("name" , X ,300);
         Label nameError = getErrorLabel("",X,320);
         TextField nameField = getTextFieldDefault("" , X , 340);
@@ -246,6 +245,24 @@ public class SellerMenuPanes {
                         (int)percentSlider.getValue());
             }
         });
+        pane.getChildren().addAll(
+                nameLabel,
+                nameError,
+                nameField,
+                beginDateLabel,
+                beginDateError,
+                beginDatePicker,
+                endDateLabel,
+                endDateError,
+                endDatePicker,
+                percentLabel,
+                percentSlider,
+                percentSliderAmount,
+                selectedLabel,
+                selectedError,
+                products
+        );
+
         return pane;
     }
 
@@ -296,6 +313,119 @@ public class SellerMenuPanes {
         table.setItems(data);
         table.getColumns().addAll(productName, select);
         return table;
+    }
+
+    public Pane getEditAuctionPane (Auction auction){
+        Pane pane = new Pane();
+        pane.setPrefSize(1540,800);
+
+        final int X = 300;
+        ArrayList<Product> selected = new ArrayList<>();
+
+        Label nameLabel = getLabel("name" , X ,300);
+        Label nameError = getErrorLabel("",X,320);
+        TextField nameField = getTextFieldDefault("" , X , 340);
+        nameField.setText(auction.getAuctionId());
+
+        Label       beginDateLabel = getLabel("begin date" , X , 390);
+        Label       beginDateError = getErrorLabel("" , X ,410);
+        DatePicker  beginDatePicker = new DatePicker();
+        setPlace(beginDatePicker , X , 430);
+        beginDatePicker.setValue(toLocalDate(auction.getBeginDate()));
+
+        Label       endDateLabel = getLabel("end date" , X ,480);
+        Label       endDateError = getErrorLabel("" , X,500);
+        DatePicker  endDatePicker= new DatePicker();
+        setPlace(endDatePicker , X , 520);
+        endDatePicker.setValue(toLocalDate(auction.getEndDate()));
+
+        Label       percentLabel     = getLabel("percent" , X , 570);
+        Slider      percentSlider   = new Slider(1,99,1);
+        Label percentSliderAmount = new Label("");
+        setPlace(percentSliderAmount , X +120, 590);
+        setPlace(percentSlider , X , 610);
+        percentSliderAmount.setText(Integer.toString((int) auction.getOffPercentage()));
+        percentSlider.setValue(auction.getOffPercentage());
+        percentSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(
+                    ObservableValue<? extends Number> observableValue,
+                    Number oldValue,
+                    Number newValue) {
+                percentSliderAmount.textProperty().setValue(
+                        String.valueOf(newValue.intValue()));
+            }
+        });
+
+        Label selectedLabel = getLabel("selected products" , 500 , 300);
+        Label selectedError = getErrorLabel("" , 500 , 320);
+
+        TableView products = getProductsTableViewAuction(selected);
+        setPlace(products , 500 , 340);
+
+        Button back = getButton("back" , event -> {
+            //todo go back
+        });
+        setPlace(back , 330 , 650);
+
+        Button confirm = getButton("confirm" ,event -> {
+            if (nameLabel.getText().equals("")||nameField.getText().equals(auction.getAuctionId())){
+                nameError.setText("");
+            }else if(sellerController.doesAuctionExist(nameField.getText())){
+                nameError.setText("this name is taken");
+            }else{
+                nameError.setText("");
+            }
+
+            if(beginDatePicker.getValue().equals(null)){
+                beginDateError.setText("please select a date");
+            }
+            if (endDatePicker.getValue().equals(null)){
+                endDateError.setText("please select a date");
+            }
+            if (endDatePicker.getValue()!=null&&beginDatePicker.getValue()!=null){
+                if (endDatePicker.getValue().isAfter(beginDatePicker.getValue())){
+                    endDateError.setText("end date must be after start");
+                }else{
+                    endDateError.setText("");
+                    beginDateError.setText("");
+                }
+            }
+
+            if (selected.size()<1){
+                selectedError.setText("select at least one product");
+            }else {
+                selectedError.setText("");
+            }
+
+            if (nameError.getText().equals("")&&
+                    beginDateError.getText().equals("")&&
+                    endDateError.getText().equals("")&&
+                    selectedError.getText().equals("")){
+                // todo after copleteing the auction problems : sellerController.editAuction();
+
+            }
+        });
+        pane.getChildren().addAll(
+                nameLabel,
+                nameError,
+                nameField,
+                beginDateLabel,
+                beginDateError,
+                beginDatePicker,
+                endDateLabel,
+                endDateError,
+                endDatePicker,
+                percentLabel,
+                percentSlider,
+                percentSliderAmount,
+                selectedLabel,
+                selectedError,
+                products
+        );
+        return pane;
+
     }
 
     private static TextField getTextFieldDefault(String Default , double x , double y){

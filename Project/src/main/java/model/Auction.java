@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Auction {
-
+//todo auctions dont have name
     private static ArrayList<Auction> allAuctions = new ArrayList<Auction>();
     private Seller seller;
     private String auctionId;

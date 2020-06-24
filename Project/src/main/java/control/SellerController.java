@@ -78,25 +78,29 @@ public class SellerController extends Controller {
         }
     }
 
-    public static void editAuction(String auctionId, String field, String value, String description)
-            throws InvalidAuctionIdException, InvalidFieldException {
+    //old edit auction
 
-        var auction = Auction.getAuctionById(auctionId);
-        if (auction == null) throw new InvalidAuctionIdException();
+//    public static void editAuction(String auctionId, String field, String value, String description)
+//            throws InvalidAuctionIdException, InvalidFieldException {
+//
+//        var auction = Auction.getAuctionById(auctionId);
+//        if (auction == null) throw new InvalidAuctionIdException();
+//
+//        if (field.equalsIgnoreCase("begin date")) {
+//            new EditAuctionRequest(auction, "begin date", value);
+//        } else if (field.equalsIgnoreCase("end date")) {
+//            new EditAuctionRequest(auction, "end date", value);
+//        } else if (field.equalsIgnoreCase("off percentage")) {
+//            new EditAuctionRequest(auction, "off percentage", value);
+//        } else if (field.equalsIgnoreCase("add product")) {
+//            new EditAuctionRequest(auction, "add product", value);
+//        } else if (field.equalsIgnoreCase("remove product")) {
+//            new EditAuctionRequest(auction, "remove product", value);
+//        } else throw new InvalidFieldException("Field is invalid ! ");
+//
+//    } // old
 
-        if (field.equalsIgnoreCase("begin date")) {
-            new EditAuctionRequest(auction, "begin date", value);
-        } else if (field.equalsIgnoreCase("end date")) {
-            new EditAuctionRequest(auction, "end date", value);
-        } else if (field.equalsIgnoreCase("off percentage")) {
-            new EditAuctionRequest(auction, "off percentage", value);
-        } else if (field.equalsIgnoreCase("add product")) {
-            new EditAuctionRequest(auction, "add product", value);
-        } else if (field.equalsIgnoreCase("remove product")) {
-            new EditAuctionRequest(auction, "remove product", value);
-        } else throw new InvalidFieldException("Field is invalid ! ");
-
-    }
+    // TODO: ۲۴/۰۶/۲۰۲۰  create new edit auction method  
 
     public static void addAuction(Auction auction) throws NotAllowedActivityException {
         if (currentAccount instanceof Seller)
