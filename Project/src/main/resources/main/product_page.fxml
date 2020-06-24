@@ -8,7 +8,7 @@
 <?import javafx.scene.text.*?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity"
            minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0"
-           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.ProductPageController">
+           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.ProductPage.ProductPageController">
     <children>
         <BorderPane fx:id="mainPane" prefHeight="970.0" prefWidth="1720.0">
             <left>

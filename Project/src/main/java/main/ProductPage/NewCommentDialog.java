@@ -1,4 +1,4 @@
-package main;
+package main.ProductPage;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.events.JFXDialogEvent;
@@ -14,6 +14,7 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import main.Main;
 
 import java.io.IOException;
 

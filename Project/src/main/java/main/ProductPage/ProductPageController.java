@@ -1,4 +1,4 @@
-package main;
+package main.ProductPage;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import main.CommentController;
 import model.Comment;
 import model.People.Seller;
 import model.Product;

@@ -1,9 +1,10 @@
-package main;
+package main.Products;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import main.Main;
 
 import java.io.IOException;
 

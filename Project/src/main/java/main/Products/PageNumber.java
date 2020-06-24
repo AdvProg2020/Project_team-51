@@ -1,9 +1,10 @@
-package main;
+package main.Products;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
+import main.Main;
 
 import java.io.IOException;
 
