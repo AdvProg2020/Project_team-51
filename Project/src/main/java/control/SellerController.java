@@ -223,4 +223,11 @@ public class SellerController extends Controller {
     public void changePassword(String text) {
         if (text.length() > 4) currentAccount.setPassword(text);
     }
+
+    public boolean doesAuctionExist(String text) {
+        for(Auction a : Auction.getAllAuctions()){
+            if (a.getAuctionId().equals(text)) return true;
+        }
+        return false;
+    }
 }

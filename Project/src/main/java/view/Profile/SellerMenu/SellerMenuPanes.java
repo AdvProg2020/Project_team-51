@@ -1,18 +1,28 @@
 package view.Profile.SellerMenu;
 
 import control.Controller;
+import control.ManagerController;
 import control.SellerController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.util.Callback;
+import model.Auction;
+import model.People.Account;
+import model.People.Manager;
 import model.People.Seller;
 import model.Product;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -20,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 public class SellerMenuPanes {
-    static SellerController sellerController;
+    SellerController sellerController = new SellerController(Controller.getCurrentAccount());
 
     public static Pane getPersonalInfoPane (){
         Seller currentAccount = (Seller) Controller.getCurrentAccount();
@@ -146,9 +156,12 @@ public class SellerMenuPanes {
     }
 
     public Pane getProductsForOffPane (List<Product> productList){
+        Pane pane = new Pane();
+        pane.setPrefSize(1540,800);
+
         final int X = 300;
         TableView tableView = new TableView();
-        ArrayList <Product> selected = new ArrayList<>();
+        ArrayList<Product> selected = new ArrayList<>();
         List<Product> availableProducts = sellerController.getProductsForAuction();
         Label nameLabel = getLabel("name" , X ,300);
         Label nameError = getErrorLabel("",X,320);
@@ -181,22 +194,109 @@ public class SellerMenuPanes {
             }
         });
 
+        Label selectedLabel = getLabel("selected products" , 500 , 300);
+        Label selectedError = getErrorLabel("" , 500 , 320);
 
+        TableView products = getProductsTableViewAuction(selected);
+        setPlace(products , 500 , 340);
 
+        Button back = getButton("back" , event -> {
+            //todo go back
+        });
+        setPlace(back , 330 , 650);
 
+        Button confirm = getButton("confirm" ,event -> {
+            if (nameLabel.getText().length()==0){
+                nameError.setText("please select a name");
+            }else if(sellerController.doesAuctionExist(nameField.getText())){
+                nameError.setText("this name is taken");
+            }else{
+                nameError.setText("");
+            }
 
+            if(beginDatePicker.getValue().equals(null)){
+                beginDateError.setText("please select a date");
+            }
+            if (endDatePicker.getValue().equals(null)){
+                endDateError.setText("please select a date");
+            }
+            if (endDatePicker.getValue()!=null&&beginDatePicker.getValue()!=null){
+                if (endDatePicker.getValue().isAfter(beginDatePicker.getValue())){
+                    endDateError.setText("end date must be after start");
+                }else{
+                    endDateError.setText("");
+                    beginDateError.setText("");
+                }
+            }
 
+            if (selected.size()<1){
+                selectedError.setText("select at least one product");
+            }else {
+                selectedError.setText("");
+            }
 
+            if (nameError.equals("")&&
+                beginDateError.equals("")&&
+                endDateError.equals("")&&
+                selectedError.equals("")){
+                new Auction((Seller) Controller.getCurrentAccount(),
+                        toDate(beginDatePicker.getValue()),
+                        toDate(endDatePicker.getValue()),
+                        selected,
+                        (int)percentSlider.getValue());
+            }
+        });
         return pane;
     }
 
+    public TableView getProductsTableViewAuction(List<Product> selection) {
+        List<Product> products = sellerController.getProductsForAuction();
+        TableView<Product> table = new TableView<>();
+        ObservableList<Product> data
+                = FXCollections.observableArrayList(
+                products);
 
+        TableColumn productName = new TableColumn("name");
+        productName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+        TableColumn select = new TableColumn("select");
+        select.setCellValueFactory(new PropertyValueFactory<>("uselessString"));
 
+        Callback<TableColumn<Product, String>, TableCell<Product, String>> cellFactory
+                = //
+                new Callback<TableColumn<Product, String>, TableCell<Product, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Product, String> param) {
+                        final TableCell<Product, String> cell = new TableCell<Product, String>() {
 
+                            final CheckBox checkBox = new CheckBox();
 
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    checkBox.setOnAction(event -> {
+                                        Product product = getTableView().getItems().get(getIndex());
+                                        if (checkBox.isSelected()) selection.add(product);
+                                        else selection.remove(product);
+                                    });
+                                    setGraphic(checkBox);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+        select.setCellFactory(cellFactory);
 
-
+        table.setItems(data);
+        table.getColumns().addAll(productName, select);
+        return table;
+    }
 
     private static TextField getTextFieldDefault(String Default , double x , double y){
         TextField textField = new TextField();
@@ -245,5 +345,8 @@ public class SellerMenuPanes {
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
+    private Date toDate (LocalDate localDate){
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
 
 }
