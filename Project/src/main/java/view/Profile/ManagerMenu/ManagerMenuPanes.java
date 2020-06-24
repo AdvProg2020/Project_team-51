@@ -44,9 +44,10 @@ public class ManagerMenuPanes {
         Label passwordFieldError = getErrorLabel("", X, 170);
         PasswordField passwordField = new PasswordField();
         setPlace(passwordField, X, 190);
-        PasswordField confirmPasswordField = new PasswordField();
+        Label confirmPasswordFieldLabel = getLabel("confirm new pass", X, 240);
         Label confirmPasswordFieldError = getErrorLabel("", X, 260);
-        TextField confirmPasswordFieldLabel = getTextFieldDefault("confirm new pass", X, 280);
+        PasswordField confirmPasswordField = new PasswordField();
+        setPlace(confirmPasswordField , X, 280);
         Label nameLabel = getLabel("name", X, 330);
         Label nameError = getErrorLabel("", X, 350);
         TextField nameTextField = getTextFieldDefault(currentAccount.getFirstName(), X, 370);
@@ -668,6 +669,7 @@ public class ManagerMenuPanes {
     }
 
     /*public Pane getCreateOffCodePane(){*/
+
 //        ArrayList<Product> selectedProducts = new ArrayList<>();
 //        List<Customer> selectedCustomers = managerController.getAllCustomers();
 //        final int X = 300;
@@ -705,6 +707,26 @@ public class ManagerMenuPanes {
 //        );
 //        return pane;
 //    }
+
+    public Pane getManageAllProductsPane (){
+
+        Pane pane = new Pane();
+        pane.setPrefSize(1540,800);
+
+        TableView products = getManageProductsTableView();
+         setPlace(products , 400 , 300);
+
+         Label label = getLabel("all products : " , 400 , 270);
+
+         Button back = getButton("back" , event -> {
+             // TODO: ۲۴/۰۶/۲۰۲۰ going back
+         });
+
+         setPlace(back , 430 , 650);
+         pane.getChildren().addAll(products , label , back);
+
+         return pane;
+    }
 
     public Pane getCreateDiscountCodePane() {
         ArrayList<Account> selectedAccounts = new ArrayList<>();

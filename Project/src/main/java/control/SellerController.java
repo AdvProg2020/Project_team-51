@@ -12,6 +12,9 @@ import model.Requests.EditAuctionRequest;
 import model.Requests.EditProductRequest;
 
 import javax.management.InstanceAlreadyExistsException;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -76,24 +79,36 @@ public class SellerController extends Controller {
         }
     }
 
-    public static void editAuction(String auctionId, String field, String value, String description)
-            throws InvalidAuctionIdException, InvalidFieldException {
+    //old edit auction
 
-        var auction = Auction.getAuctionById(auctionId);
-        if (auction == null) throw new InvalidAuctionIdException();
+//    public static void editAuction(String auctionId, String field, String value, String description)
+//            throws InvalidAuctionIdException, InvalidFieldException {
+//
+//        var auction = Auction.getAuctionById(auctionId);
+//        if (auction == null) throw new InvalidAuctionIdException();
+//
+//        if (field.equalsIgnoreCase("begin date")) {
+//            new EditAuctionRequest(auction, "begin date", value);
+//        } else if (field.equalsIgnoreCase("end date")) {
+//            new EditAuctionRequest(auction, "end date", value);
+//        } else if (field.equalsIgnoreCase("off percentage")) {
+//            new EditAuctionRequest(auction, "off percentage", value);
+//        } else if (field.equalsIgnoreCase("add product")) {
+//            new EditAuctionRequest(auction, "add product", value);
+//        } else if (field.equalsIgnoreCase("remove product")) {
+//            new EditAuctionRequest(auction, "remove product", value);
+//        } else throw new InvalidFieldException("Field is invalid ! ");
+//
+//    } // old
 
-        if (field.equalsIgnoreCase("begin date")) {
-            new EditAuctionRequest(auction, "begin date", value);
-        } else if (field.equalsIgnoreCase("end date")) {
-            new EditAuctionRequest(auction, "end date", value);
-        } else if (field.equalsIgnoreCase("off percentage")) {
-            new EditAuctionRequest(auction, "off percentage", value);
-        } else if (field.equalsIgnoreCase("add product")) {
-            new EditAuctionRequest(auction, "add product", value);
-        } else if (field.equalsIgnoreCase("remove product")) {
-            new EditAuctionRequest(auction, "remove product", value);
-        } else throw new InvalidFieldException("Field is invalid ! ");
-
+    // TODO: ۲۴/۰۶/۲۰۲۰  create new edit auction method
+    public void editAuction (Auction auction , Date newStartdate , Date newEndDate
+    , ArrayList<Product> newProducts , int newOffPercent){
+        auction.setBeginDate(newStartdate);
+        auction.setEndDate(newEndDate);
+        auction.setAppliedProducts (newProducts);
+        auction.setOffPercentage(newOffPercent);
+        auction.setAuctionStatus(Status.PENDING_EDIT);
     }
 
     public static void addAuction(Auction auction) throws NotAllowedActivityException {
@@ -174,6 +189,16 @@ public class SellerController extends Controller {
                 .collect(Collectors.toList());
     }
 
+    public List<Product> getProductsForAuction(){
+        List products = ((Seller)currentAccount).getAvailableProducts();
+        for (Auction auction : ((Seller)currentAccount).getAllAuctions()){
+            for (Product p : auction.getAppliedProducts()){
+                if (auction.getEndDate().after(new Date())) products.remove(p);
+            }
+        }
+        return products;
+    }
+
     public List<String> viewOffs() {
         return ((Seller) currentAccount).getAllAuctions().stream().map(a -> {
             StringBuilder builder = new StringBuilder();
@@ -210,5 +235,12 @@ public class SellerController extends Controller {
 
     public void changePassword(String text) {
         if (text.length() > 4) currentAccount.setPassword(text);
+    }
+
+    public boolean doesAuctionExist(String text) {
+        for(Auction a : Auction.getAllAuctions()){
+            if (a.getAuctionId().equals(text)) return true;
+        }
+        return false;
     }
 }
