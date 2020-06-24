@@ -14,6 +14,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
@@ -21,8 +22,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import model.Category;
 import model.Product;
+import view.Profile.CustomerMenu.CustomerMenuPanes;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -288,6 +291,10 @@ public class MainController {
                 mainPane.setEffect(boxBlur);
                 dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
                 dialog.overlayCloseProperty().bindBidirectional(new SimpleBooleanProperty(!Controller.isLoggedIn()));
+            } else {
+                Stage stage = (Stage) stackPane.getScene().getWindow();
+                var pane = new CustomerMenuPanes().getPersonalInfoPane();
+                stage.setScene(new Scene(pane));
             }
         });
 
