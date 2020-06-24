@@ -10,7 +10,7 @@ import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
-public class takeOffCodeController extends AnchorPane {
+public class TakeOffCodeController extends AnchorPane {
 
 
     @FXML
@@ -27,8 +27,8 @@ public class takeOffCodeController extends AnchorPane {
 
     private StackPane stackPane;
 
-    public takeOffCodeController(StackPane stackPane) {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("address.fxml"));
+    public TakeOffCodeController(StackPane stackPane) {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("offCode.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         this.stackPane = stackPane;

@@ -24,10 +24,11 @@ import javafx.scene.text.Text;
 import model.Category;
 import model.Product;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class mainController {
+public class MainController {
 
     private List<Product> bestSellerProducts = new ArrayList<>();
     private List<Product> mostViewedProducts = new ArrayList<>();
@@ -56,13 +57,7 @@ public class mainController {
     private TreeView categoriesTreeView;
 
     @FXML
-    private JFXButton aboutUsButton;
-
-    @FXML
-    private JFXButton contactUsButton;
-
-    @FXML
-    private ImageView cartButton;
+    private JFXButton cartButton;
 
     @FXML
     private JFXTextField searchField;
@@ -154,6 +149,10 @@ public class mainController {
 
     @FXML
     public void initialize() {
+        var cartDialog = new CartDialogController(stackPane);
+        var addressDialog = new AddressController(stackPane);
+        var offCodeDialog = new TakeOffCodeController(stackPane);
+        var paymentDialog = new PaymentDialogController(stackPane);
 
         bestSellerProducts = Product.getBestSellerProducts();
         mostViewedProducts = Product.getMostViewedProducts();
@@ -167,14 +166,6 @@ public class mainController {
         if (Controller.getCurrentAccount() == null) {
             // call login
         }
-
-        aboutUsButton.setOnMouseClicked((Event) -> {
-            //load about us page
-        });
-
-        contactUsButton.setOnMouseClicked((Event) -> {
-            //load contact us page
-        });
 
         logout.visibleProperty().bind(new ObservableBooleanValue() {
             @Override
@@ -217,6 +208,58 @@ public class mainController {
 
         searchButton.setOnMouseClicked(event -> {
             // implement search
+        });
+
+        cartButton.setOnMouseClicked(event -> {
+            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+            dialogLayout.setActions(cartDialog);
+            dialogLayout.setStyle("-fx-background-color:  #db5e5c");
+            dialog.show();
+            mainPane.setEffect(boxBlur);
+            dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
+        });
+
+        cartDialog.getPayButton().setOnMouseClicked(event -> {
+            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+            dialogLayout.setActions(addressDialog);
+            dialogLayout.setStyle("-fx-background-color:   #886488");
+            dialog.show();
+            cartDialog.setEffect(boxBlur);
+            dialog.setOnDialogClosed((JFXDialogEvent e) -> cartDialog.setEffect(null));
+        });
+
+        addressDialog.getNextButton().setOnMouseClicked(event -> {
+            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+            dialogLayout.setActions(offCodeDialog);
+            dialogLayout.setStyle("-fx-background-color:   #f3c669");
+            dialog.show();
+            addressDialog.setEffect(boxBlur);
+            dialog.setOnDialogClosed((JFXDialogEvent e) -> addressDialog.setEffect(null));
+        });
+
+        offCodeDialog.getNextButton().setOnMouseClicked(event -> {
+            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+            dialogLayout.setActions(paymentDialog);
+            dialogLayout.setStyle("-fx-background-color:    #b2aa72");
+            dialog.show();
+            offCodeDialog.setEffect(boxBlur);
+            dialog.setOnDialogClosed((JFXDialogEvent e) -> offCodeDialog.setEffect(null));
+        });
+
+        paymentDialog.getPayButton().setOnMouseClicked(event -> {
+            try {
+                Main.setRoot("main");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
 
