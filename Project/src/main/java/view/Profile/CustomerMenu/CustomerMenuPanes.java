@@ -54,9 +54,10 @@ public class CustomerMenuPanes {
         Label passwordFieldError = getErrorLabel("" , X , 170);
         PasswordField passwordField = new PasswordField();
         setPlace(passwordField , X , 190);
-        PasswordField confirmPasswordField     = new PasswordField();
+        Label         confirmPasswordFieldLabel = getLabel("conirm password" , X,240);
         Label         confirmPasswordFieldError= getErrorLabel("" , X , 260);
-        TextField     confirmPasswordFieldLabel= getTextFieldDefault("confirm new pass" , X , 280);
+        PasswordField confirmPasswordField = new PasswordField();
+        setPlace(passwordField , X, 280);
         Label     nameLabel             = getLabel("name" , X , 330);
         Label     nameError             = getErrorLabel("" , X , 350);
         TextField nameTextField         = getTextFieldDefault(currentAccount.getFirstName() , X , 370);
