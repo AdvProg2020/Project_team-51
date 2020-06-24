@@ -12,6 +12,8 @@ import model.Requests.EditAuctionRequest;
 import model.Requests.EditProductRequest;
 
 import javax.management.InstanceAlreadyExistsException;
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -172,6 +174,16 @@ public class SellerController extends Controller {
                 .distinct()
                 .map(Customer::getUsername)
                 .collect(Collectors.toList());
+    }
+
+    public List<Product> getProductsForAuction(){
+        List products = ((Seller)currentAccount).getAvailableProducts();
+        for (Auction auction : ((Seller)currentAccount).getAllAuctions()){
+            for (Product p : auction.getAppliedProducts()){
+                if (auction.getEndDate().after(new Date())) products.remove(p);
+            }
+        }
+        return products;
     }
 
     public List<String> viewOffs() {
