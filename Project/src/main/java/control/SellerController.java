@@ -13,6 +13,7 @@ import model.Requests.EditProductRequest;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -100,7 +101,15 @@ public class SellerController extends Controller {
 //
 //    } // old
 
-    // TODO: ۲۴/۰۶/۲۰۲۰  create new edit auction method  
+    // TODO: ۲۴/۰۶/۲۰۲۰  create new edit auction method
+    public void editAuction (Auction auction , Date newStartdate , Date newEndDate
+    , ArrayList<Product> newProducts , int newOffPercent){
+        auction.setBeginDate(newStartdate);
+        auction.setEndDate(newEndDate);
+        auction.setAppliedProducts (newProducts);
+        auction.setOffPercentage(newOffPercent);
+        auction.setAuctionStatus(Status.PENDING_EDIT);
+    }
 
     public static void addAuction(Auction auction) throws NotAllowedActivityException {
         if (currentAccount instanceof Seller)

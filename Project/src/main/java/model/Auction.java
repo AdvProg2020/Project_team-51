@@ -103,4 +103,8 @@ public class Auction {
                 "offPercentage : " + offPercentage + "\n" +
                 "auctionStatus : " + auctionStatus;
     }
+
+    public void setAppliedProducts(ArrayList<Product> newProducts) {
+    this.appliedProducts = newProducts;
+    }
 }

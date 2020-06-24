@@ -162,9 +162,9 @@ public class SellerMenuPanes {
 
         final int X = 300;
         ArrayList<Product> selected = new ArrayList<>();
-        Label nameLabel = getLabel("name" , X ,300);
-        Label nameError = getErrorLabel("",X,320);
-        TextField nameField = getTextFieldDefault("" , X , 340);
+//        Label nameLabel = getLabel("name" , X ,300);
+//        Label nameError = getErrorLabel("",X,320);
+//        TextField nameField = getTextFieldDefault("" , X , 340);
 
         Label       beginDateLabel = getLabel("begin date" , X , 390);
         Label       beginDateError = getErrorLabel("" , X ,410);
@@ -205,13 +205,13 @@ public class SellerMenuPanes {
         setPlace(back , 330 , 650);
 
         Button confirm = getButton("confirm" ,event -> {
-            if (nameLabel.getText().length()==0){
-                nameError.setText("please select a name");
-            }else if(sellerController.doesAuctionExist(nameField.getText())){
-                nameError.setText("this name is taken");
-            }else{
-                nameError.setText("");
-            }
+//            if (nameLabel.getText().length()==0){
+//                nameError.setText("please select a name");
+//            }else if(sellerController.doesAuctionExist(nameField.getText())){
+//                nameError.setText("this name is taken");
+//            }else{
+//                nameError.setText("");
+//            }
 
             if(beginDatePicker.getValue().equals(null)){
                 beginDateError.setText("please select a date");
@@ -234,7 +234,7 @@ public class SellerMenuPanes {
                 selectedError.setText("");
             }
 
-            if (nameError.equals("")&&
+            if (//nameError.equals("")&&
                 beginDateError.equals("")&&
                 endDateError.equals("")&&
                 selectedError.equals("")){
@@ -246,9 +246,9 @@ public class SellerMenuPanes {
             }
         });
         pane.getChildren().addAll(
-                nameLabel,
-                nameError,
-                nameField,
+//                nameLabel,
+//                nameError,
+//                nameField,
                 beginDateLabel,
                 beginDateError,
                 beginDatePicker,
@@ -322,10 +322,10 @@ public class SellerMenuPanes {
         final int X = 300;
         ArrayList<Product> selected = new ArrayList<>();
 
-        Label nameLabel = getLabel("name" , X ,300);
-        Label nameError = getErrorLabel("",X,320);
-        TextField nameField = getTextFieldDefault("" , X , 340);
-        nameField.setText(auction.getAuctionId());
+//        Label nameLabel = getLabel("name" , X ,300);
+//        Label nameError = getErrorLabel("",X,320);
+//        TextField nameField = getTextFieldDefault("" , X , 340);
+//        nameField.setText(auction.getAuctionId());
 
         Label       beginDateLabel = getLabel("begin date" , X , 390);
         Label       beginDateError = getErrorLabel("" , X ,410);
@@ -370,13 +370,13 @@ public class SellerMenuPanes {
         setPlace(back , 330 , 650);
 
         Button confirm = getButton("confirm" ,event -> {
-            if (nameLabel.getText().equals("")||nameField.getText().equals(auction.getAuctionId())){
-                nameError.setText("");
-            }else if(sellerController.doesAuctionExist(nameField.getText())){
-                nameError.setText("this name is taken");
-            }else{
-                nameError.setText("");
-            }
+//            if (nameLabel.getText().equals("")||nameField.getText().equals(auction.getAuctionId())){
+//                nameError.setText("");
+//            }else if(sellerController.doesAuctionExist(nameField.getText())){
+//                nameError.setText("this name is taken");
+//            }else{
+//                nameError.setText("");
+//            }
 
             if(beginDatePicker.getValue().equals(null)){
                 beginDateError.setText("please select a date");
@@ -399,18 +399,18 @@ public class SellerMenuPanes {
                 selectedError.setText("");
             }
 
-            if (nameError.getText().equals("")&&
+            if (//nameError.getText().equals("")&&
                     beginDateError.getText().equals("")&&
                     endDateError.getText().equals("")&&
                     selectedError.getText().equals("")){
-                // todo after copleteing the auction problems : sellerController.editAuction();
-
+                    sellerController.editAuction(auction,
+                            toDate(beginDatePicker.getValue()) , toDate(endDatePicker.getValue()) ,selected,(int)percentSlider.getValue());
             }
         });
         pane.getChildren().addAll(
-                nameLabel,
-                nameError,
-                nameField,
+//                nameLabel,
+//                nameError,
+//                nameField,
                 beginDateLabel,
                 beginDateError,
                 beginDatePicker,
