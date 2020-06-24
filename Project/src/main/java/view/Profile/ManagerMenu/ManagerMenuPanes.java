@@ -668,6 +668,7 @@ public class ManagerMenuPanes {
     }
 
     /*public Pane getCreateOffCodePane(){*/
+
 //        ArrayList<Product> selectedProducts = new ArrayList<>();
 //        List<Customer> selectedCustomers = managerController.getAllCustomers();
 //        final int X = 300;
@@ -705,6 +706,26 @@ public class ManagerMenuPanes {
 //        );
 //        return pane;
 //    }
+
+    public Pane getManageAllProductsPane (){
+
+        Pane pane = new Pane();
+        pane.setPrefSize(1540,800);
+
+        TableView products = getManageProductsTableView();
+         setPlace(products , 400 , 300);
+
+         Label label = getLabel("all products : " , 400 , 270);
+
+         Button back = getButton("back" , event -> {
+             // TODO: ۲۴/۰۶/۲۰۲۰ going back
+         });
+
+         setPlace(back , 430 , 650);
+         pane.getChildren().addAll(products , label , back);
+
+         return pane;
+    }
 
     public Pane getCreateDiscountCodePane() {
         ArrayList<Account> selectedAccounts = new ArrayList<>();
