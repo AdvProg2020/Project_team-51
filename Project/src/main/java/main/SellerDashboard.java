@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
-public class SellerController {
+public class SellerDashboard {
 
     @FXML
     private StackPane stackPane;
@@ -43,6 +43,6 @@ public class SellerController {
 
     @FXML
     private void initialize() {
-        
+
     }
 }
