@@ -165,7 +165,17 @@ public class ManagerMenuPanes {
     }
 
     public Pane getManageRequestsPane(){
-        return null;
+        Pane pane = new Pane();
+
+        Label requestLabel = getLabel("requests",300,300);
+        TableView tv = getRequestsTebleView();
+        Button back = getButton("back" , event -> {
+            // TODO: ۲۵/۰۶/۲۰۲۰ go back
+        });
+        setPlace(back,370,700);
+
+        pane.getChildren().addAll(requestLabel,tv,back);
+        return pane;
     }
 
     public TableView getManageUsersTableView (){
@@ -622,7 +632,19 @@ public class ManagerMenuPanes {
     }
 
     public Pane getViewOffcodesPane(){
-        return null;
+        Pane pane = new Pane();
+        pane.setPrefSize(1540,800);
+
+        Label label = getLabel("offCodes",300,300);
+        TableView tableView = getAllOffCodesTableView();
+        setPlace(tableView,300,320);
+        Button back = getButton("back" , event -> {
+            // TODO: ۲۵/۰۶/۲۰۲۰ go back
+        });
+        setPlace(back,370, 700);
+
+        pane.getChildren().addAll(label,tableView,back);
+        return pane;
     }
 
     public Pane getEditDiscountCodePane(OffCode offCode) {
@@ -789,46 +811,6 @@ public class ManagerMenuPanes {
         return pane;
     }
 
-    public Pane getCreateOffCodePane(){
-
-        ArrayList<Product> selectedProducts = new ArrayList<>();
-        List<Customer> selectedCustomers = managerController.getAllCustomers();
-        final int X = 300;
-        Label       codeLabel     = getLabel("discount code" , X , 300);
-        Label       codeError     = getErrorLabel("" , X , 320);
-        TextField   codeTextField = getTextFieldDefault("" , X , 340);
-        Label       startDateLabel= getLabel("start date: " , X , 390);
-        Label       startDateError=getErrorLabel("" , X , 410);
-        DatePicker  startDatePicker=new DatePicker();
-        setPlace(startDatePicker , X , 430);
-        Label       endDateLabel = getLabel("end date: " , X , 480);
-        Label       endDateerror = getErrorLabel("" , X , 500);
-        DatePicker endDatePicker = new DatePicker();
-        setPlace(endDatePicker , X , 520);
-        Pane pane = new Pane();
-        pane.setPrefSize(1500,800);
-        TableView tv = getPeopleTableViewForOffCode(selectedCustomers);
-        tv.setLayoutX(500);
-        tv.setLayoutY(200);
-        TableView productTableView = getProductsTableViewForOffCode(selectedProducts);
-        productTableView.setLayoutX(800);
-        productTableView.setLayoutY(200);
-        pane.getChildren().addAll(
-                codeLabel,
-                codeError,
-                codeTextField,
-                startDateLabel,
-                startDateError,
-                startDatePicker,
-                endDateLabel,
-                endDateerror,
-                tv,
-                productTableView,
-                endDatePicker
-        );
-        return pane;
-    }
-
     public Pane getManageAllProductsPane (){
 
         Pane pane = new Pane();
@@ -913,13 +895,11 @@ public class ManagerMenuPanes {
         repeatCombobox.getSelectionModel().select(0);
         setPlace(repeatCombobox, X, 640);
 
-        Label accountsLabel = getLabel("accounts", 800, 180);
+        Label accountsLabel = getLabel("accounts", 500, 180);
         TableView tv = getPeopleTableViewForDiscountCode(selectedAccounts);
         tv.setLayoutX(500);
-        tv.setLayoutY(200);
-        Label accountsError = getErrorLabel("", 860, 180);
-
-        Label productsLabel = getLabel("products", 500, 180);
+        tv.setLayoutY(220);
+        Label accountsError = getErrorLabel("", 500, 200);
 
         Button back = new Button("back");
         setPlace(back, 500, 670);
@@ -1006,63 +986,10 @@ public class ManagerMenuPanes {
                 percentSliderAmount,
                 maxOffAmount,
                 confirm,
-                productsLabel,
                 accountsError,
                 accountsLabel
         );
         return pane;
-    }
-
-
-    private TableView getProductsTableViewForDiscountCode(ArrayList <Product> products) {
-
-        TableView<Product> table = new TableView<>();
-        ObservableList<Product> data
-                = FXCollections.observableArrayList(
-                Product.getAllProducts()); // must get data from manager controlle
-
-        TableColumn productName = new TableColumn("name");
-        productName.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-        TableColumn select = new TableColumn("select");
-        select.setCellValueFactory(new PropertyValueFactory<>("uselessString"));
-
-
-        Callback<TableColumn<Product, String>, TableCell<Product, String>> cellFactory
-                = //
-                new Callback<TableColumn<Product, String>, TableCell<Product, String>>() {
-                    @Override
-                    public TableCell call(final TableColumn<Product, String> param) {
-                        final TableCell<Product, String> cell = new TableCell<Product, String>() {
-
-                            final CheckBox checkBox = new CheckBox();
-
-                            @Override
-                            public void updateItem(String item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (empty) {
-                                    setGraphic(null);
-                                    setText(null);
-                                } else {
-                                    checkBox.setOnAction(event -> {
-                                        Product product = getTableView().getItems().get(getIndex());
-                                        if (checkBox.isSelected()) products.add(product);
-                                        else products.remove(product);
-                                        System.out.println(products);
-                                    });
-                                    setGraphic(checkBox);
-                                    setText(null);
-                                }
-                            }
-                        };
-                        return cell;
-                    }
-                };
-        select.setCellFactory(cellFactory);
-
-        table.setItems(data);
-        table.getColumns().addAll(productName,select);
-        return table;
     }
 
     public TableView getPeopleTableViewForDiscountCode(ArrayList<Account> selectedAccounts) {
