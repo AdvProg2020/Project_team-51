@@ -90,4 +90,8 @@ public class Category {
     public String getCategoryId() {
         return categoryId;
     }
+
+    public static Category getCategoryByName(String name) {
+        return allCategories.stream().filter(c -> c.getName().equals(name)).findFirst().orElse(null);
+    }
 }

@@ -21,6 +21,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -32,7 +33,7 @@ import model.Product;
 import java.util.List;
 import java.util.Map;
 
-public class ProductPageController {
+public class ProductPageController extends AnchorPane {
 
 
     @FXML

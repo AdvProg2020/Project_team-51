@@ -24,4 +24,8 @@ public class SearchFilter extends Filter {
     public List<Product> applyFilter(List<Product> products) {
         return products.stream().filter(p -> p.getName().contains(search)).collect(Collectors.toList());
     }
+
+    public List<Product> applyFilter(List<Product> products, String search) {
+        return products.stream().filter(p -> p.getName().contains(search)).collect(Collectors.toList());
+    }
 }

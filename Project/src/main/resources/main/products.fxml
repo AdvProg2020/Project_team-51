@@ -7,9 +7,9 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity"
-           minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0"
-           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.Products.ProductsController">
+<fx:root xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity"
+         minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" type="StackPane"
+         xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.Products.ProductsController">
     <children>
         <BorderPane fx:id="mainPane" prefHeight="970.0" prefWidth="1720.0">
             <left>
@@ -44,7 +44,7 @@
                 </Pane>
             </left>
             <center>
-                <ScrollPane focusTraversable="false" hbarPolicy="NEVER" hmax="0.95" prefWidth="1639.0"
+                <ScrollPane focusTraversable="false" hbarPolicy="NEVER" hmax="0.95" prefWidth="1639.0" vvalue="0.47"
                             BorderPane.alignment="CENTER">
                     <content>
                         <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="1440.0"
@@ -329,7 +329,8 @@
                                                                                 <Insets left="20.0" right="20.0"/>
                                                                             </padding>
                                                                         </HBox>
-                                                                        <JFXToggleButton alignment="CENTER_LEFT"
+                                                                        <JFXToggleButton fx:id="availableFilter"
+                                                                                         alignment="CENTER_LEFT"
                                                                                          prefHeight="81.0"
                                                                                          prefWidth="383.0" size="13.0"
                                                                                          text="Available"
@@ -343,7 +344,8 @@
                                                                                 <Insets/>
                                                                             </VBox.margin>
                                                                         </JFXToggleButton>
-                                                                        <JFXToggleButton alignment="CENTER_LEFT"
+                                                                        <JFXToggleButton fx:id="discountFilter"
+                                                                                         alignment="CENTER_LEFT"
                                                                                          prefHeight="81.0"
                                                                                          prefWidth="383.0" size="13.0"
                                                                                          text="Discount"
@@ -413,4 +415,4 @@
             </center>
         </BorderPane>
     </children>
-</StackPane>
+</fx:root>

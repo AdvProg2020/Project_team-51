@@ -6,14 +6,13 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import control.Controller;
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
@@ -21,6 +20,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import main.Products.ProductsController;
 import model.Category;
 import model.Product;
 
@@ -146,6 +147,8 @@ public class MainController {
     @FXML
     private BorderPane mainPane;
 
+    private Stage stage;
+
 
     @FXML
     public void initialize() {
@@ -157,47 +160,12 @@ public class MainController {
         bestSellerProducts = Product.getBestSellerProducts();
         mostViewedProducts = Product.getMostViewedProducts();
         allCategories = Category.getAllCategories();
+//        stage = (Stage) mainPane.getScene().getWindow();
 
         if (!bestSellerProducts.isEmpty())
             initializeBestSellers();
         if (!mostViewedProducts.isEmpty())
             initializeMostViewed();
-
-        if (Controller.getCurrentAccount() == null) {
-            // call login
-        }
-
-        logout.visibleProperty().bind(new ObservableBooleanValue() {
-            @Override
-            public boolean get() {
-                return Controller.isLoggedIn();
-            }
-
-            @Override
-            public void addListener(ChangeListener<? super Boolean> listener) {
-
-            }
-
-            @Override
-            public void removeListener(ChangeListener<? super Boolean> listener) {
-
-            }
-
-            @Override
-            public Boolean getValue() {
-                return Controller.isLoggedIn();
-            }
-
-            @Override
-            public void addListener(InvalidationListener listener) {
-
-            }
-
-            @Override
-            public void removeListener(InvalidationListener listener) {
-
-            }
-        });
 
         searchField.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -207,9 +175,8 @@ public class MainController {
         });
 
         searchButton.setOnMouseClicked(event -> {
-            // implement search
-        });
 
+        });
         cartButton.setOnMouseClicked(event -> {
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
@@ -220,7 +187,6 @@ public class MainController {
             mainPane.setEffect(boxBlur);
             dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
         });
-
         cartDialog.getPayButton().setOnMouseClicked(event -> {
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
@@ -231,7 +197,6 @@ public class MainController {
             cartDialog.setEffect(boxBlur);
             dialog.setOnDialogClosed((JFXDialogEvent e) -> cartDialog.setEffect(null));
         });
-
         addressDialog.getNextButton().setOnMouseClicked(event -> {
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
@@ -242,7 +207,6 @@ public class MainController {
             addressDialog.setEffect(boxBlur);
             dialog.setOnDialogClosed((JFXDialogEvent e) -> addressDialog.setEffect(null));
         });
-
         offCodeDialog.getNextButton().setOnMouseClicked(event -> {
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
@@ -253,7 +217,6 @@ public class MainController {
             offCodeDialog.setEffect(boxBlur);
             dialog.setOnDialogClosed((JFXDialogEvent e) -> offCodeDialog.setEffect(null));
         });
-
         paymentDialog.getPayButton().setOnMouseClicked(event -> {
             try {
                 Main.setRoot("main");
@@ -267,14 +230,12 @@ public class MainController {
         Category root = allCategories.stream().filter(c -> c.getParentCategory() == null).findAny().orElse(null);
         categoriesTreeView = new TreeView<String>(populateCategories(root, new TreeItem<String>("Main")));
         categoriesTreeView.getSelectionModel().selectionModeProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(((TreeItem<String>) newValue).getValue());
+            stage.setScene(new Scene(new ProductsController(Category.getCategoryByName(newValue.toString()))));
         });
         EventHandler<MouseEvent> mouseEventHandle = (MouseEvent event) -> {
             handleMouseClicked(event);
         };
-
         categoriesTreeView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventHandle);
-
         customItem.setHideOnClick(false);
         customItem.setContent(categoriesTreeView);
         categoriesTreeView.setShowRoot(false);
