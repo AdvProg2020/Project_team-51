@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -50,22 +51,33 @@ public class CustomerDashboard {
     @FXML
     private void initialize() {
         CustomerMenuPanes dashboard = new CustomerMenuPanes();
-        Stage stage = (Stage) stackPane.getScene().getWindow();
+        Stage stage = Main.getPrimaryStage();
         Customer customer = (Customer) Controller.getCurrentAccount();
-
 
         usernameLabel.setText(customer.getUsername());
 
         personalInfoButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getPersonalInfoPane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getPersonalInfoPane()));
+            newStage.setTitle("  Personal Info");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         discountCodesButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getCustomerDiscountCodes(customer)));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getCustomerDiscountCodes(customer)));
+            newStage.setTitle("  Personal Info");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         ordersButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getOrdersPane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getOrdersPane()));
+            newStage.setTitle("  Personal Info");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         homeButton.setOnMouseClicked(event -> {

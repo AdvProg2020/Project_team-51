@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import control.Controller;
+import control.Filters.SearchFilter;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,6 +24,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Products.ProductsController;
 import model.Category;
+import model.People.Customer;
+import model.People.Manager;
+import model.People.Seller;
 import model.Product;
 
 import java.io.IOException;
@@ -147,7 +151,7 @@ public class MainController {
     @FXML
     private BorderPane mainPane;
 
-    private Stage stage;
+    private Stage stage = new Stage();
 
 
     @FXML
@@ -160,7 +164,7 @@ public class MainController {
         bestSellerProducts = Product.getBestSellerProducts();
         mostViewedProducts = Product.getMostViewedProducts();
         allCategories = Category.getAllCategories();
-//        stage = (Stage) mainPane.getScene().getWindow();
+        stage = Main.getPrimaryStage();
 
         if (!bestSellerProducts.isEmpty())
             initializeBestSellers();
@@ -174,9 +178,6 @@ public class MainController {
             }
         });
 
-        searchButton.setOnMouseClicked(event -> {
-
-        });
         cartButton.setOnMouseClicked(event -> {
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
@@ -232,9 +233,7 @@ public class MainController {
         categoriesTreeView.getSelectionModel().selectionModeProperty().addListener((observable, oldValue, newValue) -> {
             stage.setScene(new Scene(new ProductsController(Category.getCategoryByName(newValue.toString()))));
         });
-        EventHandler<MouseEvent> mouseEventHandle = (MouseEvent event) -> {
-            handleMouseClicked(event);
-        };
+        EventHandler<MouseEvent> mouseEventHandle = this::handleMouseClicked;
         categoriesTreeView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventHandle);
         customItem.setHideOnClick(false);
         customItem.setContent(categoriesTreeView);
@@ -243,7 +242,7 @@ public class MainController {
             if (!Controller.isLoggedIn()) {
                 BoxBlur boxBlur = new BoxBlur(6, 6, 6);
                 JFXDialogLayout dialogLayout = new JFXDialogLayout();
-                JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.BOTTOM);
                 dialogLayout.setActions(new LoginDialog(stackPane));
                 dialog.show();
                 mainPane.setEffect(boxBlur);
@@ -255,13 +254,32 @@ public class MainController {
                 });
                 dialog.overlayCloseProperty().bindBidirectional(new SimpleBooleanProperty(!Controller.isLoggedIn()));
             } else {
-//                Stage stage = (Stage) stackPane.getScene().getWindow();
-//                var pane = new CustomerMenuPanes().getPersonalInfoPane();
-//                stage.setScene(new Scene(pane));
-//                stage.show();
+                var currentAccount = Controller.getCurrentAccount();
+                if (currentAccount instanceof Customer) {
+                    try {
+                        Main.setRoot("customer-dashboard");
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                } else if (currentAccount instanceof Seller) {
+                    try {
+                        Main.setRoot("seller-dashboard");
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                } else if (currentAccount instanceof Manager) {
+                    try {
+                        Main.setRoot("manager-dashboard");
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
             }
         });
 
+        searchButton.setOnMouseClicked(event -> {
+            Main.getPrimaryStage().setScene(new Scene(new ProductsController(SearchFilter.getInstance().applyFilter(Product.getAllProducts(), search))));
+        });
     }
 
     private void handleMouseClicked(MouseEvent event) {
@@ -269,8 +287,8 @@ public class MainController {
         // Accept clicks only on node cells, and not on empty spaces of the TreeView
         if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
             String name = (String) ((TreeItem) categoriesTreeView.getSelectionModel().getSelectedItem()).getValue();
-            Category category = allCategories.stream().filter(c -> c.getName().equals(name)).findAny().orElse(null);
-            System.out.println(category.getName());
+            Category category = Category.getCategoryByName(name);
+            stage.setScene(new Scene(new ProductsController(category)));
         }
     }
 

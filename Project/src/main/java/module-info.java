@@ -1,4 +1,4 @@
- module Project {
+ open module Project {
      requires javafx.base;
      requires javafx.controls;
      requires javafx.fxml;
@@ -16,6 +16,5 @@
     requires org.junit.jupiter.engine;
     requires com.jfoenix;
     requires java.desktop;
-    opens main to javafx.fxml;
     exports main;
 }

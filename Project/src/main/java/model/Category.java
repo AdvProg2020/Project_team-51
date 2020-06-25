@@ -92,6 +92,10 @@ public class Category {
     }
 
     public static Category getCategoryByName(String name) {
-        return allCategories.stream().filter(c -> c.getName().equals(name)).findFirst().orElse(null);
+        for (Category category : allCategories) {
+            if (category.getName().equals(name))
+                return category;
+        }
+        return null;
     }
 }

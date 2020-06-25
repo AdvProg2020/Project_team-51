@@ -14,9 +14,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -119,28 +123,46 @@ public class ProductsController extends StackPane {
 
 
     public ProductsController(List<Product> products) {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("products.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
         this.products = products;
+        categoryName.setText("");
         initialize();
     }
 
     public ProductsController(Category currentCategory) {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("products.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        try {
+            Main.setRoot((Parent) fxmlLoader.load());
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
         this.currentCategory = currentCategory;
         if (currentCategory != null) {
             products = ProductController.showProductsOfThisCategory(currentCategory);
         }
+        categoryName.setText(currentCategory.getName());
         initialize();
     }
 
     @FXML
     public void initialize() {
-        stage = (Stage) this.getScene().getWindow();
+        stage = Main.getPrimaryStage();
         sorts = ProductController.showAvailableSort();
         initializeComponents();
         initializeSorts();
-        updateListToMap();
-        initializePageNumbers();
-        initializeCategories();
-        pageNumberUpdate(1);
+//        updateListToMap();
+//        initializePageNumbers();
+//        initializeCategories();
+//        pageNumberUpdate(1);
     }
 
     private void initializeComponents() {
@@ -150,6 +172,7 @@ public class ProductsController extends StackPane {
         var offCodeDialog = new TakeOffCodeController(stackPane);
         var paymentDialog = new PaymentDialogController(stackPane);
 
+        System.out.println(dashboard);
         dashboard.setOnMouseClicked(e -> {
             if (!Controller.isLoggedIn()) {
                 BoxBlur boxBlur = new BoxBlur(6, 6, 6);
@@ -267,6 +290,30 @@ public class ProductsController extends StackPane {
             }
         });
 
+        logout.setOnMouseClicked(event -> {
+            if (Controller.isLoggedIn()) {
+                BoxBlur boxBlur = new BoxBlur(4, 4, 4);
+                JFXButton button = new JFXButton("  Yes  ");
+                button.setStyle("-fx-background-color:#fe615a; -fx-background-radius:  18; -fx-text-fill: white");
+                button.setPadding(new Insets(3, 16, 3, 16));
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                dialogLayout.setHeading(new Label(" Logout "));
+                dialogLayout.setStyle("-fx-background-color: rgba(255,104,110,0.64)");
+                JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                button.setOnMouseClicked((MouseEvent event1) -> {
+                    dialog.close();
+                });
+                dialogLayout.setActions(button);
+                dialog.show();
+                mainPane.setEffect(boxBlur);
+                dialog.setOnDialogClosed((JFXDialogEvent event1) -> {
+                    mainPane.setEffect(null);
+                });
+            } else {
+                showError(" You have not logged in yet !");
+            }
+        });
+
 
         discountFilter.selectedProperty().addListener((a, b, newValue) -> {
 //            if (newValue) {
@@ -336,7 +383,7 @@ public class ProductsController extends StackPane {
     private void initializeSorts() {
         ObservableList<String> allSorts = FXCollections.observableArrayList();
         allSorts.addAll(sorts);
-        comboBox.getItems().addAll(allSorts);
+        comboBox.getItems().addAll(allSorts.stream().distinct().collect(Collectors.toList()));
         comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.equals("Name"))
                 products = ProductController.applySort(SortTypes.NAME_SORT, products);
@@ -361,6 +408,29 @@ public class ProductsController extends StackPane {
             });
         });
         initializePageNumbers();
+    }
+
+    private void showError(String message) {
+        showErrorWithColor(message, "#fe615a");
+    }
+
+    @FXML
+    private void showErrorWithColor(String message, String color) {
+        BoxBlur boxBlur = new BoxBlur(4, 4, 4);
+        JFXButton button = new JFXButton("  Yes  ");
+        button.setStyle("-fx-background-color:" + color + "; -fx-background-radius:  18; -fx-text-fill: white");
+        button.setPadding(new Insets(3, 16, 3, 16));
+        JFXDialogLayout dialogLayout = new JFXDialogLayout();
+        dialogLayout.setHeading(new Label(message));
+        dialogLayout.setStyle("-fx-background-color: rgba(255,104,110,0.64)");
+        JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+        button.setOnMouseClicked((MouseEvent event) -> {
+            dialog.close();
+        });
+        dialogLayout.setActions(button);
+        dialog.show();
+        mainPane.setEffect(boxBlur);
+        dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
     }
 
 
