@@ -432,6 +432,13 @@ public class SellerMenuPanes {
 
     }
 
+    public Pane getSalesHistoryPane (){
+        return null;
+    }
+
+
+
+
     private static TextField getTextFieldDefault(String Default , double x , double y){
         TextField textField = new TextField();
         textField.setText(Default);

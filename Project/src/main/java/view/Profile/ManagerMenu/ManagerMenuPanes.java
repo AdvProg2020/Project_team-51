@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
+import model.Category;
 import model.OffCode;
 import model.People.Account;
 import model.People.Customer;
@@ -28,6 +29,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class ManagerMenuPanes {
     ManagerController managerController = new ManagerController(Controller.getCurrentAccount());
@@ -993,6 +995,235 @@ public class ManagerMenuPanes {
         table.setItems(data);
         table.getColumns().addAll(productName, select);
         return table;
+    }
+
+    public Pane getEditCategoryPane(Category category){
+        Pane pane = new Pane ();
+        pane.setPrefSize(1540,800);
+        final int X = 300;
+
+        Label nameLabel = getLabel("category name" , X , 300);
+        Label nameError = getErrorLabel("" , X , 320);
+        TextField nameField = getTextFieldDefault(category.getName(),X,340);
+
+        Label parentLabel = getLabel("parent category" ,X,390);
+        Label parentError = getErrorLabel("",X,410);
+        ComboBox <Category> parentComboBox = new ComboBox<>();
+        parentComboBox.getItems().addAll(Category.getAllCategories());
+        if (category.getParentCategory()!=null)
+            parentComboBox.getSelectionModel().select(category.getParentCategory());
+        setPlace(parentComboBox , X,430);
+
+        ArrayList<Category> subCategoriesArrayList = new ArrayList<>();
+        for (Map.Entry<Integer , Category> map : category.getSubCategories().entrySet()){
+            subCategoriesArrayList.add(map.getValue());
+        }
+        Label subCategoriesLabel = getLabel("sub categories" , X+200 ,300);
+        Label subCategoriesError = getErrorLabel("",X+200,320);
+        TableView<Category> subCategoriesTableView = getSubCategoriesTableView(subCategoriesArrayList);
+        setPlace(subCategoriesTableView,X+200,340);
+
+        ArrayList<Product> products = new ArrayList<>();
+        Label productsLabel = getLabel("products",X+700,300);
+        Label productsError = getErrorLabel("",X+700,320);
+        TableView productsTableViewCategory = getProductsTableViewCategory(category,products);
+        setPlace(productsTableViewCategory,X+700,340);
+
+        Button back = getButton("back" , event -> {
+            // TODO: ۲۵/۰۶/۲۰۲۰ go back
+        });
+        setPlace(back,X,480);
+
+        Button confirm = getButton("confirm",event -> {
+            if (nameField.getText().equals("")||nameField.getText().equals(category.getName())){
+                nameError.setText("");
+            }else {
+                if (managerController.isCategoryValid(nameField.getText())){
+                    nameError.setText("this name is taken");
+                }
+            }
+
+            Category parent = parentComboBox.getValue();
+            if (parent.equals(category)) parentError.setText("a category cannot be its own father");
+            else if (category.getSubCategories().containsValue(parent)){
+                parentError.setText("cannot select this category");
+                // TODO: ۲۵/۰۶/۲۰۲۰ this must get all the sub categories from the subcategories too
+            }
+            else {
+                parentError.setText("");
+            }
+
+            try {
+                getSubCategoriesError(category , subCategoriesArrayList);
+                subCategoriesError.setText("");
+            } catch (Exception e) {
+                subCategoriesError.setText(e.getMessage());
+            }
+
+            if (products.size()<1){
+                productsError.setText("must choose at least one");
+            }else {
+                productsError.setText("");
+            }
+
+            if (nameError.equals("")&&
+                    parentError.equals("")&&
+                    productsError.equals("")&&
+                    subCategoriesError.equals("")){
+
+            }
+        });
+
+
+        pane.getChildren().addAll(
+                nameLabel,
+                nameError,
+                nameField,
+                parentLabel,
+                parentError,
+                parentComboBox,
+                subCategoriesLabel,
+                subCategoriesError,
+                subCategoriesTableView,
+                productsLabel,
+                productsError,
+                productsTableViewCategory
+        );
+
+        return pane;
+    }
+
+    private void getSubCategoriesError(Category category , ArrayList<Category> subCategories) throws Exception {
+        for (Category c : subCategories){
+            getSubCategoriesError(category , new ArrayList<>(c.getSubCategories().values()));
+        }
+        if (subCategories.contains(category)) throw new Exception("category cannot be a father");
+    }
+
+    private TableView getProductsTableViewCategory(Category category , ArrayList<Product> products) {
+
+        TableView <Product> tableView = new TableView<>();
+
+        ArrayList<Product> categoryProducts = new ArrayList<>();
+        for (Product p : Product.getAllProducts()){
+            if (p.getParentCategory().equals(category)){
+                categoryProducts.add(p);
+            }
+        }
+
+        ObservableList<Product> data
+                = FXCollections.observableArrayList(
+                Product.getAllProducts());
+
+        TableColumn categoryName = new TableColumn("name");
+        categoryName.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn select = new TableColumn("select");
+        select.setCellValueFactory(new PropertyValueFactory<>("uselessString"));
+
+        Callback<TableColumn<Product, String>, TableCell<Product, String>> cellFactory
+                = //
+                new Callback<TableColumn<Product, String>, TableCell<Product, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Product, String> param) {
+                        final TableCell<Product, String> cell = new TableCell<Product, String>() {
+
+                            final CheckBox checkBox = new CheckBox();
+                            boolean firstTime = true;
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (!empty){
+                                    if (firstTime){
+                                        Product product = getTableView().getItems().get(getIndex());
+                                        if (category!=null){
+                                            if (categoryProducts.contains(product)) checkBox.setSelected(true);
+                                        }
+                                        firstTime = false;
+                                    }
+                                }
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    checkBox.setOnAction(event -> {
+                                        Product product = getTableView().getItems().get(getIndex());
+                                        if (checkBox.isSelected()) categoryProducts.add(product);
+                                        else categoryProducts.remove(category);
+                                    });
+                                    setGraphic(checkBox);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        select.setCellFactory(cellFactory);
+        tableView.setItems(data);
+        tableView.getColumns().addAll(categoryName,select);
+
+        return tableView;
+    }
+
+    private TableView<Category> getSubCategoriesTableView(ArrayList<Category> subCategories) {
+        TableView <Category> tableView = new TableView<>();
+
+        ObservableList<Category> data
+                = FXCollections.observableArrayList(
+                Category.getAllCategories());
+
+        TableColumn categoryName = new TableColumn("name");
+        categoryName.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn select = new TableColumn("select");
+        select.setCellValueFactory(new PropertyValueFactory<>("uselessString"));
+
+        Callback<TableColumn<Category, String>, TableCell<Category, String>> cellFactory
+                = //
+                new Callback<TableColumn<Category, String>, TableCell<Category, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Category, String> param) {
+                        final TableCell<Category, String> cell = new TableCell<Category, String>() {
+
+                            final CheckBox checkBox = new CheckBox();
+                            boolean firstTime = true;
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (!empty){
+                                    if (firstTime){
+                                        Category category = getTableView().getItems().get(getIndex());
+                                        if (category!=null){
+                                            if (subCategories.contains(category)) checkBox.setSelected(true);
+                                        }
+                                        firstTime = false;
+                                    }
+                                }
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    checkBox.setOnAction(event -> {
+                                        Category category = getTableView().getItems().get(getIndex());
+                                        if (checkBox.isSelected()) subCategories.add(category);
+                                        else subCategories.remove(category);
+                                    });
+                                    setGraphic(checkBox);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        select.setCellFactory(cellFactory);
+        tableView.setItems(data);
+        tableView.getColumns().addAll(categoryName,select);
+
+        return tableView;
     }
 
     private TextField getTextFieldDefault(String Default, double x, double y) {
