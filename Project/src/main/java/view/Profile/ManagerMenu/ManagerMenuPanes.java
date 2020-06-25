@@ -992,6 +992,11 @@ public class ManagerMenuPanes {
         return pane;
     }
 
+    public Pane getAllCategoriesPane(){
+        Pane pane = new Pane();
+        return pane;
+    }
+
     public TableView getPeopleTableViewForDiscountCode(ArrayList<Account> selectedAccounts) {
         ArrayList<Product> selection = new ArrayList<>();
         TableView<Product> table = new TableView<>();
