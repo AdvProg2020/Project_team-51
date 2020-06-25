@@ -21,6 +21,7 @@ import model.People.Account;
 import model.People.Customer;
 import model.Product;
 import model.Requests.Request;
+import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 import java.time.Instant;
@@ -31,6 +32,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+
 public class ManagerMenuPanes {
     ManagerController managerController = new ManagerController(Controller.getCurrentAccount());
     Account currentAccount = Controller.getCurrentAccount();
@@ -39,29 +41,29 @@ public class ManagerMenuPanes {
         final int X = 300;
         Pane pane = new Pane();
         pane.setPrefSize(1540, 800);
-        Label usernameLabel = getLabel("username", X, 60);
-        Label userNameError = getErrorLabel("", X, 80);
-        TextField username = getTextFieldDefault(currentAccount.getUsername(), 300, 100);
-        Label passwordLabel = getLabel("password", X, 150);
-        Label passwordFieldError = getErrorLabel("", X, 170);
+        Label usernameLabel = getLabel("username", X, 160);
+        Label userNameError = getErrorLabel("", X, 180);
+        TextField username = getTextFieldDefault(currentAccount.getUsername(), X, 200);
+        Label passwordLabel = getLabel("password", X, 250);
+        Label passwordFieldError = getErrorLabel("", X, 270);
         PasswordField passwordField = new PasswordField();
-        setPlace(passwordField, X, 190);
-        Label confirmPasswordFieldLabel = getLabel("confirm new pass", X, 240);
-        Label confirmPasswordFieldError = getErrorLabel("", X, 260);
+        setPlace(passwordField, X, 290);
+        Label confirmPasswordFieldLabel = getLabel("confirm new pass", X, 340);
+        Label confirmPasswordFieldError = getErrorLabel("", X, 360);
         PasswordField confirmPasswordField = new PasswordField();
-        setPlace(confirmPasswordField , X, 280);
-        Label nameLabel = getLabel("name", X, 330);
-        Label nameError = getErrorLabel("", X, 350);
-        TextField nameTextField = getTextFieldDefault(currentAccount.getFirstName(), X, 370);
-        Label lastNameLabel = getLabel("last name", X, 420);
-        Label lastNameError = getErrorLabel("", X, 440);
-        TextField lastNameTextField = getTextFieldDefault(currentAccount.getLastName(), X, 460);
-        Label emailLabel = getLabel("email", X, 510);
-        Label emailError = getErrorLabel("", X, 530);
-        TextField emailTextField = getTextFieldDefault(currentAccount.getEmail(), X, 550);
-        Label phoneNumberLabel = getLabel("phone number", X, 600);
-        Label phoneNumberError = getErrorLabel("", X, 620);
-        TextField phoneNumberTextField = getTextFieldDefault(currentAccount.getPhoneNumber(), X, 640);
+        setPlace(confirmPasswordField , X, 380);
+        Label nameLabel = getLabel("name", X, 430);
+        Label nameError = getErrorLabel("", X, 450);
+        TextField nameTextField = getTextFieldDefault(currentAccount.getFirstName(), X, 470);
+        Label lastNameLabel = getLabel("last name", X, 520);
+        Label lastNameError = getErrorLabel("", X, 540);
+        TextField lastNameTextField = getTextFieldDefault(currentAccount.getLastName(), X, 560);
+        Label emailLabel = getLabel("email", X, 610);
+        Label emailError = getErrorLabel("", X, 630);
+        TextField emailTextField = getTextFieldDefault(currentAccount.getEmail(), X, 650);
+        Label phoneNumberLabel = getLabel("phone number", X, 700);
+        Label phoneNumberError = getErrorLabel("", X, 720);
+        TextField phoneNumberTextField = getTextFieldDefault(currentAccount.getPhoneNumber(), X, 740);
         Button submit = new Button("submit");
         EventHandler submitButtonAction = new EventHandler() {
             @Override
@@ -123,6 +125,7 @@ public class ManagerMenuPanes {
                         }
                     }
                 }
+                //if (confirmPasswordFieldError.equals())
             }
         };
         Button back = new Button("back");
@@ -249,6 +252,10 @@ public class ManagerMenuPanes {
         table.setItems(data);
         table.getColumns().addAll(requestDetail, accept, decline);
         return table;
+    }
+
+    public Pane getManageRequestsPane(){
+        return null;
     }
 
     public TableView getManageProductsTableView() {
@@ -506,6 +513,10 @@ public class ManagerMenuPanes {
         return table;
     }
 
+    public Pane getViewOffcodesPane(){
+        return null;
+    }
+
     public Pane getEditDiscountCodePane(OffCode offCode) {
         Pane pane = new Pane();
         List<Account> selectedAccounts;
@@ -670,45 +681,45 @@ public class ManagerMenuPanes {
         return pane;
     }
 
-    /*public Pane getCreateOffCodePane(){*/
+    public Pane getCreateOffCodePane(){
 
-//        ArrayList<Product> selectedProducts = new ArrayList<>();
-//        List<Customer> selectedCustomers = managerController.getAllCustomers();
-//        final int X = 300;
-//        Label       codeLabel     = getLabel("discount code" , X , 300);
-//        Label       codeError     = getErrorLabel("" , X , 320);
-//        TextField   codeTextField = getTextFieldDefault("" , X , 340);
-//        Label       startDateLabel= getLabel("start date: " , X , 390);
-//        Label       startDateError=getErrorLabel("" , X , 410);
-//        DatePicker  startDatePicker=new DatePicker();
-//        setPlace(startDatePicker , X , 430);
-//        Label       endDateLabel = getLabel("end date: " , X , 480);
-//        Label       endDateerror = getErrorLabel("" , X , 500);
-//        DatePicker endDatePicker = new DatePicker();
-//        setPlace(endDatePicker , X , 520);
-//        Pane pane = new Pane();
-//        pane.setPrefSize(1500,800);
-//        TableView tv = getPeopleTableViewForOffCode(selectedCustomers);
-//        tv.setLayoutX(500);
-//        tv.setLayoutY(200);
-//        TableView productTableView = getProductsTableViewForOffCode(selectedProducts);
-//        productTableView.setLayoutX(800);
-//        productTableView.setLayoutY(200);
-//        pane.getChildren().addAll(
-//                codeLabel,
-//                codeError,
-//                codeTextField,
-//                startDateLabel,
-//                startDateError,
-//                startDatePicker,
-//                endDateLabel,
-//                endDateerror,
-//                tv,
-//                productTableView,
-//                endDatePicker
-//        );
-//        return pane;
-//    }
+        ArrayList<Product> selectedProducts = new ArrayList<>();
+        List<Customer> selectedCustomers = managerController.getAllCustomers();
+        final int X = 300;
+        Label       codeLabel     = getLabel("discount code" , X , 300);
+        Label       codeError     = getErrorLabel("" , X , 320);
+        TextField   codeTextField = getTextFieldDefault("" , X , 340);
+        Label       startDateLabel= getLabel("start date: " , X , 390);
+        Label       startDateError=getErrorLabel("" , X , 410);
+        DatePicker  startDatePicker=new DatePicker();
+        setPlace(startDatePicker , X , 430);
+        Label       endDateLabel = getLabel("end date: " , X , 480);
+        Label       endDateerror = getErrorLabel("" , X , 500);
+        DatePicker endDatePicker = new DatePicker();
+        setPlace(endDatePicker , X , 520);
+        Pane pane = new Pane();
+        pane.setPrefSize(1500,800);
+        TableView tv = getPeopleTableViewForOffCode(selectedCustomers);
+        tv.setLayoutX(500);
+        tv.setLayoutY(200);
+        TableView productTableView = getProductsTableViewForOffCode(selectedProducts);
+        productTableView.setLayoutX(800);
+        productTableView.setLayoutY(200);
+        pane.getChildren().addAll(
+                codeLabel,
+                codeError,
+                codeTextField,
+                startDateLabel,
+                startDateError,
+                startDatePicker,
+                endDateLabel,
+                endDateerror,
+                tv,
+                productTableView,
+                endDatePicker
+        );
+        return pane;
+    }
 
     public Pane getManageAllProductsPane (){
 
@@ -716,18 +727,18 @@ public class ManagerMenuPanes {
         pane.setPrefSize(1540,800);
 
         TableView products = getManageProductsTableView();
-         setPlace(products , 400 , 300);
+        setPlace(products , 400 , 300);
 
-         Label label = getLabel("all products : " , 400 , 270);
+        Label label = getLabel("all products : " , 400 , 270);
 
-         Button back = getButton("back" , event -> {
-             // TODO: ۲۴/۰۶/۲۰۲۰ going back
-         });
+        Button back = getButton("back" , event -> {
+            // TODO: ۲۴/۰۶/۲۰۲۰ going back
+        });
 
-         setPlace(back , 430 , 650);
-         pane.getChildren().addAll(products , label , back);
+        setPlace(back , 430 , 650);
+        pane.getChildren().addAll(products , label , back);
 
-         return pane;
+        return pane;
     }
 
     public Pane getCreateDiscountCodePane() {
@@ -895,56 +906,56 @@ public class ManagerMenuPanes {
     }
 
 
-    /*private TableView getProductsTableViewForDiscountCode(ArrayList <Product> products) {*/
+    private TableView getProductsTableViewForDiscountCode(ArrayList <Product> products) {
 
-//        TableView<Product> table = new TableView<>();
-//        ObservableList<Product> data
-//                = FXCollections.observableArrayList(
-//                Product.getAllProducts()); // must get data from manager controlle
-//
-//        TableColumn productName = new TableColumn("name");
-//        productName.setCellValueFactory(new PropertyValueFactory<>("name"));
-//
-//        TableColumn select = new TableColumn("select");
-//        select.setCellValueFactory(new PropertyValueFactory<>("uselessString"));
-//
-//
-//        Callback<TableColumn<Product, String>, TableCell<Product, String>> cellFactory
-//                = //
-//                new Callback<TableColumn<Product, String>, TableCell<Product, String>>() {
-//                    @Override
-//                    public TableCell call(final TableColumn<Product, String> param) {
-//                        final TableCell<Product, String> cell = new TableCell<Product, String>() {
-//
-//                            final CheckBox checkBox = new CheckBox();
-//
-//                            @Override
-//                            public void updateItem(String item, boolean empty) {
-//                                super.updateItem(item, empty);
-//                                if (empty) {
-//                                    setGraphic(null);
-//                                    setText(null);
-//                                } else {
-//                                    checkBox.setOnAction(event -> {
-//                                        Product product = getTableView().getItems().get(getIndex());
-//                                        if (checkBox.isSelected()) products.add(product);
-//                                        else products.remove(product);
-//                                        System.out.println(products);
-//                                    });
-//                                    setGraphic(checkBox);
-//                                    setText(null);
-//                                }
-//                            }
-//                        };
-//                        return cell;
-//                    }
-//                };
-//        select.setCellFactory(cellFactory);
-//
-//        table.setItems(data);
-//        table.getColumns().addAll(productName,select);
-//        return table;
-//    }
+        TableView<Product> table = new TableView<>();
+        ObservableList<Product> data
+                = FXCollections.observableArrayList(
+                Product.getAllProducts()); // must get data from manager controlle
+
+        TableColumn productName = new TableColumn("name");
+        productName.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn select = new TableColumn("select");
+        select.setCellValueFactory(new PropertyValueFactory<>("uselessString"));
+
+
+        Callback<TableColumn<Product, String>, TableCell<Product, String>> cellFactory
+                = //
+                new Callback<TableColumn<Product, String>, TableCell<Product, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Product, String> param) {
+                        final TableCell<Product, String> cell = new TableCell<Product, String>() {
+
+                            final CheckBox checkBox = new CheckBox();
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    checkBox.setOnAction(event -> {
+                                        Product product = getTableView().getItems().get(getIndex());
+                                        if (checkBox.isSelected()) products.add(product);
+                                        else products.remove(product);
+                                        System.out.println(products);
+                                    });
+                                    setGraphic(checkBox);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+        select.setCellFactory(cellFactory);
+
+        table.setItems(data);
+        table.getColumns().addAll(productName,select);
+        return table;
+    }
 
     public TableView getPeopleTableViewForDiscountCode(ArrayList<Account> selectedAccounts) {
         ArrayList<Product> selection = new ArrayList<>();
@@ -1091,6 +1102,11 @@ public class ManagerMenuPanes {
         );
 
         return pane;
+    }
+
+    public Pane getCreateCategoryPane(){
+
+        return null;
     }
 
     private void getSubCategoriesError(Category category , ArrayList<Category> subCategories) throws Exception {
