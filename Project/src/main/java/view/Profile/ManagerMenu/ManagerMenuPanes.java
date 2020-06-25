@@ -1109,6 +1109,10 @@ public class ManagerMenuPanes {
         return null;
     }
 
+    public Pane getManageUsersPane(){
+        return null;
+    }
+
     private void getSubCategoriesError(Category category , ArrayList<Category> subCategories) throws Exception {
         for (Category c : subCategories){
             getSubCategoriesError(category , new ArrayList<>(c.getSubCategories().values()));
