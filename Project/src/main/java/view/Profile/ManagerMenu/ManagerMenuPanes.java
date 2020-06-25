@@ -21,8 +21,8 @@ import model.People.Account;
 import model.People.Customer;
 import model.Product;
 import model.Requests.Request;
-import org.junit.jupiter.api.Test;
 
+import javax.persistence.Table;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -164,6 +164,118 @@ public class ManagerMenuPanes {
         return pane;
     }
 
+    public Pane getManageRequestsPane(){
+        return null;
+    }
+
+    public TableView getManageUsersTableView (){
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll("Manager" , "Customer" , "Seller");
+        List<Account> accounts = managerController.getAllProfiles();
+        TableView<Account> table = new TableView<>();
+        ObservableList<Account> data
+                = FXCollections.observableArrayList(
+                accounts
+        );
+
+        TableColumn username = new TableColumn("username");
+        username.setCellValueFactory(new PropertyValueFactory<>("userName"));
+
+        TableColumn firstName = new TableColumn("first name");
+        firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+
+        TableColumn lastName = new TableColumn("last name");
+        lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+
+        TableColumn balance = new TableColumn("balance");
+        balance.setCellValueFactory(new PropertyValueFactory<>("balanceString")); // todo create method in account
+
+        TableColumn type = new TableColumn("type");
+        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        TableColumn delete = new TableColumn("delete");
+        delete.setCellValueFactory(new PropertyValueFactory<>("noUse"));
+
+
+        Callback<TableColumn<Account, String>, TableCell<Account, String>> cellFactoryDeleteAccount
+                = //
+                new Callback<TableColumn<Account, String>, TableCell<Account, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Account, String> param) {
+                        final TableCell<Account, String> cell = new TableCell<Account, String>() {
+
+                            final Button btn = new Button("delete");
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    btn.setOnAction(ev->{
+                                        Account account = getTableView().getItems().get(getIndex());
+                                        table.getItems().remove(account);
+                                        try {
+                                            managerController.deleteUser(account.getUsername()); //todo replace with manager delete account method
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    });
+                                    setGraphic(btn);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        Callback<TableColumn<Account, String>, TableCell<Account, String>> cellFactorysecChangeType
+                = //
+                new Callback<TableColumn<Account, String>, TableCell<Account, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Account, String> param) {
+                        final TableCell<Account, String> cell = new TableCell<Account, String>() {
+
+                            final ComboBox comboBox = getAccountTypeCombobox();
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (item!=null)comboBox.getSelectionModel().select(item);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    comboBox.setOnAction(event -> {
+                                        Account account = getTableView().getItems().get(getIndex());
+                                        if (!comboBox.getValue().equals(account.getType())){managerController.setAccountType (account,(String) comboBox.getValue() );
+                                            System.out.println("combo" + Account.getAllAccounts());}
+                                    });
+                                    setGraphic(comboBox);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        delete.setCellFactory(cellFactoryDeleteAccount);
+        type.setCellFactory(cellFactorysecChangeType);
+
+        table.setItems(data);
+        table.getColumns().addAll(username,firstName , lastName , balance ,delete, type);
+        return table;
+    }
+
+    private ComboBox getAccountTypeCombobox(){
+        ComboBox comboBox = new ComboBox();
+        comboBox.getItems().addAll("Manager" , "Customer" , "Seller");
+        return comboBox;
+    }
+
     public TableView getRequestsTebleView() {
         TableView<Request> table = new TableView<>();
         ObservableList<Request> data
@@ -252,10 +364,6 @@ public class ManagerMenuPanes {
         table.setItems(data);
         table.getColumns().addAll(requestDetail, accept, decline);
         return table;
-    }
-
-    public Pane getManageRequestsPane(){
-        return null;
     }
 
     public TableView getManageProductsTableView() {
@@ -1110,7 +1218,20 @@ public class ManagerMenuPanes {
     }
 
     public Pane getManageUsersPane(){
-        return null;
+        Pane pane = new Pane ();
+        pane.setPrefSize(1540,800);
+
+
+        Label label = getLabel("users" , 300,300);
+        TableView tv = getManageUsersTableView();
+        setPlace(tv,300,330);
+
+        Button back = getButton("back",event -> {
+            // TODO: ۲۵/۰۶/۲۰۲۰ going back
+        });
+        pane.getChildren().addAll(label,tv,back);
+        return pane;
+
     }
 
     private void getSubCategoriesError(Category category , ArrayList<Category> subCategories) throws Exception {
