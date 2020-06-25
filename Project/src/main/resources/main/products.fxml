@@ -44,7 +44,7 @@
                 </Pane>
             </left>
             <center>
-                <ScrollPane focusTraversable="false" hbarPolicy="NEVER" hmax="0.95" prefWidth="1639.0" vvalue="0.47"
+                <ScrollPane focusTraversable="false" hbarPolicy="NEVER" hmax="0.95" prefWidth="1639.0"
                             BorderPane.alignment="CENTER">
                     <content>
                         <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="1440.0"
