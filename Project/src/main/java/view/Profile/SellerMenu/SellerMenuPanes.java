@@ -436,8 +436,17 @@ public class SellerMenuPanes {
         return null;
     }
 
+    public Pane getManageProductsPane(){
+        return null;
+    }
 
+    public Pane getCreateProductPane(){
+        return null;
+    }
 
+    public Pane getViewCategoriesPane(){
+        return null;
+    }
 
     private static TextField getTextFieldDefault(String Default , double x , double y){
         TextField textField = new TextField();

@@ -176,6 +176,14 @@ public class CustomerMenuPanes {
         return textField;
     }
 
+    public Pane getOrdersPane (){
+        return null;
+    }
+
+    public Pane viewDiscountCodesPane(){
+        return null;
+    }
+
     private Label getLabel (String text , double x , double y){
         Label label = new Label(text);
         label.setLayoutX(x);
