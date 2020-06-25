@@ -1,4 +1,4 @@
-package main;
+package main.Dashboard.Seller;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
