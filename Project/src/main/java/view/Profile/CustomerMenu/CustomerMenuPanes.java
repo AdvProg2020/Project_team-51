@@ -21,27 +21,6 @@ import java.util.List;
 public class CustomerMenuPanes {
     CustomerController customerController = new CustomerController(Controller.getCurrentAccount());
 
-    public TableView getCustomerDiscountCodes(Customer customer){
-        List<OffCode> offCodes = customerController.viewDiscountCodes();
-        TableView<OffCode> table = new TableView<>();
-        ObservableList<OffCode> data
-                = FXCollections.observableArrayList(
-                offCodes);
-
-        TableColumn productName = new TableColumn("code");
-        productName.setCellValueFactory(new PropertyValueFactory<>("offCode"));
-
-        TableColumn beginDate = new TableColumn("begin date");
-        beginDate.setCellValueFactory(new PropertyValueFactory<>("beginDateString"));
-
-        TableColumn endDate = new TableColumn("end date");
-        endDate.setCellValueFactory(new PropertyValueFactory<>("endDateString"));
-
-        table.setItems(data);
-        table.getColumns().addAll(productName , beginDate , endDate);
-        return table;
-    }
-
     public Pane getPersonalInfoPane (){
         Account currentAccount = Controller.getCurrentAccount();
         final int X = 300;
@@ -168,20 +147,53 @@ public class CustomerMenuPanes {
         return pane;
     }
 
-    private TextField getTextFieldDefault(String Default , double x , double y){
-        TextField textField = new TextField();
-        textField.setText(Default);
-        textField.setLayoutY(y);
-        textField.setLayoutX(x);
-        return textField;
+    public Pane viewDiscountCodesPane(){
+        Pane pane = new Pane();
+        pane.setPrefSize(1540,800);
+
+        Label label = getLabel("discount codes" , 300,300);
+        TableView tableView = getCustomerDiscountCodes((Customer) Controller.getCurrentAccount());
+        setPlace(tableView , 300,320);
+
+        Button back = getButton("back" , event -> {
+            // TODO: ۲۵/۰۶/۲۰۲۰ going back
+        });
+
+        pane.getChildren().addAll(label,tableView,back);
+        return pane;
+    }
+
+    public TableView getCustomerDiscountCodes(Customer customer){
+        List<OffCode> offCodes = customerController.viewDiscountCodes();
+        TableView<OffCode> table = new TableView<>();
+        ObservableList<OffCode> data
+                = FXCollections.observableArrayList(
+                offCodes);
+
+        TableColumn productName = new TableColumn("code");
+        productName.setCellValueFactory(new PropertyValueFactory<>("offCode"));
+
+        TableColumn beginDate = new TableColumn("begin date");
+        beginDate.setCellValueFactory(new PropertyValueFactory<>("beginDateString"));
+
+        TableColumn endDate = new TableColumn("end date");
+        endDate.setCellValueFactory(new PropertyValueFactory<>("endDateString"));
+
+        table.setItems(data);
+        table.getColumns().addAll(productName , beginDate , endDate);
+        return table;
     }
 
     public Pane getOrdersPane (){
         return null;
     }
 
-    public Pane viewDiscountCodesPane(){
-        return null;
+    private TextField getTextFieldDefault(String Default , double x , double y){
+        TextField textField = new TextField();
+        textField.setText(Default);
+        textField.setLayoutY(y);
+        textField.setLayoutX(x);
+        return textField;
     }
 
     private Label getLabel (String text , double x , double y){
