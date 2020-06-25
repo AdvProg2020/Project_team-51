@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity"
            minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" stylesheets="main.css"
-           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.Dashboard.Manager.ManagerDashboard">
+           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.ManagerDashboard">
     <children>
         <BorderPane fx:id="mainPane" prefHeight="970.0" prefWidth="1720.0">
             <left>
@@ -87,9 +87,9 @@
                                                 <Font name="System Bold" size="21.0"/>
                                             </font>
                                         </JFXButton>
-                                        <JFXButton fx:id="editDiscountButton" prefHeight="70.0" prefWidth="1400.0"
+                                        <JFXButton fx:id="viewDiscountButton" prefHeight="70.0" prefWidth="1400.0"
                                                    style="-fx-background-color: #886488; -fx-background-radius: 20;"
-                                                   text="Edit Discount Code" textFill="WHITE">
+                                                   text="View Discount Code" textFill="WHITE">
                                             <font>
                                                 <Font name="System Bold" size="21.0"/>
                                             </font>
@@ -108,9 +108,9 @@
                                                 <Font name="System Bold" size="21.0"/>
                                             </font>
                                         </JFXButton>
-                                        <JFXButton fx:id="editCategoryButton" prefHeight="70.0" prefWidth="1400.0"
+                                        <JFXButton fx:id="viewCategoriesButton" prefHeight="70.0" prefWidth="1400.0"
                                                    style="-fx-background-color: #886488; -fx-background-radius: 20;"
-                                                   text="Edit Category" textFill="WHITE">
+                                                   text="View Categories" textFill="WHITE">
                                             <font>
                                                 <Font name="System Bold" size="21.0"/>
                                             </font>
@@ -118,13 +118,6 @@
                                         <JFXButton fx:id="manageRequestsButton" prefHeight="70.0" prefWidth="1400.0"
                                                    style="-fx-background-color: #886488; -fx-background-radius: 20;"
                                                    text="Manage Requests" textFill="WHITE">
-                                            <font>
-                                                <Font name="System Bold" size="21.0"/>
-                                            </font>
-                                        </JFXButton>
-                                        <JFXButton fx:id="viewOffCodesButton" prefHeight="70.0" prefWidth="1400.0"
-                                                   style="-fx-background-color: #886488; -fx-background-radius: 20;"
-                                                   text="View Off Codes" textFill="WHITE">
                                             <font>
                                                 <Font name="System Bold" size="21.0"/>
                                             </font>

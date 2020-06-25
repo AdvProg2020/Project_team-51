@@ -106,7 +106,7 @@ public class CustomerDashboard {
                     }
             );
         });
-        
+
     }
 
     private void showError(String message) {
