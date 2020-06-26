@@ -2,8 +2,6 @@ package view;
 
 import control.Controller;
 import control.Exceptions.HaveNotLoggedInException;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import view.LoginAndRegisterMenu.LoginAndRegisterMenu;
 
 import java.util.LinkedHashMap;

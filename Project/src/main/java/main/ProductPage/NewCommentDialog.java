@@ -56,6 +56,12 @@ public class NewCommentDialog extends AnchorPane {
 
     }
 
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
+    }
+
     private void initialize() {
         title.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -102,7 +108,6 @@ public class NewCommentDialog extends AnchorPane {
         dialog.setOnDialogClosed((JFXDialogEvent event) -> this.setEffect(null));
     }
 
-
     @FXML
     private void showConfirmation(String message) {
         BoxBlur boxBlur = new BoxBlur(4, 4, 4);
@@ -120,11 +125,5 @@ public class NewCommentDialog extends AnchorPane {
         dialog.show();
         this.setEffect(boxBlur);
         dialog.setOnDialogClosed((JFXDialogEvent event) -> this.setEffect(null));
-    }
-
-    private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
     }
 }

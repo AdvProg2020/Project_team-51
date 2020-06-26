@@ -127,6 +127,12 @@ public class ProductPageController extends StackPane {
         this.controller = new SingleProductController(Controller.getCurrentAccount(), product);
     }
 
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
+    }
+
     public void initialize() {
         var cartDialog = new CartDialogController(stackPane);
         var addressDialog = new AddressController(stackPane);
@@ -338,7 +344,6 @@ public class ProductPageController extends StackPane {
         fadeTransition.play();
     }
 
-
     private TreeItem<String> populateCategories(Category parent, TreeItem parentItem) {
 
         for (Category category : Category.getAllCategories()) {
@@ -408,7 +413,6 @@ public class ProductPageController extends StackPane {
 
     }
 
-
     private void initializeComments() {
 
         for (Comment comment : allComments) {
@@ -449,7 +453,6 @@ public class ProductPageController extends StackPane {
         dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
     }
 
-
     @FXML
     private void showConfirmation(String message) {
         BoxBlur boxBlur = new BoxBlur(4, 4, 4);
@@ -467,12 +470,6 @@ public class ProductPageController extends StackPane {
         dialog.show();
         mainPane.setEffect(boxBlur);
         dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
-    }
-
-    private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
     }
 }
 

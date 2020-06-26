@@ -1,6 +1,9 @@
 package control;
 
-import control.Exceptions.*;
+import control.Exceptions.InvalidAuctionIdException;
+import control.Exceptions.InvalidUsernameException;
+import control.Exceptions.NotAllowedActivityException;
+import control.Exceptions.WrongFormatException;
 import model.*;
 import model.OrderLog.SellerLog;
 import model.People.Account;
@@ -11,7 +14,10 @@ import model.Requests.AddItemRequest;
 import model.Requests.EditProductRequest;
 
 import javax.management.InstanceAlreadyExistsException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SellerController extends Controller {
@@ -21,10 +27,6 @@ public class SellerController extends Controller {
 
     public static Boolean isThisFieldValid(Product product, String field) {
         return product.getAttributes().containsKey(field);
-    }
-
-    public List<SellerLog> getSellerLogs(){
-        return ((Seller)currentAccount).getHistoryOfSells();
     }
 
     public static void editFirstName(String firstName) throws InstanceAlreadyExistsException {
@@ -66,13 +68,13 @@ public class SellerController extends Controller {
         ((Seller) currentAccount).setBrandName(brand);
     }
 
-    public static ArrayList<Category> getAllCategories(){
+    public static ArrayList<Category> getAllCategories() {
         return Category.getAllCategories();
 
     }
 
-    public static boolean isProductNameTaken(String name){
-        for (Product p : Product.getAllProducts()){
+    public static boolean isProductNameTaken(String name) {
+        for (Product p : Product.getAllProducts()) {
             if (p.getName().equals(name)) return true;
         }
         return false;
@@ -88,6 +90,13 @@ public class SellerController extends Controller {
                 }
             }
         }
+    }
+
+    public static void addAuction(Auction auction) throws NotAllowedActivityException {
+        if (currentAccount instanceof Seller)
+            new AddAuctionRequest(auction, (Seller) currentAccount);
+        else
+            throw new NotAllowedActivityException("You are not allowed to add Auction");
     }
 
     //old edit auction
@@ -112,29 +121,26 @@ public class SellerController extends Controller {
 //
 //    } // old
 
-    // TODO: ۲۴/۰۶/۲۰۲۰  create new edit auction method
-    public void editAuction (Auction auction , Date newStartdate , Date newEndDate
-    , ArrayList<Product> newProducts , int newOffPercent){
-        auction.setBeginDate(newStartdate);
-        auction.setEndDate(newEndDate);
-        auction.setAppliedProducts (newProducts);
-        auction.setOffPercentage(newOffPercent);
-        auction.setAuctionStatus(Status.PENDING_EDIT);
-    }
-
-    public static void addAuction(Auction auction) throws NotAllowedActivityException {
-        if (currentAccount instanceof Seller)
-            new AddAuctionRequest(auction, (Seller) currentAccount);
-        else
-            throw new NotAllowedActivityException("You are not allowed to add Auction");
-    }
-
     private static List<String> getAllEmails() {
         return Account.getAllAccounts().stream().map(Account::getEmail).collect(Collectors.toList());
     }
 
     private static List<String> getAllPhoneNumbers() {
         return Account.getAllAccounts().stream().map(Account::getPhoneNumber).collect(Collectors.toList());
+    }
+
+    public List<SellerLog> getSellerLogs() {
+        return ((Seller) currentAccount).getHistoryOfSells();
+    }
+
+    // TODO: ۲۴/۰۶/۲۰۲۰  create new edit auction method
+    public void editAuction(Auction auction, Date newStartdate, Date newEndDate
+            , ArrayList<Product> newProducts, int newOffPercent) {
+        auction.setBeginDate(newStartdate);
+        auction.setEndDate(newEndDate);
+        auction.setAppliedProducts(newProducts);
+        auction.setOffPercentage(newOffPercent);
+        auction.setAuctionStatus(Status.PENDING_EDIT);
     }
 
     public String viewCompanyInfo() {
@@ -177,8 +183,8 @@ public class SellerController extends Controller {
         return productController.digest();
     }
 
-    public List<Product> getSellerProducts(){
-        return ((Seller)currentAccount).getAvailableProducts();
+    public List<Product> getSellerProducts() {
+        return ((Seller) currentAccount).getAvailableProducts();
     }
 
     public List<String> viewSalesHistory() {
@@ -204,10 +210,10 @@ public class SellerController extends Controller {
                 .collect(Collectors.toList());
     }
 
-    public List<Product> getProductsForAuction(){
-        List products = ((Seller)currentAccount).getAvailableProducts();
-        for (Auction auction : ((Seller)currentAccount).getAllAuctions()){
-            for (Product p : auction.getAppliedProducts()){
+    public List<Product> getProductsForAuction() {
+        List products = ((Seller) currentAccount).getAvailableProducts();
+        for (Auction auction : ((Seller) currentAccount).getAllAuctions()) {
+            for (Product p : auction.getAppliedProducts()) {
                 if (auction.getEndDate().after(new Date())) products.remove(p);
             }
         }
@@ -253,7 +259,7 @@ public class SellerController extends Controller {
     }
 
     public boolean doesAuctionExist(String text) {
-        for(Auction a : Auction.getAllAuctions()){
+        for (Auction a : Auction.getAllAuctions()) {
             if (a.getAuctionId().equals(text)) return true;
         }
         return false;

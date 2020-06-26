@@ -63,6 +63,12 @@ public class SellerDashboard {
     @FXML
     private JFXButton viewAuctionsButton;
 
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
+    }
+
     @FXML
     private void initialize() {
         stackPane.setOpacity(0);
@@ -319,11 +325,5 @@ public class SellerDashboard {
 
     public void setViewAuctionsButton(JFXButton viewAuctionsButton) {
         this.viewAuctionsButton = viewAuctionsButton;
-    }
-
-    private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
     }
 }

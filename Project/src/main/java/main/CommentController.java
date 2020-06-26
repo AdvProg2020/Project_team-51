@@ -35,6 +35,12 @@ public class CommentController extends Pane {
         }
     }
 
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
+    }
+
     public VBox getVBox() {
         return vBox;
     }
@@ -65,11 +71,5 @@ public class CommentController extends Pane {
 
     public void setComment(Label comment) {
         this.comment = comment;
-    }
-
-    private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
     }
 }

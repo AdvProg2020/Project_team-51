@@ -73,6 +73,12 @@ public class ManagerDashboard {
     @FXML
     private JFXButton manageUsersButton;
 
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
+    }
+
     @FXML
     private void initialize() {
         stackPane.setOpacity(0);
@@ -254,11 +260,5 @@ public class ManagerDashboard {
             Main.getPrimaryStage().setScene(new Scene(node));
         });
         fadeTransition.play();
-    }
-
-    private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
     }
 }

@@ -158,6 +158,11 @@ public class MainController {
 
     private Stage stage = new Stage();
 
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
+    }
 
     @FXML
     public void initialize() {
@@ -360,7 +365,6 @@ public class MainController {
         fadeTransition.play();
     }
 
-
     private TreeItem<String> populateCategories(Category parent, TreeItem parentItem) {
 
         for (Category category : allCategories) {
@@ -376,7 +380,6 @@ public class MainController {
         }
         return parentItem;
     }
-
 
     private void initializeBestSellers() {
 
@@ -437,12 +440,6 @@ public class MainController {
         dialog.show();
         mainPane.setEffect(boxBlur);
         dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
-    }
-
-    private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
     }
 
 }
