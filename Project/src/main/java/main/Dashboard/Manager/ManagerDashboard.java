@@ -91,7 +91,6 @@ public class ManagerDashboard {
 
         personalInfoButton.setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button2.wav")).start();
-
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getPersonalInfoPane()));
             newStage.setTitle("  Personal Info");
@@ -101,7 +100,6 @@ public class ManagerDashboard {
 
         createDiscountButton.setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button2.wav")).start();
-
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getCreateDiscountCodePane()));
             newStage.setTitle("  Create Discount");
@@ -111,7 +109,6 @@ public class ManagerDashboard {
 
         viewDiscountButton.setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button2.wav")).start();
-
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getViewOffcodesPane()));
             newStage.setTitle("  View Discounts");
@@ -121,7 +118,6 @@ public class ManagerDashboard {
 
         manageProducts.setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button2.wav")).start();
-
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getManageAllProductsPane()));
             newStage.setTitle("  Manage Products");
@@ -132,7 +128,6 @@ public class ManagerDashboard {
 
         createCategoryButton.setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button2.wav")).start();
-
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getCreateCategoryPane()));
             newStage.setTitle("  Create Category");
@@ -141,18 +136,16 @@ public class ManagerDashboard {
         });
 
         viewCategoriesButton.setOnMouseClicked(event -> {
-            //    stage.setScene(new Scene(dashboard.));
             new Thread(() -> playAudio("button2.wav")).start();
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getAllCategoriesPane()));
-            newStage.setTitle("  Create Category");
+            newStage.setTitle("  View Categories");
             newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
             newStage.show();
         });
 
         manageRequestsButton.setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button2.wav")).start();
-
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getManageRequestsPane()));
             newStage.setTitle("  Manage Requests");
@@ -163,7 +156,6 @@ public class ManagerDashboard {
 
         manageUsersButton.setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button2.wav")).start();
-
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getManageUsersPane()));
             newStage.setTitle("  Manage Users");

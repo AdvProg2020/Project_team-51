@@ -133,12 +133,12 @@ public class SellerDashboard {
         });
 
         viewAuctionsButton.setOnMouseClicked(event -> {
-//            new Thread(() -> playAudio("button2.wav")).start();
-//            Stage newStage = new Stage();
-//            newStage.setScene(new Scene(dashboard.get()));
-//            newStage.setTitle("  Create Category");
-//            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
-//            newStage.show();
+            new Thread(() -> playAudio("button2.wav")).start();
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getAllAuctionsPane()));
+            newStage.setTitle("  View Auctions");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         homeButton.setOnMouseClicked(event -> {
