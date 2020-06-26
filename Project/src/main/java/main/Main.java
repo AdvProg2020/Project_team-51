@@ -34,8 +34,7 @@ public class Main extends Application {
         Thread statusUpdaterThread = new Thread(new StatusUpdater());
         buildThread.start();
         statusUpdaterThread.start();
-        var thread = new Thread(() -> playAudio("Hunter.mp3"));
-        thread.run();
+        new Thread(() -> playAudio("Hunter.mp3")).start();
         launch();
     }
 

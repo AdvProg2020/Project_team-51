@@ -73,6 +73,7 @@ public class SellerDashboard {
         usernameLabel.setText(seller.getUsername());
 
         personalInfoButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
             Stage newStage = new Stage();
             newStage.setScene(new Scene(SellerMenuPanes.getPersonalInfoPane()));
             newStage.setTitle("  Personal Info");
@@ -81,6 +82,7 @@ public class SellerDashboard {
         });
 
         salesButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getSalesHistoryPane()));
             newStage.setTitle("  Sales");
@@ -89,6 +91,7 @@ public class SellerDashboard {
         });
 
         manageProductsButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getManageProductsPane()));
             newStage.setTitle("  Manage Products");
@@ -97,6 +100,7 @@ public class SellerDashboard {
         });
 
         createProductButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getCreateProductPane()));
             newStage.setTitle("  Create Product");
@@ -105,6 +109,7 @@ public class SellerDashboard {
         });
 
         viewCategoriesButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getViewCategoriesPane()));
             newStage.setTitle("  View Categories");
@@ -113,6 +118,7 @@ public class SellerDashboard {
         });
 
         createAuctionButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getCreateAuctionPane()));
             newStage.setTitle("  Create Auction");
@@ -121,10 +127,16 @@ public class SellerDashboard {
         });
 
         viewAuctionsButton.setOnMouseClicked(event -> {
-//            stage.setScene(new Scene(dashboard));
+//            new Thread(() -> playAudio("button2.wav")).start();
+//            Stage newStage = new Stage();
+//            newStage.setScene(new Scene(dashboard.get()));
+//            newStage.setTitle("  Create Category");
+//            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+//            newStage.show();
         });
 
         homeButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
             try {
                 fadeOut(FXMLLoader.load(Main.class.getResource("main.fxml")));
             } catch (IOException e) {
@@ -133,6 +145,7 @@ public class SellerDashboard {
         });
 
         logoutButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
             BoxBlur boxBlur = new BoxBlur(4, 4, 4);
             JFXButton button = new JFXButton("  Yes  ");
             button.setStyle("-fx-background-color:#fe615a; -fx-background-radius:  18; -fx-text-fill: white");
@@ -171,6 +184,7 @@ public class SellerDashboard {
 
     @FXML
     private void showErrorWithColor(String message, String color) {
+        new Thread(() -> playAudio("dialog.wav")).start();
         BoxBlur boxBlur = new BoxBlur(4, 4, 4);
         JFXButton button = new JFXButton("  Yes  ");
         button.setStyle("-fx-background-color:" + color + "; -fx-background-radius:  18; -fx-text-fill: white");
@@ -205,6 +219,7 @@ public class SellerDashboard {
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(event -> {
+            new Thread(() -> playAudio("dialog.wav")).start();
             stackPane.getScene().setRoot(node);
         });
         fadeTransition.play();

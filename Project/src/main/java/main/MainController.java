@@ -186,6 +186,7 @@ public class MainController {
         });
 
         cartButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -196,6 +197,7 @@ public class MainController {
             dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
         });
         cartDialog.getPayButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -206,6 +208,7 @@ public class MainController {
             dialog.setOnDialogClosed((JFXDialogEvent e) -> cartDialog.setEffect(null));
         });
         addressDialog.getNextButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -216,6 +219,7 @@ public class MainController {
             dialog.setOnDialogClosed((JFXDialogEvent e) -> addressDialog.setEffect(null));
         });
         offCodeDialog.getNextButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -226,6 +230,7 @@ public class MainController {
             dialog.setOnDialogClosed((JFXDialogEvent e) -> offCodeDialog.setEffect(null));
         });
         paymentDialog.getPayButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             try {
                 Main.setRoot("main");
             } catch (IOException e) {
@@ -287,11 +292,13 @@ public class MainController {
             }
         });
         searchButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             stackPane.getScene().setRoot(new ProductsController(SearchFilter.getInstance().applyFilter(Product.getAllProducts(), search)));
 
         });
 
         logout.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             if (Controller.isLoggedIn()) {
                 BoxBlur boxBlur = new BoxBlur(4, 4, 4);
                 JFXButton button = new JFXButton("  Yes  ");
@@ -347,6 +354,7 @@ public class MainController {
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(event -> {
+            new Thread(() -> playAudio("dialog.wav")).start();
             stackPane.getScene().setRoot(node);
         });
         fadeTransition.play();

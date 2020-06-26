@@ -137,6 +137,7 @@ public class ProductPageController extends StackPane {
         initializeComments();
 
         addButton.setOnMouseClicked(e -> {
+            new Thread(() -> playAudio("button.wav")).start();
             try {
                 controller.addToCart(sellerComboBox.getSelectionModel().getSelectedItem().getUsername());
             } catch (LackOfProductException ex) {
@@ -147,6 +148,7 @@ public class ProductPageController extends StackPane {
             }
         });
         addComment.setOnMouseClicked(e -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -157,6 +159,7 @@ public class ProductPageController extends StackPane {
             dialog.overlayCloseProperty().bindBidirectional(new SimpleBooleanProperty(!Controller.isLoggedIn()));
         });
         cartButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -167,6 +170,7 @@ public class ProductPageController extends StackPane {
             dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
         });
         cartDialog.getPayButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -177,6 +181,7 @@ public class ProductPageController extends StackPane {
             dialog.setOnDialogClosed((JFXDialogEvent e) -> cartDialog.setEffect(null));
         });
         addressDialog.getNextButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -187,6 +192,7 @@ public class ProductPageController extends StackPane {
             dialog.setOnDialogClosed((JFXDialogEvent e) -> addressDialog.setEffect(null));
         });
         offCodeDialog.getNextButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -197,6 +203,7 @@ public class ProductPageController extends StackPane {
             dialog.setOnDialogClosed((JFXDialogEvent e) -> offCodeDialog.setEffect(null));
         });
         paymentDialog.getPayButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             try {
                 Main.setRoot("main");
             } catch (IOException e) {
@@ -215,6 +222,7 @@ public class ProductPageController extends StackPane {
         customItem.setContent(categoriesTreeView);
         categoriesTreeView.setShowRoot(false);
         dashboard.setOnMouseClicked(e -> {
+            new Thread(() -> playAudio("button.wav")).start();
             if (!Controller.isLoggedIn()) {
                 BoxBlur boxBlur = new BoxBlur(6, 6, 6);
                 JFXDialogLayout dialogLayout = new JFXDialogLayout();
@@ -254,10 +262,12 @@ public class ProductPageController extends StackPane {
         });
 
         searchButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             stackPane.getScene().setRoot(new ProductsController(SearchFilter.getInstance().applyFilter(Product.getAllProducts(), search)));
         });
 
         homeButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             try {
                 Main.setRoot("main");
             } catch (IOException e) {
@@ -267,6 +277,7 @@ public class ProductPageController extends StackPane {
 
         logout.setOnMouseClicked(event -> {
             if (Controller.isLoggedIn()) {
+                new Thread(() -> playAudio("button.wav")).start();
                 BoxBlur boxBlur = new BoxBlur(4, 4, 4);
                 JFXButton button = new JFXButton("  Yes  ");
                 button.setStyle("-fx-background-color:#fe615a; -fx-background-radius:  18; -fx-text-fill: white");
@@ -321,6 +332,7 @@ public class ProductPageController extends StackPane {
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(event -> {
+            new Thread(() -> playAudio("dialoge.wav")).start();
             stackPane.getScene().setRoot(node);
         });
         fadeTransition.play();
@@ -419,6 +431,7 @@ public class ProductPageController extends StackPane {
 
     @FXML
     private void showErrorWithColor(String message, String color) {
+        new Thread(() -> playAudio("dialog.wav")).start();
         BoxBlur boxBlur = new BoxBlur(4, 4, 4);
         JFXButton button = new JFXButton(" OK ");
         button.setStyle("-fx-background-color:" + color + "; -fx-background-radius:  18; -fx-text-fill: white");
