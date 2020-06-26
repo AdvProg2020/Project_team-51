@@ -286,9 +286,9 @@ public class MainController {
                 }
             }
         });
-
         searchButton.setOnMouseClicked(event -> {
-            Main.getPrimaryStage().setScene(new Scene(new ProductsController(SearchFilter.getInstance().applyFilter(Product.getAllProducts(), search))));
+            stackPane.getScene().setRoot(new ProductsController(SearchFilter.getInstance().applyFilter(Product.getAllProducts(), search)));
+
         });
 
         logout.setOnMouseClicked(event -> {
@@ -326,7 +326,7 @@ public class MainController {
         if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
             String name = (String) ((TreeItem) categoriesTreeView.getSelectionModel().getSelectedItem()).getValue();
             Category category = Category.getCategoryByName(name);
-            Main.getPrimaryStage().setScene(new Scene(new ProductsController(category)));
+            stackPane.getScene().setRoot(new ProductsController(category));
         }
     }
 
@@ -347,7 +347,7 @@ public class MainController {
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(event -> {
-            Main.getPrimaryStage().setScene(new Scene(node));
+            stackPane.getScene().setRoot(node);
         });
         fadeTransition.play();
     }

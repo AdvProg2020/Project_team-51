@@ -7,8 +7,8 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<fx:root xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity"
-         minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" type="StackPane"
+<fx:root xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+         minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" type="StackPane"
          xmlns="http://javafx.com/javafx/11.0.1">
     <children>
         <BorderPane fx:id="mainPane" prefHeight="970.0" prefWidth="1720.0">
@@ -80,7 +80,7 @@
                                                             style="-fx-background-color: #746d63;" text="Categories"
                                                             textFill="WHITE">
                                                     <items>
-                                                        <CustomMenuItem fx:id="customMenuItem" mnemonicParsing="false"
+                                                        <CustomMenuItem fx:id="customItem" mnemonicParsing="false"
                                                                         style="-fx-padding: 0 120 0 0; -fx-background-color: black;"
                                                                         text="Unspecified Action">
                                                             <content>
@@ -183,10 +183,15 @@
                                                                             <children>
                                                                                 <VBox fx:id="productsBox"
                                                                                       alignment="CENTER"
-                                                                                      prefWidth="962.0"/>
+                                                                                      prefWidth="962.0">
+                                                                                    <padding>
+                                                                                        <Insets bottom="20.0"
+                                                                                                top="20.0"/>
+                                                                                    </padding>
+                                                                                </VBox>
                                                                             </children>
                                                                             <padding>
-                                                                                <Insets bottom="20.0"/>
+                                                                                <Insets bottom="20.0" top="20.0"/>
                                                                             </padding>
                                                                         </Pane>
                                                                     </children>
@@ -195,7 +200,7 @@
                                                         </VBox>
                                                     </children>
                                                 </Pane>
-                                                <VBox fx:id="productsBox">
+                                                <VBox>
                                                     <HBox.margin>
                                                         <Insets left="15.0" right="30.0" top="20.0"/>
                                                     </HBox.margin>

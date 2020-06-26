@@ -4,19 +4,18 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import control.Controller;
 import control.Exceptions.HaveNotLoggedInException;
-import control.Filters.AvailabilityFilter;
-import control.Filters.PriceRangeFilter;
-import control.Filters.RateRangeFilter;
-import control.Filters.SearchFilter;
+import control.Filters.*;
 import control.ProductController;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -26,6 +25,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.*;
 import main.ProductPage.ProductPageController;
@@ -101,10 +101,10 @@ public class ProductsController extends StackPane {
     private TreeView<?> treeView;
 
     @FXML
-    private StackPane stackPane;
+    private BorderPane mainPane;
 
     @FXML
-    private BorderPane mainPane;
+    private CustomMenuItem customItem;
 
 
     private double minimumPrice;
@@ -118,8 +118,9 @@ public class ProductsController extends StackPane {
     private Category currentCategory;
     private Stack<List<Product>> productsHistory = new Stack<>();
     private HashMap<Product, SingleProduct> allProducts = new LinkedHashMap<>();
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
     private List<String> sorts;
+    private List<Product> totalProducts = new ArrayList<>();
     private String search;
 
 
@@ -132,8 +133,10 @@ public class ProductsController extends StackPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        this.getStylesheets().add(String.valueOf(Main.class.getResource("products.css")));
         this.products = products;
-        categoryName.setText("");
+        totalProducts = products;
+        categoryName.setText("Results");
         initialize();
     }
 
@@ -149,7 +152,9 @@ public class ProductsController extends StackPane {
         this.currentCategory = currentCategory;
         if (currentCategory != null) {
             products = ProductController.showProductsOfThisCategory(currentCategory);
+            totalProducts = products;
         }
+        this.getStylesheets().add(String.valueOf(Main.class.getResource("products.css")));
         categoryName.setText(currentCategory.getName());
         initialize();
     }
@@ -160,26 +165,27 @@ public class ProductsController extends StackPane {
         sorts = ProductController.showAvailableSort();
         initializeComponents();
         initializeSorts();
-//        updateListToMap();
-//        initializePageNumbers();
-//        initializeCategories();
-//        pageNumberUpdate(1);
+        if (totalProducts != null)
+            updateListToMap();
+        if (currentCategory != null)
+            initializeCategories();
+        pageNumberUpdate(1);
     }
 
     private void initializeComponents() {
 
-        var cartDialog = new CartDialogController(stackPane);
-        var addressDialog = new AddressController(stackPane);
-        var offCodeDialog = new TakeOffCodeController(stackPane);
-        var paymentDialog = new PaymentDialogController(stackPane);
+        var cartDialog = new CartDialogController(this);
+        var addressDialog = new AddressController(this);
+        var offCodeDialog = new TakeOffCodeController(this);
+        var paymentDialog = new PaymentDialogController(this);
 
         System.out.println(dashboard);
         dashboard.setOnMouseClicked(e -> {
             if (!Controller.isLoggedIn()) {
                 BoxBlur boxBlur = new BoxBlur(6, 6, 6);
                 JFXDialogLayout dialogLayout = new JFXDialogLayout();
-                JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
-                dialogLayout.setActions(new LoginDialog(stackPane));
+                JFXDialog dialog = new JFXDialog(this, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                dialogLayout.setActions(new LoginDialog(this));
                 dialog.show();
                 mainPane.setEffect(boxBlur);
                 dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
@@ -201,13 +207,13 @@ public class ProductsController extends StackPane {
             }
         });
         searchButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(new ProductsController(SearchFilter.getInstance().applyFilter(products, search))));
+            this.getScene().setRoot(new ProductsController(SearchFilter.getInstance().applyFilter(Product.getAllProducts(), search)));
         });
 
         cartButton.setOnMouseClicked(event -> {
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+            JFXDialog dialog = new JFXDialog(this, dialogLayout, JFXDialog.DialogTransition.CENTER);
             dialogLayout.setActions(cartDialog);
             dialogLayout.setStyle("-fx-background-color:  #db5e5c");
             dialog.show();
@@ -218,7 +224,7 @@ public class ProductsController extends StackPane {
         cartDialog.getPayButton().setOnMouseClicked(event -> {
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+            JFXDialog dialog = new JFXDialog(this, dialogLayout, JFXDialog.DialogTransition.CENTER);
             dialogLayout.setActions(addressDialog);
             dialogLayout.setStyle("-fx-background-color:   #886488");
             dialog.show();
@@ -229,7 +235,7 @@ public class ProductsController extends StackPane {
         addressDialog.getNextButton().setOnMouseClicked(event -> {
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+            JFXDialog dialog = new JFXDialog(this, dialogLayout, JFXDialog.DialogTransition.CENTER);
             dialogLayout.setActions(offCodeDialog);
             dialogLayout.setStyle("-fx-background-color:   #f3c669");
             dialog.show();
@@ -240,7 +246,7 @@ public class ProductsController extends StackPane {
         offCodeDialog.getNextButton().setOnMouseClicked(event -> {
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+            JFXDialog dialog = new JFXDialog(this, dialogLayout, JFXDialog.DialogTransition.CENTER);
             dialogLayout.setActions(paymentDialog);
             dialogLayout.setStyle("-fx-background-color:    #b2aa72");
             dialog.show();
@@ -253,42 +259,23 @@ public class ProductsController extends StackPane {
         });
 
         minPriceSlider.valueProperty().addListener((a, b, newValue) -> {
-            minimumPrice = newValue.doubleValue();
-            products = PriceRangeFilter.getInstance().applyFilter(products, minimumPrice, maximumPrice);
-            updateListToMap();
-            pageNumberUpdate(1);
+            updateProducts();
         });
 
         maxPriceSlider.valueProperty().addListener((a, b, newValue) -> {
-            maximumPrice = newValue.intValue();
-            products = PriceRangeFilter.getInstance().applyFilter(products, minimumPrice, maximumPrice);
-            updateListToMap();
-            pageNumberUpdate(1);
+            updateProducts();
         });
 
         minRateSlider.valueProperty().addListener((a, b, newValue) -> {
-            minimumRate = newValue.intValue();
-            products = RateRangeFilter.getInstance().applyFilter(products, minimumRate, maximumRate);
-            updateListToMap();
-            pageNumberUpdate(1);
+            updateProducts();
         });
 
         maxRateSlider.valueProperty().addListener((a, b, newValue) -> {
-            maximumRate = newValue.intValue();
-            products = RateRangeFilter.getInstance().applyFilter(products, minimumRate, maximumRate);
-            updateListToMap();
-            pageNumberUpdate(1);
+            updateProducts();
         });
 
         availableFilter.selectedProperty().addListener((a, b, newValue) -> {
-            if (newValue) {
-                products = AvailabilityFilter.getInstance().applyFilter(products);
-                updateListToMap();
-                pageNumberUpdate(1);
-                productsHistory.push(products);
-            } else {
-                products = productsHistory.pop();
-            }
+            updateProducts();
         });
 
         logout.setOnMouseClicked(event -> {
@@ -300,7 +287,7 @@ public class ProductsController extends StackPane {
                 JFXDialogLayout dialogLayout = new JFXDialogLayout();
                 dialogLayout.setHeading(new Label(" You've logged out "));
                 dialogLayout.setStyle("-fx-background-color: rgba(255,104,110,0.64)");
-                JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                JFXDialog dialog = new JFXDialog(this, dialogLayout, JFXDialog.DialogTransition.CENTER);
                 button.setOnMouseClicked((MouseEvent event1) -> {
                     dialog.close();
                 });
@@ -321,14 +308,30 @@ public class ProductsController extends StackPane {
 
 
         discountFilter.selectedProperty().addListener((a, b, newValue) -> {
-//            if (newValue) {
-//                products = AvailabilityFilter.getInstance().applyFilter(products);
-//            } else {
-//                products = productsHistory.pop();
-//            }
+            updateProducts();
         });
 
 
+        Category root = Category.getAllCategories().stream().filter(c -> c.getParentCategory() == null).findAny().orElse(null);
+        categoriesTreeView = new TreeView<String>(populateCategories(root, new TreeItem<String>("Main")));
+        categoriesTreeView.getSelectionModel().selectionModeProperty().addListener((observable, oldValue, newValue) -> {
+            stage.setScene(new Scene(new ProductsController(Category.getCategoryByName(newValue.toString()))));
+        });
+        EventHandler<MouseEvent> mouseEventHandle = this::handleMouseClicked;
+        categoriesTreeView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventHandle);
+        customItem.setHideOnClick(false);
+        customItem.setContent(categoriesTreeView);
+        categoriesTreeView.setShowRoot(false);
+    }
+
+    private void handleMouseClicked(MouseEvent event) {
+        Node node = event.getPickResult().getIntersectedNode();
+        // Accept clicks only on node cells, and not on empty spaces of the TreeView
+        if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
+            String name = (String) ((TreeItem) categoriesTreeView.getSelectionModel().getSelectedItem()).getValue();
+            Category category = Category.getCategoryByName(name);
+            this.getScene().setRoot(new ProductsController(category));
+        }
     }
 
     private void initializeCategories() {
@@ -362,6 +365,7 @@ public class ProductsController extends StackPane {
     }
 
     private void updateListToMap() {
+        allProducts.clear();
         for (Product product : products) {
             SingleProduct singleProduct = new SingleProduct();
             singleProduct.getProductPrice().setText(product.getAveragePrice() + " $");
@@ -389,6 +393,7 @@ public class ProductsController extends StackPane {
         ObservableList<String> allSorts = FXCollections.observableArrayList();
         allSorts.addAll(sorts);
         comboBox.getItems().addAll(allSorts.stream().distinct().collect(Collectors.toList()));
+        comboBox.getSelectionModel().select(0);
         comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.equals("Name"))
                 products = ProductController.applySort(SortTypes.NAME_SORT, products);
@@ -409,7 +414,7 @@ public class ProductsController extends StackPane {
         products.forEach((a, b) -> {
             productsBox.getChildren().add(b);
             b.getProductName().setOnMouseClicked(event -> {
-                Main.getPrimaryStage().setScene(new Scene(new ProductPageController(a)));
+                this.getScene().setRoot(new ProductPageController(a));
             });
         });
         initializePageNumbers();
@@ -428,7 +433,7 @@ public class ProductsController extends StackPane {
         JFXDialogLayout dialogLayout = new JFXDialogLayout();
         dialogLayout.setHeading(new Label(message));
         dialogLayout.setStyle("-fx-background-color: rgba(255,104,110,0.64)");
-        JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+        JFXDialog dialog = new JFXDialog(this, dialogLayout, JFXDialog.DialogTransition.CENTER);
         button.setOnMouseClicked((MouseEvent event) -> {
             dialog.close();
         });
@@ -438,5 +443,26 @@ public class ProductsController extends StackPane {
         dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
     }
 
+
+    private void updateProducts() {
+        var products = PriceRangeFilter.getInstance().applyFilter(totalProducts, minimumPrice, maximumPrice);
+        var products2 = RateRangeFilter.getInstance().applyFilter(products, minimumRate, maximumRate);
+        boolean isAvailableFilterOn = availableFilter.selectedProperty().get();
+        boolean isDiscountFilterOn = discountFilter.selectedProperty().get();
+        var products3 = isAvailableFilterOn ? AvailabilityFilter.getInstance().applyFilter(products2) : products2;
+        var products4 = isDiscountFilterOn ? DiscountFilter.getInstance().applyFilter(products3) : products3;
+        String sort = comboBox.getSelectionModel().selectedItemProperty().get();
+        if (sort.equals("Name"))
+            products = ProductController.applySort(SortTypes.NAME_SORT, products4);
+        else if (sort.equals("Price"))
+            products = ProductController.applySort(SortTypes.PRICE_SORT, products4);
+        else if (sort.equals("View"))
+            products = ProductController.applySort(SortTypes.VIEW_SORT, products4);
+        else if (sort.equals("Rate"))
+            products = ProductController.applySort(SortTypes.RATE_SORT, products4);
+
+        updateListToMap();
+        pageNumberUpdate(1);
+    }
 
 }
