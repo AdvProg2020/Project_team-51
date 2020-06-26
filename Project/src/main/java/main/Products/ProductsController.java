@@ -6,6 +6,7 @@ import control.Controller;
 import control.Exceptions.HaveNotLoggedInException;
 import control.Filters.*;
 import control.ProductController;
+import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -27,9 +28,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import main.*;
 import main.ProductPage.ProductPageController;
 import model.Category;
+import model.People.Customer;
+import model.People.Manager;
+import model.People.Seller;
 import model.Product;
 import model.SortTypes;
 
@@ -306,6 +311,45 @@ public class ProductsController extends StackPane {
             }
         });
 
+        dashboard.setOnMouseClicked(e -> {
+            if (!Controller.isLoggedIn()) {
+                BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                JFXDialog dialog = new JFXDialog(this, dialogLayout, JFXDialog.DialogTransition.BOTTOM);
+                dialogLayout.setActions(new LoginDialog(this));
+                dialog.show();
+                mainPane.setEffect(boxBlur);
+                dialog.setOnDialogClosed((JFXDialogEvent event) -> {
+                    mainPane.setEffect(null);
+                    if (Controller.isLoggedIn()) {
+                        logout.setVisible(true);
+                    }
+                });
+                dialog.overlayCloseProperty().bindBidirectional(new SimpleBooleanProperty(!Controller.isLoggedIn()));
+            } else {
+                var currentAccount = Controller.getCurrentAccount();
+                if (currentAccount instanceof Customer) {
+                    try {
+                        fadeOut(FXMLLoader.load(Main.class.getResource("customer-dashboard.fxml")));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                } else if (currentAccount instanceof Seller) {
+                    try {
+                        fadeOut(FXMLLoader.load(Main.class.getResource("seller-dashboard.fxml")));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                } else if (currentAccount instanceof Manager) {
+                    try {
+                        fadeOut(FXMLLoader.load(Main.class.getResource("manager-dashboard.fxml")));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+
 
         discountFilter.selectedProperty().addListener((a, b, newValue) -> {
             updateProducts();
@@ -322,6 +366,19 @@ public class ProductsController extends StackPane {
         customItem.setHideOnClick(false);
         customItem.setContent(categoriesTreeView);
         categoriesTreeView.setShowRoot(false);
+    }
+
+    private void fadeOut(StackPane node) {
+        node.getStylesheets().add("main.css");
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setNode(this);
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.setOnFinished(event -> {
+            this.getScene().setRoot(node);
+        });
+        fadeTransition.play();
     }
 
     private void handleMouseClicked(MouseEvent event) {

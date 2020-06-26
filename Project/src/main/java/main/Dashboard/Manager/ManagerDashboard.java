@@ -131,7 +131,7 @@ public class ManagerDashboard {
         manageRequestsButton.setOnMouseClicked(event -> {
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getManageRequestsPane()));
-            newStage.setTitle("  Create Category");
+            newStage.setTitle("  Manage Requests");
             newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
             newStage.show();
         });
@@ -140,7 +140,7 @@ public class ManagerDashboard {
         manageUsersButton.setOnMouseClicked(event -> {
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getManageUsersPane()));
-            newStage.setTitle("  Create Category");
+            newStage.setTitle("  Manage Users");
             newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
             newStage.show();
         });

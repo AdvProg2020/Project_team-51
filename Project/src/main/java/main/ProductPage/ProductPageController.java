@@ -133,7 +133,6 @@ public class ProductPageController extends StackPane {
         var offCodeDialog = new TakeOffCodeController(stackPane);
         var paymentDialog = new PaymentDialogController(stackPane);
         allComments = controller.getComments();
-
         initializeProduct();
         initializeComments();
 
@@ -235,21 +234,18 @@ public class ProductPageController extends StackPane {
                 if (currentAccount instanceof Customer) {
                     try {
                         fadeOut(FXMLLoader.load(Main.class.getResource("customer-dashboard.fxml")));
-//                        Main.setRoot("customer-dashboard");
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
                 } else if (currentAccount instanceof Seller) {
                     try {
                         fadeOut(FXMLLoader.load(Main.class.getResource("seller-dashboard.fxml")));
-//                        Main.setRoot("seller-dashboard");
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
                 } else if (currentAccount instanceof Manager) {
                     try {
                         fadeOut(FXMLLoader.load(Main.class.getResource("manager-dashboard.fxml")));
-//                        Main.setRoot("manager-dashboard");
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
