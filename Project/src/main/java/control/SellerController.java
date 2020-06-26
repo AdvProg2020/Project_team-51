@@ -8,15 +8,10 @@ import model.People.Customer;
 import model.People.Seller;
 import model.Requests.AddAuctionRequest;
 import model.Requests.AddItemRequest;
-import model.Requests.EditAuctionRequest;
 import model.Requests.EditProductRequest;
 
 import javax.management.InstanceAlreadyExistsException;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class SellerController extends Controller {
@@ -26,6 +21,10 @@ public class SellerController extends Controller {
 
     public static Boolean isThisFieldValid(Product product, String field) {
         return product.getAttributes().containsKey(field);
+    }
+
+    public List<SellerLog> getSellerLogs(){
+        return ((Seller)currentAccount).getHistoryOfSells();
     }
 
     public static void editFirstName(String firstName) throws InstanceAlreadyExistsException {
@@ -65,6 +64,18 @@ public class SellerController extends Controller {
         if (((Seller) currentAccount).getBrandName().equals(brand))
             throw new InstanceAlreadyExistsException();
         ((Seller) currentAccount).setBrandName(brand);
+    }
+
+    public static ArrayList<Category> getAllCategories(){
+        return Category.getAllCategories();
+
+    }
+
+    public static boolean isProductNameTaken(String name){
+        for (Product p : Product.getAllProducts()){
+            if (p.getName().equals(name)) return true;
+        }
+        return false;
     }
 
     public static void editProduct(Product product, String field, String value) {
@@ -164,6 +175,10 @@ public class SellerController extends Controller {
     public String showProductDetails(Product product) throws InvalidUsernameException {
         var productController = new SingleProductController(currentAccount, product);
         return productController.digest();
+    }
+
+    public List<Product> getSellerProducts(){
+        return ((Seller)currentAccount).getAvailableProducts();
     }
 
     public List<String> viewSalesHistory() {
