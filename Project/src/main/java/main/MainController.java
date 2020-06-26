@@ -185,6 +185,22 @@ public class MainController {
         if (mostViewedProducts.size() > 4)
             initializeMostViewed();
 
+        if (!Controller.isThereAnyManager()) {
+            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.BOTTOM);
+            dialogLayout.setActions(new LoginDialog(stackPane));
+            dialog.show();
+            mainPane.setEffect(boxBlur);
+            dialog.setOnDialogClosed((JFXDialogEvent event) -> {
+                mainPane.setEffect(null);
+                if (Controller.isLoggedIn()) {
+                    logout.setVisible(true);
+                }
+            });
+            dialog.overlayCloseProperty().bindBidirectional(new SimpleBooleanProperty(!Controller.isLoggedIn()));
+        }
+
         searchField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
