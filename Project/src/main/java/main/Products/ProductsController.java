@@ -164,6 +164,12 @@ public class ProductsController extends StackPane {
         initialize();
     }
 
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
+    }
+
     @FXML
     public void initialize() {
         stage = Main.getPrimaryStage();
@@ -413,7 +419,6 @@ public class ProductsController extends StackPane {
         return parentItem;
     }
 
-
     private void pageNumberUpdate(int number) {
         Map<Product, SingleProduct> updatedProducts = allProducts.entrySet().stream().skip((number - 1) * 5).limit(5)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -500,7 +505,6 @@ public class ProductsController extends StackPane {
         dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
     }
 
-
     private void updateProducts() {
         var products = PriceRangeFilter.getInstance().applyFilter(totalProducts, minimumPrice, maximumPrice);
         var products2 = RateRangeFilter.getInstance().applyFilter(products, minimumRate, maximumRate);
@@ -520,12 +524,6 @@ public class ProductsController extends StackPane {
 
         updateListToMap();
         pageNumberUpdate(1);
-    }
-
-    private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
     }
 
 }

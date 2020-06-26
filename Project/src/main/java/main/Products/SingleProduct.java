@@ -72,6 +72,12 @@ public class SingleProduct extends AnchorPane {
 
     }
 
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
+    }
+
     public VBox getProductsBox() {
         return productsBox;
     }
@@ -150,11 +156,5 @@ public class SingleProduct extends AnchorPane {
 
     public void setOffPercent(Label offPercent) {
         this.offPercent = offPercent;
-    }
-
-    private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
     }
 }

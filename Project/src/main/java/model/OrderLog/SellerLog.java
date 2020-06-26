@@ -25,8 +25,8 @@ public class SellerLog extends Order {
 
     }
 
-    public String getBuyerName(){
-        return buyer.getFirstName()+buyer.getLastName();
+    public String getBuyerName() {
+        return buyer.getFirstName() + buyer.getLastName();
     }
 
     public Customer getBuyer() {

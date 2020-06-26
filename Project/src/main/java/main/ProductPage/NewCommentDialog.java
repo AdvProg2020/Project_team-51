@@ -50,6 +50,16 @@ public class NewCommentDialog extends AnchorPane {
         this.rootPane = stackPane;
         this.singleProductController = singleProductController;
 
+        add.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
+        });
+
+    }
+
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
     }
 
     private void initialize() {
@@ -97,7 +107,6 @@ public class NewCommentDialog extends AnchorPane {
         this.setEffect(boxBlur);
         dialog.setOnDialogClosed((JFXDialogEvent event) -> this.setEffect(null));
     }
-
 
     @FXML
     private void showConfirmation(String message) {

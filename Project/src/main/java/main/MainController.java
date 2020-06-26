@@ -158,6 +158,11 @@ public class MainController {
 
     private Stage stage = new Stage();
 
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
+    }
 
     @FXML
     public void initialize() {
@@ -186,6 +191,7 @@ public class MainController {
         });
 
         cartButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -196,6 +202,7 @@ public class MainController {
             dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
         });
         cartDialog.getPayButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -206,6 +213,7 @@ public class MainController {
             dialog.setOnDialogClosed((JFXDialogEvent e) -> cartDialog.setEffect(null));
         });
         addressDialog.getNextButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -216,6 +224,7 @@ public class MainController {
             dialog.setOnDialogClosed((JFXDialogEvent e) -> addressDialog.setEffect(null));
         });
         offCodeDialog.getNextButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -226,6 +235,7 @@ public class MainController {
             dialog.setOnDialogClosed((JFXDialogEvent e) -> offCodeDialog.setEffect(null));
         });
         paymentDialog.getPayButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             try {
                 Main.setRoot("main");
             } catch (IOException e) {
@@ -287,11 +297,13 @@ public class MainController {
             }
         });
         searchButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             stackPane.getScene().setRoot(new ProductsController(SearchFilter.getInstance().applyFilter(Product.getAllProducts(), search)));
 
         });
 
         logout.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             if (Controller.isLoggedIn()) {
                 BoxBlur boxBlur = new BoxBlur(4, 4, 4);
                 JFXButton button = new JFXButton("  Yes  ");
@@ -347,11 +359,11 @@ public class MainController {
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(event -> {
+            new Thread(() -> playAudio("dialog.wav")).start();
             stackPane.getScene().setRoot(node);
         });
         fadeTransition.play();
     }
-
 
     private TreeItem<String> populateCategories(Category parent, TreeItem parentItem) {
 
@@ -368,7 +380,6 @@ public class MainController {
         }
         return parentItem;
     }
-
 
     private void initializeBestSellers() {
 
@@ -429,12 +440,6 @@ public class MainController {
         dialog.show();
         mainPane.setEffect(boxBlur);
         dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
-    }
-
-    private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
     }
 
 }

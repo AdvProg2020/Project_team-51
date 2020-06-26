@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Auction {
-//todo auctions dont have name
+    //todo auctions dont have name
     private static ArrayList<Auction> allAuctions = new ArrayList<Auction>();
     private Seller seller;
     private String auctionId;
@@ -71,6 +71,10 @@ public class Auction {
         return appliedProducts;
     }
 
+    public void setAppliedProducts(ArrayList<Product> newProducts) {
+        this.appliedProducts = newProducts;
+    }
+
     public void addAppliedProduct(Product product) {
         appliedProducts.add(product);
     }
@@ -102,9 +106,5 @@ public class Auction {
                 "endDate : " + endDate + "\n" +
                 "offPercentage : " + offPercentage + "\n" +
                 "auctionStatus : " + auctionStatus;
-    }
-
-    public void setAppliedProducts(ArrayList<Product> newProducts) {
-    this.appliedProducts = newProducts;
     }
 }

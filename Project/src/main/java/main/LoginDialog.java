@@ -124,6 +124,12 @@ public class LoginDialog extends AnchorPane {
         initialize();
     }
 
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
+    }
+
     @FXML
     public void initialize() {
         // login
@@ -221,12 +227,10 @@ public class LoginDialog extends AnchorPane {
         });
     }
 
-
     private boolean readyToRegister() {
         return !firstNameText.isEmpty() && !lastNameText.isEmpty() && !registerUsername.isEmpty() && !registerPassword.isEmpty()
                 && !emailText.isEmpty() && !phoneNumberText.isEmpty() && !balanceText.isEmpty();
     }
-
 
     private void showError(String message) {
         showErrorWithColor(message, "#fe615a");
@@ -251,7 +255,6 @@ public class LoginDialog extends AnchorPane {
         dialog.setOnDialogClosed((JFXDialogEvent event) -> this.setEffect(null));
     }
 
-
     @FXML
     private void showConfirmation(String message) {
         BoxBlur boxBlur = new BoxBlur(4, 4, 4);
@@ -269,11 +272,5 @@ public class LoginDialog extends AnchorPane {
         dialog.show();
         this.setEffect(boxBlur);
         dialog.setOnDialogClosed((JFXDialogEvent event) -> this.setEffect(null));
-    }
-
-    private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
     }
 }

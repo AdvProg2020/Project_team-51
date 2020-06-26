@@ -37,6 +37,12 @@ public class AddressController extends AnchorPane {
         }
     }
 
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
+    }
+
     public JFXTextArea getAddressField() {
         return addressField;
     }
@@ -67,11 +73,5 @@ public class AddressController extends AnchorPane {
 
     public void setStackPane(StackPane stackPane) {
         this.stackPane = stackPane;
-    }
-
-    private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
     }
 }

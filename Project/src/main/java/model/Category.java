@@ -55,6 +55,14 @@ public class Category {
         throw new Exception("category is invalid");
     }
 
+    public static Category getCategoryByName(String name) {
+        for (Category category : allCategories) {
+            if (category.getName().equals(name))
+                return category;
+        }
+        return null;
+    }
+
     public List<Attributes> getAttributes() {
         return attributes;
     }
@@ -89,14 +97,6 @@ public class Category {
 
     public String getCategoryId() {
         return categoryId;
-    }
-
-    public static Category getCategoryByName(String name) {
-        for (Category category : allCategories) {
-            if (category.getName().equals(name))
-                return category;
-        }
-        return null;
     }
 
     @Override

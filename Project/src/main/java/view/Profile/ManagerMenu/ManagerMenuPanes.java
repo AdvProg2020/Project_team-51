@@ -50,7 +50,7 @@ public class ManagerMenuPanes {
         Label confirmPasswordFieldLabel = getLabel("confirm new pass", X, 340);
         Label confirmPasswordFieldError = getErrorLabel("", X, 360);
         PasswordField confirmPasswordField = new PasswordField();
-        setPlace(confirmPasswordField , X, 380);
+        setPlace(confirmPasswordField, X, 380);
         Label nameLabel = getLabel("name", X, 430);
         Label nameError = getErrorLabel("", X, 450);
         TextField nameTextField = getTextFieldDefault(currentAccount.getFirstName(), X, 470);
@@ -77,7 +77,9 @@ public class ManagerMenuPanes {
                             nameError.setText(e.getMessage());
                         }
                     }
-                }else{nameError.setText("");}
+                } else {
+                    nameError.setText("");
+                }
                 if (!passwordField.getText().equals(confirmPasswordField.getText())) {
                     confirmPasswordFieldError.setText("passwords don't match");
                 }
@@ -163,24 +165,24 @@ public class ManagerMenuPanes {
         return pane;
     }
 
-    public Pane getManageRequestsPane(){
+    public Pane getManageRequestsPane() {
         Pane pane = new Pane();
 
-        Label requestLabel = getLabel("requests",300,300);
+        Label requestLabel = getLabel("requests", 300, 300);
         TableView tv = getRequestsTebleView();
-        setPlace(tv,300,330);
-        Button back = getButton("back" , event -> {
+        setPlace(tv, 300, 330);
+        Button back = getButton("back", event -> {
             // TODO: ۲۵/۰۶/۲۰۲۰ go back
         });
-        setPlace(back,370,700);
+        setPlace(back, 370, 700);
 
-        pane.getChildren().addAll(requestLabel,tv,back);
+        pane.getChildren().addAll(requestLabel, tv, back);
         return pane;
     }
 
-    public TableView getManageUsersTableView (){
+    public TableView getManageUsersTableView() {
         ComboBox<String> comboBox = new ComboBox<>();
-        comboBox.getItems().addAll("Manager" , "Customer" , "Seller");
+        comboBox.getItems().addAll("Manager", "Customer", "Seller");
         List<Account> accounts = managerController.getAllProfiles();
         TableView<Account> table = new TableView<>();
         ObservableList<Account> data
@@ -223,7 +225,7 @@ public class ManagerMenuPanes {
                                     setGraphic(null);
                                     setText(null);
                                 } else {
-                                    btn.setOnAction(ev->{
+                                    btn.setOnAction(ev -> {
                                         Account account = getTableView().getItems().get(getIndex());
                                         table.getItems().remove(account);
                                         try {
@@ -253,15 +255,17 @@ public class ManagerMenuPanes {
                             @Override
                             public void updateItem(String item, boolean empty) {
                                 super.updateItem(item, empty);
-                                if (item!=null)comboBox.getSelectionModel().select(item);
+                                if (item != null) comboBox.getSelectionModel().select(item);
                                 if (empty) {
                                     setGraphic(null);
                                     setText(null);
                                 } else {
                                     comboBox.setOnAction(event -> {
                                         Account account = getTableView().getItems().get(getIndex());
-                                        if (!comboBox.getValue().equals(account.getType())){managerController.setAccountType (account,(String) comboBox.getValue() );
-                                            System.out.println("combo" + Account.getAllAccounts());}
+                                        if (!comboBox.getValue().equals(account.getType())) {
+                                            managerController.setAccountType(account, (String) comboBox.getValue());
+                                            System.out.println("combo" + Account.getAllAccounts());
+                                        }
                                     });
                                     setGraphic(comboBox);
                                     setText(null);
@@ -276,13 +280,13 @@ public class ManagerMenuPanes {
         type.setCellFactory(cellFactorysecChangeType);
 
         table.setItems(data);
-        table.getColumns().addAll(username,firstName , lastName , balance ,delete, type);
+        table.getColumns().addAll(username, firstName, lastName, balance, delete, type);
         return table;
     }
 
-    private ComboBox getAccountTypeCombobox(){
+    private ComboBox getAccountTypeCombobox() {
         ComboBox comboBox = new ComboBox();
-        comboBox.getItems().addAll("Manager" , "Customer" , "Seller");
+        comboBox.getItems().addAll("Manager", "Customer", "Seller");
         return comboBox;
     }
 
@@ -631,19 +635,19 @@ public class ManagerMenuPanes {
         return table;
     }
 
-    public Pane getViewOffcodesPane(){
+    public Pane getViewOffcodesPane() {
         Pane pane = new Pane();
-        pane.setPrefSize(1540,800);
+        pane.setPrefSize(1540, 800);
 
-        Label label = getLabel("offCodes",300,300);
+        Label label = getLabel("offCodes", 300, 300);
         TableView tableView = getAllOffCodesTableView();
-        setPlace(tableView,300,320);
-        Button back = getButton("back" , event -> {
+        setPlace(tableView, 300, 320);
+        Button back = getButton("back", event -> {
             // TODO: ۲۵/۰۶/۲۰۲۰ go back
         });
-        setPlace(back,370, 700);
+        setPlace(back, 370, 700);
 
-        pane.getChildren().addAll(label,tableView,back);
+        pane.getChildren().addAll(label, tableView, back);
         return pane;
     }
 
@@ -811,22 +815,22 @@ public class ManagerMenuPanes {
         return pane;
     }
 
-    public Pane getManageAllProductsPane (){
+    public Pane getManageAllProductsPane() {
 
         Pane pane = new Pane();
-        pane.setPrefSize(1540,800);
+        pane.setPrefSize(1540, 800);
 
         TableView products = getManageProductsTableView();
-        setPlace(products , 400 , 300);
+        setPlace(products, 400, 300);
 
-        Label label = getLabel("all products : " , 400 , 270);
+        Label label = getLabel("all products : ", 400, 270);
 
-        Button back = getButton("back" , event -> {
+        Button back = getButton("back", event -> {
             // TODO: ۲۴/۰۶/۲۰۲۰ going back
         });
 
-        setPlace(back , 430 , 650);
-        pane.getChildren().addAll(products , label , back);
+        setPlace(back, 430, 650);
+        pane.getChildren().addAll(products, label, back);
 
         return pane;
     }
@@ -992,7 +996,7 @@ public class ManagerMenuPanes {
         return pane;
     }
 
-    public Pane getAllCategoriesPane(){
+    public Pane getAllCategoriesPane() {
         Pane pane = new Pane();
         return pane;
     }
@@ -1048,79 +1052,78 @@ public class ManagerMenuPanes {
         return table;
     }
 
-    public Pane getEditCategoryPane(Category category){
-        Pane pane = new Pane ();
-        pane.setPrefSize(1540,800);
+    public Pane getEditCategoryPane(Category category) {
+        Pane pane = new Pane();
+        pane.setPrefSize(1540, 800);
         final int X = 300;
 
-        Label nameLabel = getLabel("category name" , X , 300);
-        Label nameError = getErrorLabel("" , X , 320);
-        TextField nameField = getTextFieldDefault(category.getName(),X,340);
+        Label nameLabel = getLabel("category name", X, 300);
+        Label nameError = getErrorLabel("", X, 320);
+        TextField nameField = getTextFieldDefault(category.getName(), X, 340);
 
-        Label parentLabel = getLabel("parent category" ,X,390);
-        Label parentError = getErrorLabel("",X,410);
-        ComboBox <Category> parentComboBox = new ComboBox<>();
+        Label parentLabel = getLabel("parent category", X, 390);
+        Label parentError = getErrorLabel("", X, 410);
+        ComboBox<Category> parentComboBox = new ComboBox<>();
         parentComboBox.getItems().addAll(Category.getAllCategories());
-        if (category.getParentCategory()!=null)
+        if (category.getParentCategory() != null)
             parentComboBox.getSelectionModel().select(category.getParentCategory());
-        setPlace(parentComboBox , X,430);
+        setPlace(parentComboBox, X, 430);
 
         ArrayList<Category> subCategoriesArrayList = new ArrayList<>();
-        for (Map.Entry<Integer , Category> map : category.getSubCategories().entrySet()){
+        for (Map.Entry<Integer, Category> map : category.getSubCategories().entrySet()) {
             subCategoriesArrayList.add(map.getValue());
         }
-        Label subCategoriesLabel = getLabel("sub categories" , X+200 ,300);
-        Label subCategoriesError = getErrorLabel("",X+200,320);
+        Label subCategoriesLabel = getLabel("sub categories", X + 200, 300);
+        Label subCategoriesError = getErrorLabel("", X + 200, 320);
         TableView<Category> subCategoriesTableView = getSubCategoriesTableView(subCategoriesArrayList);
-        setPlace(subCategoriesTableView,X+200,340);
+        setPlace(subCategoriesTableView, X + 200, 340);
 
         ArrayList<Product> products = new ArrayList<>();
-        Label productsLabel = getLabel("products",X+700,300);
-        Label productsError = getErrorLabel("",X+700,320);
-        TableView productsTableViewCategory = getProductsTableViewCategory(category,products);
-        setPlace(productsTableViewCategory,X+700,340);
+        Label productsLabel = getLabel("products", X + 700, 300);
+        Label productsError = getErrorLabel("", X + 700, 320);
+        TableView productsTableViewCategory = getProductsTableViewCategory(category, products);
+        setPlace(productsTableViewCategory, X + 700, 340);
 
-        Button back = getButton("back" , event -> {
+        Button back = getButton("back", event -> {
             // TODO: ۲۵/۰۶/۲۰۲۰ go back
         });
-        setPlace(back,X,480);
+        setPlace(back, X, 480);
 
-        Button confirm = getButton("confirm",event -> {
-            if (nameField.getText().equals("")||nameField.getText().equals(category.getName())){
+        Button confirm = getButton("confirm", event -> {
+            if (nameField.getText().equals("") || nameField.getText().equals(category.getName())) {
                 nameError.setText("");
-            }else {
-                if (managerController.isCategoryValid(nameField.getText())){
+            } else {
+                if (managerController.isCategoryValid(nameField.getText())) {
                     nameError.setText("this name is taken");
                 }
             }
 
             Category parent = parentComboBox.getValue();
             if (parent.equals(category)) parentError.setText("a category cannot be its own father");
-            else if (category.getSubCategories().containsValue(parent)){
+            else if (category.getSubCategories().containsValue(parent)) {
                 parentError.setText("cannot select this category");
                 // TODO: ۲۵/۰۶/۲۰۲۰ this must get all the sub categories from the subcategories too
-            }
-            else {
+            } else {
                 parentError.setText("");
             }
 
             try {
-                getSubCategoriesError(category , subCategoriesArrayList);
+                getSubCategoriesError(category, subCategoriesArrayList);
                 subCategoriesError.setText("");
             } catch (Exception e) {
                 subCategoriesError.setText(e.getMessage());
             }
 
-            if (products.size()<1){
+            if (products.size() < 1) {
                 productsError.setText("must choose at least one");
-            }else {
+            } else {
                 productsError.setText("");
             }
 
-            if (nameError.equals("")&&
-                    parentError.equals("")&&
-                    productsError.equals("")&&
-                    subCategoriesError.equals("")){
+            if (nameError.equals("") &&
+                    parentError.equals("") &&
+                    productsError.equals("") &&
+                    subCategoriesError.equals("")) {
 
             }
         });
@@ -1144,42 +1147,42 @@ public class ManagerMenuPanes {
         return pane;
     }
 
-    public Pane getCreateCategoryPane(){
+    public Pane getCreateCategoryPane() {
 
         return null;
     }
 
-    public Pane getManageUsersPane(){
-        Pane pane = new Pane ();
-        pane.setPrefSize(1540,800);
+    public Pane getManageUsersPane() {
+        Pane pane = new Pane();
+        pane.setPrefSize(1540, 800);
 
 
-        Label label = getLabel("users" , 300,300);
+        Label label = getLabel("users", 300, 300);
         TableView tv = getManageUsersTableView();
-        setPlace(tv,300,330);
+        setPlace(tv, 300, 330);
 
-        Button back = getButton("back",event -> {
+        Button back = getButton("back", event -> {
             // TODO: ۲۵/۰۶/۲۰۲۰ going back
         });
-        pane.getChildren().addAll(label,tv,back);
+        pane.getChildren().addAll(label, tv, back);
         return pane;
 
     }
 
-    private void getSubCategoriesError(Category category , ArrayList<Category> subCategories) throws Exception {
-        for (Category c : subCategories){
-            getSubCategoriesError(category , new ArrayList<>(c.getSubCategories().values()));
+    private void getSubCategoriesError(Category category, ArrayList<Category> subCategories) throws Exception {
+        for (Category c : subCategories) {
+            getSubCategoriesError(category, new ArrayList<>(c.getSubCategories().values()));
         }
         if (subCategories.contains(category)) throw new Exception("category cannot be a father");
     }
 
-    private TableView getProductsTableViewCategory(Category category , ArrayList<Product> products) {
+    private TableView getProductsTableViewCategory(Category category, ArrayList<Product> products) {
 
-        TableView <Product> tableView = new TableView<>();
+        TableView<Product> tableView = new TableView<>();
 
         ArrayList<Product> categoryProducts = new ArrayList<>();
-        for (Product p : Product.getAllProducts()){
-            if (p.getParentCategory().equals(category)){
+        for (Product p : Product.getAllProducts()) {
+            if (p.getParentCategory().equals(category)) {
                 categoryProducts.add(p);
             }
         }
@@ -1203,13 +1206,14 @@ public class ManagerMenuPanes {
 
                             final CheckBox checkBox = new CheckBox();
                             boolean firstTime = true;
+
                             @Override
                             public void updateItem(String item, boolean empty) {
                                 super.updateItem(item, empty);
-                                if (!empty){
-                                    if (firstTime){
+                                if (!empty) {
+                                    if (firstTime) {
                                         Product product = getTableView().getItems().get(getIndex());
-                                        if (category!=null){
+                                        if (category != null) {
                                             if (categoryProducts.contains(product)) checkBox.setSelected(true);
                                         }
                                         firstTime = false;
@@ -1235,13 +1239,13 @@ public class ManagerMenuPanes {
 
         select.setCellFactory(cellFactory);
         tableView.setItems(data);
-        tableView.getColumns().addAll(categoryName,select);
+        tableView.getColumns().addAll(categoryName, select);
 
         return tableView;
     }
 
     private TableView<Category> getSubCategoriesTableView(ArrayList<Category> subCategories) {
-        TableView <Category> tableView = new TableView<>();
+        TableView<Category> tableView = new TableView<>();
 
         ObservableList<Category> data
                 = FXCollections.observableArrayList(
@@ -1262,13 +1266,14 @@ public class ManagerMenuPanes {
 
                             final CheckBox checkBox = new CheckBox();
                             boolean firstTime = true;
+
                             @Override
                             public void updateItem(String item, boolean empty) {
                                 super.updateItem(item, empty);
-                                if (!empty){
-                                    if (firstTime){
+                                if (!empty) {
+                                    if (firstTime) {
                                         Category category = getTableView().getItems().get(getIndex());
-                                        if (category!=null){
+                                        if (category != null) {
                                             if (subCategories.contains(category)) checkBox.setSelected(true);
                                         }
                                         firstTime = false;
@@ -1294,7 +1299,7 @@ public class ManagerMenuPanes {
 
         select.setCellFactory(cellFactory);
         tableView.setItems(data);
-        tableView.getColumns().addAll(categoryName,select);
+        tableView.getColumns().addAll(categoryName, select);
 
         return tableView;
     }

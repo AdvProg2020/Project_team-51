@@ -54,6 +54,12 @@ public class CustomerDashboard {
     @FXML
     private JFXButton ordersButton;
 
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
+    }
+
     @FXML
     private void initialize() {
         stackPane.setOpacity(0);
@@ -70,6 +76,8 @@ public class CustomerDashboard {
         usernameLabel.setText(customer.getUsername());
 
         personalInfoButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
+
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getPersonalInfoPane()));
             newStage.setTitle("  Personal Info");
@@ -78,6 +86,8 @@ public class CustomerDashboard {
         });
 
         discountCodesButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
+
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getCustomerDiscountCodes(customer)));
             newStage.setTitle("  Personal Info");
@@ -86,6 +96,8 @@ public class CustomerDashboard {
         });
 
         ordersButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
+
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getOrdersPane()));
             newStage.setTitle("  Personal Info");
@@ -94,6 +106,8 @@ public class CustomerDashboard {
         });
 
         homeButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
+
             try {
                 fadeOut(FXMLLoader.load(Main.class.getResource("main.fxml")));
             } catch (IOException e) {
@@ -102,6 +116,7 @@ public class CustomerDashboard {
         });
 
         logoutButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("dialog.wav")).start();
             BoxBlur boxBlur = new BoxBlur(4, 4, 4);
             JFXButton button = new JFXButton("  Yes  ");
             button.setStyle("-fx-background-color:#fe615a; -fx-background-radius:  18; -fx-text-fill: white");
@@ -133,6 +148,7 @@ public class CustomerDashboard {
         });
 
         cartButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -144,6 +160,7 @@ public class CustomerDashboard {
         });
 
         cartDialog.getPayButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -155,6 +172,7 @@ public class CustomerDashboard {
         });
 
         addressDialog.getNextButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -166,6 +184,7 @@ public class CustomerDashboard {
         });
 
         offCodeDialog.getNextButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -203,6 +222,8 @@ public class CustomerDashboard {
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(event -> {
+            new Thread(() -> playAudio("dialog.wav")).start();
+
             stackPane.getScene().setRoot(node);
         });
         fadeTransition.play();
@@ -229,11 +250,5 @@ public class CustomerDashboard {
         dialog.show();
         mainPane.setEffect(boxBlur);
         dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
-    }
-
-    private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
     }
 }

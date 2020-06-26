@@ -73,6 +73,12 @@ public class ManagerDashboard {
     @FXML
     private JFXButton manageUsersButton;
 
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
+    }
+
     @FXML
     private void initialize() {
         stackPane.setOpacity(0);
@@ -84,6 +90,8 @@ public class ManagerDashboard {
         usernameLabel.setText(manager.getUsername());
 
         personalInfoButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
+
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getPersonalInfoPane()));
             newStage.setTitle("  Personal Info");
@@ -92,6 +100,8 @@ public class ManagerDashboard {
         });
 
         createDiscountButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
+
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getCreateDiscountCodePane()));
             newStage.setTitle("  Create Discount");
@@ -100,6 +110,8 @@ public class ManagerDashboard {
         });
 
         viewDiscountButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
+
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getViewOffcodesPane()));
             newStage.setTitle("  View Discounts");
@@ -108,6 +120,8 @@ public class ManagerDashboard {
         });
 
         manageProducts.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
+
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getManageAllProductsPane()));
             newStage.setTitle("  Manage Products");
@@ -117,6 +131,8 @@ public class ManagerDashboard {
         });
 
         createCategoryButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
+
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getCreateCategoryPane()));
             newStage.setTitle("  Create Category");
@@ -126,9 +142,17 @@ public class ManagerDashboard {
 
         viewCategoriesButton.setOnMouseClicked(event -> {
             //    stage.setScene(new Scene(dashboard.));
+            new Thread(() -> playAudio("button2.wav")).start();
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getAllCategoriesPane()));
+            newStage.setTitle("  Create Category");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         manageRequestsButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
+
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getManageRequestsPane()));
             newStage.setTitle("  Manage Requests");
@@ -138,6 +162,8 @@ public class ManagerDashboard {
 
 
         manageUsersButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
+
             Stage newStage = new Stage();
             newStage.setScene(new Scene(dashboard.getManageUsersPane()));
             newStage.setTitle("  Manage Users");
@@ -146,6 +172,8 @@ public class ManagerDashboard {
         });
 
         homeButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
+
             try {
                 fadeOut(FXMLLoader.load(Main.class.getResource("main.fxml")));
             } catch (IOException e) {
@@ -154,6 +182,7 @@ public class ManagerDashboard {
         });
 
         logoutButton.setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button2.wav")).start();
             BoxBlur boxBlur = new BoxBlur(4, 4, 4);
             JFXButton button = new JFXButton("  Yes  ");
             button.setStyle("-fx-background-color:#fe615a; -fx-background-radius:  18; -fx-text-fill: white");
@@ -192,6 +221,7 @@ public class ManagerDashboard {
 
     @FXML
     private void showErrorWithColor(String message, String color) {
+        new Thread(() -> playAudio("dialog.wav")).start();
         BoxBlur boxBlur = new BoxBlur(4, 4, 4);
         JFXButton button = new JFXButton("  Yes  ");
         button.setStyle("-fx-background-color:" + color + "; -fx-background-radius:  18; -fx-text-fill: white");
@@ -226,14 +256,9 @@ public class ManagerDashboard {
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(event -> {
+            new Thread(() -> playAudio("dialog.wav")).start();
             Main.getPrimaryStage().setScene(new Scene(node));
         });
         fadeTransition.play();
-    }
-
-    private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
     }
 }

@@ -34,8 +34,7 @@ public class Main extends Application {
         Thread statusUpdaterThread = new Thread(new StatusUpdater());
         buildThread.start();
         statusUpdaterThread.start();
-        var thread = new Thread(() -> playAudio("Hunter.mp3"));
-        thread.run();
+        new Thread(() -> playAudio("Hunter.mp3")).start();
         launch();
     }
 
@@ -47,6 +46,12 @@ public class Main extends Application {
         Main.primaryStage = stage;
     }
 
+    private static void playAudio(String musicFile) {
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("main"));
@@ -56,12 +61,6 @@ public class Main extends Application {
         setPrimaryStage(stage);
         scene.getStylesheets().add(Main.class.getResource("main.css").toExternalForm());
         stage.show();
-    }
-
-    private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
     }
 
 }
