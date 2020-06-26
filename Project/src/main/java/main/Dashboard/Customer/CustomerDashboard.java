@@ -263,4 +263,76 @@ public class CustomerDashboard {
         mainPane.setEffect(boxBlur);
         dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
     }
+
+    public StackPane getStackPane() {
+        return stackPane;
+    }
+
+    public void setStackPane(StackPane stackPane) {
+        this.stackPane = stackPane;
+    }
+
+    public BorderPane getMainPane() {
+        return mainPane;
+    }
+
+    public void setMainPane(BorderPane mainPane) {
+        this.mainPane = mainPane;
+    }
+
+    public JFXButton getHomeButton() {
+        return homeButton;
+    }
+
+    public void setHomeButton(JFXButton homeButton) {
+        this.homeButton = homeButton;
+    }
+
+    public JFXButton getCartButton() {
+        return cartButton;
+    }
+
+    public void setCartButton(JFXButton cartButton) {
+        this.cartButton = cartButton;
+    }
+
+    public JFXButton getLogoutButton() {
+        return logoutButton;
+    }
+
+    public void setLogoutButton(JFXButton logoutButton) {
+        this.logoutButton = logoutButton;
+    }
+
+    public Label getUsernameLabel() {
+        return usernameLabel;
+    }
+
+    public void setUsernameLabel(Label usernameLabel) {
+        this.usernameLabel = usernameLabel;
+    }
+
+    public JFXButton getPersonalInfoButton() {
+        return personalInfoButton;
+    }
+
+    public void setPersonalInfoButton(JFXButton personalInfoButton) {
+        this.personalInfoButton = personalInfoButton;
+    }
+
+    public JFXButton getDiscountCodesButton() {
+        return discountCodesButton;
+    }
+
+    public void setDiscountCodesButton(JFXButton discountCodesButton) {
+        this.discountCodesButton = discountCodesButton;
+    }
+
+    public JFXButton getOrdersButton() {
+        return ordersButton;
+    }
+
+    public void setOrdersButton(JFXButton ordersButton) {
+        this.ordersButton = ordersButton;
+    }
 }

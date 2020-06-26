@@ -507,5 +507,229 @@ public class ProductPageController extends StackPane {
         mainPane.setEffect(boxBlur);
         dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
     }
+
+    public JFXButton getDashboard() {
+        return dashboard;
+    }
+
+    public void setDashboard(JFXButton dashboard) {
+        this.dashboard = dashboard;
+    }
+
+    public JFXButton getLogout() {
+        return logout;
+    }
+
+    public void setLogout(JFXButton logout) {
+        this.logout = logout;
+    }
+
+    public JFXButton getHomeButton() {
+        return homeButton;
+    }
+
+    public void setHomeButton(JFXButton homeButton) {
+        this.homeButton = homeButton;
+    }
+
+    public MenuButton getCategoriesButton() {
+        return categoriesButton;
+    }
+
+    public void setCategoriesButton(MenuButton categoriesButton) {
+        this.categoriesButton = categoriesButton;
+    }
+
+    public JFXButton getCartButton() {
+        return cartButton;
+    }
+
+    public void setCartButton(JFXButton cartButton) {
+        this.cartButton = cartButton;
+    }
+
+    public ImageView getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(ImageView productImage) {
+        this.productImage = productImage;
+    }
+
+    public Label getProductName() {
+        return productName;
+    }
+
+    public void setProductName(Label productName) {
+        this.productName = productName;
+    }
+
+    public Label getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(Label productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    public ComboBox<Seller> getSellerComboBox() {
+        return sellerComboBox;
+    }
+
+    public void setSellerComboBox(ComboBox<Seller> sellerComboBox) {
+        this.sellerComboBox = sellerComboBox;
+    }
+
+    public Label getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(Label productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public JFXTextField getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(JFXTextField quantity) {
+        this.quantity = quantity;
+    }
+
+    public JFXButton getAddButton() {
+        return addButton;
+    }
+
+    public void setAddButton(JFXButton addButton) {
+        this.addButton = addButton;
+    }
+
+    public VBox getCommentsBox() {
+        return commentsBox;
+    }
+
+    public void setCommentsBox(VBox commentsBox) {
+        this.commentsBox = commentsBox;
+    }
+
+    public Label getComment() {
+        return comment;
+    }
+
+    public void setComment(Label comment) {
+        this.comment = comment;
+    }
+
+    public Label getOffPercent() {
+        return offPercent;
+    }
+
+    public void setOffPercent(Label offPercent) {
+        this.offPercent = offPercent;
+    }
+
+    public ImageView getRateStar() {
+        return rateStar;
+    }
+
+    public void setRateStar(ImageView rateStar) {
+        this.rateStar = rateStar;
+    }
+
+    public Label getAttributesLabel() {
+        return attributesLabel;
+    }
+
+    public void setAttributesLabel(Label attributesLabel) {
+        this.attributesLabel = attributesLabel;
+    }
+
+    public CustomMenuItem getCustomItem() {
+        return customItem;
+    }
+
+    public void setCustomItem(CustomMenuItem customItem) {
+        this.customItem = customItem;
+    }
+
+    public TreeView getCategoriesTreeView() {
+        return categoriesTreeView;
+    }
+
+    public void setCategoriesTreeView(TreeView categoriesTreeView) {
+        this.categoriesTreeView = categoriesTreeView;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public List<Comment> getAllComments() {
+        return allComments;
+    }
+
+    public void setAllComments(List<Comment> allComments) {
+        this.allComments = allComments;
+    }
+
+    public JFXButton getAddComment() {
+        return addComment;
+    }
+
+    public void setAddComment(JFXButton addComment) {
+        this.addComment = addComment;
+    }
+
+    public SingleProductController getController() {
+        return controller;
+    }
+
+    public void setController(SingleProductController controller) {
+        this.controller = controller;
+    }
+
+    public String getQuantityText() {
+        return quantityText;
+    }
+
+    public void setQuantityText(String quantityText) {
+        this.quantityText = quantityText;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public StackPane getStackPane() {
+        return stackPane;
+    }
+
+    public void setStackPane(StackPane stackPane) {
+        this.stackPane = stackPane;
+    }
+
+    public BorderPane getMainPane() {
+        return mainPane;
+    }
+
+    public void setMainPane(BorderPane mainPane) {
+        this.mainPane = mainPane;
+    }
+
+    public JFXButton getSearchButton() {
+        return searchButton;
+    }
+
+    public void setSearchButton(JFXButton searchButton) {
+        this.searchButton = searchButton;
+    }
 }
 
