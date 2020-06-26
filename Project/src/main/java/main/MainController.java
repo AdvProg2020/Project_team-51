@@ -398,38 +398,46 @@ public class MainController {
 
     private void initializeBestSellers() {
 
-        BestSellerProductImage1.setImage(bestSellerProducts.get(0).getImage());
+//        BestSellerProductImage1.setImage(bestSellerProducts.get(0).getImage());
+        BestSellerProductImage1.setImage(RandomPicture.getRandomImage());
         BestSellerProductName1.setText(bestSellerProducts.get(0).getName());
         BestSellerProductPrice1.setText(bestSellerProducts.get(0).getAveragePrice() + " $");
 
-        BestSellerProductImage2.setImage(bestSellerProducts.get(1).getImage());
+//        BestSellerProductImage2.setImage(bestSellerProducts.get(1).getImage());
+        BestSellerProductImage2.setImage(RandomPicture.getRandomImage());
         BestSellerProductName2.setText(bestSellerProducts.get(1).getName());
         BestSellerProductPrice2.setText(bestSellerProducts.get(1).getAveragePrice() + " $");
 
-        BestSellerProductImage3.setImage(bestSellerProducts.get(2).getImage());
+//        BestSellerProductImage3.setImage(bestSellerProducts.get(2).getImage());
+        BestSellerProductImage3.setImage(RandomPicture.getRandomImage());
         BestSellerProductName3.setText(bestSellerProducts.get(2).getName());
         BestSellerProductPrice3.setText(bestSellerProducts.get(2).getAveragePrice() + " $");
 
-        BestSellerProductImage4.setImage(bestSellerProducts.get(3).getImage());
+//        BestSellerProductImage4.setImage(bestSellerProducts.get(3).getImage());
+        BestSellerProductImage4.setImage(RandomPicture.getRandomImage());
         BestSellerProductName4.setText(bestSellerProducts.get(3).getName());
         BestSellerProductPrice4.setText(bestSellerProducts.get(3).getAveragePrice() + " $");
     }
 
     private void initializeMostViewed() {
 
-        mostViewedProductImage1.setImage(mostViewedProducts.get(0).getImage());
+//        mostViewedProductImage1.setImage(mostViewedProducts.get(0).getImage());
+        mostViewedProductImage1.setImage(RandomPicture.getRandomImage());
         mostViewedProductName1.setText(mostViewedProducts.get(0).getName());
         mostViewedProductPrice1.setText(mostViewedProducts.get(0).getAveragePrice() + " $");
 
-        mostViewedProductImage2.setImage(mostViewedProducts.get(1).getImage());
+//        mostViewedProductImage2.setImage(mostViewedProducts.get(1).getImage());
+        mostViewedProductImage2.setImage(RandomPicture.getRandomImage());
         mostViewedProductName2.setText(mostViewedProducts.get(1).getName());
         mostViewedProductPrice2.setText(mostViewedProducts.get(1).getAveragePrice() + " $");
 
-        mostViewedProductImage3.setImage(mostViewedProducts.get(2).getImage());
+//        mostViewedProductImage3.setImage(mostViewedProducts.get(2).getImage());
+        mostViewedProductImage3.setImage(RandomPicture.getRandomImage());
         mostViewedProductName3.setText(mostViewedProducts.get(2).getName());
         mostViewedProductPrice3.setText(mostViewedProducts.get(2).getAveragePrice() + " $");
 
-        mostViewedProductImage4.setImage(mostViewedProducts.get(3).getImage());
+//        mostViewedProductImage4.setImage(mostViewedProducts.get(3).getImage());
+        mostViewedProductImage4.setImage(RandomPicture.getRandomImage());
         mostViewedProductName4.setText(mostViewedProducts.get(3).getName());
         mostViewedProductPrice4.setText(mostViewedProducts.get(3).getAveragePrice() + " $");
     }

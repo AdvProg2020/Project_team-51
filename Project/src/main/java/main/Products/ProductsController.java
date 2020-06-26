@@ -449,11 +449,16 @@ public class ProductsController extends StackPane {
     private void updateListToMap() {
         allProducts.clear();
         for (Product product : products) {
+            product.setImage(RandomPicture.getRandomImage());
             SingleProduct singleProduct = new SingleProduct();
             singleProduct.getProductPrice().setText(product.getAveragePrice() + " $");
             singleProduct.getProductName().setText(product.getName());
             singleProduct.getProductImage().setImage(product.getImage());
             singleProduct.getProductDescription().setText(product.getDescription());
+            int number = product.getTotalQuantity();
+            if (number == 0) {
+                singleProduct.getProductImage().setOpacity(.4);
+            }
             allProducts.put(product, singleProduct);
         }
     }

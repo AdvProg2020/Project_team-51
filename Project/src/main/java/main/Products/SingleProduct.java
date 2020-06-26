@@ -1,5 +1,6 @@
 package main.Products;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -32,7 +33,7 @@ public class SingleProduct extends AnchorPane {
     private ImageView productImage;
 
     @FXML
-    private Label productName;
+    private JFXButton productName;
 
     @FXML
     private Label productDescription;
@@ -118,12 +119,36 @@ public class SingleProduct extends AnchorPane {
         this.productImage = productImage;
     }
 
-    public Label getProductName() {
+    public JFXButton getProductName() {
         return productName;
     }
 
-    public void setProductName(Label productName) {
+    public void setProductName(JFXButton productName) {
         this.productName = productName;
+    }
+
+    public ImageView getRateImage() {
+        return rateImage;
+    }
+
+    public void setRateImage(ImageView rateImage) {
+        this.rateImage = rateImage;
+    }
+
+    public ImageView getPrice() {
+        return price;
+    }
+
+    public void setPrice(ImageView price) {
+        this.price = price;
+    }
+
+    public ImageView getOff() {
+        return off;
+    }
+
+    public void setOff(ImageView off) {
+        this.off = off;
     }
 
     public Label getProductDescription() {
