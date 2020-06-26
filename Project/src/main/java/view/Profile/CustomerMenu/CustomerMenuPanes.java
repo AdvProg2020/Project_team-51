@@ -7,14 +7,24 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.util.Callback;
+import model.Category;
+import model.ItemOfOrder;
 import model.OffCode;
+import model.OrderLog.BuyerLog;
+import model.OrderLog.Order;
 import model.People.Account;
 import model.People.Customer;
+import model.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerMenuPanes {
@@ -114,12 +124,8 @@ public class CustomerMenuPanes {
                 }
             }
         };
-        Button back = new Button("back");
-        back.setOnAction(ev -> {
-            //todo go back
-        });
-        back.setLayoutX(300);
-        back.setLayoutY(690);
+
+
         submit.setLayoutX(360);
         submit.setLayoutY(690);
         pane.getChildren().addAll(
@@ -144,7 +150,6 @@ public class CustomerMenuPanes {
                 phoneNumberLabel,
                 phoneNumberError,
                 phoneNumberTextField,
-                back,
                 submit,
                 balance,
                 balanceLabel
@@ -157,18 +162,14 @@ public class CustomerMenuPanes {
         pane.setPrefSize(1540, 800);
 
         Label label = getLabel("discount codes", 300, 300);
-        TableView tableView = getCustomerDiscountCodes((Customer) Controller.getCurrentAccount());
+
+        TableView tableView = getCustomerDiscountCodes();
         setPlace(tableView, 300, 320);
-
-        Button back = getButton("back", event -> {
-            // TODO: ۲۵/۰۶/۲۰۲۰ going back
-        });
-
-        pane.getChildren().addAll(label, tableView, back);
+        pane.getChildren().addAll(label, tableView);
         return pane;
     }
 
-    public TableView getCustomerDiscountCodes(Customer customer) {
+    public TableView getCustomerDiscountCodes() {
         List<OffCode> offCodes = customerController.viewDiscountCodes();
         TableView<OffCode> table = new TableView<>();
         ObservableList<OffCode> data
@@ -190,7 +191,105 @@ public class CustomerMenuPanes {
     }
 
     public Pane getOrdersPane() {
-        return null;
+        Pane pane = new Pane();
+        pane.setPrefSize(1540,800);
+
+        TableView tv = getAllShoppingsTableView();
+        setPlace(tv,300,300);
+
+        pane.getChildren().addAll(tv);
+        return pane;
+    }
+
+    public TableView getAllShoppingsTableView(){
+        Customer customer =(Customer) Controller.getCurrentAccount();
+
+        List<Order> orders = customer.getHistoryOfOrders();
+        TableView<Order> table = new TableView<>();
+        ObservableList<Order> data
+                = FXCollections.observableArrayList(
+                orders);
+
+        TableColumn id = new TableColumn("id");
+        id.setCellValueFactory(new PropertyValueFactory<>("orderID"));
+
+        TableColumn status = new TableColumn("shipping status");
+        status.setCellValueFactory(new PropertyValueFactory<>("shippingStatusString"));
+
+        TableColumn open = new TableColumn("open");
+        open.setCellValueFactory(new PropertyValueFactory<>("orderID"));
+
+        Callback<TableColumn<Order, String>, TableCell<Order, String>> cellFactory
+                = //
+                new Callback<TableColumn<Order, String>, TableCell<Order, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Order, String> param) {
+                        final TableCell<Order, String> cell = new TableCell<Order, String>() {
+
+                            final Button button = new Button("open");
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    button.setOnAction(event -> {
+                                        Order  order = getTableView().getItems().get(getIndex());
+                                        Stage stage = new Stage();
+                                        stage.setScene(new Scene(
+                                                openSingleOrderPane(order)
+                                        ));
+                                    });
+                                    setGraphic(button);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+        open.setCellFactory(cellFactory);
+
+        table.setItems(data);
+        table.getColumns().addAll(id,status,open);
+        return table;
+
+    }
+
+    private Pane openSingleOrderPane(Order order) {
+        Customer customer =(Customer) Controller.getCurrentAccount();
+
+        ArrayList<ItemOfOrder> items = (ArrayList<ItemOfOrder>) ((BuyerLog)order).getItems();
+
+        TableView<ItemOfOrder> table = new TableView<>();
+        ObservableList<ItemOfOrder> data
+                = FXCollections.observableArrayList(
+                items);
+
+        TableColumn product = new TableColumn("product");
+        product.setCellValueFactory(new PropertyValueFactory<>("productString"));
+
+        TableColumn price = new TableColumn("price");
+        price.setCellValueFactory(new PropertyValueFactory<>("priceString"));
+
+        TableColumn discount = new TableColumn("discount");
+        discount.setCellValueFactory(new PropertyValueFactory<>("discountString"));
+
+        TableColumn date = new TableColumn("date");
+        date.setCellValueFactory(new PropertyValueFactory<>("dateString"));
+
+        TableColumn quantity = new TableColumn("dquantity");
+        quantity.setCellValueFactory(new PropertyValueFactory<>("quantityString"));
+
+
+        table.setItems(data);
+        table.getColumns().addAll(product,price,discount,date,quantity);
+
+        Pane pane = new Pane();
+        pane.getChildren().addAll(table);
+        return pane;
     }
 
     private TextField getTextFieldDefault(String Default, double x, double y) {

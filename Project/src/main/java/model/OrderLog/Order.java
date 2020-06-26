@@ -2,6 +2,7 @@ package model.OrderLog;
 
 import control.TokenGenerator;
 import model.ItemOfOrder;
+import model.Status;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,5 +46,12 @@ public abstract class Order {
 
     public ShippingStatus getStatus() {
         return status;
+    }
+
+    public String getShippingStatusString(){
+        if (status.equals( Status.APPROVED))return "approved";
+        else if (status.equals(Status.ENDED)) return "ended";
+        else if (status.equals(Status.PENDING_CREATE)) return "pending create";
+        else return "peinding edit";
     }
 }
