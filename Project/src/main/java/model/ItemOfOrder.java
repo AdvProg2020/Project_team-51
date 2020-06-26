@@ -45,6 +45,10 @@ public class ItemOfOrder {
         quantity--;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public double getTotalPrice() {
         return quantity * price;
     }

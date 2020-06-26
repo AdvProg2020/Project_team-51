@@ -3,15 +3,14 @@ package main;
 import com.jfoenix.controls.JFXButton;
 import control.Controller;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.util.Callback;
 import model.ItemOfOrder;
 
 import java.io.IOException;
@@ -39,13 +38,11 @@ public class CartDialogController extends AnchorPane {
     private TableColumn<ItemOfOrder, String> priceColumn;
 
     @FXML
-    private TableColumn<ItemOfOrder, String> quantityColumn;
+    private TableColumn<ItemOfOrder, TextField> quantityColumn;
 
     @FXML
     private TableColumn<ItemOfOrder, String> amountColumn;
 
-    @FXML
-    private TableColumn<?, ?> removeColumn;
 
     @FXML
     private Label priceLabel;
@@ -56,6 +53,7 @@ public class CartDialogController extends AnchorPane {
     private StackPane stackPane;
 
     private List<ItemOfOrder> cart = new ArrayList<>();
+    private String quantity;
 
 
     public CartDialogController(StackPane stackPane) {
@@ -85,12 +83,35 @@ public class CartDialogController extends AnchorPane {
             productIdColumn.setCellValueFactory(new PropertyValueFactory<>(itemOfOrder.getProduct().getProductId()));
             nameColumn.setCellValueFactory(new PropertyValueFactory<>(itemOfOrder.getProduct().getName()));
             priceColumn.setCellValueFactory(new PropertyValueFactory<>(itemOfOrder.getProduct().getPriceForSeller(itemOfOrder.getSeller()) + " $"));
-            quantityColumn.setCellValueFactory(new PropertyValueFactory<>(itemOfOrder.getQuantity() + ""));
+            quantityColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ItemOfOrder, TextField>, ObservableValue<TextField>>() {
+                @Override
+                public ObservableValue<TextField> call(TableColumn.CellDataFeatures<ItemOfOrder, TextField> param) {
+                    var filed = new TextField(String.valueOf(itemOfOrder.getQuantity()));
+                    filed.textProperty().addListener((a, b, newValue) -> {
+                        if (newValue.matches("\\d+")) {
+                            quantity = newValue;
+                            itemOfOrder.setQuantity(Integer.parseInt(quantity));
+                            updatePrices();
+                        }
+                    });
+                    return (ObservableValue<TextField>) filed;
+                }
+            });
             amountColumn.setCellValueFactory(new PropertyValueFactory<>(itemOfOrder.getTotalPrice() + " $"));
             price += itemOfOrder.getTotalPrice();
             priceAfterDiscount += itemOfOrder.getTotalPriceWithDiscount();
         }
 
+        priceLabel.textProperty().bind(new SimpleStringProperty(price + " $" + "     " + priceAfterDiscount + " $"));
+    }
+
+    private void updatePrices() {
+        double price = 0;
+        double priceAfterDiscount = 0;
+        for (ItemOfOrder itemOfOrder : cart) {
+            price += itemOfOrder.getTotalPrice();
+            priceAfterDiscount += itemOfOrder.getTotalPriceWithDiscount();
+        }
         priceLabel.textProperty().bind(new SimpleStringProperty(price + " $" + "     " + priceAfterDiscount + " $"));
     }
 
@@ -142,13 +163,6 @@ public class CartDialogController extends AnchorPane {
         this.priceColumn = priceColumn;
     }
 
-    public TableColumn<ItemOfOrder, String> getQuantityColumn() {
-        return quantityColumn;
-    }
-
-    public void setQuantityColumn(TableColumn<ItemOfOrder, String> quantityColumn) {
-        this.quantityColumn = quantityColumn;
-    }
 
     public TableColumn<ItemOfOrder, String> getAmountColumn() {
         return amountColumn;
@@ -156,14 +170,6 @@ public class CartDialogController extends AnchorPane {
 
     public void setAmountColumn(TableColumn<ItemOfOrder, String> amountColumn) {
         this.amountColumn = amountColumn;
-    }
-
-    public TableColumn<?, ?> getRemoveColumn() {
-        return removeColumn;
-    }
-
-    public void setRemoveColumn(TableColumn<?, ?> removeColumn) {
-        this.removeColumn = removeColumn;
     }
 
     public Label getPriceLabel() {
@@ -197,4 +203,6 @@ public class CartDialogController extends AnchorPane {
     public void setCart(List<ItemOfOrder> cart) {
         this.cart = cart;
     }
+
+
 }

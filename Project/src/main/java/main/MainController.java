@@ -6,7 +6,9 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import control.Controller;
+import control.CustomerController;
 import control.Exceptions.HaveNotLoggedInException;
+import control.Exceptions.InsufficientBalanceException;
 import control.Filters.SearchFilter;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -191,26 +193,36 @@ public class MainController {
         });
 
         cartButton.setOnMouseClicked(event -> {
-            new Thread(() -> playAudio("button.wav")).start();
-            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
-            JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
-            dialogLayout.setActions(cartDialog);
-            dialogLayout.setStyle("-fx-background-color:  #db5e5c");
-            dialog.show();
-            mainPane.setEffect(boxBlur);
-            dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
+            var account = Controller.getCurrentAccount();
+            if (account == null || account instanceof Customer) {
+                new Thread(() -> playAudio("button.wav")).start();
+                BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                dialogLayout.setActions(cartDialog);
+                dialogLayout.setStyle("-fx-background-color:  #db5e5c");
+                dialog.show();
+                mainPane.setEffect(boxBlur);
+                dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
+            } else {
+                showError("Not allowed activity");
+            }
         });
         cartDialog.getPayButton().setOnMouseClicked(event -> {
-            new Thread(() -> playAudio("button.wav")).start();
-            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
-            JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
-            dialogLayout.setActions(addressDialog);
-            dialogLayout.setStyle("-fx-background-color:   #886488");
-            dialog.show();
-            cartDialog.setEffect(boxBlur);
-            dialog.setOnDialogClosed((JFXDialogEvent e) -> cartDialog.setEffect(null));
+            var account = Controller.getCurrentAccount();
+            if (account instanceof Customer) {
+                new Thread(() -> playAudio("button.wav")).start();
+                BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                dialogLayout.setActions(addressDialog);
+                dialogLayout.setStyle("-fx-background-color:   #886488");
+                dialog.show();
+                cartDialog.setEffect(boxBlur);
+                dialog.setOnDialogClosed((JFXDialogEvent e) -> cartDialog.setEffect(null));
+            } else {
+                showError("You have to login first!");
+            }
         });
         addressDialog.getNextButton().setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button.wav")).start();
@@ -237,9 +249,12 @@ public class MainController {
         paymentDialog.getPayButton().setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button.wav")).start();
             try {
+                new CustomerController(Controller.getCurrentAccount()).purchase();
                 Main.setRoot("main");
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (InsufficientBalanceException e) {
+                showError("Insufficient Money");
             }
         });
 
@@ -383,38 +398,46 @@ public class MainController {
 
     private void initializeBestSellers() {
 
-        BestSellerProductImage1.setImage(bestSellerProducts.get(0).getImage());
+//        BestSellerProductImage1.setImage(bestSellerProducts.get(0).getImage());
+        BestSellerProductImage1.setImage(RandomPicture.getRandomImage());
         BestSellerProductName1.setText(bestSellerProducts.get(0).getName());
         BestSellerProductPrice1.setText(bestSellerProducts.get(0).getAveragePrice() + " $");
 
-        BestSellerProductImage2.setImage(bestSellerProducts.get(1).getImage());
+//        BestSellerProductImage2.setImage(bestSellerProducts.get(1).getImage());
+        BestSellerProductImage2.setImage(RandomPicture.getRandomImage());
         BestSellerProductName2.setText(bestSellerProducts.get(1).getName());
         BestSellerProductPrice2.setText(bestSellerProducts.get(1).getAveragePrice() + " $");
 
-        BestSellerProductImage3.setImage(bestSellerProducts.get(2).getImage());
+//        BestSellerProductImage3.setImage(bestSellerProducts.get(2).getImage());
+        BestSellerProductImage3.setImage(RandomPicture.getRandomImage());
         BestSellerProductName3.setText(bestSellerProducts.get(2).getName());
         BestSellerProductPrice3.setText(bestSellerProducts.get(2).getAveragePrice() + " $");
 
-        BestSellerProductImage4.setImage(bestSellerProducts.get(3).getImage());
+//        BestSellerProductImage4.setImage(bestSellerProducts.get(3).getImage());
+        BestSellerProductImage4.setImage(RandomPicture.getRandomImage());
         BestSellerProductName4.setText(bestSellerProducts.get(3).getName());
         BestSellerProductPrice4.setText(bestSellerProducts.get(3).getAveragePrice() + " $");
     }
 
     private void initializeMostViewed() {
 
-        mostViewedProductImage1.setImage(mostViewedProducts.get(0).getImage());
+//        mostViewedProductImage1.setImage(mostViewedProducts.get(0).getImage());
+        mostViewedProductImage1.setImage(RandomPicture.getRandomImage());
         mostViewedProductName1.setText(mostViewedProducts.get(0).getName());
         mostViewedProductPrice1.setText(mostViewedProducts.get(0).getAveragePrice() + " $");
 
-        mostViewedProductImage2.setImage(mostViewedProducts.get(1).getImage());
+//        mostViewedProductImage2.setImage(mostViewedProducts.get(1).getImage());
+        mostViewedProductImage2.setImage(RandomPicture.getRandomImage());
         mostViewedProductName2.setText(mostViewedProducts.get(1).getName());
         mostViewedProductPrice2.setText(mostViewedProducts.get(1).getAveragePrice() + " $");
 
-        mostViewedProductImage3.setImage(mostViewedProducts.get(2).getImage());
+//        mostViewedProductImage3.setImage(mostViewedProducts.get(2).getImage());
+        mostViewedProductImage3.setImage(RandomPicture.getRandomImage());
         mostViewedProductName3.setText(mostViewedProducts.get(2).getName());
         mostViewedProductPrice3.setText(mostViewedProducts.get(2).getAveragePrice() + " $");
 
-        mostViewedProductImage4.setImage(mostViewedProducts.get(3).getImage());
+//        mostViewedProductImage4.setImage(mostViewedProducts.get(3).getImage());
+        mostViewedProductImage4.setImage(RandomPicture.getRandomImage());
         mostViewedProductName4.setText(mostViewedProducts.get(3).getName());
         mostViewedProductPrice4.setText(mostViewedProducts.get(3).getAveragePrice() + " $");
     }

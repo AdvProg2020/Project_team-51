@@ -3,7 +3,9 @@ package main.Products;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import control.Controller;
+import control.CustomerController;
 import control.Exceptions.HaveNotLoggedInException;
+import control.Exceptions.InsufficientBalanceException;
 import control.Filters.*;
 import control.ProductController;
 import javafx.animation.FadeTransition;
@@ -222,28 +224,39 @@ public class ProductsController extends StackPane {
         });
 
         cartButton.setOnMouseClicked(event -> {
-            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
-            JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            JFXDialog dialog = new JFXDialog(this, dialogLayout, JFXDialog.DialogTransition.CENTER);
-            dialogLayout.setActions(cartDialog);
-            dialogLayout.setStyle("-fx-background-color:  #db5e5c");
-            dialog.show();
-            mainPane.setEffect(boxBlur);
-            dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
+            var account = Controller.getCurrentAccount();
+            if (account == null || account instanceof Customer) {
+                new Thread(() -> playAudio("button.wav")).start();
+                BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                JFXDialog dialog = new JFXDialog(this, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                dialogLayout.setActions(cartDialog);
+                dialogLayout.setStyle("-fx-background-color:  #db5e5c");
+                dialog.show();
+                mainPane.setEffect(boxBlur);
+                dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
+            } else {
+                showError("Not allowed activity");
+            }
         });
-
         cartDialog.getPayButton().setOnMouseClicked(event -> {
-            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
-            JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            JFXDialog dialog = new JFXDialog(this, dialogLayout, JFXDialog.DialogTransition.CENTER);
-            dialogLayout.setActions(addressDialog);
-            dialogLayout.setStyle("-fx-background-color:   #886488");
-            dialog.show();
-            cartDialog.setEffect(boxBlur);
-            dialog.setOnDialogClosed((JFXDialogEvent e) -> cartDialog.setEffect(null));
+            var account = Controller.getCurrentAccount();
+            if (account instanceof Customer) {
+                new Thread(() -> playAudio("button.wav")).start();
+                BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                JFXDialog dialog = new JFXDialog(this, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                dialogLayout.setActions(addressDialog);
+                dialogLayout.setStyle("-fx-background-color:   #886488");
+                dialog.show();
+                cartDialog.setEffect(boxBlur);
+                dialog.setOnDialogClosed((JFXDialogEvent e) -> cartDialog.setEffect(null));
+            } else {
+                showError("You have to login first!");
+            }
         });
-
         addressDialog.getNextButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(this, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -253,8 +266,8 @@ public class ProductsController extends StackPane {
             addressDialog.setEffect(boxBlur);
             dialog.setOnDialogClosed((JFXDialogEvent e) -> addressDialog.setEffect(null));
         });
-
         offCodeDialog.getNextButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(this, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -264,9 +277,16 @@ public class ProductsController extends StackPane {
             offCodeDialog.setEffect(boxBlur);
             dialog.setOnDialogClosed((JFXDialogEvent e) -> offCodeDialog.setEffect(null));
         });
-
         paymentDialog.getPayButton().setOnMouseClicked(event -> {
-            stage.setScene(new Scene(new ProductsController(products)));
+            new Thread(() -> playAudio("button.wav")).start();
+            try {
+                new CustomerController(Controller.getCurrentAccount()).purchase();
+                Main.setRoot("main");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InsufficientBalanceException e) {
+                showError("Insufficient Money");
+            }
         });
 
         minPriceSlider.valueProperty().addListener((a, b, newValue) -> {
@@ -429,11 +449,16 @@ public class ProductsController extends StackPane {
     private void updateListToMap() {
         allProducts.clear();
         for (Product product : products) {
+            product.setImage(RandomPicture.getRandomImage());
             SingleProduct singleProduct = new SingleProduct();
             singleProduct.getProductPrice().setText(product.getAveragePrice() + " $");
             singleProduct.getProductName().setText(product.getName());
             singleProduct.getProductImage().setImage(product.getImage());
             singleProduct.getProductDescription().setText(product.getDescription());
+            int number = product.getTotalQuantity();
+            if (number == 0) {
+                singleProduct.getProductImage().setOpacity(.4);
+            }
             allProducts.put(product, singleProduct);
         }
     }

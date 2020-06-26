@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.*?>
@@ -34,7 +35,8 @@
                         <Font size="14.0"/>
                     </font>
                 </JFXTextField>
-                <JFXTextArea fx:id="comment" focusColor="#757575" focusTraversable="false" promptText="Comment"
+                <JFXTextArea fx:id="comment" focusColor="#757575" focusTraversable="false" prefHeight="148.0"
+                             prefWidth="275.0" promptText="Comment"
                              style="-fx-background-color: #ceb175; -fx-background-radius: 15;">
                     <VBox.margin>
                         <Insets left="50.0" right="50.0" top="20.0"/>
@@ -46,11 +48,17 @@
                         <Font size="14.0"/>
                     </font>
                 </JFXTextArea>
+                <JFXSlider fx:id="scoreSlider" blockIncrement="5.0" max="5.0" prefHeight="73.0" prefWidth="375.0"
+                           value="0.001">
+                    <VBox.margin>
+                        <Insets left="80.0" right="80.0"/>
+                    </VBox.margin>
+                </JFXSlider>
                 <JFXButton fx:id="add" prefHeight="45.0" prefWidth="90.0"
                            style="-fx-background-color: #a6a548; -fx-background-radius: 10;" text="Add"
                            textFill="WHITE">
                     <VBox.margin>
-                        <Insets top="70.0"/>
+                        <Insets top="30.0"/>
                     </VBox.margin>
                     <font>
                         <Font name="System Bold" size="15.0"/>
