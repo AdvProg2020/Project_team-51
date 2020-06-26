@@ -35,6 +35,10 @@ public class ItemOfOrder {
         return quantity;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public void incrementQuantity() {
         quantity++;
     }
@@ -43,10 +47,6 @@ public class ItemOfOrder {
         if (quantity <= 0)
             throw new InvalidProductIdException();
         quantity--;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public double getTotalPrice() {

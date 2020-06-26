@@ -25,7 +25,6 @@ import model.People.Customer;
 import model.Product;
 import model.Requests.Request;
 
-import javax.swing.*;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -804,7 +803,7 @@ public class ManagerMenuPanes {
 
         Label label = getLabel("all products : ", 400, 270);
 
-        pane.getChildren().addAll(label,products);
+        pane.getChildren().addAll(label, products);
         return pane;
     }//v1
 
@@ -964,7 +963,7 @@ public class ManagerMenuPanes {
 
     public Pane getAllCategoriesPane() {
         Pane pane = new Pane();
-        pane.setPrefSize(1540,800);
+        pane.setPrefSize(1540, 800);
 
         TableView tv = new TableView();
 
@@ -1006,7 +1005,7 @@ public class ManagerMenuPanes {
                 };
         select.setCellFactory(cellFactory);
 
-        tv.getColumns().addAll(categoryName,select);
+        tv.getColumns().addAll(categoryName, select);
         pane.getChildren().addAll(tv);
         return pane;
     }//v1
@@ -1129,8 +1128,8 @@ public class ManagerMenuPanes {
                     productsError.equals("") &&
                     subCategoriesError.equals("")) {
                 String name = category.getName();
-                if (nameField.getText()!=null) name = nameField.getText();
-                managerController.editCategory(category,products,name,parentComboBox.getValue());
+                if (nameField.getText() != null) name = nameField.getText();
+                managerController.editCategory(category, products, name, parentComboBox.getValue());
             }
         });
 
@@ -1156,14 +1155,14 @@ public class ManagerMenuPanes {
 
     public Pane getCreateCategoryPane() {
         Pane pane = new Pane();
-        pane.setPrefSize(1540,800);
+        pane.setPrefSize(1540, 800);
         final int X = 300;
 
-        HashMap<Object , String> attributes = new HashMap<>();
+        HashMap<Object, String> attributes = new HashMap<>();
 
-        Label name = getLabel("category name" , 300,300);
-        Label nameError = getErrorLabel("",300,320);
-        TextField nameField = getTextFieldDefault("",300,340);
+        Label name = getLabel("category name", 300, 300);
+        Label nameError = getErrorLabel("", 300, 320);
+        TextField nameField = getTextFieldDefault("", 300, 340);
 
         Label countLabel = getLabel("attributes", X, 370);
         Slider countSlider = new Slider(1, 15, 1);
@@ -1182,48 +1181,48 @@ public class ManagerMenuPanes {
             }
         });
 
-        Label parentLabel = getLabel("parent" , X,460);
+        Label parentLabel = getLabel("parent", X, 460);
         ComboBox<Category> categoryComboBox = new ComboBox<>();
         categoryComboBox.getItems().addAll(managerController.getAllCategories());
-        setPlace(categoryComboBox,X,480);
+        setPlace(categoryComboBox, X, 480);
 
-        Button ok = getButton("attributes" , event -> {
+        Button ok = getButton("attributes", event -> {
             Stage stage = new Stage();
-            stage.setScene(new Scene(getEnterAttributesTableView(attributes ,(int) countSlider.getValue())));
+            stage.setScene(new Scene(getEnterAttributesTableView(attributes, (int) countSlider.getValue())));
             stage.show();
         });
-        setPlace(ok,X,550);
+        setPlace(ok, X, 550);
 
         ArrayList<Attributes> attributes1 = new ArrayList<>();
-        for (String attributeName : attributes.values()){
+        for (String attributeName : attributes.values()) {
             attributes1.add(new Attributes(attributeName));
         }
 
-        Button done =getButton("done" , event -> {
-            if (nameField.getText().equals("")){
+        Button done = getButton("done", event -> {
+            if (nameField.getText().equals("")) {
                 nameError.setText("please selet a name");
-            }else if (managerController.isCategoryValid(nameField.getText())){
+            } else if (managerController.isCategoryValid(nameField.getText())) {
                 nameError.setText("this name is taken");
-            }else{
-                if (attributes.size()<countSlider.getValue()){
+            } else {
+                if (attributes.size() < countSlider.getValue()) {
                     nameError.setText("please enter all attributes");
-                }else {
-                    managerController.addCategory(nameField.getText(),categoryComboBox.getValue().getName(),attributes1);
+                } else {
+                    managerController.addCategory(nameField.getText(), categoryComboBox.getValue().getName(), attributes1);
                 }
             }
         });
 
-        setPlace(done,X+100,550);
-        pane.getChildren().addAll(name,nameError,nameField,
-                countLabel,countSlider,countSliderAmount,parentLabel,categoryComboBox,ok,done);
+        setPlace(done, X + 100, 550);
+        pane.getChildren().addAll(name, nameError, nameField,
+                countLabel, countSlider, countSliderAmount, parentLabel, categoryComboBox, ok, done);
         return pane;
     }//v1
 
-    public TableView getEnterAttributesTableView (HashMap<Object,String> map,int size){
+    public TableView getEnterAttributesTableView(HashMap<Object, String> map, int size) {
         TableView<Object> tableView = new TableView<>();
 
         ArrayList<Object> objects = new ArrayList<>();
-        for(int x = 0;x<size;x++){
+        for (int x = 0; x < size; x++) {
             objects.add(new Object());
         }
         ObservableList<Object> data
@@ -1250,7 +1249,7 @@ public class ManagerMenuPanes {
                                 } else {
                                     textField.setOnKeyTyped(event -> {
                                         Object o = getTableView().getItems().get(getIndex());
-                                        map.put(o,textField.getText());
+                                        map.put(o, textField.getText());
                                     });
                                     setGraphic(textField);
                                     setText(null);
