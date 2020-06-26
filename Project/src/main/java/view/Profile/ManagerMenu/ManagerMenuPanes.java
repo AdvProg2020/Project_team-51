@@ -804,6 +804,7 @@ public class ManagerMenuPanes {
 
         Label label = getLabel("all products : ", 400, 270);
 
+        pane.getChildren().addAll(label,products);
         return pane;
     }//v1
 
