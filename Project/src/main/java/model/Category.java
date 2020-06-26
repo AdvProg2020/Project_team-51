@@ -14,11 +14,11 @@ public class Category {
     private List<Product> categoryProducts = new ArrayList<>();
     private List<Attributes> attributes = new ArrayList<>();
 
-    public Category(String name, Category parentCategory, Attributes... attributes) {
+    public Category(String name, Category parentCategory, ArrayList<Attributes> attributes) {
         this.name = name;
         this.parentCategory = parentCategory;
         allCategories.add(this);
-        this.attributes = List.of(attributes);
+        this.attributes = attributes;
         categoryId = TokenGenerator.generateCategoryId();
     }
 

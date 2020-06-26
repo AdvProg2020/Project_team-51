@@ -542,7 +542,7 @@ public class SellerMenuPanes {
         );
         return pane;
 
-    }//v1 todo find place to put
+    }//v1
 
     public Pane getCreateProductPane(){
         Pane pane = new Pane();
@@ -560,7 +560,7 @@ public class SellerMenuPanes {
         TextField brandField = getTextFieldDefault("",X  ,430);
 
         Label quantityLabel = getLabel("amount" , X , 480);
-        Slider quantitySlider = new Slider(1, 99, 1);
+        Slider quantitySlider = new Slider(0, 99, 1);
         Label quantityAmount = new Label("");
         setPlace(quantityAmount, X + 120, 480);
         setPlace(quantitySlider, X, 500);
@@ -829,14 +829,10 @@ public class SellerMenuPanes {
         return tableView;
     }//v1
 
-    private Pane getEditProductPane(Product product) {
-        return null;
-    }
-
-    public Pane getManageSingleProductPane(Product product){
-        ArrayList<Attributes> attributes = new ArrayList<>();
+    private Pane getEditProductPane(Product product){
         Pane pane = new Pane();
         pane.setPrefSize(1540,800);
+        HashMap<Attributes , String> attributesStringMap = new HashMap<>();
 
         final int X = 300;
         Label nameLabel = getLabel("name",X,300);
@@ -847,12 +843,13 @@ public class SellerMenuPanes {
         Label brandError = getErrorLabel("",X,410);
         TextField brandField = getTextFieldDefault(product.getBrandName(),X  ,430);
 
-        Label amountLabel = getLabel("amount" , X , 480);
-        Slider percentSlider = new Slider(1, 99, 1);
-        Label percentSliderAmount = new Label("");
-        setPlace(percentSliderAmount, X + 120, 480);
-        setPlace(percentSlider, X, 500);
-        percentSlider.setValue(product.getPriceForSeller((Seller) Controller.getCurrentAccount()));
+        Label quantityLabel = getLabel("amount" , X , 480);
+        Slider quantitySlider = new Slider(0, 99, 1);
+        quantitySlider.setValue(product.getQuantityForSeller((Seller)Controller.getCurrentAccount()));
+        Label quantityAmount = new Label("");
+        quantityAmount.setText(Integer.toString(product.getQuantityForSeller((Seller)Controller.getCurrentAccount())));
+        setPlace(quantityAmount, X + 120, 480);
+        setPlace(quantitySlider, X, 500);
 
         Label priceLabel = getLabel("price" , X ,550);
         Label priceError = getErrorLabel("" , X,570);
@@ -871,24 +868,32 @@ public class SellerMenuPanes {
         Label categoryError = getErrorLabel("",X,650);
         ComboBox<Category> categoryComboBox = new ComboBox<>();
         categoryComboBox.getItems().addAll(SellerController.getAllCategories());
-        setPlace(categoryComboBox,X,670);
         categoryComboBox.getSelectionModel().select(product.getParentCategory());
+        setPlace(categoryComboBox,X,670);
 
         Label descriptionLabel = getLabel("description" , X,710);
-        TextField descrioptionField = getTextFieldDefault("" , X + 120 , 710);
+        TextField descrioptionField = getTextFieldDefault(product.getDescription() , X + 120 , 710);
+        Label attributeError = getErrorLabel("" , 300,740);
 
-        Button back,next;
-
-        back = getButton("back" , event -> {
-            // TODO: ۲۶/۰۶/۲۰۲۰ bak
+        Button attributesButton = getButton("attributes" , event -> {
+            if (categoryComboBox.getValue()==null) attributeError.setText("please select category");
+            else {
+                categoryError.setText("");
+                Stage stage = new Stage();
+                stage.setScene(new Scene(getAttributesTableViewCreateProduct(
+                        categoryComboBox.getValue(),attributesStringMap
+                )));
+            }
         });
-        setPlace(back , 300 , 750);
 
-        next = getButton("next" , event -> {
-            if (nameField.getText().equals("")) nameError.setText("please select a name");
-            else if (SellerController.isProductNameTaken(nameField.getText())){
+        setPlace(attributesButton , 400 , 755);
+
+        Button done = getButton("done" , event -> {
+            if (nameField.getText().equals(product.getName()));
+            if (SellerController.isProductNameTaken(nameField.getText())){
                 nameError.setText("this name is taken");
             }else {
+                sellerController.editProduct(product,"name",nameField.getText());
                 nameError.setText("");
             }
 
@@ -913,25 +918,29 @@ public class SellerMenuPanes {
             if (nameError.equals("")&&
                     brandError.equals("")&&
                     priceError.equals("")&&
-                    categoryError.equals("")){
-                Stage nextSatge = new Stage();
-                nextSatge.setScene(
-                        new Scene(getAttributesTableView(categoryComboBox.getValue()))
-                );
+                    categoryError.equals("")&&
+                    attributeError.equals("")){
+                try {
+                    sellerController.addProduct(new Product("" , nameField.getText(),brandField.getText(),Double.parseDouble(priceField.getText()),
+                            (Seller) Controller.getCurrentAccount(),(int)quantitySlider.getValue(),categoryComboBox.getValue(),
+                            descrioptionField.getText(),attributesStringMap));
+                } catch (NotAllowedActivityException e) {
+                    attributeError.setText(e.getMessage());
+                }
             }
         });
 
-        setPlace(next,350,750);
+        setPlace(done,350,755);
 
-        pane.getChildren().addAll(nameError,nameField,nameLabel,amountLabel,
+        pane.getChildren().addAll(nameError,nameField,nameLabel,quantityLabel,
                 categoryLabel,categoryComboBox,categoryError,
                 brandError,brandField,brandLabel,
                 priceError,priceField,priceLabel,
-                descrioptionField,descriptionLabel
+                descrioptionField,descriptionLabel,
+                done
         );
         return pane;
-
-    }
+    }// v1 todo
 
     public Pane getViewCategoriesPane(){
         TableView <Category> tableView = new TableView<>();
@@ -961,12 +970,12 @@ public class SellerMenuPanes {
                                     setGraphic(null);
                                     setText(null);
                                 } else {
-//                                    b.setOnAction(actionEvent -> {
+                                    b.setOnAction(actionEvent -> {
 //                                        Stage stage = new Stage();
 //                                        stage.setScene(new Scene(
 //                                                getViewCategoryPane(getTableView().getItems().get(getIndex()))));
-//                                        stage.show();
-//                                    });
+//                                        stage.show();//todo
+                                    });
                                     setGraphic(b);
                                     setText(null);
                                 }

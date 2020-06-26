@@ -3,6 +3,7 @@ package model.People;
 import control.Exceptions.InvalidUsernameException;
 import javafx.scene.image.ImageView;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,6 +110,10 @@ public abstract class Account {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public String getBalanceString(){
+        return Double.toString(balance);
     }
 
     public void setPhoneNumber(String phoneNumber) {

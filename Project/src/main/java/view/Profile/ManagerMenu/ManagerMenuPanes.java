@@ -10,11 +10,14 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Callback;
+import model.Attributes;
 import model.Category;
 import model.OffCode;
 import model.People.Account;
@@ -22,14 +25,12 @@ import model.People.Customer;
 import model.Product;
 import model.Requests.Request;
 
+import javax.swing.*;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class ManagerMenuPanes {
@@ -129,12 +130,6 @@ public class ManagerMenuPanes {
             }
         };
         submit.setOnAction(submitButtonAction);
-        Button back = new Button("back");
-        back.setOnAction(ev -> {
-            //todo go back
-        });
-        back.setLayoutX(300);
-        back.setLayoutY(690);
         submit.setLayoutX(360);
         submit.setLayoutY(690);
         pane.getChildren().addAll(
@@ -159,11 +154,10 @@ public class ManagerMenuPanes {
                 phoneNumberLabel,
                 phoneNumberError,
                 phoneNumberTextField,
-                back,
                 submit
         );
         return pane;
-    }
+    }//v1
 
     public Pane getManageRequestsPane() {
         Pane pane = new Pane();
@@ -171,14 +165,9 @@ public class ManagerMenuPanes {
         Label requestLabel = getLabel("requests", 300, 300);
         TableView tv = getRequestsTebleView();
         setPlace(tv, 300, 330);
-        Button back = getButton("back", event -> {
-            // TODO: ۲۵/۰۶/۲۰۲۰ go back
-        });
-        setPlace(back, 370, 700);
-
-        pane.getChildren().addAll(requestLabel, tv, back);
+        pane.getChildren().addAll(requestLabel, tv);
         return pane;
-    }
+    }//v1
 
     public TableView getManageUsersTableView() {
         ComboBox<String> comboBox = new ComboBox<>();
@@ -200,7 +189,7 @@ public class ManagerMenuPanes {
         lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 
         TableColumn balance = new TableColumn("balance");
-        balance.setCellValueFactory(new PropertyValueFactory<>("balanceString")); // todo create method in account
+        balance.setCellValueFactory(new PropertyValueFactory<>("balanceString"));
 
         TableColumn type = new TableColumn("type");
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -229,7 +218,7 @@ public class ManagerMenuPanes {
                                         Account account = getTableView().getItems().get(getIndex());
                                         table.getItems().remove(account);
                                         try {
-                                            managerController.deleteUser(account.getUsername()); //todo replace with manager delete account method
+                                            managerController.deleteUser(account.getUsername());
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
@@ -282,13 +271,13 @@ public class ManagerMenuPanes {
         table.setItems(data);
         table.getColumns().addAll(username, firstName, lastName, balance, delete, type);
         return table;
-    }
+    }//v1
 
     private ComboBox getAccountTypeCombobox() {
         ComboBox comboBox = new ComboBox();
         comboBox.getItems().addAll("Manager", "Customer", "Seller");
         return comboBox;
-    }
+    }//v1
 
     public TableView getRequestsTebleView() {
         TableView<Request> table = new TableView<>();
@@ -378,7 +367,7 @@ public class ManagerMenuPanes {
         table.setItems(data);
         table.getColumns().addAll(requestDetail, accept, decline);
         return table;
-    }
+    }//v1
 
     public TableView getManageProductsTableView() {
 
@@ -413,10 +402,9 @@ public class ManagerMenuPanes {
                                     btn.setOnAction(event -> {
                                         Product product = getTableView().getItems().get(getIndex());
                                         try {
-                                            managerController.removeProduct(product.getProductId()); //todo allProducts remove this
+                                            managerController.removeProduct(product.getProductId());
                                             table.getItems().remove(product);
                                         } catch (Exception e) {
-                                            //todo handle this error better: can reject automatically and show popup error
                                             System.err.println(e.getMessage());
                                         }
                                     });
@@ -433,7 +421,7 @@ public class ManagerMenuPanes {
         table.setItems(data);
         table.getColumns().addAll(productName, delete);
         return table;
-    }
+    }//v1
 
     // note that this arraylist can be empty but will get filled by the table
     public TableView getProductsTableViewForOffCode(ArrayList<Product> selection) {
@@ -484,7 +472,7 @@ public class ManagerMenuPanes {
         table.setItems(data);
         table.getColumns().addAll(productName, select);
         return table;
-    }
+    }//v1
 
     public TableView getPeopleTableViewForOffCode(List<Customer> selection) {
         TableView<Account> table = new TableView<>();
@@ -533,7 +521,7 @@ public class ManagerMenuPanes {
         table.setItems(data);
         table.getColumns().addAll(productName, select);
         return table;
-    }
+    }//v1
 
     public TableView<OffCode> getAllOffCodesTableView() {
         List<OffCode> offCodes = managerController.getAllOffcodes();
@@ -617,7 +605,9 @@ public class ManagerMenuPanes {
                                 } else {
                                     open.setOnAction(event -> {
                                         OffCode offCode = getTableView().getItems().get(getIndex());
-                                        // changing the pane here to open this offcode page
+                                        Stage stage = new Stage();
+                                        stage.setScene(new Scene(getEditDiscountCodePane(offCode)));
+                                        stage.show();
                                     });
                                     setGraphic(open);
                                     setText(null);
@@ -633,7 +623,7 @@ public class ManagerMenuPanes {
         table.setItems(data);
         table.getColumns().addAll(productName, beginDate, endDate, status, delete, open);
         return table;
-    }
+    }//v1
 
     public Pane getViewOffcodesPane() {
         Pane pane = new Pane();
@@ -642,14 +632,10 @@ public class ManagerMenuPanes {
         Label label = getLabel("offCodes", 300, 300);
         TableView tableView = getAllOffCodesTableView();
         setPlace(tableView, 300, 320);
-        Button back = getButton("back", event -> {
-            // TODO: ۲۵/۰۶/۲۰۲۰ go back
-        });
-        setPlace(back, 370, 700);
 
-        pane.getChildren().addAll(label, tableView, back);
+        pane.getChildren().addAll(label, tableView);
         return pane;
-    }
+    }//v1
 
     public Pane getEditDiscountCodePane(OffCode offCode) {
         Pane pane = new Pane();
@@ -728,12 +714,6 @@ public class ManagerMenuPanes {
 
         Label accountsLabel = getLabel("applied accounts", 500, 180);
 
-        Button back = new Button("back");
-        setPlace(back, 500, 670);
-        back.setOnAction(actionEvent -> {
-            //todo
-        });
-
         Button confirm = new Button("confirm");
         setPlace(confirm, 580, 670);
         confirm.setOnAction(actionEvent -> {
@@ -809,7 +789,6 @@ public class ManagerMenuPanes {
                 accountsError,
                 accountsLabel,
                 tv,
-                back,
                 confirm
         );
         return pane;
@@ -998,8 +977,52 @@ public class ManagerMenuPanes {
 
     public Pane getAllCategoriesPane() {
         Pane pane = new Pane();
+        pane.setPrefSize(1540,800);
+
+        TableView tv = new TableView();
+
+        TableColumn categoryName = new TableColumn("name");
+        categoryName.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn select = new TableColumn("open");
+        select.setCellValueFactory(new PropertyValueFactory<>("uselessString"));
+
+        Callback<TableColumn<Category, String>, TableCell<Category, String>> cellFactory
+                = //
+                new Callback<TableColumn<Category, String>, TableCell<Category, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Category, String> param) {
+                        final TableCell<Category, String> cell = new TableCell<Category, String>() {
+
+                            final Button open = new Button("open");
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    open.setOnAction(event -> {
+                                        Category category = getTableView().getItems().get(getIndex());
+                                        Stage stage = new Stage();
+                                        stage.setScene(new Scene(getEditCategoryPane(category)));
+                                        stage.show();
+                                    });
+                                    setGraphic(open);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+        select.setCellFactory(cellFactory);
+
+        tv.getColumns().addAll(categoryName,select);
+        pane.getChildren().addAll(tv);
         return pane;
-    }
+    }//v1
 
     public TableView getPeopleTableViewForDiscountCode(ArrayList<Account> selectedAccounts) {
         ArrayList<Product> selection = new ArrayList<>();
@@ -1148,7 +1171,115 @@ public class ManagerMenuPanes {
     }
 
     public Pane getCreateCategoryPane() {
+        Pane pane = new Pane();
+        pane.setPrefSize(1540,800);
+        final int X = 300;
 
+        HashMap<Object , String> attributes = new HashMap<>();
+
+        Label name = getLabel("category name" , 300,300);
+        Label nameError = getErrorLabel("",300,320);
+        TextField nameField = getTextFieldDefault("",300,340);
+
+        Label countLabel = getLabel("attributes", X, 370);
+        Slider countSlider = new Slider(1, 15, 1);
+        Label countSliderAmount = new Label("");
+        setPlace(countSliderAmount, X + 120, 390);
+        setPlace(countSlider, X, 410);
+        countSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(
+                    ObservableValue<? extends Number> observableValue,
+                    Number oldValue,
+                    Number newValue) {
+                countSliderAmount.textProperty().setValue(
+                        String.valueOf(newValue.intValue()));
+            }
+        });
+
+        Label parentLabel = getLabel("parent" , X,460);
+        ComboBox<Category> categoryComboBox = new ComboBox<>();
+        categoryComboBox.getItems().addAll(managerController.getAllCategories());
+        setPlace(categoryComboBox,X,480);
+
+        Button ok = getButton("attributes" , event -> {
+            Stage stage = new Stage();
+            stage.setScene(new Scene(getEnterAttributesTableView(attributes ,(int) countSlider.getValue())));
+            stage.show();
+        });
+        setPlace(ok,X,550);
+
+        ArrayList<Attributes> attributes1 = new ArrayList<>();
+        for (String attributeName : attributes.values()){
+            attributes1.add(new Attributes(attributeName));
+        }
+
+        Button done =getButton("done" , event -> {
+            if (nameField.getText().equals("")){
+                nameError.setText("please selet a name");
+            }else if (managerController.isCategoryValid(nameField.getText())){
+                nameError.setText("this name is taken");
+            }else{
+                if (attributes.size()<countSlider.getValue()){
+                    nameError.setText("please enter all attributes");
+                }else {
+                    managerController.addCategory(nameField.getText(),categoryComboBox.getValue().getName(),attributes1);
+                }
+            }
+        });
+
+        setPlace(done,X+100,550);
+        pane.getChildren().addAll(name,nameError,nameField,
+                countLabel,countSlider,countSliderAmount,parentLabel,categoryComboBox,ok,done);
+        return pane;
+    }
+
+    public TableView getEnterAttributesTableView (HashMap<Object,String> map,int size){
+        TableView<Object> tableView = new TableView<>();
+
+        ArrayList<Object> objects = new ArrayList<>();
+        for(int x = 0;x<size;x++){
+            objects.add(new Object());
+        }
+        ObservableList<Object> data
+                = FXCollections.observableArrayList(
+                objects);
+
+        TableColumn name = new TableColumn("name");
+
+        Callback<TableColumn<Object, String>, TableCell<Object, String>> cellFactory
+                = //
+                new Callback<TableColumn<Object, String>, TableCell<Object, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Object, String> param) {
+                        final TableCell<Object, String> cell = new TableCell<Object, String>() {
+
+                            final TextField textField = new TextField();
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    textField.setOnKeyTyped(event -> {
+                                        Object o = getTableView().getItems().get(getIndex());
+                                        map.put(o,textField.getText());
+                                    });
+                                    setGraphic(textField);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        name.setCellFactory(cellFactory);
+        tableView.setItems(data);
+        tableView.getColumns().addAll(name);
         return null;
     }
 
@@ -1161,10 +1292,7 @@ public class ManagerMenuPanes {
         TableView tv = getManageUsersTableView();
         setPlace(tv, 300, 330);
 
-        Button back = getButton("back", event -> {
-            // TODO: ۲۵/۰۶/۲۰۲۰ going back
-        });
-        pane.getChildren().addAll(label, tv, back);
+        pane.getChildren().addAll(label, tv);
         return pane;
 
     }
