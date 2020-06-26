@@ -5,7 +5,9 @@ import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import control.Controller;
+import control.CustomerController;
 import control.Exceptions.HaveNotLoggedInException;
+import control.Exceptions.InsufficientBalanceException;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -148,31 +150,39 @@ public class CustomerDashboard {
         });
 
         cartButton.setOnMouseClicked(event -> {
-            new Thread(() -> playAudio("button2.wav")).start();
-            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
-            JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
-            dialogLayout.setActions(cartDialog);
-            dialogLayout.setStyle("-fx-background-color:  #db5e5c");
-            dialog.show();
-            mainPane.setEffect(boxBlur);
-            dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
+            var account = Controller.getCurrentAccount();
+            if (account == null || account instanceof Customer) {
+                new Thread(() -> playAudio("button.wav")).start();
+                BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                dialogLayout.setActions(cartDialog);
+                dialogLayout.setStyle("-fx-background-color:  #db5e5c");
+                dialog.show();
+                mainPane.setEffect(boxBlur);
+                dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
+            } else {
+                showError("Not allowed activity");
+            }
         });
-
         cartDialog.getPayButton().setOnMouseClicked(event -> {
-            new Thread(() -> playAudio("button2.wav")).start();
-            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
-            JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
-            dialogLayout.setActions(addressDialog);
-            dialogLayout.setStyle("-fx-background-color:   #886488");
-            dialog.show();
-            cartDialog.setEffect(boxBlur);
-            dialog.setOnDialogClosed((JFXDialogEvent e) -> cartDialog.setEffect(null));
+            var account = Controller.getCurrentAccount();
+            if (account instanceof Customer) {
+                new Thread(() -> playAudio("button.wav")).start();
+                BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                dialogLayout.setActions(addressDialog);
+                dialogLayout.setStyle("-fx-background-color:   #886488");
+                dialog.show();
+                cartDialog.setEffect(boxBlur);
+                dialog.setOnDialogClosed((JFXDialogEvent e) -> cartDialog.setEffect(null));
+            } else {
+                showError("You have to login first!");
+            }
         });
-
         addressDialog.getNextButton().setOnMouseClicked(event -> {
-            new Thread(() -> playAudio("button2.wav")).start();
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -182,9 +192,8 @@ public class CustomerDashboard {
             addressDialog.setEffect(boxBlur);
             dialog.setOnDialogClosed((JFXDialogEvent e) -> addressDialog.setEffect(null));
         });
-
         offCodeDialog.getNextButton().setOnMouseClicked(event -> {
-            new Thread(() -> playAudio("button2.wav")).start();
+            new Thread(() -> playAudio("button.wav")).start();
             BoxBlur boxBlur = new BoxBlur(6, 6, 6);
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
@@ -194,12 +203,15 @@ public class CustomerDashboard {
             offCodeDialog.setEffect(boxBlur);
             dialog.setOnDialogClosed((JFXDialogEvent e) -> offCodeDialog.setEffect(null));
         });
-
         paymentDialog.getPayButton().setOnMouseClicked(event -> {
+            new Thread(() -> playAudio("button.wav")).start();
             try {
-                Main.setRoot("customer-dashboard");
+                new CustomerController(Controller.getCurrentAccount()).purchase();
+                Main.setRoot("main");
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (InsufficientBalanceException e) {
+                showError("Insufficient Money");
             }
         });
 
