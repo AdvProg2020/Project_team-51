@@ -91,7 +91,7 @@ public class CustomerDashboard {
             new Thread(() -> playAudio("button2.wav")).start();
 
             Stage newStage = new Stage();
-            newStage.setScene(new Scene(dashboard.getCustomerDiscountCodes(customer)));
+            newStage.setScene(new Scene(dashboard.getCustomerDiscountCodes()));
             newStage.setTitle("  Personal Info");
             newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
             newStage.show();

@@ -48,8 +48,8 @@ public abstract class Order {
         return status;
     }
 
-    public String getShippingStatusString(){
-        if (status.equals( Status.APPROVED))return "approved";
+    public String getShippingStatusString() {
+        if (status.equals(Status.APPROVED)) return "approved";
         else if (status.equals(Status.ENDED)) return "ended";
         else if (status.equals(Status.PENDING_CREATE)) return "pending create";
         else return "peinding edit";

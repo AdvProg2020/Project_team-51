@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,14 +14,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import model.Category;
 import model.ItemOfOrder;
 import model.OffCode;
-import model.OrderLog.BuyerLog;
 import model.OrderLog.Order;
 import model.People.Account;
 import model.People.Customer;
-import model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -192,17 +188,17 @@ public class CustomerMenuPanes {
 
     public Pane getOrdersPane() {
         Pane pane = new Pane();
-        pane.setPrefSize(1540,800);
+        pane.setPrefSize(1540, 800);
 
         TableView tv = getAllShoppingsTableView();
-        setPlace(tv,300,300);
+        setPlace(tv, 300, 300);
 
         pane.getChildren().addAll(tv);
         return pane;
     }
 
-    public TableView getAllShoppingsTableView(){
-        Customer customer =(Customer) Controller.getCurrentAccount();
+    public TableView getAllShoppingsTableView() {
+        Customer customer = (Customer) Controller.getCurrentAccount();
 
         List<Order> orders = customer.getHistoryOfOrders();
         TableView<Order> table = new TableView<>();
@@ -236,7 +232,7 @@ public class CustomerMenuPanes {
                                     setText(null);
                                 } else {
                                     button.setOnAction(event -> {
-                                        Order  order = getTableView().getItems().get(getIndex());
+                                        Order order = getTableView().getItems().get(getIndex());
                                         Stage stage = new Stage();
                                         stage.setScene(new Scene(
                                                 openSingleOrderPane(order)
@@ -253,15 +249,15 @@ public class CustomerMenuPanes {
         open.setCellFactory(cellFactory);
 
         table.setItems(data);
-        table.getColumns().addAll(id,status,open);
+        table.getColumns().addAll(id, status, open);
         return table;
 
     }
 
     private Pane openSingleOrderPane(Order order) {
-        Customer customer =(Customer) Controller.getCurrentAccount();
+        Customer customer = (Customer) Controller.getCurrentAccount();
 
-        ArrayList<ItemOfOrder> items = (ArrayList<ItemOfOrder>) ((BuyerLog)order).getItems();
+        ArrayList<ItemOfOrder> items = (ArrayList<ItemOfOrder>) order.getItems();
 
         TableView<ItemOfOrder> table = new TableView<>();
         ObservableList<ItemOfOrder> data
@@ -285,7 +281,7 @@ public class CustomerMenuPanes {
 
 
         table.setItems(data);
-        table.getColumns().addAll(product,price,discount,date,quantity);
+        table.getColumns().addAll(product, price, discount, date, quantity);
 
         Pane pane = new Pane();
         pane.getChildren().addAll(table);
