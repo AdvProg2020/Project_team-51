@@ -19,9 +19,8 @@
                                 <TableColumn fx:id="productIdColumn" prefWidth="114.40006637573242" text="Product Id"/>
                                 <TableColumn fx:id="nameColumn" prefWidth="216.53335571289062" text="Name"/>
                                 <TableColumn fx:id="priceColumn" prefWidth="117.06668090820312" text="Price"/>
-                                <TableColumn fx:id="quantityColumn" prefWidth="106.13345336914062" text="Quantity"/>
-                                <TableColumn fx:id="amountColumn" prefWidth="152.13330078125" text="Amount"/>
-                                <TableColumn fx:id="removeColumn" prefWidth="76.53338623046875" text="Remove"/>
+                                <TableColumn fx:id="quantityColumn" prefWidth="171.99996948242188" text="Quantity"/>
+                                <TableColumn fx:id="amountColumn" prefWidth="175.5999755859375" text="Amount"/>
                             </columns>
                         </TableView>
                     </content>

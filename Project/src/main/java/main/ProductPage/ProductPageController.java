@@ -6,10 +6,8 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import control.Controller;
-import control.Exceptions.HaveNotLoggedInException;
-import control.Exceptions.InvalidUsernameException;
-import control.Exceptions.LackOfProductException;
-import control.Exceptions.NotAllowedActivityException;
+import control.CustomerController;
+import control.Exceptions.*;
 import control.Filters.SearchFilter;
 import control.SingleProductController;
 import javafx.animation.FadeTransition;
@@ -141,7 +139,6 @@ public class ProductPageController extends StackPane {
         allComments = controller.getComments();
         initializeProduct();
         initializeComments();
-
         addButton.setOnMouseClicked(e -> {
             new Thread(() -> playAudio("button.wav")).start();
             try {
@@ -154,37 +151,60 @@ public class ProductPageController extends StackPane {
             }
         });
         addComment.setOnMouseClicked(e -> {
-            new Thread(() -> playAudio("button.wav")).start();
-            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
-            JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
-            dialogLayout.setActions(new NewCommentDialog(stackPane, controller));
-            dialog.show();
-            mainPane.setEffect(boxBlur);
-            dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
-            dialog.overlayCloseProperty().bindBidirectional(new SimpleBooleanProperty(!Controller.isLoggedIn()));
+            if (Controller.getCurrentAccount() instanceof Customer) {
+                var newComment = new NewCommentDialog(stackPane, controller);
+                new Thread(() -> playAudio("button.wav")).start();
+                BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                dialogLayout.setActions(newComment);
+                dialog.show();
+                mainPane.setEffect(boxBlur);
+                dialog.setOnDialogClosed((JFXDialogEvent event) -> {
+                            mainPane.setEffect(null);
+                            try {
+                                controller.addComment(newComment.getTitleText(), newComment.getCommentText());
+                            } catch (NotAllowedActivityException ex) {
+
+                            }
+                        }
+
+                );
+            } else {
+                showError("Not allowed activity!");
+            }
         });
         cartButton.setOnMouseClicked(event -> {
-            new Thread(() -> playAudio("button.wav")).start();
-            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
-            JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
-            dialogLayout.setActions(cartDialog);
-            dialogLayout.setStyle("-fx-background-color:  #db5e5c");
-            dialog.show();
-            mainPane.setEffect(boxBlur);
-            dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
+            var account = Controller.getCurrentAccount();
+            if (account == null || account instanceof Customer) {
+                new Thread(() -> playAudio("button.wav")).start();
+                BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                dialogLayout.setActions(cartDialog);
+                dialogLayout.setStyle("-fx-background-color:  #db5e5c");
+                dialog.show();
+                mainPane.setEffect(boxBlur);
+                dialog.setOnDialogClosed((JFXDialogEvent e) -> mainPane.setEffect(null));
+            } else {
+                showError("Not allowed activity");
+            }
         });
         cartDialog.getPayButton().setOnMouseClicked(event -> {
-            new Thread(() -> playAudio("button.wav")).start();
-            BoxBlur boxBlur = new BoxBlur(6, 6, 6);
-            JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
-            dialogLayout.setActions(addressDialog);
-            dialogLayout.setStyle("-fx-background-color:   #886488");
-            dialog.show();
-            cartDialog.setEffect(boxBlur);
-            dialog.setOnDialogClosed((JFXDialogEvent e) -> cartDialog.setEffect(null));
+            var account = Controller.getCurrentAccount();
+            if (account instanceof Customer) {
+                new Thread(() -> playAudio("button.wav")).start();
+                BoxBlur boxBlur = new BoxBlur(6, 6, 6);
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                dialogLayout.setActions(addressDialog);
+                dialogLayout.setStyle("-fx-background-color:   #886488");
+                dialog.show();
+                cartDialog.setEffect(boxBlur);
+                dialog.setOnDialogClosed((JFXDialogEvent e) -> cartDialog.setEffect(null));
+            } else {
+                showError("You have to login first!");
+            }
         });
         addressDialog.getNextButton().setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button.wav")).start();
@@ -211,9 +231,12 @@ public class ProductPageController extends StackPane {
         paymentDialog.getPayButton().setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button.wav")).start();
             try {
+                new CustomerController(Controller.getCurrentAccount()).purchase();
                 Main.setRoot("main");
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (InsufficientBalanceException e) {
+                showError("Insufficient Money");
             }
         });
 
@@ -338,7 +361,7 @@ public class ProductPageController extends StackPane {
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(event -> {
-            new Thread(() -> playAudio("dialoge.wav")).start();
+            new Thread(() -> playAudio("dialog.wav")).start();
             stackPane.getScene().setRoot(node);
         });
         fadeTransition.play();
@@ -423,9 +446,11 @@ public class ProductPageController extends StackPane {
 //            commentController.getRate().setImage("STH");
         }
 
-        commentsBox.getChildren().add(addButton);
-        addButton.setText("Add");
-        addButton.setStyle("-fx-background-color: #4a804a; -fx-background-radius: 15");
+
+        commentsBox.getChildren().add(addComment);
+        addComment.setText("Add Comment");
+        addComment.setStyle("-fx-background-color: #4a804a; -fx-background-radius: 15");
+
 
     }
 

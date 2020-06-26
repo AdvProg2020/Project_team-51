@@ -24,6 +24,7 @@ public class CommentController extends Pane {
     @FXML
     private Label comment;
 
+
     public CommentController() {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("comment.fxml"));
         fxmlLoader.setRoot(this);

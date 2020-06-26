@@ -29,6 +29,9 @@ public class NewCommentDialog extends AnchorPane {
     @FXML
     private JFXButton add;
 
+    @FXML
+    private JFXSlider scoreSlider;
+
 
     private StackPane rootPane;
 
@@ -125,5 +128,69 @@ public class NewCommentDialog extends AnchorPane {
         dialog.show();
         this.setEffect(boxBlur);
         dialog.setOnDialogClosed((JFXDialogEvent event) -> this.setEffect(null));
+    }
+
+    public JFXTextField getTitle() {
+        return title;
+    }
+
+    public void setTitle(JFXTextField title) {
+        this.title = title;
+    }
+
+    public JFXTextArea getComment() {
+        return comment;
+    }
+
+    public void setComment(JFXTextArea comment) {
+        this.comment = comment;
+    }
+
+    public JFXButton getAdd() {
+        return add;
+    }
+
+    public void setAdd(JFXButton add) {
+        this.add = add;
+    }
+
+    public JFXSlider getScoreSlider() {
+        return scoreSlider;
+    }
+
+    public void setScoreSlider(JFXSlider scoreSlider) {
+        this.scoreSlider = scoreSlider;
+    }
+
+    public StackPane getRootPane() {
+        return rootPane;
+    }
+
+    public void setRootPane(StackPane rootPane) {
+        this.rootPane = rootPane;
+    }
+
+    public String getTitleText() {
+        return titleText;
+    }
+
+    public void setTitleText(String titleText) {
+        this.titleText = titleText;
+    }
+
+    public String getCommentText() {
+        return commentText;
+    }
+
+    public void setCommentText(String commentText) {
+        this.commentText = commentText;
+    }
+
+    public SingleProductController getSingleProductController() {
+        return singleProductController;
+    }
+
+    public void setSingleProductController(SingleProductController singleProductController) {
+        this.singleProductController = singleProductController;
     }
 }
