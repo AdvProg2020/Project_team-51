@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import model.Database.Build;
 import model.Database.StatusUpdater;
@@ -35,9 +34,8 @@ public class Main extends Application {
         Thread statusUpdaterThread = new Thread(new StatusUpdater());
         buildThread.start();
         statusUpdaterThread.start();
-//        var thread = new Thread(() -> playAudio("Hunter.mp3"));
-//        thread.run();
-//        new MainMenu();
+        var thread = new Thread(() -> playAudio("Hunter.mp3"));
+        thread.run();
         launch();
     }
 
@@ -61,13 +59,9 @@ public class Main extends Application {
     }
 
     private static void playAudio(String musicFile) {
-//        Media sound = new Media(new File(musicFile).toURI().toString());
-//        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-//        mediaPlayer.setCycleCount(2);
-//        mediaPlayer.play();
-        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-        audioClip.setCycleCount(Integer.MAX_VALUE);
-        audioClip.play();
+//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+//        audioClip.setCycleCount(Integer.MAX_VALUE);
+//        audioClip.play();
     }
 
 }

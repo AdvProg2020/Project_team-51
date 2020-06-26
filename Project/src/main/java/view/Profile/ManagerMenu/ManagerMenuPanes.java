@@ -22,7 +22,6 @@ import model.People.Customer;
 import model.Product;
 import model.Requests.Request;
 
-import javax.persistence.Table;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
