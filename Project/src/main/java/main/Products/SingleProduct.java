@@ -68,8 +68,9 @@ public class SingleProduct extends AnchorPane {
         }
 
         rateImage.setImage(new Image(String.valueOf(Main.class.getResource("star.png"))));
-        off.setImage(new Image(String.valueOf(Main.class.getResource("discount.png"))));
+//        off.setImage(new Image(String.valueOf(Main.class.getResource("discount.png"))));
         price.setImage(new Image(String.valueOf(Main.class.getResource("price.png"))));
+        offPercent.setText("");
 
     }
 
