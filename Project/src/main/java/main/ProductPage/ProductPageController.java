@@ -39,6 +39,7 @@ import model.People.Seller;
 import model.Product;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -104,8 +105,8 @@ public class ProductPageController extends StackPane {
 
 
     private Product product;
-    private List<Comment> allComments;
-    private JFXButton addComment;
+    private List<Comment> allComments = new ArrayList<>();
+    private JFXButton addComment = new JFXButton();
     private SingleProductController controller;
     private String quantityText;
     private String search;
@@ -123,6 +124,14 @@ public class ProductPageController extends StackPane {
     public ProductPageController(Product product) {
         this.product = product;
         this.controller = new SingleProductController(Controller.getCurrentAccount(), product);
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("product_page.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     private static void playAudio(String musicFile) {
@@ -131,13 +140,15 @@ public class ProductPageController extends StackPane {
 //        audioClip.play();
     }
 
+    @FXML
     public void initialize() {
         var cartDialog = new CartDialogController(stackPane);
         var addressDialog = new AddressController(stackPane);
         var offCodeDialog = new TakeOffCodeController(stackPane);
         var paymentDialog = new PaymentDialogController(stackPane);
-        allComments = controller.getComments();
-        initializeProduct();
+
+        allComments.addAll(controller.getComments());
+        if (product != null) initializeProduct();
         initializeComments();
         addButton.setOnMouseClicked(e -> {
             new Thread(() -> playAudio("button.wav")).start();
@@ -384,7 +395,7 @@ public class ProductPageController extends StackPane {
     }
 
     private void initializeProduct() {
-        productImage.setImage(product.getImage());
+//        productImage.setImage(product.getImage());
         productName.setText(product.getName());
         try {
             productDescription.setText(controller.digest());

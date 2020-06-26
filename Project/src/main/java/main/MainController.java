@@ -180,9 +180,9 @@ public class MainController {
         allCategories = Category.getAllCategories();
         stage = Main.getPrimaryStage();
 
-        if (!bestSellerProducts.isEmpty())
+        if (bestSellerProducts.size() > 4)
             initializeBestSellers();
-        if (!mostViewedProducts.isEmpty())
+        if (mostViewedProducts.size() > 4)
             initializeMostViewed();
 
         searchField.textProperty().addListener(new ChangeListener<String>() {
