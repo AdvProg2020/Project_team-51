@@ -659,7 +659,7 @@ public class SellerMenuPanes {
                 done
                 );
         return pane;
-    }
+    }//v1
 
 //    public Pane getAttributesPane(Category category){
 //        Pane pane = new Pane();
@@ -725,7 +725,7 @@ public class SellerMenuPanes {
         select.setCellFactory(cellFactory);
         attributesTableView.getColumns().addAll(categoryName,select);
         return  attributesTableView;
-    }
+    }//v1
 
     public Pane getManageProductsPane(){
         Pane pane = new Pane();
