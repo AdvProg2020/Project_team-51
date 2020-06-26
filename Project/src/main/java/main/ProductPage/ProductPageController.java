@@ -21,7 +21,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
@@ -209,7 +208,7 @@ public class ProductPageController extends StackPane {
         Category root = Category.getAllCategories().stream().filter(c -> c.getParentCategory() == null).findAny().orElse(null);
         categoriesTreeView = new TreeView<String>(populateCategories(root, new TreeItem<String>("Main")));
         categoriesTreeView.getSelectionModel().selectionModeProperty().addListener((observable, oldValue, newValue) -> {
-            Main.getPrimaryStage().setScene(new Scene(new ProductsController(Category.getCategoryByName(newValue.toString()))));
+            stackPane.getScene().setRoot(new ProductsController(Category.getCategoryByName(newValue.toString())));
         });
         EventHandler<MouseEvent> mouseEventHandle = this::handleMouseClicked;
         categoriesTreeView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventHandle);
@@ -259,7 +258,7 @@ public class ProductPageController extends StackPane {
         });
 
         searchButton.setOnMouseClicked(event -> {
-            Main.getPrimaryStage().setScene(new Scene(new ProductsController(SearchFilter.getInstance().applyFilter(Product.getAllProducts(), search))));
+            stackPane.getScene().setRoot(new ProductsController(SearchFilter.getInstance().applyFilter(Product.getAllProducts(), search)));
         });
 
         homeButton.setOnMouseClicked(event -> {
@@ -305,7 +304,7 @@ public class ProductPageController extends StackPane {
         if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
             String name = (String) ((TreeItem) categoriesTreeView.getSelectionModel().getSelectedItem()).getValue();
             Category category = Category.getCategoryByName(name);
-            Main.getPrimaryStage().setScene(new Scene(new ProductsController(category)));
+            stackPane.getScene().setRoot(new ProductsController(category));
         }
     }
 
@@ -326,7 +325,7 @@ public class ProductPageController extends StackPane {
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(event -> {
-            Main.getPrimaryStage().setScene(new Scene(node));
+            stackPane.getScene().setRoot(node);
         });
         fadeTransition.play();
     }

@@ -143,7 +143,6 @@ public class ManagerDashboard {
             newStage.setTitle("  Create Category");
             newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
             newStage.show();
-
         });
 
         homeButton.setOnMouseClicked(event -> {

@@ -203,7 +203,7 @@ public class CustomerDashboard {
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(event -> {
-            Main.getPrimaryStage().setScene(new Scene(node));
+            stackPane.getScene().setRoot(node);
         });
         fadeTransition.play();
     }

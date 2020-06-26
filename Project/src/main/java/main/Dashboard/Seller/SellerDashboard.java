@@ -8,10 +8,12 @@ import control.Controller;
 import control.Exceptions.HaveNotLoggedInException;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -67,32 +69,55 @@ public class SellerDashboard {
         fadeIn();
         SellerMenuPanes dashboard = new SellerMenuPanes();
         Seller seller = (Seller) Controller.getCurrentAccount();
-        Stage stage = (Stage) stackPane.getScene().getWindow();
 
         usernameLabel.setText(seller.getUsername());
 
         personalInfoButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(SellerMenuPanes.getPersonalInfoPane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(SellerMenuPanes.getPersonalInfoPane()));
+            newStage.setTitle("  Personal Info");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         salesButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getSalesHistoryPane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getSalesHistoryPane()));
+            newStage.setTitle("  Sales");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         manageProductsButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getManageProductsPane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getManageProductsPane()));
+            newStage.setTitle("  Manage Products");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         createProductButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getCreateProductPane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getCreateProductPane()));
+            newStage.setTitle("  Create Product");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         viewCategoriesButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getViewCategoriesPane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getViewCategoriesPane()));
+            newStage.setTitle("  View Categories");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         createAuctionButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getCreateAuctionPane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getCreateAuctionPane()));
+            newStage.setTitle("  Create Auction");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         viewAuctionsButton.setOnMouseClicked(event -> {
@@ -101,7 +126,7 @@ public class SellerDashboard {
 
         homeButton.setOnMouseClicked(event -> {
             try {
-                Main.setRoot("main");
+                fadeOut(FXMLLoader.load(Main.class.getResource("main.fxml")));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -127,7 +152,7 @@ public class SellerDashboard {
                         try {
                             Controller.logout();
                             try {
-                                Main.setRoot("main");
+                                fadeOut(FXMLLoader.load(Main.class.getResource("main.fxml")));
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -180,8 +205,104 @@ public class SellerDashboard {
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(event -> {
-            Main.getPrimaryStage().setScene(new Scene(node));
+            stackPane.getScene().setRoot(node);
         });
         fadeTransition.play();
+    }
+
+    public StackPane getStackPane() {
+        return stackPane;
+    }
+
+    public void setStackPane(StackPane stackPane) {
+        this.stackPane = stackPane;
+    }
+
+    public BorderPane getMainPane() {
+        return mainPane;
+    }
+
+    public void setMainPane(BorderPane mainPane) {
+        this.mainPane = mainPane;
+    }
+
+    public JFXButton getHomeButton() {
+        return homeButton;
+    }
+
+    public void setHomeButton(JFXButton homeButton) {
+        this.homeButton = homeButton;
+    }
+
+    public JFXButton getLogoutButton() {
+        return logoutButton;
+    }
+
+    public void setLogoutButton(JFXButton logoutButton) {
+        this.logoutButton = logoutButton;
+    }
+
+    public Label getUsernameLabel() {
+        return usernameLabel;
+    }
+
+    public void setUsernameLabel(Label usernameLabel) {
+        this.usernameLabel = usernameLabel;
+    }
+
+    public JFXButton getPersonalInfoButton() {
+        return personalInfoButton;
+    }
+
+    public void setPersonalInfoButton(JFXButton personalInfoButton) {
+        this.personalInfoButton = personalInfoButton;
+    }
+
+    public JFXButton getSalesButton() {
+        return salesButton;
+    }
+
+    public void setSalesButton(JFXButton salesButton) {
+        this.salesButton = salesButton;
+    }
+
+    public JFXButton getManageProductsButton() {
+        return manageProductsButton;
+    }
+
+    public void setManageProductsButton(JFXButton manageProductsButton) {
+        this.manageProductsButton = manageProductsButton;
+    }
+
+    public JFXButton getCreateProductButton() {
+        return createProductButton;
+    }
+
+    public void setCreateProductButton(JFXButton createProductButton) {
+        this.createProductButton = createProductButton;
+    }
+
+    public JFXButton getViewCategoriesButton() {
+        return viewCategoriesButton;
+    }
+
+    public void setViewCategoriesButton(JFXButton viewCategoriesButton) {
+        this.viewCategoriesButton = viewCategoriesButton;
+    }
+
+    public JFXButton getCreateAuctionButton() {
+        return createAuctionButton;
+    }
+
+    public void setCreateAuctionButton(JFXButton createAuctionButton) {
+        this.createAuctionButton = createAuctionButton;
+    }
+
+    public JFXButton getViewAuctionsButton() {
+        return viewAuctionsButton;
+    }
+
+    public void setViewAuctionsButton(JFXButton viewAuctionsButton) {
+        this.viewAuctionsButton = viewAuctionsButton;
     }
 }
