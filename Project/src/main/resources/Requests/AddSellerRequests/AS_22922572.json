@@ -4,7 +4,7 @@
     "availableProducts": [],
     "allAuctions": [],
     "brandName": "Amzon",
-    "status": "PENDING_CREATE",
+    "status": "APPROVED",
     "username": "amazon",
     "firstName": "amazon",
     "lastName": "amazoni",
@@ -14,7 +14,7 @@
     "password": "amazon zadeh",
     "image": null
   },
-  "status": "PENDING_CREATE",
+  "status": "APPROVED",
   "requestId": "22922572",
   "date": "Jun 11, 2020, 6:09:59 PM"
 }

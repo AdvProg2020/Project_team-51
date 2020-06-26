@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import control.Controller;
 import control.Exceptions.HaveNotLoggedInException;
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import main.Main;
 import model.People.Seller;
 import view.Profile.SellerMenu.SellerMenuPanes;
@@ -61,6 +63,8 @@ public class SellerDashboard {
 
     @FXML
     private void initialize() {
+        stackPane.setOpacity(0);
+        fadeIn();
         SellerMenuPanes dashboard = new SellerMenuPanes();
         Seller seller = (Seller) Controller.getCurrentAccount();
         Stage stage = (Stage) stackPane.getScene().getWindow();
@@ -157,5 +161,27 @@ public class SellerDashboard {
         dialog.show();
         mainPane.setEffect(boxBlur);
         dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
+    }
+
+    private void fadeIn() {
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setNode(stackPane);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+    }
+
+    private void fadeOut(StackPane node) {
+        node.getStylesheets().add("main.css");
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setNode(stackPane);
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.setOnFinished(event -> {
+            Main.getPrimaryStage().setScene(new Scene(node));
+        });
+        fadeTransition.play();
     }
 }

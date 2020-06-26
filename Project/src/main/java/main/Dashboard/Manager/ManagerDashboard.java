@@ -6,16 +6,20 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import control.Controller;
 import control.Exceptions.HaveNotLoggedInException;
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import main.Main;
 import model.People.Manager;
 import view.Profile.ManagerMenu.ManagerMenuPanes;
@@ -71,30 +75,53 @@ public class ManagerDashboard {
 
     @FXML
     private void initialize() {
+        stackPane.setOpacity(0);
+        fadeIn();
         ManagerMenuPanes dashboard = new ManagerMenuPanes();
-        Stage stage = (Stage) stackPane.getScene().getWindow();
+        Stage stage = Main.getPrimaryStage();
         Manager manager = (Manager) Controller.getCurrentAccount();
 
         usernameLabel.setText(manager.getUsername());
 
         personalInfoButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getPersonalInfoPane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getPersonalInfoPane()));
+            newStage.setTitle("  Personal Info");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         createDiscountButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getCreateDiscountCodePane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getCreateDiscountCodePane()));
+            newStage.setTitle("  Create Discount");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         viewDiscountButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getViewOffcodesPane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getViewOffcodesPane()));
+            newStage.setTitle("  View Discounts");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         manageProducts.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getManageAllProductsPane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getManageAllProductsPane()));
+            newStage.setTitle("  Manage Products");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
+
         });
 
         createCategoryButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getCreateCategoryPane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getCreateCategoryPane()));
+            newStage.setTitle("  Create Category");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
         viewCategoriesButton.setOnMouseClicked(event -> {
@@ -102,17 +129,26 @@ public class ManagerDashboard {
         });
 
         manageRequestsButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getManageRequestsPane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getManageRequestsPane()));
+            newStage.setTitle("  Create Category");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
         });
 
 
         manageUsersButton.setOnMouseClicked(event -> {
-            stage.setScene(new Scene(dashboard.getManageUsersPane()));
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(dashboard.getManageUsersPane()));
+            newStage.setTitle("  Create Category");
+            newStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("JShop.png"))));
+            newStage.show();
+
         });
 
         homeButton.setOnMouseClicked(event -> {
             try {
-                Main.setRoot("main");
+                fadeOut(FXMLLoader.load(Main.class.getResource("main.fxml")));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -138,7 +174,7 @@ public class ManagerDashboard {
                         try {
                             Controller.logout();
                             try {
-                                Main.setRoot("main");
+                                fadeOut(FXMLLoader.load(Main.class.getResource("main.fxml")));
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -172,5 +208,27 @@ public class ManagerDashboard {
         dialog.show();
         mainPane.setEffect(boxBlur);
         dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
+    }
+
+    private void fadeIn() {
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setNode(stackPane);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+    }
+
+    private void fadeOut(StackPane node) {
+        node.getStylesheets().add("main.css");
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setNode(stackPane);
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.setOnFinished(event -> {
+            Main.getPrimaryStage().setScene(new Scene(node));
+        });
+        fadeTransition.play();
     }
 }

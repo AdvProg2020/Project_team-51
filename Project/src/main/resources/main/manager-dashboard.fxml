@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity"
            minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" stylesheets="main.css"
-           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.ManagerDashboard">
+           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.Dashboard.Manager.ManagerDashboard">
     <children>
         <BorderPane fx:id="mainPane" prefHeight="970.0" prefWidth="1720.0">
             <left>

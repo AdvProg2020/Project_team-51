@@ -63,6 +63,23 @@
                                     <Font size="31.0"/>
                                  </font>
                               </Label>
+                              <VBox alignment="CENTER_RIGHT" prefHeight="114.0" prefWidth="1044.0">
+                                 <HBox.margin>
+                                    <Insets/>
+                                 </HBox.margin>
+                                 <children>
+                                    <JFXButton fx:id="cartButton" prefHeight="68.0" prefWidth="107.0" text=" ">
+                                       <graphic>
+                                          <ImageView fitHeight="66.0" fitWidth="60.0" pickOnBounds="true"
+                                                     preserveRatio="true">
+                                             <image>
+                                                <Image url="@buy.png"/>
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </JFXButton>
+                                 </children>
+                              </VBox>
                            </children>
                         </HBox>
                         <JFXButton fx:id="personalInfoButton" prefHeight="70.0" prefWidth="1400.0"

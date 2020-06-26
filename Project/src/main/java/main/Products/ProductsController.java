@@ -3,6 +3,7 @@ package main.Products;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import control.Controller;
+import control.Exceptions.HaveNotLoggedInException;
 import control.Filters.AvailabilityFilter;
 import control.Filters.PriceRangeFilter;
 import control.Filters.RateRangeFilter;
@@ -293,11 +294,11 @@ public class ProductsController extends StackPane {
         logout.setOnMouseClicked(event -> {
             if (Controller.isLoggedIn()) {
                 BoxBlur boxBlur = new BoxBlur(4, 4, 4);
-                JFXButton button = new JFXButton("  Yes  ");
+                JFXButton button = new JFXButton("  OK  ");
                 button.setStyle("-fx-background-color:#fe615a; -fx-background-radius:  18; -fx-text-fill: white");
                 button.setPadding(new Insets(3, 16, 3, 16));
                 JFXDialogLayout dialogLayout = new JFXDialogLayout();
-                dialogLayout.setHeading(new Label(" Logout "));
+                dialogLayout.setHeading(new Label(" You've logged out "));
                 dialogLayout.setStyle("-fx-background-color: rgba(255,104,110,0.64)");
                 JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
                 button.setOnMouseClicked((MouseEvent event1) -> {
@@ -308,6 +309,10 @@ public class ProductsController extends StackPane {
                 mainPane.setEffect(boxBlur);
                 dialog.setOnDialogClosed((JFXDialogEvent event1) -> {
                     mainPane.setEffect(null);
+                    try {
+                        Controller.logout();
+                    } catch (HaveNotLoggedInException e) {
+                    }
                 });
             } else {
                 showError(" You have not logged in yet !");

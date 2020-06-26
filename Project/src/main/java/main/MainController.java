@@ -6,12 +6,16 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import control.Controller;
+import control.Exceptions.HaveNotLoggedInException;
 import control.Filters.SearchFilter;
+import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -22,6 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import main.Products.ProductsController;
 import model.Category;
 import model.People.Customer;
@@ -156,6 +161,8 @@ public class MainController {
 
     @FXML
     public void initialize() {
+        stackPane.setOpacity(0);
+        fadeIn();
         var cartDialog = new CartDialogController(stackPane);
         var addressDialog = new AddressController(stackPane);
         var offCodeDialog = new TakeOffCodeController(stackPane);
@@ -257,19 +264,22 @@ public class MainController {
                 var currentAccount = Controller.getCurrentAccount();
                 if (currentAccount instanceof Customer) {
                     try {
-                        Main.setRoot("customer-dashboard");
+                        fadeOut(FXMLLoader.load(Main.class.getResource("customer-dashboard.fxml")));
+//                        Main.setRoot("customer-dashboard");
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
                 } else if (currentAccount instanceof Seller) {
                     try {
-                        Main.setRoot("seller-dashboard");
+                        fadeOut(FXMLLoader.load(Main.class.getResource("seller-dashboard.fxml")));
+//                        Main.setRoot("seller-dashboard");
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
                 } else if (currentAccount instanceof Manager) {
                     try {
-                        Main.setRoot("manager-dashboard");
+                        fadeOut(FXMLLoader.load(Main.class.getResource("manager-dashboard.fxml")));
+//                        Main.setRoot("manager-dashboard");
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
@@ -279,6 +289,34 @@ public class MainController {
 
         searchButton.setOnMouseClicked(event -> {
             Main.getPrimaryStage().setScene(new Scene(new ProductsController(SearchFilter.getInstance().applyFilter(Product.getAllProducts(), search))));
+        });
+
+        logout.setOnMouseClicked(event -> {
+            if (Controller.isLoggedIn()) {
+                BoxBlur boxBlur = new BoxBlur(4, 4, 4);
+                JFXButton button = new JFXButton("  Yes  ");
+                button.setStyle("-fx-background-color:#fe615a; -fx-background-radius:  18; -fx-text-fill: white");
+                button.setPadding(new Insets(3, 16, 3, 16));
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                dialogLayout.setHeading(new Label(" Logout "));
+                dialogLayout.setStyle("-fx-background-color: rgba(255,104,110,0.64)");
+                JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+                button.setOnMouseClicked((MouseEvent event1) -> {
+                    dialog.close();
+                });
+                dialogLayout.setActions(button);
+                dialog.show();
+                mainPane.setEffect(boxBlur);
+                dialog.setOnDialogClosed((JFXDialogEvent event1) -> {
+                    mainPane.setEffect(null);
+                    try {
+                        Controller.logout();
+                    } catch (HaveNotLoggedInException e) {
+                    }
+                });
+            } else {
+                showError(" You have not logged in yet !");
+            }
         });
     }
 
@@ -290,6 +328,28 @@ public class MainController {
             Category category = Category.getCategoryByName(name);
             stage.setScene(new Scene(new ProductsController(category)));
         }
+    }
+
+    private void fadeIn() {
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setNode(stackPane);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+    }
+
+    private void fadeOut(StackPane node) {
+        node.getStylesheets().add("main.css");
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setNode(stackPane);
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.setOnFinished(event -> {
+            Main.getPrimaryStage().setScene(new Scene(node));
+        });
+        fadeTransition.play();
     }
 
 
@@ -346,6 +406,29 @@ public class MainController {
         mostViewedProductImage4.setImage(mostViewedProducts.get(3).getImage());
         mostViewedProductName4.setText(mostViewedProducts.get(3).getName());
         mostViewedProductPrice4.setText(mostViewedProducts.get(3).getAveragePrice() + " $");
+    }
+
+    private void showError(String message) {
+        showErrorWithColor(message, "#fe615a");
+    }
+
+    @FXML
+    private void showErrorWithColor(String message, String color) {
+        BoxBlur boxBlur = new BoxBlur(4, 4, 4);
+        JFXButton button = new JFXButton("  Yes  ");
+        button.setStyle("-fx-background-color:" + color + "; -fx-background-radius:  18; -fx-text-fill: white");
+        button.setPadding(new Insets(3, 16, 3, 16));
+        JFXDialogLayout dialogLayout = new JFXDialogLayout();
+        dialogLayout.setHeading(new Label(message));
+        dialogLayout.setStyle("-fx-background-color: rgba(255,104,110,0.64)");
+        JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+        button.setOnMouseClicked((MouseEvent event) -> {
+            dialog.close();
+        });
+        dialogLayout.setActions(button);
+        dialog.show();
+        mainPane.setEffect(boxBlur);
+        dialog.setOnDialogClosed((JFXDialogEvent event) -> mainPane.setEffect(null));
     }
 
 }
