@@ -990,7 +990,7 @@ public class SellerMenuPanes {
 
         tableView.getColumns().addAll(category,open);
         return new Pane(tableView);
-    }
+    }//v1
 
     private Pane getViewCategoryPane(Category category) {
 
@@ -1048,7 +1048,7 @@ public class SellerMenuPanes {
                 subCategoriesTV,attributesTV,productsTV);
 
         return pane;
-    }
+    }//v1
 
     public TableView getAttributesTableView(Category category){
         return null;
