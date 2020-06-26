@@ -253,4 +253,124 @@ public class ManagerDashboard {
         });
         fadeTransition.play();
     }
+
+    public StackPane getStackPane() {
+        return stackPane;
+    }
+
+    public void setStackPane(StackPane stackPane) {
+        this.stackPane = stackPane;
+    }
+
+    public BorderPane getMainPane() {
+        return mainPane;
+    }
+
+    public void setMainPane(BorderPane mainPane) {
+        this.mainPane = mainPane;
+    }
+
+    public JFXButton getHomeButton() {
+        return homeButton;
+    }
+
+    public void setHomeButton(JFXButton homeButton) {
+        this.homeButton = homeButton;
+    }
+
+    public JFXButton getLogoutButton() {
+        return logoutButton;
+    }
+
+    public void setLogoutButton(JFXButton logoutButton) {
+        this.logoutButton = logoutButton;
+    }
+
+    public ImageView getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(ImageView avatar) {
+        this.avatar = avatar;
+    }
+
+    public Label getUsernameLabel() {
+        return usernameLabel;
+    }
+
+    public void setUsernameLabel(Label usernameLabel) {
+        this.usernameLabel = usernameLabel;
+    }
+
+    public JFXButton getPersonalInfoButton() {
+        return personalInfoButton;
+    }
+
+    public void setPersonalInfoButton(JFXButton personalInfoButton) {
+        this.personalInfoButton = personalInfoButton;
+    }
+
+    public JFXButton getCreateDiscountButton() {
+        return createDiscountButton;
+    }
+
+    public void setCreateDiscountButton(JFXButton createDiscountButton) {
+        this.createDiscountButton = createDiscountButton;
+    }
+
+    public JFXButton getViewDiscountButton() {
+        return viewDiscountButton;
+    }
+
+    public void setViewDiscountButton(JFXButton viewDiscountButton) {
+        this.viewDiscountButton = viewDiscountButton;
+    }
+
+    public JFXButton getManageProducts() {
+        return manageProducts;
+    }
+
+    public void setManageProducts(JFXButton manageProducts) {
+        this.manageProducts = manageProducts;
+    }
+
+    public JFXButton getCreateCategoryButton() {
+        return createCategoryButton;
+    }
+
+    public void setCreateCategoryButton(JFXButton createCategoryButton) {
+        this.createCategoryButton = createCategoryButton;
+    }
+
+    public JFXButton getViewCategoriesButton() {
+        return viewCategoriesButton;
+    }
+
+    public void setViewCategoriesButton(JFXButton viewCategoriesButton) {
+        this.viewCategoriesButton = viewCategoriesButton;
+    }
+
+    public JFXButton getManageRequestsButton() {
+        return manageRequestsButton;
+    }
+
+    public void setManageRequestsButton(JFXButton manageRequestsButton) {
+        this.manageRequestsButton = manageRequestsButton;
+    }
+
+    public JFXButton getViewOffCodesButton() {
+        return viewOffCodesButton;
+    }
+
+    public void setViewOffCodesButton(JFXButton viewOffCodesButton) {
+        this.viewOffCodesButton = viewOffCodesButton;
+    }
+
+    public JFXButton getManageUsersButton() {
+        return manageUsersButton;
+    }
+
+    public void setManageUsersButton(JFXButton manageUsersButton) {
+        this.manageUsersButton = manageUsersButton;
+    }
 }

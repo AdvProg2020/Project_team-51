@@ -115,7 +115,7 @@ public class CustomerMenuPanes {
                     if (phoneNumberTextField.getText().equals("")) phoneNumberError.setText("");
                     else {
                         try {
-                            customerController.editPhoneNumber(nameTextField.getText());
+                            CustomerController.editPhoneNumber(nameTextField.getText());
                             phoneNumberError.setText("");
                         } catch (Exception e) {
                             phoneNumberError.setText(e.getMessage());
