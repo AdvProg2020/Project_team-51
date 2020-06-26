@@ -165,7 +165,7 @@ public class ManageCategories extends Menu {
                 System.err.println(e.getMessage());
             }
         }
-        managerController.addCategory(name, parentName, attributes.toArray(new Attributes[attributes.size()]));
+        //managerController.addCategory(name, parentName, attributes.toArray(new Attributes[attributes.size()]));
 
     }
 

@@ -2,6 +2,7 @@ package model;
 
 import control.Controller;
 import control.Exceptions.InvalidProductIdException;
+import control.TokenGenerator;
 import javafx.scene.image.Image;
 import model.People.Customer;
 import model.People.Seller;
@@ -33,7 +34,7 @@ public class Product {
     public Product(String productId, String name, String brandName,
                    Double price, Seller seller, int quantity, Category parentCategory, String description,
                    Map<Attributes, String> attributes) {
-        this.productId = productId;
+        this.productId = TokenGenerator.generateProductId();
         this.name = name;
         this.brandName = brandName;
         this.price.putIfAbsent(seller, price);

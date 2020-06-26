@@ -1,7 +1,7 @@
 package view.Profile.SellerMenu;
 
 import control.Controller;
-import control.ManagerController;
+import control.Exceptions.NotAllowedActivityException;
 import control.SellerController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,23 +15,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.*;
 import model.OrderLog.SellerLog;
 import model.OrderLog.ShippingStatus;
-import model.People.Account;
-import model.People.Manager;
 import model.People.Seller;
-import org.w3c.dom.Attr;
 
-import javax.swing.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SellerMenuPanes {
     SellerController sellerController = new SellerController(Controller.getCurrentAccount());
@@ -125,12 +119,12 @@ public class SellerMenuPanes {
                 }
             }
         };
-        Button back = new Button("back");
-        back.setOnAction(ev->{
-            //todo go back
-        });
-        back.setLayoutX(300);
-        back.setLayoutY(690);
+//        Button back = new Button("back");
+//        back.setOnAction(ev->{
+//
+//        });
+//        back.setLayoutX(300);
+//        back.setLayoutY(690);
         submit.setLayoutX(360);
         submit.setLayoutY(690);
         pane.getChildren().addAll(
@@ -157,11 +151,10 @@ public class SellerMenuPanes {
                 brandLabel,
                 brandError,
                 brandTextField,
-                back,
                 submit
         );
         return pane;
-    }//done
+    }//v1
 
     public Pane getCreateAuctionPane(){
         Pane pane = new Pane();
@@ -169,10 +162,6 @@ public class SellerMenuPanes {
 
         final int X = 300;
         ArrayList<Product> selected = new ArrayList<>();
-//        Label nameLabel = getLabel("name" , X ,300);
-//        Label nameError = getErrorLabel("",X,320);
-//        TextField nameField = getTextFieldDefault("" , X , 340);
-
         Label       beginDateLabel = getLabel("begin date" , X , 390);
         Label       beginDateError = getErrorLabel("" , X ,410);
         DatePicker  beginDatePicker = new DatePicker();
@@ -200,32 +189,19 @@ public class SellerMenuPanes {
             }
         });
 
-        Label selectedLabel = getLabel("selected products" , 500 , 300);
-        Label selectedError = getErrorLabel("" , 500 , 320);
+        Label selectedLabel = getLabel("selected products" , 600 , 300);
+        Label selectedError = getErrorLabel("" , 600 , 320);
 
-        TableView products = getProductsTableViewAuction(selected);
-        setPlace(products , 500 , 340);
-
-        Button back = getButton("back" , event -> {
-            //todo go back
-        });
-        setPlace(back , 330 , 650);
+        TableView products = getProductsTableViewAuction(selected); //todo check
+        setPlace(products , 600 , 340);
 
         Button confirm = getButton("confirm" ,event -> {
-//            if (nameLabel.getText().length()==0){
-//                nameError.setText("please select a name");
-//            }else if(sellerController.doesAuctionExist(nameField.getText())){
-//                nameError.setText("this name is taken");
-//            }else{
-//                nameError.setText("");
-//            }
-
             if(beginDatePicker.getValue().equals(null)){
                 beginDateError.setText("please select a date");
-            }
+            }else{beginDateError.setText("");}
             if (endDatePicker.getValue().equals(null)){
                 endDateError.setText("please select a date");
-            }
+            }else endDateError.setText("");
             if (endDatePicker.getValue()!=null&&beginDatePicker.getValue()!=null){
                 if (endDatePicker.getValue().isAfter(beginDatePicker.getValue())){
                     endDateError.setText("end date must be after start");
@@ -241,8 +217,7 @@ public class SellerMenuPanes {
                 selectedError.setText("");
             }
 
-            if (//nameError.equals("")&&
-                beginDateError.equals("")&&
+            if (beginDateError.equals("")&&
                 endDateError.equals("")&&
                 selectedError.equals("")){
                 new Auction((Seller) Controller.getCurrentAccount(),
@@ -253,9 +228,6 @@ public class SellerMenuPanes {
             }
         });
         pane.getChildren().addAll(
-//                nameLabel,
-//                nameError,
-//                nameField,
                 beginDateLabel,
                 beginDateError,
                 beginDatePicker,
@@ -267,11 +239,12 @@ public class SellerMenuPanes {
                 percentSliderAmount,
                 selectedLabel,
                 selectedError,
-                products
+                products,
+                confirm
         );
 
         return pane;
-    }//done
+    }//v1
 
     public TableView getProductsTableViewAuction(List<Product> selection) {
         List<Product> products = sellerController.getProductsForAuction();
@@ -294,7 +267,7 @@ public class SellerMenuPanes {
                         final TableCell<Product, String> cell = new TableCell<Product, String>() {
 
                             final CheckBox checkBox = new CheckBox();
-
+                            boolean firstTime = true;
                             @Override
                             public void updateItem(String item, boolean empty) {
                                 super.updateItem(item, empty);
@@ -302,8 +275,12 @@ public class SellerMenuPanes {
                                     setGraphic(null);
                                     setText(null);
                                 } else {
+                                    Product product = getTableView().getItems().get(getIndex());
+                                    if (firstTime){
+                                        if (selection.contains(product)) checkBox.setSelected(true);
+                                        firstTime = false;
+                                    }
                                     checkBox.setOnAction(event -> {
-                                        Product product = getTableView().getItems().get(getIndex());
                                         if (checkBox.isSelected()) selection.add(product);
                                         else selection.remove(product);
                                     });
@@ -320,7 +297,7 @@ public class SellerMenuPanes {
         table.setItems(data);
         table.getColumns().addAll(productName, select);
         return table;
-    }//done
+    }//v1
 
     public Pane getSalesHistoryPane(){
         Pane pane = new Pane ();
@@ -337,7 +314,7 @@ public class SellerMenuPanes {
         TableColumn name = new TableColumn("buyer");
         name.setCellValueFactory(new PropertyValueFactory<>("buyerName"));
 
-        TableColumn open = new TableColumn("buyer");
+        TableColumn open = new TableColumn("open");
         name.setCellValueFactory(new PropertyValueFactory<>("buyerName"));
 
         Callback<TableColumn<SellerLog, String>, TableCell<SellerLog, String>> cellFactory
@@ -374,15 +351,11 @@ public class SellerMenuPanes {
         sellerLogsTable.getColumns().addAll(id,name,open);
 
         setPlace(sellerLogsTable,300,300);
-        Button back = getButton("back" , event -> {
-            // TODO: ۲۶/۰۶/۲۰۲۰ get back
-        });
-        setPlace(back , 370,750);
 
-        pane.getChildren().addAll(sellerLogsTable,back);
+        pane.getChildren().addAll(sellerLogsTable);
 
         return pane;
-    } //done
+    } //v1
 
     public Pane getSingleSaleHistoryPane(SellerLog sellerLog){
         Pane pane  = new Pane();
@@ -425,7 +398,60 @@ public class SellerMenuPanes {
         tableView.getColumns().addAll(product,price,discount,date,quantity);
         pane.getChildren().addAll(label,nameLabel,statusLabel,statusValue,tableView);
         return pane;
-    } //done
+    } //v1
+
+    public Pane getAllAuctionsPane(){
+        TableView tableView = new TableView();
+        ObservableList<Auction> data
+                =  FXCollections.observableArrayList(
+                sellerController.getSellerAuctions());
+
+        TableColumn auctionId = new TableColumn("id");
+        auctionId.setCellValueFactory(new PropertyValueFactory<>("auctionId"));
+
+        TableColumn open = new TableColumn("open");
+        open.setCellValueFactory(new PropertyValueFactory<>("auctionId"));
+
+        Callback<TableColumn<Auction, String>, TableCell<Auction, String>> cellFactory
+                = //
+                new Callback<TableColumn<Auction, String>, TableCell<Auction, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Auction, String> param) {
+                        final TableCell<Auction, String> cell = new TableCell<Auction, String>() {
+
+                            final Button b = new Button("edit");
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    b.setOnKeyTyped(event -> {
+                                        Auction auction = getTableView().getItems().get(getIndex());
+
+                                        Stage stage = new Stage();
+                                        stage.setScene(new Scene(getEditAuctionPane(auction)));
+                                        stage.show();
+
+                                    });
+                                    setGraphic(b);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        tableView.setItems(data);
+        open.setCellFactory(cellFactory);
+        tableView.getColumns().addAll(auctionId,open);
+
+        Pane pane = new Pane();
+        pane.getChildren().addAll(tableView);
+        return pane;
+    } //v1
 
     public Pane getEditAuctionPane (Auction auction){
         Pane pane = new Pane();
@@ -434,10 +460,10 @@ public class SellerMenuPanes {
         final int X = 300;
         ArrayList<Product> selected = new ArrayList<>();
 
-//        Label nameLabel = getLabel("name" , X ,300);
-//        Label nameError = getErrorLabel("",X,320);
-//        TextField nameField = getTextFieldDefault("" , X , 340);
-//        nameField.setText(auction.getAuctionId());
+        Label nameLabel = getLabel("name" , X ,300);
+        TextField nameField = getTextFieldDefault("" , X , 340);
+        nameField.setText(auction.getAuctionId());
+        nameField.setEditable(false);
 
         Label       beginDateLabel = getLabel("begin date" , X , 390);
         Label       beginDateError = getErrorLabel("" , X ,410);
@@ -458,17 +484,8 @@ public class SellerMenuPanes {
         setPlace(percentSlider , X , 610);
         percentSliderAmount.setText(Integer.toString((int) auction.getOffPercentage()));
         percentSlider.setValue(auction.getOffPercentage());
-        percentSlider.valueProperty().addListener(new ChangeListener<Number>() {
-
-            @Override
-            public void changed(
-                    ObservableValue<? extends Number> observableValue,
-                    Number oldValue,
-                    Number newValue) {
-                percentSliderAmount.textProperty().setValue(
-                        String.valueOf(newValue.intValue()));
-            }
-        });
+        percentSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> percentSliderAmount.textProperty().setValue(
+                String.valueOf(newValue.intValue())));
 
         Label selectedLabel = getLabel("selected products" , 500 , 300);
         Label selectedError = getErrorLabel("" , 500 , 320);
@@ -476,26 +493,14 @@ public class SellerMenuPanes {
         TableView products = getProductsTableViewAuction(selected);
         setPlace(products , 500 , 340);
 
-        Button back = getButton("back" , event -> {
-            //todo go back
-        });
-        setPlace(back , 330 , 650);
-
         Button confirm = getButton("confirm" ,event -> {
-//            if (nameLabel.getText().equals("")||nameField.getText().equals(auction.getAuctionId())){
-//                nameError.setText("");
-//            }else if(sellerController.doesAuctionExist(nameField.getText())){
-//                nameError.setText("this name is taken");
-//            }else{
-//                nameError.setText("");
-//            }
 
             if(beginDatePicker.getValue().equals(null)){
                 beginDateError.setText("please select a date");
-            }
+            } else beginDateError.setText("");
             if (endDatePicker.getValue().equals(null)){
                 endDateError.setText("please select a date");
-            }
+            }else endDateError.setText("");
             if (endDatePicker.getValue()!=null&&beginDatePicker.getValue()!=null){
                 if (endDatePicker.getValue().isAfter(beginDatePicker.getValue())){
                     endDateError.setText("end date must be after start");
@@ -511,8 +516,7 @@ public class SellerMenuPanes {
                 selectedError.setText("");
             }
 
-            if (//nameError.getText().equals("")&&
-                    beginDateError.getText().equals("")&&
+            if (beginDateError.getText().equals("")&&
                     endDateError.getText().equals("")&&
                     selectedError.getText().equals("")){
                     sellerController.editAuction(auction,
@@ -520,9 +524,8 @@ public class SellerMenuPanes {
             }
         });
         pane.getChildren().addAll(
-//                nameLabel,
-//                nameError,
-//                nameField,
+                nameLabel,
+                nameField,
                 beginDateLabel,
                 beginDateError,
                 beginDatePicker,
@@ -534,16 +537,18 @@ public class SellerMenuPanes {
                 percentSliderAmount,
                 selectedLabel,
                 selectedError,
-                products
+                products,
+                confirm
         );
         return pane;
 
-    }//done
+    }//v1
 
     public Pane getCreateProductPane(){
         Pane pane = new Pane();
         pane.setPrefSize(1540,800);
         ArrayList<Attributes > attributes = new ArrayList<>();
+        HashMap<Attributes , String> attributesStringMap = new HashMap<>();
 
         final int X = 300;
         Label nameLabel = getLabel("name",X,300);
@@ -554,11 +559,11 @@ public class SellerMenuPanes {
         Label brandError = getErrorLabel("",X,410);
         TextField brandField = getTextFieldDefault("",X  ,430);
 
-        Label amountLabel = getLabel("amount" , X , 480);
-        Slider percentSlider = new Slider(1, 99, 1);
-        Label percentSliderAmount = new Label("");
-        setPlace(percentSliderAmount, X + 120, 480);
-        setPlace(percentSlider, X, 500);
+        Label quantityLabel = getLabel("amount" , X , 480);
+        Slider quantitySlider = new Slider(0, 99, 1);
+        Label quantityAmount = new Label("");
+        setPlace(quantityAmount, X + 120, 480);
+        setPlace(quantitySlider, X, 500);
 
         Label priceLabel = getLabel("price" , X ,550);
         Label priceError = getErrorLabel("" , X,570);
@@ -582,14 +587,24 @@ public class SellerMenuPanes {
         Label descriptionLabel = getLabel("description" , X,710);
         TextField descrioptionField = getTextFieldDefault("" , X + 120 , 710);
 
-        Button back,next;
+        Label attributeError = getErrorLabel("" , 300,740);
 
-        back = getButton("back" , event -> {
-            // TODO: ۲۶/۰۶/۲۰۲۰ bak
+        AtomicBoolean enteredAttributes = new AtomicBoolean(false);
+        Button attributesButton = getButton("attributes" , event -> {
+            if (categoryComboBox.getValue()==null) attributeError.setText("please select category");
+            else {
+                enteredAttributes.set(true);
+                categoryError.setText("");
+                Stage stage = new Stage();
+                stage.setScene(new Scene(getAttributesTableViewCreateProduct(
+                        categoryComboBox.getValue(),attributesStringMap
+                )));
+            }
         });
-        setPlace(back , 300 , 750);
 
-        next = getButton("next" , event -> {
+        setPlace(attributesButton , 400 , 755);
+
+        Button done = getButton("done" , event -> {
            if (nameField.getText().equals("")) nameError.setText("please select a name");
             else if (SellerController.isProductNameTaken(nameField.getText())){
                 nameError.setText("this name is taken");
@@ -615,27 +630,36 @@ public class SellerMenuPanes {
                 categoryError.setText("");
             }
 
+            if (enteredAttributes.get() ==true){
+                attributeError.setText("");
+            }else attributeError.setText("please fill attributes");
+
             if (nameError.equals("")&&
             brandError.equals("")&&
             priceError.equals("")&&
-            categoryError.equals("")){
-                Stage nextStage = new Stage();
-                nextStage.setScene(new Scene(getAttributesTableViewCreateProduct(categoryComboBox.getValue(),
-                        attributes)));
-                nextStage.show();
+            categoryError.equals("")&&
+            attributeError.equals("")){
+                try {
+                    sellerController.addProduct(new Product("" , nameField.getText(),brandField.getText(),Double.parseDouble(priceField.getText()),
+                            (Seller) Controller.getCurrentAccount(),(int)quantitySlider.getValue(),categoryComboBox.getValue(),
+                            descrioptionField.getText(),attributesStringMap));
+                } catch (NotAllowedActivityException e) {
+                    attributeError.setText(e.getMessage());
+                }
             }
         });
 
-        setPlace(next,350,750);
+        setPlace(done,350,755);
 
-        pane.getChildren().addAll(nameError,nameField,nameLabel,amountLabel,
+        pane.getChildren().addAll(nameError,nameField,nameLabel,quantityLabel,
                 categoryLabel,categoryComboBox,categoryError,
                 brandError,brandField,brandLabel,
                 priceError,priceField,priceLabel,
-                descrioptionField,descriptionLabel
+                descrioptionField,descriptionLabel,
+                done
                 );
         return pane;
-    } //done
+    }//v1
 
 //    public Pane getAttributesPane(Category category){
 //        Pane pane = new Pane();
@@ -646,7 +670,7 @@ public class SellerMenuPanes {
 //        Button back , confirm;
 //
 //        back = getButton("back" , event -> {
-//            // TODO: ۲۶/۰۶/۲۰۲۰ go back
+//            // TOD: ۲۶/۰۶/۲۰۲۰ go back
 //        });
 //        setPlace(back,100,600);
 //        confirm = getButton("confirm" , event -> {
@@ -657,7 +681,7 @@ public class SellerMenuPanes {
 //        return pane;
 //    }//not done
 
-    public TableView getAttributesTableViewCreateProduct(Category c,ArrayList attributes){
+    public TableView getAttributesTableViewCreateProduct(Category c,HashMap<Attributes,String> hashMap){
         TableView<Attributes> attributesTableView = new TableView<>();
         ObservableList<Attributes> data
                 =  FXCollections.observableArrayList(
@@ -686,7 +710,7 @@ public class SellerMenuPanes {
                                 } else {
                                     tf.setOnKeyTyped(event -> {
                                         Attributes at = getTableView().getItems().get(getIndex());
-                                        // Attributes second part is a set?
+                                        hashMap.put(at,tf.getText());
                                     });
                                     setGraphic(tf);
                                     setText(null);
@@ -701,7 +725,7 @@ public class SellerMenuPanes {
         select.setCellFactory(cellFactory);
         attributesTableView.getColumns().addAll(categoryName,select);
         return  attributesTableView;
-    }
+    }//v1
 
     public Pane getManageProductsPane(){
         Pane pane = new Pane();
@@ -713,7 +737,7 @@ public class SellerMenuPanes {
 
         pane.getChildren().addAll(productsLabel,tv);
         return pane;
-    }//done
+    }//v1
 
     public TableView getManageProductsTableView(){
         TableView<Product> tableView = new TableView<>();
@@ -784,8 +808,8 @@ public class SellerMenuPanes {
                                 } else {
                                     Product p = getTableView().getItems().get(getIndex());
                                     b.setOnAction(actionEvent -> {
-                                        tableView.getItems().remove(p);
                                         sellerController.removeProduct(p);
+                                        tableView.getItems().remove(p);
                                     });
                                     setGraphic(b);
                                     setText(null);
@@ -803,16 +827,12 @@ public class SellerMenuPanes {
                 edit,
                 delete);
         return tableView;
-    }
+    }//v1
 
-    private Pane getEditProductPane(Product product) {
-        return null;
-    }
-
-    public Pane getManageSingleProductPane(Product product){
-        ArrayList<Attributes> attributes = new ArrayList<>();
+    private Pane getEditProductPane(Product product){
         Pane pane = new Pane();
         pane.setPrefSize(1540,800);
+        HashMap<Attributes , String> attributesStringMap = new HashMap<>();
 
         final int X = 300;
         Label nameLabel = getLabel("name",X,300);
@@ -823,12 +843,13 @@ public class SellerMenuPanes {
         Label brandError = getErrorLabel("",X,410);
         TextField brandField = getTextFieldDefault(product.getBrandName(),X  ,430);
 
-        Label amountLabel = getLabel("amount" , X , 480);
-        Slider percentSlider = new Slider(1, 99, 1);
-        Label percentSliderAmount = new Label("");
-        setPlace(percentSliderAmount, X + 120, 480);
-        setPlace(percentSlider, X, 500);
-        percentSlider.setValue(product.getPriceForSeller((Seller) Controller.getCurrentAccount()));
+        Label quantityLabel = getLabel("amount" , X , 480);
+        Slider quantitySlider = new Slider(0, 99, 1);
+        quantitySlider.setValue(product.getQuantityForSeller((Seller)Controller.getCurrentAccount()));
+        Label quantityAmount = new Label("");
+        quantityAmount.setText(Integer.toString(product.getQuantityForSeller((Seller)Controller.getCurrentAccount())));
+        setPlace(quantityAmount, X + 120, 480);
+        setPlace(quantitySlider, X, 500);
 
         Label priceLabel = getLabel("price" , X ,550);
         Label priceError = getErrorLabel("" , X,570);
@@ -847,24 +868,32 @@ public class SellerMenuPanes {
         Label categoryError = getErrorLabel("",X,650);
         ComboBox<Category> categoryComboBox = new ComboBox<>();
         categoryComboBox.getItems().addAll(SellerController.getAllCategories());
-        setPlace(categoryComboBox,X,670);
         categoryComboBox.getSelectionModel().select(product.getParentCategory());
+        setPlace(categoryComboBox,X,670);
 
         Label descriptionLabel = getLabel("description" , X,710);
-        TextField descrioptionField = getTextFieldDefault("" , X + 120 , 710);
+        TextField descrioptionField = getTextFieldDefault(product.getDescription() , X + 120 , 710);
+        Label attributeError = getErrorLabel("" , 300,740);
 
-        Button back,next;
-
-        back = getButton("back" , event -> {
-            // TODO: ۲۶/۰۶/۲۰۲۰ bak
+        Button attributesButton = getButton("attributes" , event -> {
+            if (categoryComboBox.getValue()==null) attributeError.setText("please select category");
+            else {
+                categoryError.setText("");
+                Stage stage = new Stage();
+                stage.setScene(new Scene(getAttributesTableViewCreateProduct(
+                        categoryComboBox.getValue(),attributesStringMap
+                )));
+            }
         });
-        setPlace(back , 300 , 750);
 
-        next = getButton("next" , event -> {
-            if (nameField.getText().equals("")) nameError.setText("please select a name");
-            else if (SellerController.isProductNameTaken(nameField.getText())){
+        setPlace(attributesButton , 400 , 755);
+
+        Button done = getButton("done" , event -> {
+            if (nameField.getText().equals(product.getName()));
+            if (SellerController.isProductNameTaken(nameField.getText())){
                 nameError.setText("this name is taken");
             }else {
+                sellerController.editProduct(product,"name",nameField.getText());
                 nameError.setText("");
             }
 
@@ -889,31 +918,36 @@ public class SellerMenuPanes {
             if (nameError.equals("")&&
                     brandError.equals("")&&
                     priceError.equals("")&&
-                    categoryError.equals("")){
-                Stage nextSatge = new Stage();
-                nextSatge.setScene(
-                        new Scene(getAttributesTableView(categoryComboBox.getValue()))
-                );
+                    categoryError.equals("")&&
+                    attributeError.equals("")){
+                try {
+                    sellerController.addProduct(new Product("" , nameField.getText(),brandField.getText(),Double.parseDouble(priceField.getText()),
+                            (Seller) Controller.getCurrentAccount(),(int)quantitySlider.getValue(),categoryComboBox.getValue(),
+                            descrioptionField.getText(),attributesStringMap));
+                } catch (NotAllowedActivityException e) {
+                    attributeError.setText(e.getMessage());
+                }
             }
         });
 
-        setPlace(next,350,750);
+        setPlace(done,350,755);
 
-        pane.getChildren().addAll(nameError,nameField,nameLabel,amountLabel,
+        pane.getChildren().addAll(nameError,nameField,nameLabel,quantityLabel,
                 categoryLabel,categoryComboBox,categoryError,
                 brandError,brandField,brandLabel,
                 priceError,priceField,priceLabel,
-                descrioptionField,descriptionLabel
+                descrioptionField,descriptionLabel,
+                done
         );
         return pane;
-
-    }
+    }// v1 todo
 
     public Pane getViewCategoriesPane(){
         TableView <Category> tableView = new TableView<>();
 
-        ObservableList<Category> date =
+        ObservableList<Category> data =
                 FXCollections.observableList(sellerController.listCategories());
+        tableView.setItems(data);
 
         TableColumn category = new TableColumn("category name");
         category.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -921,8 +955,39 @@ public class SellerMenuPanes {
         TableColumn open = new TableColumn("open");
         open.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+        Callback<TableColumn<Category, String>, TableCell<Category, String>> cellFactoryOpen
+                = //
+                new Callback<TableColumn<Category, String>, TableCell<Category, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Category, String> param) {
+                        final TableCell<Category, String> cell = new TableCell<Category, String>() {
 
-        return null;
+                            final Button b = new Button("open");
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    b.setOnAction(actionEvent -> {
+//                                        Stage stage = new Stage();
+//                                        stage.setScene(new Scene(
+//                                                getViewCategoryPane(getTableView().getItems().get(getIndex()))));
+//                                        stage.show();//todo
+                                    });
+                                    setGraphic(b);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+        open.setCellFactory(cellFactoryOpen);
+
+        tableView.getColumns().addAll(category/*,open*/);
+        return new Pane(tableView);
     }
 
     public TableView getAttributesTableView(Category category){

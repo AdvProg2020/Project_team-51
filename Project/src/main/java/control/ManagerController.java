@@ -253,7 +253,7 @@ public class ManagerController extends Controller {
         return getCategoryByName(categoryName) != null;
     }
 
-    public void addCategory(String name, String parentName, Attributes... attributes) {
+    public void addCategory(String name, String parentName, ArrayList<Attributes> attributes) {
         if (!(currentAccount instanceof Manager)) return;
         Category newCategory = new Category(name, getCategoryByName(parentName), attributes);
         List<Category> allCategories = ((Manager) currentAccount).getAllCategories();
