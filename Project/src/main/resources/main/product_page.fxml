@@ -6,9 +6,9 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity"
-           minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0"
-           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.ProductPage.ProductPageController">
+<fx:root xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity"
+         minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" type="StackPane"
+         xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.ProductPage.ProductPageController">
     <children>
         <BorderPane fx:id="mainPane" prefHeight="970.0" prefWidth="1720.0">
             <left>
@@ -79,11 +79,12 @@
                                                             style="-fx-background-color: #746d63;" text="Categories"
                                                             textFill="WHITE">
                                                     <items>
-                                                        <CustomMenuItem mnemonicParsing="false"
+                                                        <CustomMenuItem fx:id="customItem" mnemonicParsing="false"
                                                                         style="-fx-padding: 0 120 0 0; -fx-background-color: black;"
                                                                         text="Unspecified Action">
                                                             <content>
-                                                                <TreeView style="-fx-background-color: #746d63;"/>
+                                                                <TreeView fx:id="categoriesTreeView"
+                                                                          style="-fx-background-color: #746d63;"/>
                                                             </content>
                                                         </CustomMenuItem>
                                                     </items>
@@ -109,8 +110,8 @@
                                                         <Insets left="650.0"/>
                                                     </HBox.margin>
                                                 </JFXButton>
-                                                <JFXTextField focusColor="#f2837c" prefHeight="56.0" prefWidth="270.0"
-                                                              promptText="Serach ..."
+                                                <JFXTextField fx:id="searchField" focusColor="#f2837c" prefHeight="56.0"
+                                                              prefWidth="270.0" promptText="Serach ..."
                                                               style="-fx-background-color: #ebebeb; -fx-background-radius: 15;"
                                                               unFocusColor="#646161">
                                                     <HBox.margin>
@@ -123,7 +124,7 @@
                                                         <Insets left="25.0"/>
                                                     </padding>
                                                 </JFXTextField>
-                                                <JFXButton prefHeight="58.0" prefWidth="61.0"
+                                                <JFXButton fx:id="searchButton" prefHeight="58.0" prefWidth="61.0"
                                                            style="-fx-background-color: #f2837c; -fx-background-radius: 14;"
                                                            text=" " textFill="WHITE">
                                                     <font>
@@ -164,9 +165,9 @@
                                                                                 vgrow="SOMETIMES"/>
                                                             </rowConstraints>
                                                             <children>
-                                                                <ImageView fx:id="productImage" fitHeight="360.0"
-                                                                           fitWidth="360.0" pickOnBounds="true"
-                                                                           preserveRatio="true"
+                                                                <ImageView id="image-product" fx:id="productImage"
+                                                                           fitHeight="360.0" fitWidth="360.0"
+                                                                           pickOnBounds="true" preserveRatio="true"
                                                                            GridPane.halignment="CENTER"
                                                                            GridPane.valignment="CENTER">
                                                                     <image>
@@ -180,25 +181,50 @@
                                                                 <Insets left="20.0"/>
                                                             </HBox.margin>
                                                             <children>
-                                                                <Label fx:id="productName" prefHeight="101.0"
-                                                                       prefWidth="350.0" text="Product Name"
-                                                                       textFill="#a4522c">
-                                                                    <font>
-                                                                        <Font name="System Bold" size="41.0"/>
-                                                                    </font>
+                                                                <HBox alignment="CENTER_LEFT">
                                                                     <VBox.margin>
                                                                         <Insets left="35.0"/>
                                                                     </VBox.margin>
-                                                                </Label>
+                                                                    <children>
+                                                                        <Label fx:id="productName" prefHeight="101.0"
+                                                                               prefWidth="350.0" text="Product Name"
+                                                                               textFill="#a4522c">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="41.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                        <ImageView fx:id="rateStar" fitHeight="66.0"
+                                                                                   fitWidth="172.0" pickOnBounds="true"
+                                                                                   preserveRatio="true">
+                                                                            <image>
+                                                                                <Image url="@0star.png"/>
+                                                                            </image>
+                                                                            <HBox.margin>
+                                                                                <Insets left="350.0"/>
+                                                                            </HBox.margin>
+                                                                        </ImageView>
+                                                                    </children>
+                                                                </HBox>
                                                                 <Label fx:id="productDescription" alignment="TOP_LEFT"
-                                                                       prefHeight="98.0" prefWidth="880.0"
-                                                                       text="This is Product description.This is Product description. This is Product description. This is Product description. This is Product description. This is Product description. This is Product description.This is Product description. This is Product description.This is Product description. This is Product description."
+                                                                       prefHeight="34.0" prefWidth="880.0"
+                                                                       text="This is Product description.This is Product description.. This is Product description."
                                                                        textFill="#4c4c4c" wrapText="true">
                                                                     <font>
                                                                         <Font size="19.0"/>
                                                                     </font>
                                                                     <VBox.margin>
                                                                         <Insets left="20.0"/>
+                                                                    </VBox.margin>
+                                                                </Label>
+                                                                <Label fx:id="attributesLabel" alignment="TOP_LEFT"
+                                                                       prefHeight="34.0" prefWidth="880.0"
+                                                                       text="This Attributes" textFill="#4c4c4c"
+                                                                       wrapText="true">
+                                                                    <font>
+                                                                        <Font size="19.0"/>
+                                                                    </font>
+                                                                    <VBox.margin>
+                                                                        <Insets left="20.0" top="30.0"/>
                                                                     </VBox.margin>
                                                                 </Label>
                                                                 <HBox alignment="CENTER_LEFT">
@@ -216,6 +242,16 @@
                                                                                 <Insets left="10.0"/>
                                                                             </padding>
                                                                         </ComboBox>
+                                                                        <Label fx:id="offPercent" prefHeight="43.0"
+                                                                               prefWidth="192.0" text="OFF"
+                                                                               textFill="#791111">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="29.0"/>
+                                                                            </font>
+                                                                            <HBox.margin>
+                                                                                <Insets left="400.0"/>
+                                                                            </HBox.margin>
+                                                                        </Label>
                                                                     </children>
                                                                     <padding>
                                                                         <Insets left="20.0"/>
@@ -378,4 +414,4 @@
             </center>
         </BorderPane>
     </children>
-</StackPane>
+</fx:root>

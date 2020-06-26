@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="box" maxHeight="" maxWidth="" minHeight="" minWidth="" prefWidth=""
+      spacing="" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="view.CompareController">
+    <children>
+        <ImageView fx:id="productImage" fitHeight="" fitWidth="" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url=""/>
+            </image>
+        </ImageView>
+        <TextField fx:id="name">
+            <VBox.margin>
+                <Insets left="" right=""/>
+            </VBox.margin>
+        </TextField>
+        <TextField fx:id="brand">
+            <VBox.margin>
+                <Insets left="" right=""/>
+            </VBox.margin>
+        </TextField>
+        <TextArea fx:id="description" prefHeight="" prefWidth="">
+            <VBox.margin>
+                <Insets left="" right=""/>
+            </VBox.margin>
+        </TextArea>
+        <TextField fx:id="price" layoutX="" layoutY="" prefHeight="" prefWidth="">
+            <VBox.margin>
+                <Insets left="" right=""/>
+            </VBox.margin>
+        </TextField>
+        <TextField fx:id="rate" prefHeight="" prefWidth="">
+            <VBox.margin>
+                <Insets left="" right=""/>
+            </VBox.margin>
+        </TextField>
+    </children>
+    <padding>
+        <Insets bottom=""/>
+    </padding>
+</VBox>

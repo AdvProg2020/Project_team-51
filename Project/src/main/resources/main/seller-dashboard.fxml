@@ -8,7 +8,7 @@
 <?import javafx.scene.text.*?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity"
            minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" stylesheets="main.css"
-           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.Dashboard.Seller.SellerDashboard">
+           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.SellerDashboard">
     <children>
         <BorderPane fx:id="mainPane" prefHeight="970.0" prefWidth="1720.0">
             <left>
@@ -99,6 +99,13 @@
                                 <JFXButton fx:id="viewCategoriesButton" prefHeight="70.0" prefWidth="1400.0"
                                            style="-fx-background-color: #5e85a4; -fx-background-radius: 20;"
                                            text="View Categories" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="21.0"/>
+                                    </font>
+                                </JFXButton>
+                                <JFXButton fx:id="viewAuctionsButton" prefHeight="70.0" prefWidth="1400.0"
+                                           style="-fx-background-color: #5e85a4; -fx-background-radius: 20;"
+                                           text="View Auctions" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="21.0"/>
                                     </font>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<HBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="" maxWidth="" minHeight="" minWidth="" prefWidth=""
+      xmlns="http://javafx.com/javafx/11.0.1" fx:controller="view.ComparePane">
+    <children>
+        <VBox alignment="TOP_LEFT" prefHeight="" prefWidth="" spacing="">
+            <children>
+                <Button fx:id="exitButton" mnemonicParsing="false" text="EXIT"/>
+                <Region prefHeight="" prefWidth=""/>
+                <TextField prefHeight="" prefWidth="" text="Name"/>
+                <TextField text="Rate"/>
+                <TextField text="Price"/>
+                <TextField text="Brand"/>
+                <TextField text="Description"/>
+                <TextField text="Features"/>
+            </children>
+            <HBox.margin>
+                <Insets bottom=""/>
+            </HBox.margin>
+        </VBox>
+        <ScrollPane fx:id="scrollPaneForCompare" prefHeight="" prefWidth="">
+            <content>
+                <HBox fx:id="box" alignment="CENTER_LEFT"/>
+            </content>
+        </ScrollPane>
+    </children>
+</HBox>

@@ -326,7 +326,7 @@ public class MainController {
         if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
             String name = (String) ((TreeItem) categoriesTreeView.getSelectionModel().getSelectedItem()).getValue();
             Category category = Category.getCategoryByName(name);
-            stage.setScene(new Scene(new ProductsController(category)));
+            Main.getPrimaryStage().setScene(new Scene(new ProductsController(category)));
         }
     }
 

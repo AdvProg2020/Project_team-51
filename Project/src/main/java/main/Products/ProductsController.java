@@ -409,7 +409,7 @@ public class ProductsController extends StackPane {
         products.forEach((a, b) -> {
             productsBox.getChildren().add(b);
             b.getProductName().setOnMouseClicked(event -> {
-                stage.setScene(new Scene(new ProductPageController()));
+                Main.getPrimaryStage().setScene(new Scene(new ProductPageController(a)));
             });
         });
         initializePageNumbers();
