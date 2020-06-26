@@ -93,6 +93,26 @@ public class ItemOfOrder {
         this.discount = discount;
     }
 
+    public String getProductString(){
+        return product.getName();
+    }
+
+    public String getPriceString(){
+        return Double.toString(price);
+    }
+
+    public String getDiscountString(){
+        return Integer.toString(discount);
+    }
+
+    public String getDateString (){
+        return date.toString();
+    }
+
+    public String getQuantityString (){
+        return Integer.toString(quantity);
+    }
+
     @Override
     public String toString() {
         return "product : " + product.getName() +

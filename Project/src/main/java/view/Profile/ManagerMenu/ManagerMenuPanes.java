@@ -78,7 +78,7 @@ public class ManagerMenuPanes {
                             nameError.setText(e.getMessage());
                         }
                     }
-                }
+                }else{nameError.setText("");}
                 if (!passwordField.getText().equals(confirmPasswordField.getText())) {
                     confirmPasswordFieldError.setText("passwords don't match");
                 }
@@ -125,9 +125,9 @@ public class ManagerMenuPanes {
                         }
                     }
                 }
-                //if (confirmPasswordFieldError.equals())
             }
         };
+        submit.setOnAction(submitButtonAction);
         Button back = new Button("back");
         back.setOnAction(ev -> {
             //todo go back
@@ -169,6 +169,7 @@ public class ManagerMenuPanes {
 
         Label requestLabel = getLabel("requests",300,300);
         TableView tv = getRequestsTebleView();
+        setPlace(tv,300,330);
         Button back = getButton("back" , event -> {
             // TODO: ۲۵/۰۶/۲۰۲۰ go back
         });
@@ -706,7 +707,7 @@ public class ManagerMenuPanes {
                         String.valueOf(newValue.intValue()));
             }
         });
-        setPlace(maxOffAmount, 400, 600);
+        setPlace(maxOffAmount, 400, 560);
         maxOffSlider.setValue(offCode.getMaxDiscount());
         maxOffAmount.setText(Double.toString(offCode.getMaxDiscount()));
 
