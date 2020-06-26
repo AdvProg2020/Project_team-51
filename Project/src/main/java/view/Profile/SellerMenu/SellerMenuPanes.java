@@ -3,6 +3,7 @@ package view.Profile.SellerMenu;
 import control.Controller;
 import control.Exceptions.NotAllowedActivityException;
 import control.SellerController;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -10,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -971,10 +973,10 @@ public class SellerMenuPanes {
                                     setText(null);
                                 } else {
                                     b.setOnAction(actionEvent -> {
-//                                        Stage stage = new Stage();
-//                                        stage.setScene(new Scene(
-//                                                getViewCategoryPane(getTableView().getItems().get(getIndex()))));
-//                                        stage.show();//todo
+                                        Stage stage = new Stage();
+                                        stage.setScene(new Scene(
+                                                getViewCategoryPane(getTableView().getItems().get(getIndex()))));
+                                        stage.show();
                                     });
                                     setGraphic(b);
                                     setText(null);
@@ -986,9 +988,67 @@ public class SellerMenuPanes {
                 };
         open.setCellFactory(cellFactoryOpen);
 
-        tableView.getColumns().addAll(category/*,open*/);
+        tableView.getColumns().addAll(category,open);
         return new Pane(tableView);
-    }
+    }//v1
+
+    private Pane getViewCategoryPane(Category category) {
+
+        final int X = 300;
+        Label father        = getLabel("father",X,300);
+        Label fatherLabel = getLabel(category.getParentCategory().getName(),X,320);
+
+
+        ArrayList<String> subNames = new ArrayList<>();
+        for (Category c : category.getSubCategories().values()){
+            subNames.add(c.getName());
+        }
+
+        TableView<String> subCategoriesTV = new TableView(FXCollections.observableArrayList(
+                new ArrayList<String>(subNames)));
+        TableColumn<String, String> tc = new TableColumn<>("sub categories");
+        tc.setCellValueFactory((p) -> {
+            return new ReadOnlyStringWrapper(p.getValue());
+        });
+        subCategoriesTV.getColumns().add(tc);
+
+        ArrayList<String> attributeNames = new ArrayList<>();
+        for (Attributes a : category.getAttributes()){
+            attributeNames.add(a.getField());
+        }
+
+        TableView<String> attributesTV = new TableView(FXCollections.observableArrayList(
+                new ArrayList<String>(attributeNames)));
+        TableColumn<String, String> tc2 = new TableColumn<>("attributes");
+        tc.setCellValueFactory((p) -> {
+            return new ReadOnlyStringWrapper(p.getValue());
+        });
+        subCategoriesTV.getColumns().add(tc2);
+
+        ArrayList<String> productNames = new ArrayList<>();
+        for (Product p : category.getCategoryProducts()){
+            attributeNames.add(p.getName());
+        }
+
+        TableView<String> productsTV = new TableView(FXCollections.observableArrayList(
+                new ArrayList<String>(productNames)));
+        TableColumn<String, String> tc3 = new TableColumn<>("products");
+        tc.setCellValueFactory((p) -> {
+            return new ReadOnlyStringWrapper(p.getValue());
+        });
+        subCategoriesTV.getColumns().add(tc3);
+
+        Pane pane = new Pane();
+        pane.setPrefSize(1540,800);
+
+        setPlace(subCategoriesTV,500,300);
+        setPlace(attributesTV,800,300);
+        setPlace(productsTV,1100,300);
+        pane.getChildren().addAll(father,fatherLabel,
+                subCategoriesTV,attributesTV,productsTV);
+
+        return pane;
+    }//v1
 
     public TableView getAttributesTableView(Category category){
         return null;

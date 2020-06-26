@@ -792,7 +792,7 @@ public class ManagerMenuPanes {
                 confirm
         );
         return pane;
-    }
+    }//v1
 
     public Pane getManageAllProductsPane() {
 
@@ -804,15 +804,8 @@ public class ManagerMenuPanes {
 
         Label label = getLabel("all products : ", 400, 270);
 
-        Button back = getButton("back", event -> {
-            // TODO: ۲۴/۰۶/۲۰۲۰ going back
-        });
-
-        setPlace(back, 430, 650);
-        pane.getChildren().addAll(products, label, back);
-
         return pane;
-    }
+    }//v1
 
     public Pane getCreateDiscountCodePane() {
         ArrayList<Account> selectedAccounts = new ArrayList<>();
@@ -883,12 +876,6 @@ public class ManagerMenuPanes {
         tv.setLayoutX(500);
         tv.setLayoutY(220);
         Label accountsError = getErrorLabel("", 500, 200);
-
-        Button back = new Button("back");
-        setPlace(back, 500, 670);
-        back.setOnAction(ev -> {
-            //todo just go to the privious scene
-        });//todo
 
         Button confirm = new Button("confirm");
         setPlace(confirm, 580, 670);
@@ -965,7 +952,6 @@ public class ManagerMenuPanes {
                 repeat,
                 repeatCombobox,
                 tv,
-                back,
                 percentSliderAmount,
                 maxOffAmount,
                 confirm,
@@ -973,7 +959,7 @@ public class ManagerMenuPanes {
                 accountsLabel
         );
         return pane;
-    }
+    }//v1
 
     public Pane getAllCategoriesPane() {
         Pane pane = new Pane();
@@ -1073,7 +1059,7 @@ public class ManagerMenuPanes {
         table.setItems(data);
         table.getColumns().addAll(productName, select);
         return table;
-    }
+    }//v1
 
     public Pane getEditCategoryPane(Category category) {
         Pane pane = new Pane();
@@ -1107,11 +1093,6 @@ public class ManagerMenuPanes {
         TableView productsTableViewCategory = getProductsTableViewCategory(category, products);
         setPlace(productsTableViewCategory, X + 700, 340);
 
-        Button back = getButton("back", event -> {
-            // TODO: ۲۵/۰۶/۲۰۲۰ go back
-        });
-        setPlace(back, X, 480);
-
         Button confirm = getButton("confirm", event -> {
             if (nameField.getText().equals("") || nameField.getText().equals(category.getName())) {
                 nameError.setText("");
@@ -1125,7 +1106,6 @@ public class ManagerMenuPanes {
             if (parent.equals(category)) parentError.setText("a category cannot be its own father");
             else if (category.getSubCategories().containsValue(parent)) {
                 parentError.setText("cannot select this category");
-                // TODO: ۲۵/۰۶/۲۰۲۰ this must get all the sub categories from the subcategories too
             } else {
                 parentError.setText("");
             }
@@ -1147,7 +1127,9 @@ public class ManagerMenuPanes {
                     parentError.equals("") &&
                     productsError.equals("") &&
                     subCategoriesError.equals("")) {
-
+                String name = category.getName();
+                if (nameField.getText()!=null) name = nameField.getText();
+                managerController.editCategory(category,products,name,parentComboBox.getValue());
             }
         });
 
@@ -1164,11 +1146,12 @@ public class ManagerMenuPanes {
                 subCategoriesTableView,
                 productsLabel,
                 productsError,
-                productsTableViewCategory
+                productsTableViewCategory,
+                confirm
         );
 
         return pane;
-    }
+    }//v1 1
 
     public Pane getCreateCategoryPane() {
         Pane pane = new Pane();
@@ -1233,7 +1216,7 @@ public class ManagerMenuPanes {
         pane.getChildren().addAll(name,nameError,nameField,
                 countLabel,countSlider,countSliderAmount,parentLabel,categoryComboBox,ok,done);
         return pane;
-    }
+    }//v1
 
     public TableView getEnterAttributesTableView (HashMap<Object,String> map,int size){
         TableView<Object> tableView = new TableView<>();
@@ -1281,7 +1264,7 @@ public class ManagerMenuPanes {
         tableView.setItems(data);
         tableView.getColumns().addAll(name);
         return null;
-    }
+    }//v1
 
     public Pane getManageUsersPane() {
         Pane pane = new Pane();
@@ -1295,7 +1278,7 @@ public class ManagerMenuPanes {
         pane.getChildren().addAll(label, tv);
         return pane;
 
-    }
+    }//v1
 
     private void getSubCategoriesError(Category category, ArrayList<Category> subCategories) throws Exception {
         for (Category c : subCategories) {

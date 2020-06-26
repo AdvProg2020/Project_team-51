@@ -261,16 +261,14 @@ public class ManagerController extends Controller {
         ((Manager) currentAccount).setAllCategories(allCategories);
     }
 
-    private void editCategory(Category category, ArrayList<Product> removeProducts
-            , ArrayList<Product> addProducts, String name, Category parent) {
+    public void editCategory(Category category, ArrayList<Product> newProducts, String name, Category parent) {
         List<Product> products = category.getCategoryProducts();
-        products.removeAll(removeProducts);
-        products.addAll(addProducts);
+        category.getCategoryProducts().clear();
+        category.getCategoryProducts().addAll(newProducts);
         if (name != null) {
             if (!this.isCategoryValid(name)) category.setName(name);
         }
         if (parent != null) {
-            //this doesn't fill the empty number in the map
             Map<Integer, Category> subCategories = category.getParentCategory().getSubCategories();
             subCategories.remove(category);
             category.getParentCategory().setSubCategories(subCategories);
