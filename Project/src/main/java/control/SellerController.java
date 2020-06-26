@@ -254,6 +254,10 @@ public class SellerController extends Controller {
         return auction;
     }
 
+    public List<Auction> getSellerAuctions(){
+        return ((Seller)currentAccount).getAllAuctions();
+    }
+
     public void changePassword(String text) {
         if (text.length() > 4) currentAccount.setPassword(text);
     }
