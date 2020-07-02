@@ -1,14 +1,12 @@
 package control;
 
 import control.Exceptions.*;
-import model.Attributes;
-import model.Category;
-import model.OffCode;
+import model.*;
 import model.People.Account;
 import model.People.Customer;
 import model.People.Manager;
 import model.People.Seller;
-import model.Product;
+import model.Requests.AddSellerRequest;
 import model.Requests.Request;
 
 import java.util.*;
@@ -51,12 +49,12 @@ public class ManagerController extends Controller {
     }
 
     public void deleteUser(String username) throws Exception {
-        if (hasUserWithThisUsername(username)) throw new InvalidUsernameException();
-        if (currentAccount.getUsername().equals(username)) throw new Exception("cant delete logged in account");
+        if (!hasUserWithThisUsername(username)) throw new InvalidUsernameException();
+        if (currentAccount.getUserName().equals(username)) throw new Exception("cant delete logged in account");
         List<Account> allAccounts;
         allAccounts = Account.getAllAccounts();
         for (Account account : allAccounts) {
-            if (account.getUsername().equals(username)) {
+            if (account.getUserName().equals(username)) {
                 allAccounts.remove(account);
                 break;
             }
@@ -150,11 +148,11 @@ public class ManagerController extends Controller {
     public void changeTypeToManager(Account a) {
         if (a instanceof Manager) return;
         try {
-            deleteUser(a.getUsername());
+            deleteUser(a.getUserName());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        new Manager(a.getUsername(),
+        new Manager(a.getUserName(),
                 a.getPassword(),
                 a.getFirstName(),
                 a.getLastName(),
@@ -165,28 +163,28 @@ public class ManagerController extends Controller {
     public void changeTypeToSeller(Account a) {
         if (a instanceof Seller) return;
         try {
-            deleteUser(a.getUsername());
+            deleteUser(a.getUserName());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        new Seller(a.getUsername(),
+        new AddSellerRequest(new Seller(a.getUserName(),
                 a.getPassword(),
                 a.getFirstName(),
                 a.getLastName(),
                 1000.0,
                 a.getEmail(),
                 a.getPhoneNumber(),
-                "not Specified");
+                "not Specified"));
     }
 
     public void changeTypeToCustomer(Account a) {
         if (a instanceof Customer) return;
         try {
-            deleteUser(a.getUsername());
+            deleteUser(a.getUserName());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        new Customer(a.getUsername(),
+        new Customer(a.getUserName(),
                 a.getPassword(),
                 a.getFirstName(),
                 a.getLastName(),
@@ -211,11 +209,11 @@ public class ManagerController extends Controller {
         for (OffCode offCode : offCodes) {
             if (offCode.getOffCode().equals(code)) {
                 offCodes.remove(offCode);
-                break;
+                model.OffCode.setAllOffCodes(offCodes);
+                return;
             }
-            if (!offCode.getOffCode().equals(code)) throw new InvalidOffCodeException();
-            model.OffCode.setAllOffCodes(offCodes);
         }
+        throw new InvalidOffCodeException();
     }
 
     public Boolean isRequestValid(String requestId) {
@@ -368,14 +366,14 @@ public class ManagerController extends Controller {
     }
 
     private void checkEmail(String email) throws Exception {
-        if (!email.matches("$\\w+@[a-zA-Z]+\\.\\w+^")) throw new WrongFormatException("email");
+        if (!email.matches("^\\w+@\\w+\\.\\w+$")) throw new WrongFormatException("email");
         for (Account a : model.People.Account.getAllAccounts()) {
             if (a.getEmail().equals(email)) throw new Exception("email is used before");
         }
     }
 
     public void checkPhoneNumber(String number) throws Exception {
-        if (!number.matches("^\\d{10}$")) throw new WrongFormatException("phone number");
+        if (!number.matches("^\\d{11}$")) throw new WrongFormatException("phone number");
         for (Account account : Account.getAllAccounts()) {
             if (account.getPhoneNumber().equals(number)) throw new Exception("number is used before");
         }
@@ -413,7 +411,14 @@ public class ManagerController extends Controller {
 //    }
 
     public ArrayList<Request> getAllRequests() {
-        return model.Requests.Request.getAllRequests();
+        ArrayList<Request> pendingRequests = new ArrayList<>();
+        for (Request r : model.Requests.Request.getAllRequests()){
+            if (r.getStatus()== Status.PENDING_CREATE||
+                    r.getStatus()==Status.PENDING_EDIT){
+                pendingRequests.add(r);
+            }
+        }
+        return pendingRequests;
     }
 
     public Product getProductById(String id) throws InvalidProductIdException {

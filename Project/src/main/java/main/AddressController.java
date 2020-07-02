@@ -26,7 +26,7 @@ public class AddressController extends AnchorPane {
 
 
     public AddressController(StackPane stackPane) {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("address.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(main.Main.class.getResource("address.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         this.stackPane = stackPane;

@@ -31,6 +31,7 @@ public class OffCode {
         allOffCodes.add(this);
         status = Status.APPROVED;
         this.repeat = repeat;
+        System.out.println("created offcode");
     }
 
     public static List<OffCode> getAllOffCodes() {

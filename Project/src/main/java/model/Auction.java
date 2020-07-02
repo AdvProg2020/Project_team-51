@@ -1,6 +1,7 @@
 package model;
 
 import model.People.Seller;
+import model.Requests.AddAuctionRequest;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +24,7 @@ public class Auction {
         this.appliedProducts = appliedProducts;
         this.offPercentage = offPercentage;
         this.auctionStatus = Status.PENDING_CREATE;
+        new AddAuctionRequest(this,seller);
         allAuctions.add(this);
     }
 

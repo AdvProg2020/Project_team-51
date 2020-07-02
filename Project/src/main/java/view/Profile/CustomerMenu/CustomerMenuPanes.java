@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.ItemOfOrder;
 import model.OffCode;
+import model.OrderLog.BuyerLog;
 import model.OrderLog.Order;
 import model.People.Account;
 import model.People.Customer;
@@ -33,7 +34,8 @@ public class CustomerMenuPanes {
         pane.setPrefSize(1540, 800);
         Label usernameLabel = getLabel("username", X, 60);
         Label userNameError = getErrorLabel("", X, 80);
-        TextField username = getTextFieldDefault(currentAccount.getUsername(), 300, 100);
+        TextField username = getTextFieldDefault(currentAccount.getUserName(), 300, 100);
+        username.setEditable(false);
         Label passwordLabel = getLabel("password", X, 150);
         Label passwordFieldError = getErrorLabel("", X, 170);
         PasswordField passwordField = new PasswordField();
@@ -41,7 +43,7 @@ public class CustomerMenuPanes {
         Label confirmPasswordFieldLabel = getLabel("conirm password", X, 240);
         Label confirmPasswordFieldError = getErrorLabel("", X, 260);
         PasswordField confirmPasswordField = new PasswordField();
-        setPlace(passwordField, X, 280);
+        setPlace(confirmPasswordField, X, 280);
         Label nameLabel = getLabel("name", X, 330);
         Label nameError = getErrorLabel("", X, 350);
         TextField nameTextField = getTextFieldDefault(currentAccount.getFirstName(), X, 370);
@@ -120,7 +122,7 @@ public class CustomerMenuPanes {
                 }
             }
         };
-
+        submit.setOnAction(submitButtonAction);
 
         submit.setLayoutX(360);
         submit.setLayoutY(690);
@@ -188,17 +190,17 @@ public class CustomerMenuPanes {
 
     public Pane getOrdersPane() {
         Pane pane = new Pane();
-        pane.setPrefSize(1540, 800);
+        pane.setPrefSize(1540,800);
 
         TableView tv = getAllShoppingsTableView();
-        setPlace(tv, 300, 300);
+        setPlace(tv,300,300);
 
         pane.getChildren().addAll(tv);
         return pane;
     }
 
-    public TableView getAllShoppingsTableView() {
-        Customer customer = (Customer) Controller.getCurrentAccount();
+    public TableView getAllShoppingsTableView(){
+        Customer customer =(Customer) Controller.getCurrentAccount();
 
         List<Order> orders = customer.getHistoryOfOrders();
         TableView<Order> table = new TableView<>();
@@ -232,7 +234,7 @@ public class CustomerMenuPanes {
                                     setText(null);
                                 } else {
                                     button.setOnAction(event -> {
-                                        Order order = getTableView().getItems().get(getIndex());
+                                        Order  order = getTableView().getItems().get(getIndex());
                                         Stage stage = new Stage();
                                         stage.setScene(new Scene(
                                                 openSingleOrderPane(order)
@@ -249,15 +251,15 @@ public class CustomerMenuPanes {
         open.setCellFactory(cellFactory);
 
         table.setItems(data);
-        table.getColumns().addAll(id, status, open);
+        table.getColumns().addAll(id,status,open);
         return table;
 
     }
 
     private Pane openSingleOrderPane(Order order) {
-        Customer customer = (Customer) Controller.getCurrentAccount();
+        Customer customer =(Customer) Controller.getCurrentAccount();
 
-        ArrayList<ItemOfOrder> items = (ArrayList<ItemOfOrder>) order.getItems();
+        ArrayList<ItemOfOrder> items = (ArrayList<ItemOfOrder>) ((BuyerLog)order).getItems();
 
         TableView<ItemOfOrder> table = new TableView<>();
         ObservableList<ItemOfOrder> data
@@ -281,7 +283,7 @@ public class CustomerMenuPanes {
 
 
         table.setItems(data);
-        table.getColumns().addAll(product, price, discount, date, quantity);
+        table.getColumns().addAll(product,price,discount,date,quantity);
 
         Pane pane = new Pane();
         pane.getChildren().addAll(table);

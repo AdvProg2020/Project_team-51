@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SellerMenuPanes {
+
     SellerController sellerController = new SellerController(Controller.getCurrentAccount());
 
     public static Pane getPersonalInfoPane() {
@@ -41,7 +42,7 @@ public class SellerMenuPanes {
         Pane pane = new Pane();
         pane.setPrefSize(1540, 800);
         Label usernameLabel = getLabel("username", X, 60);
-        TextField username = getTextFieldDefault(currentAccount.getUsername(), 300, 100);
+        TextField username = getTextFieldDefault(currentAccount.getUserName(), 300, 100);
         username.setEditable(false);
         Label passwordLabel = getLabel("password", X, 150);
         Label passwordFieldError = getErrorLabel("", X, 170);
@@ -80,7 +81,7 @@ public class SellerMenuPanes {
                             nameError.setText(e.getMessage());
                         }
                     }
-                }
+                }else {nameError.setText("");}
                 if (!passwordField.getText().equals(confirmPasswordField.getText())) {
                     confirmPasswordFieldError.setText("passwords don't match");
                 }
@@ -129,12 +130,8 @@ public class SellerMenuPanes {
                 }
             }
         };
-//        Button back = new Button("back");
-//        back.setOnAction(ev->{
-//
-//        });
-//        back.setLayoutX(300);
-//        back.setLayoutY(690);
+        submit.setOnAction(submitButtonAction);
+
         submit.setLayoutX(360);
         submit.setLayoutY(690);
         pane.getChildren().addAll(
@@ -249,16 +246,16 @@ public class SellerMenuPanes {
         setPlace(products, 600, 340);
 
         Button confirm = getButton("confirm", event -> {
-            if (beginDatePicker.getValue().equals(null)) {
+            if (beginDatePicker.getValue() == null) {
                 beginDateError.setText("please select a date");
             } else {
                 beginDateError.setText("");
             }
-            if (endDatePicker.getValue().equals(null)) {
+            if (endDatePicker.getValue()==null) {
                 endDateError.setText("please select a date");
             } else endDateError.setText("");
             if (endDatePicker.getValue() != null && beginDatePicker.getValue() != null) {
-                if (endDatePicker.getValue().isAfter(beginDatePicker.getValue())) {
+                if (endDatePicker.getValue().isBefore(beginDatePicker.getValue())) {
                     endDateError.setText("end date must be after start");
                 } else {
                     endDateError.setText("");
@@ -272,9 +269,9 @@ public class SellerMenuPanes {
                 selectedError.setText("");
             }
 
-            if (beginDateError.equals("") &&
-                    endDateError.equals("") &&
-                    selectedError.equals("")) {
+            if (beginDateError.getText().equals("") &&
+                    endDateError.getText().equals("") &&
+                    selectedError.getText().equals("")) {
                 new Auction((Seller) Controller.getCurrentAccount(),
                         toDate(beginDatePicker.getValue()),
                         toDate(endDatePicker.getValue()),
@@ -677,6 +674,7 @@ public class SellerMenuPanes {
                 stage.setScene(new Scene(getAttributesTableViewCreateProduct(
                         categoryComboBox.getValue(), attributesStringMap
                 )));
+                stage.show();
             }
         });
 
@@ -712,12 +710,13 @@ public class SellerMenuPanes {
                 attributeError.setText("");
             } else attributeError.setText("please fill attributes");
 
-            if (nameError.equals("") &&
-                    brandError.equals("") &&
-                    priceError.equals("") &&
-                    categoryError.equals("") &&
-                    attributeError.equals("")) {
+            if (nameError.getText().equals("") &&
+                    brandError.getText().equals("") &&
+                    priceError.getText().equals("") &&
+                    categoryError.getText().equals("") &&
+                    attributeError.getText().equals("")) {
                 try {
+                    System.out.println("created product 1");
                     sellerController.addProduct(new Product("", nameField.getText(), brandField.getText(), Double.parseDouble(priceField.getText()),
                             (Seller) Controller.getCurrentAccount(), (int) quantitySlider.getValue(), categoryComboBox.getValue(),
                             descrioptionField.getText(), attributesStringMap));
@@ -729,12 +728,13 @@ public class SellerMenuPanes {
 
         setPlace(done, 350, 755);
 
-        pane.getChildren().addAll(nameError, nameField, nameLabel, quantityLabel,
+        pane.getChildren().addAll(nameError, nameField, nameLabel,
+                quantityLabel,quantityAmount,quantitySlider,
                 categoryLabel, categoryComboBox, categoryError,
                 brandError, brandField, brandLabel,
                 priceError, priceField, priceLabel,
                 descrioptionField, descriptionLabel,
-                done
+                attributesButton,attributeError,done
         );
         return pane;
     }//v1
@@ -787,14 +787,13 @@ public class SellerMenuPanes {
     }//v1
 
     public Pane getManageProductsPane() {
+        System.out.println(sellerController.getSellerProducts().size());
+        System.out.println(sellerController.getSellerProducts());
         Pane pane = new Pane();
-        pane.setPrefSize(1540, 800);
 
-        Label productsLabel = getLabel("products", 300, 200);
         TableView tv = getManageProductsTableView();
-        setPlace(tv, 300, 250);
 
-        pane.getChildren().addAll(productsLabel, tv);
+        pane.getChildren().addAll(tv);
         return pane;
     }//v1
 

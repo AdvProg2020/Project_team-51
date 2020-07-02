@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Account {
-    protected static List<Account> allAccounts = new ArrayList<Account>();
+    protected static List<Account> allAccounts = new ArrayList<>();
     protected String username;
     protected String firstName;
     protected String lastName;
@@ -67,7 +67,7 @@ public abstract class Account {
         this.password = password;
     }
 
-    public String getUsername() {
+    public String getUserName() {
         return username;
     }
 

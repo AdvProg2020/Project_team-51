@@ -37,32 +37,32 @@ public class ManagerMenuPanes {
     Account currentAccount = Controller.getCurrentAccount();
 
     public Pane getPersonalInfoPane() {
-        final int X = 300;
+        final int X = 60;
         Pane pane = new Pane();
-        pane.setPrefSize(1540, 800);
-        Label usernameLabel = getLabel("username", X, 160);
-        Label userNameError = getErrorLabel("", X, 180);
-        TextField username = getTextFieldDefault(currentAccount.getUsername(), X, 200);
-        Label passwordLabel = getLabel("password", X, 250);
-        Label passwordFieldError = getErrorLabel("", X, 270);
+        pane.setPrefSize(300, 800);
+        Label usernameLabel = getLabel("username", X, 80);
+        TextField username = getTextFieldDefault(currentAccount.getUserName(), X, 100);
+        username.setEditable(false); // todo bug
+        Label passwordLabel = getLabel("password", X, 160);
+        Label passwordFieldError = getErrorLabel("", X, 180);
         PasswordField passwordField = new PasswordField();
-        setPlace(passwordField, X, 290);
-        Label confirmPasswordFieldLabel = getLabel("confirm new pass", X, 340);
-        Label confirmPasswordFieldError = getErrorLabel("", X, 360);
+        setPlace(passwordField, X, 200);
+        Label confirmPasswordFieldLabel = getLabel("confirm new pass", X, 250);
+        Label confirmPasswordFieldError = getErrorLabel("", X, 270);
         PasswordField confirmPasswordField = new PasswordField();
-        setPlace(confirmPasswordField, X, 380);
-        Label nameLabel = getLabel("name", X, 430);
-        Label nameError = getErrorLabel("", X, 450);
-        TextField nameTextField = getTextFieldDefault(currentAccount.getFirstName(), X, 470);
-        Label lastNameLabel = getLabel("last name", X, 520);
-        Label lastNameError = getErrorLabel("", X, 540);
-        TextField lastNameTextField = getTextFieldDefault(currentAccount.getLastName(), X, 560);
-        Label emailLabel = getLabel("email", X, 610);
-        Label emailError = getErrorLabel("", X, 630);
-        TextField emailTextField = getTextFieldDefault(currentAccount.getEmail(), X, 650);
-        Label phoneNumberLabel = getLabel("phone number", X, 700);
-        Label phoneNumberError = getErrorLabel("", X, 720);
-        TextField phoneNumberTextField = getTextFieldDefault(currentAccount.getPhoneNumber(), X, 740);
+        setPlace(confirmPasswordField, X, 290);
+        Label nameLabel = getLabel("name", X, 340);
+        Label nameError = getErrorLabel("", X, 360);
+        TextField nameTextField = getTextFieldDefault(currentAccount.getFirstName(), X, 380);
+        Label lastNameLabel = getLabel("last name", X, 430);
+        Label lastNameError = getErrorLabel("", X, 450);
+        TextField lastNameTextField = getTextFieldDefault(currentAccount.getLastName(), X, 470);
+        Label emailLabel = getLabel("email", X, 520);
+        Label emailError = getErrorLabel("", X, 520);
+        TextField emailTextField = getTextFieldDefault(currentAccount.getEmail(), X, 560);
+        Label phoneNumberLabel = getLabel("phone number", X, 610);
+        Label phoneNumberError = getErrorLabel("", X, 630);
+        TextField phoneNumberTextField = getTextFieldDefault(currentAccount.getPhoneNumber(), X, 650);
         Button submit = new Button("submit");
         EventHandler submitButtonAction = new EventHandler() {
             @Override
@@ -114,26 +114,29 @@ public class ManagerMenuPanes {
                             emailError.setText(e.getMessage());
                         }
                     }
+                }else{
+                    emailError.setText("");
                 }
                 if (!phoneNumberTextField.getText().equals(currentAccount.getPhoneNumber())) {
                     if (phoneNumberTextField.getText().equals("")) phoneNumberError.setText("");
                     else {
                         try {
-                            managerController.editPhoneNumber(nameTextField.getText());
+                            managerController.editPhoneNumber(phoneNumberTextField.getText());
                             phoneNumberError.setText("");
                         } catch (Exception e) {
                             phoneNumberError.setText(e.getMessage());
                         }
                     }
+                }else{
+                    phoneNumberError.setText("");
                 }
             }
         };
         submit.setOnAction(submitButtonAction);
-        submit.setLayoutX(360);
+        submit.setLayoutX(80);
         submit.setLayoutY(690);
         pane.getChildren().addAll(
                 usernameLabel,
-                userNameError,
                 username,
                 passwordLabel,
                 passwordFieldError,
@@ -160,11 +163,8 @@ public class ManagerMenuPanes {
 
     public Pane getManageRequestsPane() {
         Pane pane = new Pane();
-
-        Label requestLabel = getLabel("requests", 300, 300);
         TableView tv = getRequestsTebleView();
-        setPlace(tv, 300, 330);
-        pane.getChildren().addAll(requestLabel, tv);
+        pane.getChildren().addAll(tv);
         return pane;
     }//v1
 
@@ -194,7 +194,7 @@ public class ManagerMenuPanes {
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
 
         TableColumn delete = new TableColumn("delete");
-        delete.setCellValueFactory(new PropertyValueFactory<>("noUse"));
+        delete.setCellValueFactory(new PropertyValueFactory<>("userName"));
 
 
         Callback<TableColumn<Account, String>, TableCell<Account, String>> cellFactoryDeleteAccount
@@ -217,7 +217,7 @@ public class ManagerMenuPanes {
                                         Account account = getTableView().getItems().get(getIndex());
                                         table.getItems().remove(account);
                                         try {
-                                            managerController.deleteUser(account.getUsername());
+                                            managerController.deleteUser(account.getUserName());
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
@@ -282,16 +282,16 @@ public class ManagerMenuPanes {
         TableView<Request> table = new TableView<>();
         ObservableList<Request> data
                 = FXCollections.observableArrayList(
-                Request.getAllRequests());
+                managerController.getAllRequests());
 
         TableColumn requestDetail = new TableColumn("Detail");
         requestDetail.setCellValueFactory(new PropertyValueFactory<>("detail"));
 
         TableColumn accept = new TableColumn("accept");
-        accept.setCellValueFactory(new PropertyValueFactory<>("noUse"));
+        accept.setCellValueFactory(new PropertyValueFactory<>("detail"));
 
         TableColumn decline = new TableColumn("decline");
-        decline.setCellValueFactory(new PropertyValueFactory<>("noUse"));
+        decline.setCellValueFactory(new PropertyValueFactory<>("detail"));
 
 
         Callback<TableColumn<Request, String>, TableCell<Request, String>> cellFactory
@@ -313,10 +313,9 @@ public class ManagerMenuPanes {
                                     btn.setOnAction(event -> {
                                         Request request = getTableView().getItems().get(getIndex());
                                         try {
-                                            request.accept(); //todo allRequests remove this
                                             table.getItems().remove(request);
+                                            request.accept();
                                         } catch (Exception e) {
-                                            //todo handle this error better: can reject automatically and show popup error
                                             if (e instanceof ParseException) System.err.println("parse exception");
                                             else System.err.println(e.getMessage());
                                         }
@@ -348,8 +347,8 @@ public class ManagerMenuPanes {
                                 } else {
                                     btn.setOnAction(event -> {
                                         Request request = getTableView().getItems().get(getIndex());
-                                        request.delete();
                                         table.getItems().remove(request);
+                                        request.delete();
                                     });
                                     setGraphic(btn);
                                     setText(null);
@@ -640,12 +639,12 @@ public class ManagerMenuPanes {
         Pane pane = new Pane();
         List<Account> selectedAccounts;
         selectedAccounts = offCode.getAppliedAccounts();
-        pane.setPrefSize(1540, 800);
+        pane.setPrefSize(600, 800);
         final int X = 300;
         Label codeLabel = getLabel("code:", X, 200);
-        Label codeError = getErrorLabel("", X, 220);
         TextField codeTextField = getTextFieldDefault(offCode.getOffCode(), X, 240);
         codeTextField.setText(offCode.getOffCode());
+        codeTextField.setEditable(false);
 
         Label beginDateLabel = getLabel("begin date", X, 290);
         Label beginDateError = getErrorLabel("", X, 310);
@@ -743,21 +742,12 @@ public class ManagerMenuPanes {
                 }
             }
 
-            if (codeTextField.getText().equals("")) {
-                codeError.setText("");
-            } else {
-                if (managerController.isCodeUsedBefore(codeTextField.getText())) {
-                    codeError.setText("this code is taken before");
-                } else codeLabel.setText("");
-            }
-
             if (selectedAccounts.size() == 0) accountsError.setText("must choose at lease 1 person");
             else accountsError.setText("");
 
-            if (accountsError.equals("") &&
-                    codeError.equals("") &&
-                    endDateError.equals("") &&
-                    beginDateError.equals("")) {
+            if (accountsError.getText().equals("") &&
+                    endDateError.getText().equals("") &&
+                    beginDateError.getText().equals("")) {
                 managerController.editDiscountCode
                         (offCode,
                                 selectedAccounts,
@@ -771,7 +761,6 @@ public class ManagerMenuPanes {
         });
         pane.getChildren().addAll(
                 codeLabel,
-                codeError,
                 codeTextField,
                 beginDateLabel,
                 beginDateError,
@@ -810,11 +799,11 @@ public class ManagerMenuPanes {
     public Pane getCreateDiscountCodePane() {
         ArrayList<Account> selectedAccounts = new ArrayList<>();
         Pane pane = new Pane();
-        pane.setPrefSize(1500, 800);
+        //pane.setPrefSize(1500, 800);
         final int X = 300;
         Label codeLabel = getLabel("discount code", X, 200);
-        Label codeError = getErrorLabel("", X, 220);
         TextField codeTextField = getTextFieldDefault("", X, 240);
+        codeTextField.setEditable(false);
 
         Label startDateLabel = getLabel("start date: ", X, 290);
         Label startDateError = getErrorLabel("", X, 310);
@@ -908,22 +897,13 @@ public class ManagerMenuPanes {
                 }
             }
 
-            if (codeTextField.getText().equals("")) {
-                codeError.setText("this field cannot be empty");
-            } else {
-                if (managerController.isCodeUsedBefore(codeTextField.getText())) {
-                    codeError.setText("this code is taken before");
-                } else codeLabel.setText("");
-            }
-
             if (selectedAccounts.size() == 0) accountsError.setText("must choose at lease 1 person");
             else accountsError.setText("");
 
             if (
-                    accountsError.equals("") &&
-                            codeError.equals("") &&
-                            endDateError.equals("") &&
-                            startDateError.equals("")) {
+                    accountsError.getText().equals("") &&
+                            endDateError.getText().equals("") &&
+                            startDateError.getText().equals("")) {
                 managerController.createDiscountCode
                         (selectedAccounts,
                                 startDate,
@@ -937,7 +917,6 @@ public class ManagerMenuPanes {
 
         pane.getChildren().addAll(
                 codeLabel,
-                codeError,
                 codeTextField,
                 startDateLabel,
                 startDateError,
@@ -967,11 +946,15 @@ public class ManagerMenuPanes {
 
         TableView tv = new TableView();
 
+        ObservableList<Category> data
+                = FXCollections.observableArrayList(
+                managerController.getAllCategories());
+
         TableColumn categoryName = new TableColumn("name");
         categoryName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn select = new TableColumn("open");
-        select.setCellValueFactory(new PropertyValueFactory<>("uselessString"));
+        select.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         Callback<TableColumn<Category, String>, TableCell<Category, String>> cellFactory
                 = //
@@ -1004,6 +987,7 @@ public class ManagerMenuPanes {
                     }
                 };
         select.setCellFactory(cellFactory);
+        tv.setItems(data);
 
         tv.getColumns().addAll(categoryName, select);
         pane.getChildren().addAll(tv);
@@ -1011,28 +995,28 @@ public class ManagerMenuPanes {
     }//v1
 
     public TableView getPeopleTableViewForDiscountCode(ArrayList<Account> selectedAccounts) {
-        ArrayList<Product> selection = new ArrayList<>();
-        TableView<Product> table = new TableView<>();
-        ObservableList<Product> data
+        //ArrayList<Account> selection = new ArrayList<>();
+        TableView<Account> table = new TableView<>();
+        ObservableList<Account> data
                 = FXCollections.observableArrayList(
-                Product.getAllProducts()); // must get data from manager controlle
+                managerController.getAllCustomers());
 
         TableColumn productName = new TableColumn("name");
-        productName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 
         TableColumn select = new TableColumn("select");
-        select.setCellValueFactory(new PropertyValueFactory<>("uselessString"));
+        select.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 
 
-        Callback<TableColumn<Product, String>, TableCell<Product, String>> cellFactory
+        Callback<TableColumn<Account, String>, TableCell<Account, String>> cellFactory
                 = //
-                new Callback<TableColumn<Product, String>, TableCell<Product, String>>() {
+                new Callback<TableColumn<Account, String>, TableCell<Account, String>>() {
                     @Override
-                    public TableCell call(final TableColumn<Product, String> param) {
-                        final TableCell<Product, String> cell = new TableCell<Product, String>() {
+                    public TableCell call(final TableColumn<Account, String> param) {
+                        final TableCell<Account, String> cell = new TableCell<Account, String>() {
 
                             final CheckBox checkBox = new CheckBox();
-
+                            boolean firstTime = true;
                             @Override
                             public void updateItem(String item, boolean empty) {
                                 super.updateItem(item, empty);
@@ -1040,11 +1024,17 @@ public class ManagerMenuPanes {
                                     setGraphic(null);
                                     setText(null);
                                 } else {
+                                    if (firstTime){
+                                        checkBox.setSelected(selectedAccounts.contains(
+                                                getTableView().getItems().get(getIndex())
+                                        ));
+                                        firstTime = false;
+                                    }
                                     checkBox.setOnAction(event -> {
-                                        Product product = getTableView().getItems().get(getIndex());
-                                        if (checkBox.isSelected()) selection.add(product);
-                                        else selection.remove(product);
-                                        System.out.println(selection);
+                                        Account product = getTableView().getItems().get(getIndex());
+                                        if (checkBox.isSelected()) selectedAccounts.add(product);
+                                        else selectedAccounts.remove(product);
+                                        System.out.println(selectedAccounts);
                                     });
                                     setGraphic(checkBox);
                                     setText(null);
@@ -1103,7 +1093,8 @@ public class ManagerMenuPanes {
             }
 
             Category parent = parentComboBox.getValue();
-            if (parent.equals(category)) parentError.setText("a category cannot be its own father");
+            if (parent==null) parentError.setText("");
+            else if (parent.equals(category)) parentError.setText("a category cannot be its own father");
             else if (category.getSubCategories().containsValue(parent)) {
                 parentError.setText("cannot select this category");
             } else {
@@ -1132,7 +1123,7 @@ public class ManagerMenuPanes {
                 managerController.editCategory(category, products, name, parentComboBox.getValue());
             }
         });
-
+        setPlace(confirm,X,480);
 
         pane.getChildren().addAll(
                 nameLabel,
@@ -1204,10 +1195,11 @@ public class ManagerMenuPanes {
             } else if (managerController.isCategoryValid(nameField.getText())) {
                 nameError.setText("this name is taken");
             } else {
-                if (attributes.size() < countSlider.getValue()) {
+                if (attributes.size() < (int)countSlider.getValue()) {
                     nameError.setText("please enter all attributes");
                 } else {
                     managerController.addCategory(nameField.getText(), categoryComboBox.getValue().getName(), attributes1);
+                    nameError.setText("");
                 }
             }
         });
@@ -1250,6 +1242,7 @@ public class ManagerMenuPanes {
                                     textField.setOnKeyTyped(event -> {
                                         Object o = getTableView().getItems().get(getIndex());
                                         map.put(o, textField.getText());
+                                        System.out.println(map);
                                     });
                                     setGraphic(textField);
                                     setText(null);
@@ -1263,21 +1256,14 @@ public class ManagerMenuPanes {
         name.setCellFactory(cellFactory);
         tableView.setItems(data);
         tableView.getColumns().addAll(name);
-        return null;
+        return tableView;
     }//v1
 
     public Pane getManageUsersPane() {
         Pane pane = new Pane();
-        pane.setPrefSize(1540, 800);
-
-
-        Label label = getLabel("users", 300, 300);
         TableView tv = getManageUsersTableView();
-        setPlace(tv, 300, 330);
-
-        pane.getChildren().addAll(label, tv);
+        pane.getChildren().addAll(tv);
         return pane;
-
     }//v1
 
     private void getSubCategoriesError(Category category, ArrayList<Category> subCategories) throws Exception {
@@ -1306,7 +1292,7 @@ public class ManagerMenuPanes {
         categoryName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn select = new TableColumn("select");
-        select.setCellValueFactory(new PropertyValueFactory<>("uselessString"));
+        select.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         Callback<TableColumn<Product, String>, TableCell<Product, String>> cellFactory
                 = //
@@ -1360,57 +1346,13 @@ public class ManagerMenuPanes {
 
         ObservableList<Category> data
                 = FXCollections.observableArrayList(
-                Category.getAllCategories());
+        );
 
         TableColumn categoryName = new TableColumn("name");
         categoryName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn select = new TableColumn("select");
-        select.setCellValueFactory(new PropertyValueFactory<>("uselessString"));
-
-        Callback<TableColumn<Category, String>, TableCell<Category, String>> cellFactory
-                = //
-                new Callback<TableColumn<Category, String>, TableCell<Category, String>>() {
-                    @Override
-                    public TableCell call(final TableColumn<Category, String> param) {
-                        final TableCell<Category, String> cell = new TableCell<Category, String>() {
-
-                            final CheckBox checkBox = new CheckBox();
-                            boolean firstTime = true;
-
-                            @Override
-                            public void updateItem(String item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (!empty) {
-                                    if (firstTime) {
-                                        Category category = getTableView().getItems().get(getIndex());
-                                        if (category != null) {
-                                            if (subCategories.contains(category)) checkBox.setSelected(true);
-                                        }
-                                        firstTime = false;
-                                    }
-                                }
-                                if (empty) {
-                                    setGraphic(null);
-                                    setText(null);
-                                } else {
-                                    checkBox.setOnAction(event -> {
-                                        Category category = getTableView().getItems().get(getIndex());
-                                        if (checkBox.isSelected()) subCategories.add(category);
-                                        else subCategories.remove(category);
-                                    });
-                                    setGraphic(checkBox);
-                                    setText(null);
-                                }
-                            }
-                        };
-                        return cell;
-                    }
-                };
-
-        select.setCellFactory(cellFactory);
         tableView.setItems(data);
-        tableView.getColumns().addAll(categoryName, select);
+        tableView.getColumns().addAll(categoryName);
 
         return tableView;
     }
