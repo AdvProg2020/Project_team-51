@@ -48,13 +48,13 @@ public class RuntimeDaraSaver implements Runnable {
 
     private void saveAllProducts() {
         var allProducts = Product.getAllProducts();
-        for (Product product : allProducts) {
-            try {
-                serialize.serializeProduct(product);
-            } catch (IOException e) {
-                System.out.println("OOPS");
-            }
-        }
+//        for (Product product : allProducts) {
+//            try {
+//                serialize.serializeProduct(product);
+//            } catch (IOException e) {
+//                System.out.println("OOPS Products");
+//            }
+//        }
     }
 
     private void saveAllAuctions() {

@@ -35,14 +35,14 @@ public class SingleProductController extends Controller {
 
         StringBuilder digest = new StringBuilder();
         digest.append(product.getDescription()).append("\n");
-        digest.append("Total Price : ").append(product.getPrice()).append("\n");
-        digest.append("Discount : ").append(getProductDiscountAmount(product.getSellersForThisProduct().get(0).getUsername())).append("%").append("\n");
-        digest.append("Category : ").append(product.getParentCategory().getName()).append("\n");
-        digest.append("Sellers :" + "\n");
-        for (Seller seller : product.getSellersForThisProduct()) {
-            digest.append(seller.getBrandName()).append("\n");
-        }
-        digest.append("Rate : ").append(averageRate()).append("\n");
+        digest.append("Total Price : ").append(product.getAveragePrice()).append("\n");
+//        digest.append("Discount : ").append(getProductDiscountAmount(product.getSellersForThisProduct().get(0).getUsername())).append("%").append("\n");
+//        digest.append("Category : ").append(product.getParentCategory().getName()).append("\n");
+//        digest.append("Sellers :" + "\n");
+//        for (Seller seller : product.getSellersForThisProduct()) {
+//            digest.append(seller.getBrandName()).append("\n");
+//        }
+//        digest.append("Rate : ").append(averageRate()).append("\n");
 
         return digest.toString();
     }

@@ -123,7 +123,6 @@ public class ProductPageController extends StackPane {
 
     public ProductPageController(Product product) {
         this.product = product;
-        this.controller = new SingleProductController(Controller.getCurrentAccount(), product);
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("product_page.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -136,18 +135,20 @@ public class ProductPageController extends StackPane {
 
     private static void playAudio(String musicFile) {
 //        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
 //        audioClip.play();
     }
 
     @FXML
     public void initialize() {
+
+        Main.getPrimaryStage().getScene().getStylesheets().add(Main.class.getResource("product-page.css").toExternalForm());
+        this.controller = new SingleProductController(Controller.getCurrentAccount(), product);
         var cartDialog = new CartDialogController(stackPane);
         var addressDialog = new AddressController(stackPane);
         var offCodeDialog = new TakeOffCodeController(stackPane);
         var paymentDialog = new PaymentDialogController(stackPane);
-
-        allComments.addAll(controller.getComments());
+        if (controller.getComments() != null)
+            allComments.addAll(controller.getComments());
         if (product != null) initializeProduct();
         initializeComments();
         addButton.setOnMouseClicked(e -> {
@@ -421,27 +422,36 @@ public class ProductPageController extends StackPane {
             }
         });
 
+        offPercent.setText("OFF :  0.00");
+
         int rate = (int) product.averageRate();
         String attributeText = "";
-        for (String attributes : controller.showAttributes().values()) {
-            attributeText += attributes + ", ";
-        }
+        if (controller.showAttributes() != null)
+            for (String attributes : controller.showAttributes().values()) {
+                attributeText += attributes + ", ";
+            }
 
         attributesLabel.setText(attributeText);
 
         switch (rate) {
             case 0:
                 rateStar.setImage(new Image(String.valueOf(Main.class.getResource("0star.png"))));
+                break;
             case 1:
                 rateStar.setImage(new Image(String.valueOf(Main.class.getResource("1star.png"))));
+                break;
             case 2:
                 rateStar.setImage(new Image(String.valueOf(Main.class.getResource("2star.png"))));
+                break;
             case 3:
                 rateStar.setImage(new Image(String.valueOf(Main.class.getResource("3star.png"))));
+                break;
             case 4:
                 rateStar.setImage(new Image(String.valueOf(Main.class.getResource("4star.png"))));
+                break;
             case 5:
                 rateStar.setImage(new Image(String.valueOf(Main.class.getResource("5star.png"))));
+                break;
         }
 
 

@@ -19,6 +19,7 @@ public class Product {
     private Map<Seller, Status> status;
     private String name;
     private String brandName;
+    private int quantityTest;
     private Map<Seller, Double> price = new HashMap<>();
     private Map<Seller, Integer> quantity = new HashMap<>();
     private Category parentCategory;
@@ -39,6 +40,7 @@ public class Product {
         this.brandName = brandName;
         this.price.putIfAbsent(seller, price);
         this.quantity.putIfAbsent(seller, quantity);
+        this.quantityTest = quantity;
         this.parentCategory = parentCategory;
         this.description = description;
         this.attributes = attributes;
@@ -182,7 +184,8 @@ public class Product {
     }
 
     public double averageRate() {
-        return (rating.stream().map(r -> r.getScore()).reduce((a, b) -> a + b).orElse(0)) / rating.size();
+        double sum = (rating.stream().map(r -> r.getScore()).reduce((a, b) -> a + b).orElse(0));
+        return rating.size() == 0 ? 0.00 : sum / rating.size();
     }
 
     public int getViews() {
@@ -243,7 +246,7 @@ public class Product {
         return "productId : " + productId + '\'' +
                 " ,name : " + name + '\'' +
                 " ,price : " + price +
-                " ,rate : " + this.averageRate() +
+//                " ,rate : " + this.averageRate() +
                 " ,quantity : " + quantity;
     }
 

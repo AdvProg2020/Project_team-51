@@ -21,6 +21,6 @@ public class DiscountFilter extends Filter {
 
     @Override
     public List<Product> applyFilter(List<Product> products) {
-        return products.stream().filter(product -> true).collect(Collectors.toList());
+        return products.stream().filter(product -> false).collect(Collectors.toList());
     }
 }

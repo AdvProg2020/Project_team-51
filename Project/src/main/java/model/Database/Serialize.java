@@ -23,7 +23,7 @@ public class Serialize {
 
 
     public void serializeProduct(Product product) throws IOException {
-        String filePath = "Project\\src\\resources\\Products\\" + product.getProductId() + ".json";
+        String filePath = "Project\\src\\main\\resources\\Products\\" + product.getProductId() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(product, Product.class), filePath);
     }
 

@@ -6,7 +6,9 @@ import control.Controller;
 import control.CustomerController;
 import control.Exceptions.HaveNotLoggedInException;
 import control.Exceptions.InsufficientBalanceException;
-import control.Filters.*;
+import control.Filters.AvailabilityFilter;
+import control.Filters.DiscountFilter;
+import control.Filters.SearchFilter;
 import control.ProductController;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -123,7 +125,6 @@ public class ProductsController extends StackPane {
 
 
     private Category currentCategory;
-    private Stack<List<Product>> productsHistory = new Stack<>();
     private HashMap<Product, SingleProduct> allProducts = new LinkedHashMap<>();
     private List<Product> products = new ArrayList<>();
     private List<String> sorts;
@@ -440,8 +441,11 @@ public class ProductsController extends StackPane {
     }
 
     private void pageNumberUpdate(int number) {
-        Map<Product, SingleProduct> updatedProducts = allProducts.entrySet().stream().skip((number - 1) * 5).limit(5)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        LinkedHashMap<Product, SingleProduct> updatedProducts = new LinkedHashMap();
+
+
+        updatedProducts = allProducts.entrySet().stream().skip((number - 1) * 5).limit(5)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y, LinkedHashMap::new));
 
         showProducts(updatedProducts);
     }
@@ -478,7 +482,7 @@ public class ProductsController extends StackPane {
 
     private void initializeSorts() {
         ObservableList<String> allSorts = FXCollections.observableArrayList();
-        allSorts.addAll(sorts);
+        allSorts.addAll("Name", "Price", "View", "Rate");
         comboBox.getItems().addAll(allSorts.stream().distinct().collect(Collectors.toList()));
         comboBox.getSelectionModel().select(0);
         comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -496,7 +500,7 @@ public class ProductsController extends StackPane {
         });
     }
 
-    private void showProducts(Map<Product, SingleProduct> products) {
+    private void showProducts(LinkedHashMap<Product, SingleProduct> products) {
         productsBox.getChildren().clear();
         products.forEach((a, b) -> {
             productsBox.getChildren().add(b);
@@ -531,13 +535,14 @@ public class ProductsController extends StackPane {
     }
 
     private void updateProducts() {
-        var products = PriceRangeFilter.getInstance().applyFilter(totalProducts, minimumPrice, maximumPrice);
-        var products2 = RateRangeFilter.getInstance().applyFilter(products, minimumRate, maximumRate);
+//        var products = PriceRangeFilter.getInstance().applyFilter(totalProducts, minimumPrice, maximumPrice);
+//        var products2 = RateRangeFilter.getInstance().applyFilter(products, minimumRate, maximumRate);
         boolean isAvailableFilterOn = availableFilter.selectedProperty().get();
         boolean isDiscountFilterOn = discountFilter.selectedProperty().get();
-        var products3 = isAvailableFilterOn ? AvailabilityFilter.getInstance().applyFilter(products2) : products2;
+        var products3 = isAvailableFilterOn ? AvailabilityFilter.getInstance().applyFilter(totalProducts) : totalProducts;
         var products4 = isDiscountFilterOn ? DiscountFilter.getInstance().applyFilter(products3) : products3;
         String sort = comboBox.getSelectionModel().selectedItemProperty().get();
+
         if (sort.equals("Name"))
             products = ProductController.applySort(SortTypes.NAME_SORT, products4);
         else if (sort.equals("Price"))
