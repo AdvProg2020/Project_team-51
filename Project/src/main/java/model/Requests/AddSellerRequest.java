@@ -17,7 +17,7 @@ public class AddSellerRequest extends Request {
     public String toString() {
         return "" + getRequestId() + " Seller Register Request{" +
                 "Name : " + seller.getFirstName() + " " + seller.getLastName() + "\n" +
-                "Username : " + seller.getUsername() + "\n" +
+                "Username : " + seller.getUserName() + "\n" +
                 "Brand : " + seller.getBrandName();
     }
 

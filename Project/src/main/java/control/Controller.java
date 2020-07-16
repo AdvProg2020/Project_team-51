@@ -79,7 +79,7 @@ public class Controller {
 
     public static boolean isUserNameUsed(String username) throws InvalidUsernameException {
         for (Account account : Account.getAllAccounts()) {
-            if (account.getUsername().equalsIgnoreCase(username)) throw new InvalidUsernameException();
+            if (account.getUserName().equalsIgnoreCase(username)) throw new InvalidUsernameException();
         }
 
         return false;

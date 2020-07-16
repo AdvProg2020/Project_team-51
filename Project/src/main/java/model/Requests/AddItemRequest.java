@@ -20,7 +20,7 @@ public class AddItemRequest extends Request {
     public String toString() {
         return "" + getRequestId() + " Add Item Request :" +
                 "Product : " + product.getName() +
-                "\nSeller : " + seller.getUsername() + " | " + seller.getBrandName()
+                "\nSeller : " + seller.getUserName() + " | " + seller.getBrandName()
                 ;
     }
 

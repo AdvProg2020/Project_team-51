@@ -68,7 +68,7 @@ public class ManageUsers extends Menu {
 
     private void viewAllProfiles() {
         for (Account a : managerController.getAllProfiles()) {
-            System.out.print(a.getUsername() + " name : " + a.getFirstName()
+            System.out.print(a.getUserName() + " name : " + a.getFirstName()
                     + " " + a.getLastName() + " phone : " + a.getPhoneNumber() +
                     " email: " + a.getEmail());
             if (a.getBalance() != null) System.out.println(" balence : " + a.getBalance());
@@ -80,7 +80,7 @@ public class ManageUsers extends Menu {
         String id = inputInFormat("enter id", "^\\w+$");
         try {
             Account a = managerController.getAccountById(id);
-            System.out.println(a.getUsername() + " name : " + a.getFirstName()
+            System.out.println(a.getUserName() + " name : " + a.getFirstName()
                     + " " + a.getLastName() + " phone : " + a.getPhoneNumber() +
                     " email: " + a.getEmail() + " balence : " + a.getBalance());
         } catch (Exception e) {

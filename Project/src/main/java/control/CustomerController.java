@@ -83,7 +83,7 @@ public class CustomerController extends Controller {
 
     public String viewPersonalInfo() {
         Customer customer = (Customer) currentAccount;
-        return customer.getUsername() + "\n" +
+        return customer.getUserName() + "\n" +
                 "First Name : " + customer.getFirstName() + "\n" +
                 "Last Name : " + customer.getLastName() + "\n" +
                 "Email : " + customer.getEmail() + "\n" +

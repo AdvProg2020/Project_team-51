@@ -116,7 +116,7 @@ public class ProductPageMenu extends Menu {
             option = getOption();
         }
 
-        return sellers.get(option - 1).getUsername();
+        return sellers.get(option - 1).getUserName();
     }
 
     private void attributes() {

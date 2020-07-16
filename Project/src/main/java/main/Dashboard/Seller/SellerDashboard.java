@@ -76,7 +76,7 @@ public class SellerDashboard {
         SellerMenuPanes dashboard = new SellerMenuPanes();
         Seller seller = (Seller) Controller.getCurrentAccount();
 
-        usernameLabel.setText(seller.getUsername());
+        usernameLabel.setText(seller.getUserName());
 
         personalInfoButton.setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button2.wav")).start();

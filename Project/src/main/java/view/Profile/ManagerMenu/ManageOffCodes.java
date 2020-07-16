@@ -96,7 +96,7 @@ public class ManageOffCodes extends Menu {
                     "  off percent : " + o.getOffPercentage());
             System.out.println("applied accounts : ");
             for (Account account : o.getAppliedAccounts()) {
-                System.out.println(account.getUsername());
+                System.out.println(account.getUserName());
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());

@@ -23,7 +23,7 @@ public class EditProductRequest extends Request {
     public String toString() {
         return "" + getRequestId() + " Edit Product Request : " +
                 "Product : " + product.getName() +
-                "\nSeller : " + seller.getUsername() +
+                "\nSeller : " + seller.getUserName() +
                 "\nField : " + field + '\'' +
                 "\nEdited Value : " + value
                 ;

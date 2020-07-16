@@ -75,7 +75,7 @@ public class CustomerDashboard {
         Stage stage = Main.getPrimaryStage();
         Customer customer = (Customer) Controller.getCurrentAccount();
 
-        usernameLabel.setText(customer.getUsername());
+        usernameLabel.setText(customer.getUserName());
 
         personalInfoButton.setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button2.wav")).start();

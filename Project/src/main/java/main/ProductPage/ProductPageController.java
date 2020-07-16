@@ -154,7 +154,7 @@ public class ProductPageController extends StackPane {
         addButton.setOnMouseClicked(e -> {
             new Thread(() -> playAudio("button.wav")).start();
             try {
-                controller.addToCart(sellerComboBox.getSelectionModel().getSelectedItem().getUsername());
+                controller.addToCart(sellerComboBox.getSelectionModel().getSelectedItem().getUserName());
             } catch (LackOfProductException ex) {
                 showError("Lack Of Products");
             } catch (NotAllowedActivityException ex) {

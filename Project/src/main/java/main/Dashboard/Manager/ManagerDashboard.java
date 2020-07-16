@@ -87,7 +87,7 @@ public class ManagerDashboard {
         Stage stage = Main.getPrimaryStage();
         Manager manager = (Manager) Controller.getCurrentAccount();
 
-        usernameLabel.setText(manager.getUsername());
+        usernameLabel.setText(manager.getUserName());
 
         personalInfoButton.setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button2.wav")).start();

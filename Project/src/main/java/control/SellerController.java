@@ -206,7 +206,7 @@ public class SellerController extends Controller {
                 .filter(a -> a.getItems().stream().map(b -> (b.getProduct())).equals(product))
                 .map(SellerLog::getBuyer)
                 .distinct()
-                .map(Customer::getUsername)
+                .map(Customer::getUserName)
                 .collect(Collectors.toList());
     }
 
@@ -234,7 +234,7 @@ public class SellerController extends Controller {
 
     public String viewPersonalInfo() {
         Seller seller = (Seller) currentAccount;
-        return seller.getUsername() + "\n" +
+        return seller.getUserName() + "\n" +
                 "First Name : " + seller.getFirstName() + "\n" +
                 "Last Name : " + seller.getLastName() + "\n" +
                 "Email : " + seller.getEmail() + "\n" +

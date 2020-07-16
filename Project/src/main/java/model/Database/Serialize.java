@@ -34,17 +34,17 @@ public class Serialize {
     }
 
     private void serializeManager(Manager manager) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\People\\Managers\\" + "Manager_" + manager.getUsername() + ".json";
+        String filePath = "Project\\src\\main\\resources\\People\\Managers\\" + "Manager_" + manager.getUserName() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(manager, Manager.class), filePath);
     }
 
     private void serializeSeller(Seller seller) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\People\\Sellers\\" + "Seller_" + seller.getUsername() + ".json";
+        String filePath = "Project\\src\\main\\resources\\People\\Sellers\\" + "Seller_" + seller.getUserName() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(seller, Seller.class), filePath);
     }
 
     private void serializeCustomer(Customer customer) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\People\\Customers\\" + "Customer_" + customer.getUsername() + ".json";
+        String filePath = "Project\\src\\main\\resources\\People\\Customers\\" + "Customer_" + customer.getUserName() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(customer, Customer.class), filePath);
     }
 
@@ -148,7 +148,7 @@ public class Serialize {
     }
 
     public void serializeItemOfOrder(ItemOfOrder itemOfOrder) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\ItemsOfOrders\\" + "IOO_" + itemOfOrder.getSeller().getUsername() + "_"
+        String filePath = "Project\\src\\main\\resources\\ItemsOfOrders\\" + "IOO_" + itemOfOrder.getSeller().getUserName() + "_"
                 + itemOfOrder.getProduct().getProductId() + "_" + itemOfOrder.getDate() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(itemOfOrder, ItemOfOrder.class), filePath);
     }
