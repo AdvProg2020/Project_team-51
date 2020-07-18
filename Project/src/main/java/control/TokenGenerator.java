@@ -50,11 +50,15 @@ public class TokenGenerator {
     }
 
     public static String generateMessageId() {
-        return generateToken("msg", 5, true, true);
+        return generateToken("MSG_", 5, true, true);
     }
 
     public static String generateChatid() {
-        return generateToken("chat", 5, true, true);
+        return generateToken("CHT_", 5, true, true);
+    }
+
+    public static String generateWalletid() {
+        return generateToken("WLT_", 5, true, true);
     }
 
 }
