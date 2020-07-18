@@ -21,8 +21,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Main;
+import main.ManagerMenuPanes;
 import model.People.Manager;
-import view.Profile.ManagerMenuPanes;
 
 import java.io.IOException;
 

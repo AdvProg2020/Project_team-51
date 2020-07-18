@@ -1,4 +1,4 @@
-package view.Profile;
+package main;
 
 import control.Controller;
 import control.Exceptions.NotAllowedActivityException;

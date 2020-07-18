@@ -34,7 +34,6 @@ public class Main extends Application {
 //        buildThread.start();
 //        statusUpdaterThread.start();
 //        new Thread(() -> playAudio("Hunter.mp3")).start();
-//        new MainMenu();
         launch();
 
     }

@@ -20,8 +20,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Main;
+import main.SellerMenuPanes;
 import model.People.Seller;
-import view.Profile.SellerMenuPanes;
 
 import java.io.IOException;
 
