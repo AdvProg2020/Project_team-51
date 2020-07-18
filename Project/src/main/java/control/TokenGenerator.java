@@ -49,4 +49,12 @@ public class TokenGenerator {
         return generateToken("", 10, false, true);
     }
 
+    public static String generateMessageId() {
+        return generateToken("msg", 5, true, true);
+    }
+
+    public static String generateChatid() {
+        return generateToken("chat", 5, true, true);
+    }
+
 }

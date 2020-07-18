@@ -67,7 +67,6 @@ public class CustomerMenuPanes {
                     if (nameTextField.getText().equals("")) nameError.setText("");
                     else {
                         try {
-                            customerController.editFirstName(nameTextField.getText());
                             nameError.setText("");
                         } catch (Exception e) {
                             nameError.setText(e.getMessage());
