@@ -1,0 +1,15 @@
+{
+  "historyOfSells": [],
+  "availableProducts": [],
+  "allAuctions": [],
+  "brandName": "Amazon",
+  "status": "APPROVED",
+  "username": "abc",
+  "firstName": "abc",
+  "lastName": "abc",
+  "balance": 32189.0,
+  "email": "a@b.c",
+  "phoneNumber": "0987654321",
+  "password": "abc",
+  "image": null
+}

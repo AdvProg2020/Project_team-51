@@ -1,0 +1,197 @@
+{
+  "product": {
+    "uselessString": "",
+    "productId": "PID_89508",
+    "sellersForThisProduct": [
+      {
+        "historyOfSells": [],
+        "availableProducts": [
+          {
+            "uselessString": "",
+            "productId": "PID_73255",
+            "sellersForThisProduct": [
+              "@root.product.sellersForThisProduct.0",
+              "@root.product.sellersForThisProduct.0"
+            ],
+            "status": null,
+            "name": "test1",
+            "brandName": "Adidas",
+            "quantityTest": 37,
+            "price": {
+              "@type": "java.util.HashMap",
+              "@val": {
+                "@root.product.sellersForThisProduct.0": 1000.0
+              }
+            },
+            "quantity": {
+              "@type": "java.util.HashMap",
+              "@val": {
+                "@root.product.sellersForThisProduct.0": 37
+              }
+            },
+            "parentCategory": {
+              "name": "Clothes",
+              "categoryId": "neJqoq",
+              "subCategories": {
+                "@type": "java.util.LinkedHashMap",
+                "@val": {}
+              },
+              "parentCategory": {
+                "name": "Main",
+                "categoryId": "B5ujD6",
+                "subCategories": {
+                  "@type": "java.util.LinkedHashMap",
+                  "@val": {}
+                },
+                "parentCategory": null,
+                "categoryProducts": [],
+                "attributes": {
+                  "@type": "java.util.ImmutableCollections$ListN",
+                  "@val": {
+                    "elements": {
+                      "@type": "[Ljava.lang.Object;",
+                      "@val": [
+                        {
+                          "@type": "model.Attributes",
+                          "@val": {
+                            "attributeId": "9055299226",
+                            "field": "Color",
+                            "values": {
+                              "@type": "java.util.HashSet",
+                              "@val": []
+                            }
+                          }
+                        },
+                        {
+                          "@type": "model.Attributes",
+                          "@val": {
+                            "attributeId": "6278697474",
+                            "field": "Material",
+                            "values": {
+                              "@type": "java.util.HashSet",
+                              "@val": []
+                            }
+                          }
+                        },
+                        {
+                          "@type": "model.Attributes",
+                          "@val": {
+                            "attributeId": "4044555818",
+                            "field": "Size",
+                            "values": {
+                              "@type": "java.util.HashSet",
+                              "@val": []
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "categoryProducts": [],
+              "attributes": {
+                "@type": "java.util.ImmutableCollections$ListN",
+                "@val": {
+                  "elements": {
+                    "@type": "[Ljava.lang.Object;",
+                    "@val": [
+                      {
+                        "@type": "model.Attributes",
+                        "@val": {
+                          "attributeId": "3924401035",
+                          "field": "Material",
+                          "values": {
+                            "@type": "java.util.HashSet",
+                            "@val": []
+                          }
+                        }
+                      },
+                      {
+                        "@type": "model.Attributes",
+                        "@val": {
+                          "attributeId": "7301158576",
+                          "field": "Color",
+                          "values": {
+                            "@type": "java.util.HashSet",
+                            "@val": []
+                          }
+                        }
+                      },
+                      {
+                        "@type": "model.Attributes",
+                        "@val": {
+                          "attributeId": "6600373186",
+                          "field": "Brand",
+                          "values": {
+                            "@type": "java.util.HashSet",
+                            "@val": []
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "description": "Hello",
+            "attributes": {
+              "@type": "java.util.HashMap",
+              "@val": {
+                "@root.product.sellersForThisProduct.0.availableProducts.0.parentCategory.attributes.elements.2": "c",
+                "@root.product.sellersForThisProduct.0.availableProducts.0.parentCategory.attributes.elements.0": "a",
+                "@root.product.sellersForThisProduct.0.availableProducts.0.parentCategory.attributes.elements.1": "b"
+              }
+            },
+            "rating": [],
+            "views": 0,
+            "sellNumber": 0,
+            "comments": [],
+            "image": null
+          },
+          "@root.product"
+        ],
+        "allAuctions": [],
+        "brandName": "AmazonCo",
+        "status": "APPROVED",
+        "username": "Amazon",
+        "firstName": "Amazon",
+        "lastName": "Amazoni",
+        "balance": 3.1745893674352E9,
+        "email": "Amzon@Amazon.com",
+        "phoneNumber": "09112223344",
+        "password": "ImAmazon",
+        "image": null
+      },
+      "@.0"
+    ],
+    "status": null,
+    "name": "test2",
+    "brandName": "Nike",
+    "quantityTest": 37,
+    "price": {
+      "@type": "java.util.HashMap",
+      "@val": {
+        "@root.product.sellersForThisProduct.0": 1000.0
+      }
+    },
+    "quantity": {
+      "@type": "java.util.HashMap",
+      "@val": {
+        "@root.product.sellersForThisProduct.0": 37
+      }
+    },
+    "parentCategory": "@root.product.sellersForThisProduct.0.availableProducts.0.parentCategory",
+    "description": "Bye",
+    "attributes": "@root.product.sellersForThisProduct.0.availableProducts.0.attributes",
+    "rating": [],
+    "views": 0,
+    "sellNumber": 0,
+    "comments": [],
+    "image": null
+  },
+  "seller": "@root.product.sellersForThisProduct.0",
+  "status": "APPROVED",
+  "requestId": "42422244",
+  "date": "Jul 3, 2020, 12:17:46 PM"
+}
