@@ -2,6 +2,7 @@ package model.People;
 
 import control.Exceptions.InvalidUsernameException;
 import javafx.scene.image.ImageView;
+import model.Chat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public abstract class Account {
     protected String phoneNumber;
     private String password;
     private ImageView image;
-
+    private ArrayList<Chat> chats;
     public Account(String username, String password, String firstName, String lastName, Double balance, String email, String phoneNumber) {
         this.username = username;
         this.password = password;
@@ -25,6 +26,7 @@ public abstract class Account {
         this.balance = balance;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.chats = new ArrayList<>();
         if (this instanceof Customer || this instanceof Manager)
             allAccounts.add(this);
     }
@@ -117,6 +119,10 @@ public abstract class Account {
 
     public String getBalanceString() {
         return Double.toString(balance);
+    }
+
+    public ArrayList<Chat> getChats(){
+        return chats;
     }
 
     public String getType() {
