@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.*;
 import model.People.Customer;
-import view.Profile.CustomerMenu.CustomerMenuPanes;
+import view.Profile.CustomerMenuPanes;
 
 import java.io.IOException;
 

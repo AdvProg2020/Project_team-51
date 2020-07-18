@@ -1,4 +1,4 @@
-package view.Profile.CustomerMenu;
+package view.Profile;
 
 import control.Controller;
 import control.CustomerController;

@@ -1,4 +1,4 @@
-package view.Profile.ManagerMenu;
+package view.Profile;
 
 import control.Controller;
 import control.Exceptions.InvalidOffCodeException;

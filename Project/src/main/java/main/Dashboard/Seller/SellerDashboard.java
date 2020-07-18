@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Main;
 import model.People.Seller;
-import view.Profile.SellerMenu.SellerMenuPanes;
+import view.Profile.SellerMenuPanes;
 
 import java.io.IOException;
 

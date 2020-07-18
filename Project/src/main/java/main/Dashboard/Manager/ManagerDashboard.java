@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Main;
 import model.People.Manager;
-import view.Profile.ManagerMenu.ManagerMenuPanes;
+import view.Profile.ManagerMenuPanes;
 
 import java.io.IOException;
 

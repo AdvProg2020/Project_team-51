@@ -1,4 +1,4 @@
-package view.Profile.SellerMenu;
+package view.Profile;
 
 import control.Controller;
 import control.Exceptions.NotAllowedActivityException;
