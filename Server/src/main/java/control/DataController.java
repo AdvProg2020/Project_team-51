@@ -27,7 +27,15 @@ public class DataController {
         return true;
     }
 
-    public void register(Message message) {
+    public void registerCustomer(Message message) {
+
+    }
+
+    public void registerService(Message message) {
+
+    }
+
+    public void registerManager(Message message) {
 
     }
 
@@ -153,6 +161,22 @@ public class DataController {
 
     public void createEditProductRequest(Message message) {
 
+    }
+
+    public void loginCheck(Message message) {
+        loginCheck(message.getSender());
+    }
+
+    public void loginCheck(String sender) {
+        if (sender == null) {
+//            throw new ClientException("invalid message!");
+        }
+        if (!clients.containsKey(sender)) {
+//            throw new LogicException("Client Wasn't Added!");
+        }
+        if (clients.get(sender) == null) {
+//            throw new ClientException("Client Was Not LoggedIn");
+        }
     }
 
 }
