@@ -103,7 +103,7 @@ public class DataController {
 
     }
 
-    public void createDiscountCode(Message message) {
+    public void createOffCode(Message message) {
 
     }
 
