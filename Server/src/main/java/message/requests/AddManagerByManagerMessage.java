@@ -3,6 +3,7 @@ package message.requests;
 import model.People.Manager;
 
 public class AddManagerByManagerMessage {
+
     private Manager manager;
 
     public AddManagerByManagerMessage(Manager manager) {
