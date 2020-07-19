@@ -1,11 +1,11 @@
 package message.requests;
 
-public class loginMessage {
+public class LoginMessage {
 
     private String username;
     private String password;
 
-    public loginMessage(String username, String password) {
+    public LoginMessage(String username, String password) {
         this.username = username;
         this.password = password;
     }
