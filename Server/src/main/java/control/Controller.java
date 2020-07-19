@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
+
     protected static Account currentAccount;
     protected static List<ItemOfOrder> cart = new ArrayList<>();
 

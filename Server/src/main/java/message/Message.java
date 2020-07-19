@@ -4,7 +4,9 @@ import Server.JsonConverter;
 import Server.Server;
 
 public class Message {
+
     private MessageType messageType;
+
     //serverName || clientName
     private String sender;
     private String receiver;

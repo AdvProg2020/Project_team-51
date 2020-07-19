@@ -1,5 +1,8 @@
 package Server;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.*;
 
 public class ClientPortal extends Thread {
@@ -18,7 +21,20 @@ public class ClientPortal extends Thread {
 
     @Override
     public void run() {
-
+        Server.getInstance().serverPrint("Starting ClientPortal...");
+        try {
+            ServerSocket serverSocket = makeServerSocket();
+            while (true) {
+                Socket socket = serverSocket.accept();
+                ClientListener clientListener = new ClientListener(socket);
+                clientListener.setDaemon(true);
+                clientListener.start();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Server.getInstance().serverPrint("Error Making ServerSocket!");
+            System.exit(-1);
+        }
     }
 
     synchronized public boolean hasThisClient(String clientName) {
@@ -49,5 +65,9 @@ public class ClientPortal extends Thread {
 
     void removeClient(String clientName) {
         clients.remove(clientName);
+    }
+
+    private ServerSocket makeServerSocket() throws IOException {
+        return new ServerSocket(DEFAULT_PORT);
     }
 }
