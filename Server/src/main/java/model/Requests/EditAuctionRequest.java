@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class EditAuctionRequest extends Request {
+
     private Auction auction;
     private String field;
     private String value;
