@@ -87,7 +87,7 @@ public class DataController {
 
     }
 
-    public void pay(Message message) {
+    public void payCart(Message message) {
 
     }
 
