@@ -83,7 +83,7 @@ public class DataController {
 
     }
 
-    public void applyDiscountCode(Message message) {
+    public void applyOffCode(Message message) {
 
     }
 
