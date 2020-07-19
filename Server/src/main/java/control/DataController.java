@@ -111,10 +111,6 @@ public class DataController {
 
     }
 
-    public void createProduct(Message message) {
-
-    }
-
     public void createCategory(Message message) {
 
     }
