@@ -9,4 +9,8 @@ public class RegisterCustomerMessage {
     public RegisterCustomerMessage(Customer customer) {
         this.customer = customer;
     }
+
+    public Customer getCustomer() {
+        return customer;
+    }
 }
