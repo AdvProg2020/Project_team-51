@@ -8,5 +8,4 @@ public enum MessageType {
     REGISTER_SERVICE,
     ADD_TO_CART,
 
-
 }
