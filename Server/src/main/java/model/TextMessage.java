@@ -5,14 +5,14 @@ import model.People.Account;
 
 import java.util.Date;
 
-public class Message {
+public class TextMessage {
     String content;
     Date sendDate;
     Account sender;
     String id;
     //Chat chat;  //is this necessary?
 
-    public Message(Account sender, String content) {
+    public TextMessage(Account sender, String content) {
         this.id = TokenGenerator.generateMessageId();
         this.content = content;
         this.sendDate = new Date();

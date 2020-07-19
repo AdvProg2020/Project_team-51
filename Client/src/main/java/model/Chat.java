@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Chat {
-    private static ArrayList <Chat> allChats = new ArrayList<>();
-    private ArrayList<Message> messages;
+    private static ArrayList<Chat> allChats = new ArrayList<>();
+    private ArrayList<TextMessage> messages;
     private ArrayList<Account> members;
     String id;
     public Chat(ArrayList<Account> members){
@@ -17,7 +17,7 @@ public class Chat {
         this.members = members;
     }
 
-    public ArrayList<Message> getMessages() {
+    public ArrayList<TextMessage> getMessages() {
         return messages;
     }
 
@@ -29,7 +29,7 @@ public class Chat {
         return id;
     }
 
-    private void sendMessage(Message message){
+    private void sendMessage(TextMessage message) {
         messages.add(message);
     }
 

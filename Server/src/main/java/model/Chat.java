@@ -9,7 +9,7 @@ import java.util.Collections;
 public class Chat {
     private static ArrayList<Chat> allChats = new ArrayList<>();
     String id;
-    private ArrayList<Message> messages;
+    private ArrayList<TextMessage> messages;
     private ArrayList<Account> members;
 
     public Chat(ArrayList<Account> members) {
@@ -18,7 +18,7 @@ public class Chat {
         this.members = members;
     }
 
-    public ArrayList<Message> getMessages() {
+    public ArrayList<TextMessage> getMessages() {
         return messages;
     }
 
@@ -30,7 +30,7 @@ public class Chat {
         return id;
     }
 
-    private void sendMessage(Message message) {
+    private void sendMessage(TextMessage message) {
         messages.add(message);
     }
 
