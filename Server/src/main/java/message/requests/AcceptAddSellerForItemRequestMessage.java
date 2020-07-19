@@ -13,4 +13,5 @@ public class AcceptAddSellerForItemRequestMessage {
     public AddSellerForItemRequest getAddSellerForItemRequest() {
         return addSellerForItemRequest;
     }
+
 }
