@@ -1,16 +1,23 @@
 package message.requests;
 
-import model.Requests.AddItemRequest;
+import model.People.Seller;
+import model.Product;
 
 public class CreateAddItemRequestMessage {
 
-    private AddItemRequest addItemRequest;
+    private Product product;
+    private Seller seller;
 
-    public CreateAddItemRequestMessage(AddItemRequest addItemRequest) {
-        this.addItemRequest = addItemRequest;
+    public CreateAddItemRequestMessage(Product product, Seller seller) {
+        this.product = product;
+        this.seller = seller;
     }
 
-    public AddItemRequest getAddItemRequest() {
-        return addItemRequest;
+    public Product getProduct() {
+        return product;
+    }
+
+    public Seller getSeller() {
+        return seller;
     }
 }

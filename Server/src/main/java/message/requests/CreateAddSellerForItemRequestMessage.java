@@ -5,12 +5,16 @@ import model.Product;
 
 public class CreateAddSellerForItemRequestMessage {
 
-    private Seller seller;
     private Product product;
+    private Seller seller;
+    private int quantity;
+    private double price;
 
-    public CreateAddSellerForItemRequestMessage(Seller seller, Product product) {
-        this.seller = seller;
+    public CreateAddSellerForItemRequestMessage(Product product, Seller seller, int quantity, double price) {
         this.product = product;
+        this.seller = seller;
+        this.quantity = quantity;
+        this.price = price;
     }
 
     public Seller getSeller() {
@@ -21,5 +25,11 @@ public class CreateAddSellerForItemRequestMessage {
         return product;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
 
+    public double getPrice() {
+        return price;
+    }
 }

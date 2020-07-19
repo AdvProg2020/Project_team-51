@@ -1,16 +1,16 @@
 package message.requests;
 
-import model.Requests.AddCommentRequest;
+import model.Comment;
 
 public class CreateAddCommentRequestMessage {
 
-    private AddCommentRequest addCommentRequest;
+    private Comment comment;
 
-    public CreateAddCommentRequestMessage(AddCommentRequest addCommentRequest) {
-        this.addCommentRequest = addCommentRequest;
+    public CreateAddCommentRequestMessage(Comment comment) {
+        this.comment = comment;
     }
 
-    public AddCommentRequest getAddCommentRequest() {
-        return addCommentRequest;
+    public Comment getComment() {
+        return comment;
     }
 }
