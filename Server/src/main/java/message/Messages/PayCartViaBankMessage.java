@@ -5,11 +5,11 @@ import model.ItemOfOrder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PayCartMessage {
+public class PayCartViaBankMessage {
 
     private List<ItemOfOrder> cart = new ArrayList<>();
 
-    public PayCartMessage(List<ItemOfOrder> cart) {
+    public PayCartViaBankMessage(List<ItemOfOrder> cart) {
         this.cart = cart;
     }
 
