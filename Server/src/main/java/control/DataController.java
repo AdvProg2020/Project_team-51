@@ -361,19 +361,49 @@ public class DataController {
     }
 
     public void createFileForSale(Message message) {
-
+        //TODO
     }
 
     public void buyFile(Message message) {
-
+        //TODO
     }
 
-    public void incrementProductQuantity(Message message) {
-
+    public void incrementProductQuantity(Message message) throws ClientException, InvalidProductIdException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            if (!(account instanceof Customer)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                var customerController = new CustomerController(account);
+                int number = message.getIncrementProductQuantityMessage().getNumber();
+                for (int i = 0; i < number; i++) {
+                    customerController.increaseProduct(message.getIncrementProductQuantityMessage().getItemOfOrder().getProduct());
+                }
+                Server.getInstance().serverPrint("Category has created!");
+            }
+        }
     }
 
-    public void decrementProductQuantity(Message message) {
-
+    public void decrementProductQuantity(Message message) throws ClientException, InvalidProductIdException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            if (!(account instanceof Customer)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                var customerController = new CustomerController(account);
+                int number = message.getDecrementProductQuantityMessage().getNumber();
+                for (int i = 0; i < number; i++) {
+                    customerController.decreaseProduct(message.getDecrementProductQuantityMessage().getItemOfOrder().getProduct());
+                }
+                Server.getInstance().serverPrint("Category has created!");
+            }
+        }
     }
 
     public void removeProductFromCart(Message message) {
