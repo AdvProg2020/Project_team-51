@@ -6,6 +6,7 @@ import control.Exceptions.ClientException;
 import control.Exceptions.InsufficientBalanceException;
 import control.Exceptions.InvalidProductIdException;
 import message.Message;
+import model.Attributes;
 import model.Bid;
 import model.OffCode;
 import model.People.Account;
@@ -15,6 +16,7 @@ import model.People.Seller;
 import model.Requests.*;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -334,8 +336,28 @@ public class DataController {
         }
     }
 
-    public void createCategory(Message message) {
+    public void createCategory(Message message) throws ClientException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            if (!(account instanceof Manager)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                var category = message.getCreateCategoryMessage().getCategory();
+                if (category != null) {
+                    if (category.getParentCategory() != null)
+                        new ManagerController(account).addCategory(category.getName(), category.getParentCategory().getName(),
+                                (ArrayList<Attributes>) category.getAttributes());
+                    else
+                        new ManagerController(account).addCategory(category.getName(), null,
+                                (ArrayList<Attributes>) category.getAttributes());
 
+                    Server.getInstance().serverPrint("Category has created!");
+                }
+            }
+        }
     }
 
     public void createFileForSale(Message message) {
