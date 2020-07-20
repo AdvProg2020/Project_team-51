@@ -6,6 +6,8 @@ import control.Exceptions.ClientException;
 import control.Exceptions.InsufficientBalanceException;
 import control.Exceptions.InvalidProductIdException;
 import message.Message;
+import model.Bid;
+import model.OffCode;
 import model.People.Account;
 import model.People.Customer;
 import model.People.Manager;
@@ -296,17 +298,40 @@ public class DataController {
             } else {
                 var createAddAuctionRequest = message.getCreateAddAuctionRequestMessage();
                 new AddAuctionRequest(createAddAuctionRequest.getAuction(), createAddAuctionRequest.getSeller());
-                Server.getInstance().serverPrint("Request got accepted!");
+                Server.getInstance().serverPrint("Request has created!");
             }
         }
     }
 
-    public void createOffCode(Message message) {
-
+    public void createOffCode(Message message) throws ClientException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            if (!(account instanceof Manager)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                var offCode = message.getCreateOffCodeMessage().getOffCode();
+                OffCode.addOffCode(offCode);
+                Server.getInstance().serverPrint("Off Code has created!");
+            }
+        }
     }
 
-    public void createBid(Message message) {
-
+    public void createBid(Message message) throws ClientException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            if (!(account instanceof Seller)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                new Bid(message.getCreateBidMessage().getSeller(), message.getCreateBidMessage().getProduct());
+                Server.getInstance().serverPrint("Bid has created!");
+            }
+        }
     }
 
     public void createCategory(Message message) {
