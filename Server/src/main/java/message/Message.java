@@ -52,6 +52,7 @@ public class Message {
     private RegisterServiceByManagerMessage registerServiceByManagerMessage;
     private RegisterManagerByManagerMessage registerManagerByManagerMessage;
     private SetWageMessage setWageMessage;
+    private ResponseToClientMessage responseToClientMessage;
 
     // Server --> Clients
     //      TODO (NEED TO FIGURE OUT THE REQUESTS)
@@ -82,6 +83,14 @@ public class Message {
 
     public String getReceiver() {
         return receiver;
+    }
+
+    public ResponseToClientMessage getResponseToClientMessage() {
+        return responseToClientMessage;
+    }
+
+    public void setResponseToClientMessage(ResponseToClientMessage responseToClientMessage) {
+        this.responseToClientMessage = responseToClientMessage;
     }
 
     public void setMessageType(MessageType messageType) {
