@@ -5,6 +5,7 @@ import control.Exceptions.ClientException;
 import message.Message;
 import model.People.Account;
 import model.People.Customer;
+import model.People.Manager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,11 +59,23 @@ public class DataController {
     }
 
     public void registerService(Message message) {
-
+        //TODO
     }
 
-    public void registerManager(Message message) {
-
+    public void registerManager(Message message) throws ClientException {
+        if (message.getRegisterManagerMessage().getManager().getUserName() == null ||
+                getAccount(message.getRegisterManagerMessage().getManager().getUserName()) != null) {
+            throw new ClientException("Invalid Username!");
+        } else if (message.getLoginMessage().getPassword() == null) {
+            throw new ClientException("Invalid Password!");
+        } else if (ManagerController.isThereAnyManager()) {
+            Server.getInstance().serverPrint("manager already exists");
+        } else {
+            Manager manager = message.getRegisterManagerMessage().getManager();
+            Manager.addManager(manager);
+            accounts.put(manager, null);
+            Server.getInstance().serverPrint(message.getRegisterManagerMessage().getManager().getUserName() + " Is Created!");
+        }
     }
 
     public void login(Message message) {
