@@ -3,6 +3,7 @@ package control;
 import Server.ClientPortal;
 import Server.Server;
 import control.Exceptions.ClientException;
+import control.Exceptions.InsufficientBalanceException;
 import control.Exceptions.InvalidProductIdException;
 import message.Message;
 import model.People.Account;
@@ -254,11 +255,28 @@ public class DataController {
 
     }
 
-    public void payCart(Message message) {
-
+    public void payCart(Message message) throws ClientException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            if (!(account instanceof Customer)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                var customerController = new CustomerController(account);
+                try {
+                    customerController.purchase();
+                    Server.getInstance().serverPrint("Paid !");
+                } catch (InsufficientBalanceException e) {
+                    Server.getInstance().serverPrint("Insufficient money");
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
-    public void setٌWage(Message message) {
+    public void setWage(Message message) {
 
     }
 
