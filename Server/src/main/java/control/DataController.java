@@ -382,7 +382,7 @@ public class DataController {
                 for (int i = 0; i < number; i++) {
                     customerController.increaseProduct(message.getIncrementProductQuantityMessage().getItemOfOrder().getProduct());
                 }
-                Server.getInstance().serverPrint("Category has created!");
+                Server.getInstance().serverPrint("Quantity Incremented");
             }
         }
     }
@@ -401,21 +401,45 @@ public class DataController {
                 for (int i = 0; i < number; i++) {
                     customerController.decreaseProduct(message.getDecrementProductQuantityMessage().getItemOfOrder().getProduct());
                 }
-                Server.getInstance().serverPrint("Category has created!");
+                Server.getInstance().serverPrint("Quantity Decremented");
             }
         }
     }
 
     public void removeProductFromCart(Message message) {
-
+        //TODO
     }
 
-    public void createAddCommentRequest(Message message) {
-
+    public void createAddCommentRequest(Message message) throws ClientException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            if (!(account instanceof Customer)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                var createAddCommentRequest = message.getCreateAddCommentRequestMessage();
+                new AddCommentRequest(createAddCommentRequest.getComment());
+                Server.getInstance().serverPrint("Request has created!");
+            }
+        }
     }
 
-    public void createAddItemRequest(Message message) {
-
+    public void createAddItemRequest(Message message) throws ClientException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            if (!(account instanceof Seller)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                var createAddItemRequest = message.getCreateAddItemRequestMessage();
+                new AddItemRequest(createAddItemRequest.getProduct(), createAddItemRequest.getSeller());
+                Server.getInstance().serverPrint("Request has created!");
+            }
+        }
     }
 
     public void createAddSellerForItemRequest(Message message) {
