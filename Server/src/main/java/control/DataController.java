@@ -3,12 +3,14 @@ package control;
 import Server.ClientPortal;
 import Server.Server;
 import control.Exceptions.ClientException;
+import control.Exceptions.InvalidProductIdException;
 import message.Message;
 import model.People.Account;
 import model.People.Customer;
 import model.People.Manager;
 import model.Requests.AddAuctionRequest;
 import model.Requests.AddCommentRequest;
+import model.Requests.AddItemRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -155,8 +157,20 @@ public class DataController {
         }
     }
 
-    public void acceptAddItemRequest(Message message) {
-
+    public void acceptAddItemRequest(Message message) throws InvalidProductIdException, ClientException {
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            AddItemRequest addItemRequest = message.getAcceptAddItemRequestMessage().getAddItemRequest();
+            if (addItemRequest == null) {
+                throw new ClientException("null message!");
+            } else if (!(account instanceof Manager)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                addItemRequest.accept();
+            }
+        }
     }
 
     public void acceptAddSellerForItemRequest(Message message) {
