@@ -1,5 +1,7 @@
 package Server;
 
+import control.DataController;
+import control.Exceptions.ClientException;
 import message.Message;
 import model.Database.Build;
 import model.Database.StatusUpdater;
@@ -96,6 +98,10 @@ public class Server {
         }
     }
 
+    private void sendException(String exceptionString, String receiver) {
+        addToSendingMessages(Message.makeExceptionMessage(receiver, exceptionString));
+    }
+
     private void receiveMessage(Message message) {
         if (message == null) {
             // It's a null message
@@ -103,112 +109,129 @@ public class Server {
         if (!message.getReceiver().equals(serverName)) {
             // message doesn't belong to this sever
         }
-        switch (message.getMessageType()) {
-            case LOGIN:
-                // TODO
-                break;
-            case LOGOUT:
-                // TODO
-                break;
-            case REGISTER_CUSTOMER:
-                // TODO
-                break;
-            case REGISTER_MANAGER:
-                // TODO
-                break;
-            case REGISTER_MANAGER_BY_MANAGER:
-                // TODO
-                break;
-            case REGISTER_SERVICE_BY_MANAGER:
-                // TODO
-                break;
-            case ACCEPT_ADD_AUCTION_REQUEST:
-                // TODO
-                break;
-            case ACCEPT_ADD_COMMENT_REQUEST:
-                // TODO
-                break;
-            case ACCEPT_ADD_ITEM_REQUEST:
-                // TODO
-                break;
-            case ACCEPT_ADD_SELLER_FOR_ITEM_REQUEST:
-                // TODO
-                break;
-            case ACCEPT_ADD_SELLER_REQUEST:
-                // TODO
-                break;
-            case ACCEPT_EDIT_AUCTION_REQUEST:
-                // TODO
-                break;
-            case ACCEPT_EDIT_PRODUCT_REQUEST:
-                // TODO
-                break;
-            case CREATE_ADD_AUCTION_REQUEST:
-                // TODO
-                break;
-            case CREATE_ADD_COMMENT_REQUEST:
-                // TODO
-                break;
-            case CREATE_ADD_ITEM_REQUEST:
-                // TODO
-                break;
-            case CREATE_ADD_SELLER_FOR_ITEM_REQUEST:
-                // TODO
-                break;
-            case CREATE_ADD_SELLER_REQUEST:
-                // TODO
-                break;
-            case CREATE_EDIT_AUCTION_REQUEST:
-                // TODO
-                break;
-            case CREATE_EDIT_PRODUCT_REQUEST:
-                // TODO
-                break;
-            case CHARGE_WALLET:
-                // TODO
-                break;
-            case CREATE_BID:
-                // TODO
-                break;
-            case CREATE_CATEGORY:
-                // TODO
-                break;
-            case CREATE_FILE_FOR_SALE:
-                // TODO
-                break;
-            case CREATE_OFF_CODE:
-                // TODO
-                break;
-            case ADD_TO_CART:
-                // TODO
-                break;
-            case APPLY_OFF_CODE:
-                // TODO
-                break;
-            case BUY_FILE:
-                // TODO
-                break;
-            case DECREMENT_PRODUCT_QUANTITY:
-                // TODO
-                break;
-            case INCREMENT_PRODUCT_QUANTITY:
-                // TODO
-                break;
-            case REMOVE_PRODUCT_FROM_CART:
-                // TODO
-                break;
-            case SET_WAGE:
-                // TODO
-                break;
-            case TAKE_FROM_WALLET:
-                // TODO
-                break;
-            case PAY_CART_VIA_BANK:
-                // TODO
-                break;
-            case PAY_CART_VIA_WALLET:
-                // TODO
-                break;
+        try {
+            switch (message.getMessageType()) {
+                case LOGIN:
+                    DataController.getInstance().login(message);
+                    break;
+                case LOGOUT:
+                    DataController.getInstance().logout(message);
+                    break;
+                case REGISTER_CUSTOMER:
+                    DataController.getInstance().registerCustomer(message);
+                    break;
+                case REGISTER_MANAGER:
+                    DataController.getInstance().registerManager(message);
+                    break;
+                case REGISTER_MANAGER_BY_MANAGER:
+//                DataController.getInstance().registerManager(message);
+                    break;
+                case REGISTER_SERVICE_BY_MANAGER:
+                    DataController.getInstance().registerService(message);
+                    break;
+                case ACCEPT_ADD_AUCTION_REQUEST:
+                    DataController.getInstance().acceptAddAuctionRequest(message);
+                    break;
+                case ACCEPT_ADD_COMMENT_REQUEST:
+                    DataController.getInstance().acceptAddCommentRequest(message);
+                    break;
+                case ACCEPT_ADD_ITEM_REQUEST:
+                    DataController.getInstance().acceptAddItemRequest(message);
+                    break;
+                case ACCEPT_ADD_SELLER_FOR_ITEM_REQUEST:
+                    DataController.getInstance().acceptAddSellerForItemRequest(message);
+                    break;
+                case ACCEPT_ADD_SELLER_REQUEST:
+                    DataController.getInstance().acceptAddSellerRequest(message);
+                    break;
+                case ACCEPT_EDIT_AUCTION_REQUEST:
+                    DataController.getInstance().acceptEditAuctionRequest(message);
+                    break;
+                case ACCEPT_EDIT_PRODUCT_REQUEST:
+                    DataController.getInstance().acceptEditProductRequest(message);
+                    break;
+                case CREATE_ADD_AUCTION_REQUEST:
+                    DataController.getInstance().createAddAuctionRequest(message);
+                    break;
+                case CREATE_ADD_COMMENT_REQUEST:
+                    DataController.getInstance().createAddCommentRequest(message);
+                    break;
+                case CREATE_ADD_ITEM_REQUEST:
+                    DataController.getInstance().createAddItemRequest(message);
+                    break;
+                case CREATE_ADD_SELLER_FOR_ITEM_REQUEST:
+                    DataController.getInstance().createAddSellerForItemRequest(message);
+                    break;
+                case CREATE_ADD_SELLER_REQUEST:
+                    DataController.getInstance().createAddSellerRequest(message);
+                    break;
+                case CREATE_EDIT_AUCTION_REQUEST:
+                    DataController.getInstance().createEditAuctionRequest(message);
+                    break;
+                case CREATE_EDIT_PRODUCT_REQUEST:
+                    DataController.getInstance().createEditProductRequest(message);
+                    break;
+                case CHARGE_WALLET:
+                    DataController.getInstance().chargeWallet(message);
+                    break;
+                case CREATE_BID:
+                    DataController.getInstance().createBid(message);
+                    break;
+                case CREATE_CATEGORY:
+                    DataController.getInstance().createCategory(message);
+                    break;
+                case CREATE_FILE_FOR_SALE:
+                    DataController.getInstance().createFileForSale(message);
+                    break;
+                case CREATE_OFF_CODE:
+                    DataController.getInstance().createOffCode(message);
+                    break;
+                case ADD_TO_CART:
+//                DataController.getInstance()
+                    break;
+                case APPLY_OFF_CODE:
+                    DataController.getInstance().applyOffCode(message);
+                    break;
+                case BUY_FILE:
+                    DataController.getInstance().buyFile(message);
+                    break;
+                case DECREMENT_PRODUCT_QUANTITY:
+                    DataController.getInstance().decrementProductQuantity(message);
+                    break;
+                case INCREMENT_PRODUCT_QUANTITY:
+                    DataController.getInstance().incrementProductQuantity(message);
+                    break;
+                case REMOVE_PRODUCT_FROM_CART:
+                    DataController.getInstance().removeProductFromCart(message);
+                    break;
+                case SET_WAGE:
+                    DataController.getInstance().setWage(message);
+                    break;
+                case TAKE_FROM_WALLET:
+                    DataController.getInstance().takeFromWallet(message);
+                    break;
+                case PAY_CART_VIA_BANK:
+                    DataController.getInstance().payCart(message);
+                    //TODO VIA BANK
+                    break;
+                case PAY_CART_VIA_WALLET:
+                    DataController.getInstance().payCart(message);
+                    // TODO VIA WALLET
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + message.getMessageType());
+            }
+        }
+//        catch (ServerException e) {
+//            serverPrint(e.getMessage());
+//            if (message != null) {
+//                sendException("server has error:(", message.getSender());
+//            }
+//        }
+        catch (ClientException e) {
+            sendException(e.getMessage(), message.getSender());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

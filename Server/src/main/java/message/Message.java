@@ -53,6 +53,7 @@ public class Message {
     private RegisterManagerByManagerMessage registerManagerByManagerMessage;
     private SetWageMessage setWageMessage;
     private ResponseToClientMessage responseToClientMessage;
+    private ExceptionMessage exceptionMessage;
 
     // Server --> Clients
     //      TODO (NEED TO FIGURE OUT THE REQUESTS)
@@ -71,6 +72,13 @@ public class Message {
 
     public String toJson() {
         return JsonConverter.toJson(this);
+    }
+
+    public static Message makeExceptionMessage(String receiver, String exceptionString) {
+        Message message = new Message(receiver);
+        message.exceptionMessage = new ExceptionMessage(exceptionString);
+        message.messageType = MessageType.SEND_EXCEPTION;
+        return message;
     }
 
     public MessageType getMessageType() {

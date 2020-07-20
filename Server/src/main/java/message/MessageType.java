@@ -35,5 +35,6 @@ public enum MessageType {
     PAY_CART_VIA_BANK,
     PAY_CART_VIA_WALLET,
     REMOVE_PRODUCT_FROM_CART,
-    SET_WAGE
+    SET_WAGE,
+    SEND_EXCEPTION
 }
