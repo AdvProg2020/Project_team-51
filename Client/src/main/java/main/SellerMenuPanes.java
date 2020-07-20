@@ -81,7 +81,9 @@ public class SellerMenuPanes {
                             nameError.setText(e.getMessage());
                         }
                     }
-                }else {nameError.setText("");}
+                } else {
+                    nameError.setText("");
+                }
                 if (!passwordField.getText().equals(confirmPasswordField.getText())) {
                     confirmPasswordFieldError.setText("passwords don't match");
                 }
@@ -251,7 +253,7 @@ public class SellerMenuPanes {
             } else {
                 beginDateError.setText("");
             }
-            if (endDatePicker.getValue()==null) {
+            if (endDatePicker.getValue() == null) {
                 endDateError.setText("please select a date");
             } else endDateError.setText("");
             if (endDatePicker.getValue() != null && beginDatePicker.getValue() != null) {
@@ -729,12 +731,12 @@ public class SellerMenuPanes {
         setPlace(done, 350, 755);
 
         pane.getChildren().addAll(nameError, nameField, nameLabel,
-                quantityLabel,quantityAmount,quantitySlider,
+                quantityLabel, quantityAmount, quantitySlider,
                 categoryLabel, categoryComboBox, categoryError,
                 brandError, brandField, brandLabel,
                 priceError, priceField, priceLabel,
                 descrioptionField, descriptionLabel,
-                attributesButton,attributeError,done
+                attributesButton, attributeError, done
         );
         return pane;
     }//v1

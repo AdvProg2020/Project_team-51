@@ -27,12 +27,12 @@ public class Bid {
         return currentPrice.get();
     }
 
-    public DoubleProperty currentPriceProperty() {
-        return currentPrice;
-    }
-
     public void setCurrentPrice(double currentPrice) {
         if (currentPrice > this.currentPrice.get())
             this.currentPrice.set(currentPrice);
+    }
+
+    public DoubleProperty currentPriceProperty() {
+        return currentPrice;
     }
 }

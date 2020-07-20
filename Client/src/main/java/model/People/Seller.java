@@ -17,12 +17,13 @@ public class Seller extends Account {
     private String brandName;
     private Status status;
     private Wallet wallet;
+
     public Seller(String username, String password, String firstName, String lastName, Double balance,
                   String email, String phoneNumber, String brandName) {
         super(username, password, firstName, lastName, balance, email, phoneNumber);
         this.brandName = brandName;
         this.status = Status.PENDING_CREATE;
-        this.wallet = new Wallet(balance,this);
+        this.wallet = new Wallet(balance, this);
     }
 
     public static void addSeller(Seller seller) {

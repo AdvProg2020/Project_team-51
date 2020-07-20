@@ -24,7 +24,7 @@ public class Auction {
         this.appliedProducts = appliedProducts;
         this.offPercentage = offPercentage;
         this.auctionStatus = Status.PENDING_CREATE;
-        new AddAuctionRequest(this,seller);
+        new AddAuctionRequest(this, seller);
         allAuctions.add(this);
     }
 

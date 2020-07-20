@@ -189,17 +189,17 @@ public class CustomerMenuPanes {
 
     public Pane getOrdersPane() {
         Pane pane = new Pane();
-        pane.setPrefSize(1540,800);
+        pane.setPrefSize(1540, 800);
 
         TableView tv = getAllShoppingsTableView();
-        setPlace(tv,300,300);
+        setPlace(tv, 300, 300);
 
         pane.getChildren().addAll(tv);
         return pane;
     }
 
-    public TableView getAllShoppingsTableView(){
-        Customer customer =(Customer) Controller.getCurrentAccount();
+    public TableView getAllShoppingsTableView() {
+        Customer customer = (Customer) Controller.getCurrentAccount();
 
         List<Order> orders = customer.getHistoryOfOrders();
         TableView<Order> table = new TableView<>();
@@ -233,7 +233,7 @@ public class CustomerMenuPanes {
                                     setText(null);
                                 } else {
                                     button.setOnAction(event -> {
-                                        Order  order = getTableView().getItems().get(getIndex());
+                                        Order order = getTableView().getItems().get(getIndex());
                                         Stage stage = new Stage();
                                         stage.setScene(new Scene(
                                                 openSingleOrderPane(order)
@@ -250,13 +250,13 @@ public class CustomerMenuPanes {
         open.setCellFactory(cellFactory);
 
         table.setItems(data);
-        table.getColumns().addAll(id,status,open);
+        table.getColumns().addAll(id, status, open);
         return table;
 
     }
 
     private Pane openSingleOrderPane(Order order) {
-        Customer customer =(Customer) Controller.getCurrentAccount();
+        Customer customer = (Customer) Controller.getCurrentAccount();
 
         ArrayList<ItemOfOrder> items = (ArrayList<ItemOfOrder>) order.getItems();
 
@@ -282,7 +282,7 @@ public class CustomerMenuPanes {
 
 
         table.setItems(data);
-        table.getColumns().addAll(product,price,discount,date,quantity);
+        table.getColumns().addAll(product, price, discount, date, quantity);
 
         Pane pane = new Pane();
         pane.getChildren().addAll(table);

@@ -114,7 +114,7 @@ public class ManagerMenuPanes {
                             emailError.setText(e.getMessage());
                         }
                     }
-                }else{
+                } else {
                     emailError.setText("");
                 }
                 if (!phoneNumberTextField.getText().equals(currentAccount.getPhoneNumber())) {
@@ -127,7 +127,7 @@ public class ManagerMenuPanes {
                             phoneNumberError.setText(e.getMessage());
                         }
                     }
-                }else{
+                } else {
                     phoneNumberError.setText("");
                 }
             }
@@ -1017,6 +1017,7 @@ public class ManagerMenuPanes {
 
                             final CheckBox checkBox = new CheckBox();
                             boolean firstTime = true;
+
                             @Override
                             public void updateItem(String item, boolean empty) {
                                 super.updateItem(item, empty);
@@ -1024,7 +1025,7 @@ public class ManagerMenuPanes {
                                     setGraphic(null);
                                     setText(null);
                                 } else {
-                                    if (firstTime){
+                                    if (firstTime) {
                                         checkBox.setSelected(selectedAccounts.contains(
                                                 getTableView().getItems().get(getIndex())
                                         ));
@@ -1093,7 +1094,7 @@ public class ManagerMenuPanes {
             }
 
             Category parent = parentComboBox.getValue();
-            if (parent==null) parentError.setText("");
+            if (parent == null) parentError.setText("");
             else if (parent.equals(category)) parentError.setText("a category cannot be its own father");
             else if (category.getSubCategories().containsValue(parent)) {
                 parentError.setText("cannot select this category");
@@ -1123,7 +1124,7 @@ public class ManagerMenuPanes {
                 managerController.editCategory(category, products, name, parentComboBox.getValue());
             }
         });
-        setPlace(confirm,X,480);
+        setPlace(confirm, X, 480);
 
         pane.getChildren().addAll(
                 nameLabel,
@@ -1195,7 +1196,7 @@ public class ManagerMenuPanes {
             } else if (managerController.isCategoryValid(nameField.getText())) {
                 nameError.setText("this name is taken");
             } else {
-                if (attributes.size() < (int)countSlider.getValue()) {
+                if (attributes.size() < (int) countSlider.getValue()) {
                     nameError.setText("please enter all attributes");
                 } else {
                     managerController.addCategory(nameField.getText(), categoryComboBox.getValue().getName(), attributes1);

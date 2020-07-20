@@ -124,7 +124,7 @@ public class Server {
                     DataController.getInstance().registerManager(message);
                     break;
                 case REGISTER_MANAGER_BY_MANAGER:
-                DataController.getInstance().registerManagerByManager(message);
+                    DataController.getInstance().registerManagerByManager(message);
                     break;
                 case REGISTER_SERVICE_BY_MANAGER:
                     DataController.getInstance().registerService(message);
@@ -187,7 +187,7 @@ public class Server {
                     DataController.getInstance().createOffCode(message);
                     break;
                 case ADD_TO_CART:
-                DataController.getInstance().addToCart(message);
+                    DataController.getInstance().addToCart(message);
                     break;
                 case APPLY_OFF_CODE:
                     DataController.getInstance().applyOffCode(message);

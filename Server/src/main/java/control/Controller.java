@@ -28,19 +28,6 @@ public class Controller {
         return currentAccount != null;
     }
 
-    public void login(String username, String password) throws WrongPasswordException, InvalidUsernameException {
-        var account = Account.getAccountById(username);
-        if (doesPasswordMatches(username, password)
-                && (!(account instanceof Seller) || ((((Seller) account).getStatus().equals(Status.APPROVED))))) {
-            currentAccount = Account.getAccountById(username);
-            if (currentAccount instanceof Customer)
-                ((Customer) currentAccount).setCart(cart);
-            if (currentAccount == null) throw new InvalidUsernameException();
-        } else {
-            throw new WrongPasswordException();
-        }
-    }
-
     public static boolean doesPasswordMatches(String user, String password) throws InvalidUsernameException {
         return hasUserWithThisUsername(user) && Account.getAccountById(user).getPassword().equals(password);
     }
@@ -93,6 +80,19 @@ public class Controller {
         }
 
         return false;
+    }
+
+    public void login(String username, String password) throws WrongPasswordException, InvalidUsernameException {
+        var account = Account.getAccountById(username);
+        if (doesPasswordMatches(username, password)
+                && (!(account instanceof Seller) || ((((Seller) account).getStatus().equals(Status.APPROVED))))) {
+            currentAccount = Account.getAccountById(username);
+            if (currentAccount instanceof Customer)
+                ((Customer) currentAccount).setCart(cart);
+            if (currentAccount == null) throw new InvalidUsernameException();
+        } else {
+            throw new WrongPasswordException();
+        }
     }
 
     public List<ItemOfOrder> getCart() {

@@ -72,11 +72,6 @@ public class Message {
         return JsonConverter.fromJson(messageJson, Message.class);
     }
 
-
-    public String toJson() {
-        return JsonConverter.toJson(this);
-    }
-
     public static Message makeExceptionMessage(String receiver, String exceptionString) {
         Message message = new Message(receiver);
         message.exceptionMessage = new ExceptionMessage(exceptionString);
@@ -84,16 +79,32 @@ public class Message {
         return message;
     }
 
+    public String toJson() {
+        return JsonConverter.toJson(this);
+    }
+
     public MessageType getMessageType() {
         return messageType;
+    }
+
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
     }
 
     public String getSender() {
         return sender;
     }
 
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
     public String getReceiver() {
         return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 
     public ResponseToClientMessage getResponseToClientMessage() {
@@ -102,18 +113,6 @@ public class Message {
 
     public void setResponseToClientMessage(ResponseToClientMessage responseToClientMessage) {
         this.responseToClientMessage = responseToClientMessage;
-    }
-
-    public void setMessageType(MessageType messageType) {
-        this.messageType = messageType;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
     }
 
     public LocalDate getDate() {

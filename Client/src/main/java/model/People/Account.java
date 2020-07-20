@@ -18,6 +18,7 @@ public abstract class Account {
     private String password;
     private ImageView image;
     private ArrayList<Chat> chats;
+
     public Account(String username, String password, String firstName, String lastName, Double balance, String email, String phoneNumber) {
         this.username = username;
         this.password = password;
@@ -121,7 +122,7 @@ public abstract class Account {
         return Double.toString(balance);
     }
 
-    public ArrayList<Chat> getChats(){
+    public ArrayList<Chat> getChats() {
         return chats;
     }
 

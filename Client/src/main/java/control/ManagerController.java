@@ -412,9 +412,9 @@ public class ManagerController extends Controller {
 
     public ArrayList<Request> getAllRequests() {
         ArrayList<Request> pendingRequests = new ArrayList<>();
-        for (Request r : model.Requests.Request.getAllRequests()){
-            if (r.getStatus()== Status.PENDING_CREATE||
-                    r.getStatus()==Status.PENDING_EDIT){
+        for (Request r : model.Requests.Request.getAllRequests()) {
+            if (r.getStatus() == Status.PENDING_CREATE ||
+                    r.getStatus() == Status.PENDING_EDIT) {
                 pendingRequests.add(r);
             }
         }
