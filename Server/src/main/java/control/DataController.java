@@ -8,6 +8,7 @@ import model.People.Account;
 import model.People.Customer;
 import model.People.Manager;
 import model.Requests.AddAuctionRequest;
+import model.Requests.AddCommentRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -138,8 +139,20 @@ public class DataController {
         }
     }
 
-    public void acceptAddCommentRequest(Message message) {
-
+    public void acceptAddCommentRequest(Message message) throws ClientException {
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            AddCommentRequest addCommentRequest = message.getAcceptAddCommentRequestMessage().getAddCommentRequest();
+            if (addCommentRequest == null) {
+                throw new ClientException("null message!");
+            } else if (!(account instanceof Manager)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                addCommentRequest.accept();
+            }
+        }
     }
 
     public void acceptAddItemRequest(Message message) {
