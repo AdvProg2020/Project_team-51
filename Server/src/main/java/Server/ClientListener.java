@@ -36,6 +36,8 @@ public class ClientListener extends Thread {
                 }
             }
             Server.getInstance().serverPrint("New Client Is Accepted!");
+            DNS.getInstance().putClient(name, socket.getPort());
+            
             while (true) {
                 String message = scanner.nextLine();
                 ClientPortal.getInstance().addMessage(name, message);
