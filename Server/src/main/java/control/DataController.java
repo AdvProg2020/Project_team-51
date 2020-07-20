@@ -8,10 +8,7 @@ import message.Message;
 import model.People.Account;
 import model.People.Customer;
 import model.People.Manager;
-import model.Requests.AddAuctionRequest;
-import model.Requests.AddCommentRequest;
-import model.Requests.AddItemRequest;
-import model.Requests.AddSellerForItemRequest;
+import model.Requests.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -139,6 +136,7 @@ public class DataController {
                 throw new ClientException("You are not allowed to do that");
             } else {
                 addAuctionRequest.accept();
+                Server.getInstance().serverPrint("Request got accepted!");
             }
         }
     }
@@ -156,6 +154,7 @@ public class DataController {
                 throw new ClientException("You are not allowed to do that");
             } else {
                 addCommentRequest.accept();
+                Server.getInstance().serverPrint("Request got accepted!");
             }
         }
     }
@@ -173,6 +172,7 @@ public class DataController {
                 throw new ClientException("You are not allowed to do that");
             } else {
                 addItemRequest.accept();
+                Server.getInstance().serverPrint("Request got accepted!");
             }
         }
     }
@@ -190,12 +190,27 @@ public class DataController {
                 throw new ClientException("You are not allowed to do that");
             } else {
                 addSellerForItemRequest.accept();
+                Server.getInstance().serverPrint("Request got accepted!");
             }
         }
     }
 
-    public void acceptAddSellerRequest(Message message) {
-
+    public void acceptAddSellerRequest(Message message) throws ClientException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            AddSellerRequest addSellerRequest = message.getAcceptAddSellerRequestMessage().getAddSellerRequest();
+            if (addSellerRequest == null) {
+                throw new ClientException("null message!");
+            } else if (!(account instanceof Manager)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                addSellerRequest.accept();
+                Server.getInstance().serverPrint("Request got accepted!");
+            }
+        }
     }
 
     public void acceptEditAuctionRequest(Message message) {
