@@ -1,5 +1,8 @@
 package Server;
 
+import control.DataController;
+import message.Message;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -43,11 +46,11 @@ public class ClientPortal extends Thread {
 
     synchronized void addClient(String name, Formatter formatter) {//TODO:add remove client
         clients.put(name, formatter);
-//        DataCenter.getInstance().putClient(name, null);
+        DataController.getInstance().putClient(name, null);
     }
 
     void addMessage(String clientName, String message) {
-//        Server.getInstance().addToReceivingMessages(Message.convertJsonToMessage(message));
+        Server.getInstance().addToReceivingMessages(Message.convertJsonToMessage(message));
     }
 
     synchronized public void sendMessage(String clientName, String message) {//TODO:Change Synchronization

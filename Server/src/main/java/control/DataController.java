@@ -36,10 +36,14 @@ public class DataController {
         return instance;
     }
 
-
     public boolean isOnline(String username) {
         return true;
     }
+
+    public void putClient(String name, Account account) {
+        clients.put(name, account);
+    }
+
 
     public Account getAccount(String username) {
         if (username == null) {
