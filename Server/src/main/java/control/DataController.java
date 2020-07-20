@@ -493,8 +493,23 @@ public class DataController {
         }
     }
 
-    public void createEditProductRequest(Message message) {
-
+    public void createEditProductRequest(Message message) throws ClientException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            if (!(account instanceof Seller)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                var createEditProductRequest = message.getCreateEditProductRequestMessage();
+                new EditProductRequest(createEditProductRequest.getProduct(),
+                        createEditProductRequest.getSeller(),
+                        createEditProductRequest.getField(),
+                        createEditProductRequest.getValue());
+                Server.getInstance().serverPrint("Request has created!");
+            }
+        }
     }
 
     public void loginCheck(Message message) throws ClientException {
