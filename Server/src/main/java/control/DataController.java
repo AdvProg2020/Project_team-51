@@ -11,6 +11,7 @@ import model.People.Manager;
 import model.Requests.AddAuctionRequest;
 import model.Requests.AddCommentRequest;
 import model.Requests.AddItemRequest;
+import model.Requests.AddSellerForItemRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -126,6 +127,7 @@ public class DataController {
     }
 
     public void acceptAddAuctionRequest(Message message) throws ClientException {
+        loginCheck(message);
         if (message.getSender() == null) {
             throw new ClientException("invalid message!");
         } else {
@@ -142,6 +144,7 @@ public class DataController {
     }
 
     public void acceptAddCommentRequest(Message message) throws ClientException {
+        loginCheck(message);
         if (message.getSender() == null) {
             throw new ClientException("invalid message!");
         } else {
@@ -158,6 +161,7 @@ public class DataController {
     }
 
     public void acceptAddItemRequest(Message message) throws InvalidProductIdException, ClientException {
+        loginCheck(message);
         if (message.getSender() == null) {
             throw new ClientException("invalid message!");
         } else {
@@ -173,8 +177,21 @@ public class DataController {
         }
     }
 
-    public void acceptAddSellerForItemRequest(Message message) {
-
+    public void acceptAddSellerForItemRequest(Message message) throws ClientException, InvalidProductIdException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            AddSellerForItemRequest addSellerForItemRequest = message.getAcceptAddSellerForItemRequestMessage().getAddSellerForItemRequest();
+            if (addSellerForItemRequest == null) {
+                throw new ClientException("null message!");
+            } else if (!(account instanceof Manager)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                addSellerForItemRequest.accept();
+            }
+        }
     }
 
     public void acceptAddSellerRequest(Message message) {
