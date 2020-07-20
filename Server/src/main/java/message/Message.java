@@ -2,7 +2,9 @@ package message;
 
 import Server.JsonConverter;
 import Server.Server;
-import message.Messages.*;
+import message.Messages.ClientToServer.*;
+import message.Messages.ServerToClient.ExceptionMessage;
+import message.Messages.ServerToClient.ResponseToClientMessage;
 
 import java.time.LocalDate;
 

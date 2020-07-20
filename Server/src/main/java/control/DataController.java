@@ -116,7 +116,7 @@ public class DataController {
         // TODO -> Send Done Message
     }
 
-    public void addManager(Message message) throws ClientException {
+    public void registerManagerByManager(Message message) throws ClientException {
         Account account = message.getRegisterManagerByManagerMessage().getManager();
         if (account instanceof Manager) {
             Manager.addManager((Manager) account);
