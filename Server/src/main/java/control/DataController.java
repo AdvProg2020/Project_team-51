@@ -232,8 +232,22 @@ public class DataController {
         }
     }
 
-    public void acceptEditProductRequest(Message message) {
-
+    public void acceptEditProductRequest(Message message) throws ClientException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            EditProductRequest editProductRequest = message.getAcceptEditProductRequestMessage().getEditProductRequest();
+            if (editProductRequest == null) {
+                throw new ClientException("null message!");
+            } else if (!(account instanceof Manager)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                editProductRequest.accept();
+                Server.getInstance().serverPrint("Request got accepted!");
+            }
+        }
     }
 
     public void applyOffCode(Message message) {
