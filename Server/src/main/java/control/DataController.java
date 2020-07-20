@@ -10,6 +10,7 @@ import model.People.Customer;
 import model.People.Manager;
 import model.Requests.*;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -213,8 +214,22 @@ public class DataController {
         }
     }
 
-    public void acceptEditAuctionRequest(Message message) {
-
+    public void acceptEditAuctionRequest(Message message) throws ClientException, InvalidProductIdException, ParseException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            EditAuctionRequest editAuctionRequest = message.getAcceptEditAuctionRequestMessage().getEditAuctionRequest();
+            if (editAuctionRequest == null) {
+                throw new ClientException("null message!");
+            } else if (!(account instanceof Manager)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                editAuctionRequest.accept();
+                Server.getInstance().serverPrint("Request got accepted!");
+            }
+        }
     }
 
     public void acceptEditProductRequest(Message message) {
