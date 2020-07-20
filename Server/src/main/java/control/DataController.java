@@ -477,8 +477,20 @@ public class DataController {
         }
     }
 
-    public void createEditAuctionRequest() {
-
+    public void createEditAuctionRequest(Message message) throws ClientException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            if (!(account instanceof Seller)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                var createEditAuctionRequest = message.getCreateEditAuctionRequestMessage();
+                new EditAuctionRequest(createEditAuctionRequest.getAuction(), createEditAuctionRequest.getField(), createEditAuctionRequest.getValue());
+                Server.getInstance().serverPrint("Request has created!");
+            }
+        }
     }
 
     public void createEditProductRequest(Message message) {
