@@ -14,7 +14,7 @@ import java.util.List;
 public class Controller {
 
     protected static Account currentAccount;
-    protected static List<ItemOfOrder> cart = new ArrayList<>();
+    protected List<ItemOfOrder> cart = new ArrayList<>();
 
     public Controller(Account currentAccount) {
         Controller.currentAccount = currentAccount;
@@ -28,7 +28,7 @@ public class Controller {
         return currentAccount != null;
     }
 
-    public static void login(String username, String password) throws WrongPasswordException, InvalidUsernameException {
+    public void login(String username, String password) throws WrongPasswordException, InvalidUsernameException {
         var account = Account.getAccountById(username);
         if (doesPasswordMatches(username, password)
                 && (!(account instanceof Seller) || ((((Seller) account).getStatus().equals(Status.APPROVED))))) {
@@ -95,7 +95,7 @@ public class Controller {
         return false;
     }
 
-    public static List<ItemOfOrder> getCart() {
+    public List<ItemOfOrder> getCart() {
         return cart;
     }
 }

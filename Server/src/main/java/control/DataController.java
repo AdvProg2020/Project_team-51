@@ -2,9 +2,7 @@ package control;
 
 import Server.ClientPortal;
 import Server.Server;
-import control.Exceptions.ClientException;
-import control.Exceptions.InsufficientBalanceException;
-import control.Exceptions.InvalidProductIdException;
+import control.Exceptions.*;
 import message.Message;
 import model.Attributes;
 import model.Bid;
@@ -126,6 +124,16 @@ public class DataController {
             throw new ClientException("You are not allowed to do that");
         }
     }
+
+    public void addToCart(Message message) throws ClientException, InvalidUsernameException, LackOfProductException, NotAllowedActivityException {
+        Account account = message.getRegisterManagerByManagerMessage().getManager();
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        }
+        new SingleProductController(account, message.getAddToCartMessage().getProduct())
+                .addToCart(message.getAddToCartMessage().getSeller().getUserName());
+    }
+
 
     public void acceptAddAuctionRequest(Message message) throws ClientException {
         loginCheck(message);

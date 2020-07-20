@@ -53,10 +53,11 @@ public class Message {
     private RegisterManagerByManagerMessage registerManagerByManagerMessage;
     private SetWageMessage setWageMessage;
     private ResponseToClientMessage responseToClientMessage;
-    private ExceptionMessage exceptionMessage;
+    private AddToCartMessage addToCartMessage;
 
     // Server --> Clients
     //      TODO (NEED TO FIGURE OUT THE REQUESTS)
+    private ExceptionMessage exceptionMessage;
 
 
     private Message(String receiver) {
@@ -399,5 +400,13 @@ public class Message {
 
     public void setSetWageMessage(SetWageMessage setWageMessage) {
         this.setWageMessage = setWageMessage;
+    }
+
+    public AddToCartMessage getAddToCartMessage() {
+        return addToCartMessage;
+    }
+
+    public void setAddToCartMessage(AddToCartMessage addToCartMessage) {
+        this.addToCartMessage = addToCartMessage;
     }
 }
