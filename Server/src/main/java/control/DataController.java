@@ -1,7 +1,10 @@
 package control;
 
+import Server.Server;
+import control.Exceptions.ClientException;
 import message.Message;
 import model.People.Account;
+import model.People.Customer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,8 +30,31 @@ public class DataController {
         return true;
     }
 
-    public void registerCustomer(Message message) {
+    public Account getAccount(String username) {
+        if (username == null) {
+            Server.getInstance().serverPrint("Null Username In getAccount.");
+            return null;
+        }
+        for (Account account : accounts.keySet()) {
+            if (account.getUserName().equalsIgnoreCase(username)) {
+                return account;
+            }
+        }
+        return null;
+    }
 
+    public void registerCustomer(Message message) throws ClientException {
+        if (message.getRegisterCustomerMessage().getCustomer().getUserName() == null ||
+                getAccount(message.getRegisterCustomerMessage().getCustomer().getUserName()) != null) {
+            throw new ClientException("Invalid Username!");
+        } else if (message.getLoginMessage().getPassword() == null) {
+            throw new ClientException("Invalid Password!");
+        } else {
+            Customer customer = message.getRegisterCustomerMessage().getCustomer();
+            Customer.addCustomer(customer);
+            accounts.put(customer, null);
+            Server.getInstance().serverPrint(message.getRegisterCustomerMessage().getCustomer().getUserName() + " Is Created!");
+        }
     }
 
     public void registerService(Message message) {
@@ -159,19 +185,19 @@ public class DataController {
 
     }
 
-    public void loginCheck(Message message) {
+    public void loginCheck(Message message) throws ClientException {
         loginCheck(message.getSender());
     }
 
-    public void loginCheck(String sender) {
+    public void loginCheck(String sender) throws ClientException {
         if (sender == null) {
-//            throw new ClientException("invalid message!");
+            throw new ClientException("invalid message!");
         }
         if (!clients.containsKey(sender)) {
-//            throw new LogicException("Client Wasn't Added!");
+            throw new ClientException("Client Wasn't Added!");
         }
         if (clients.get(sender) == null) {
-//            throw new ClientException("Client Was Not LoggedIn");
+            throw new ClientException("Client Was Not LoggedIn");
         }
     }
 

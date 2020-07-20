@@ -33,6 +33,7 @@ public class Server {
         new Build().run();
         Thread statusUpdaterThread = new Thread(new StatusUpdater());
         statusUpdaterThread.start();
+        ClientPortal.getInstance().start();
 
         new Thread(() -> {
             serverPrint("Server Thread:sending messages is started...");
