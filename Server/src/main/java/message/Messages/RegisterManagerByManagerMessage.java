@@ -2,11 +2,11 @@ package message.Messages;
 
 import model.People.Manager;
 
-public class AddManagerByManagerMessage {
+public class RegisterManagerByManagerMessage {
 
     private Manager manager;
 
-    public AddManagerByManagerMessage(Manager manager) {
+    public RegisterManagerByManagerMessage(Manager manager) {
         this.manager = manager;
     }
 

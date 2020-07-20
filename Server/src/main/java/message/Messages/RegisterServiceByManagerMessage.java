@@ -2,11 +2,11 @@ package message.Messages;
 
 import model.People.Seller;
 
-public class RegisterServiceMessage {
+public class RegisterServiceByManagerMessage {
 
     private Seller seller;
 
-    public RegisterServiceMessage(Seller seller) {
+    public RegisterServiceByManagerMessage(Seller seller) {
         this.seller = seller;
     }
 
