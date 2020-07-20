@@ -54,7 +54,6 @@ public class DataController {
         } else {
             Customer customer = message.getRegisterCustomerMessage().getCustomer();
             Customer.addCustomer(customer);
-            accounts.put(customer, null);
             Server.getInstance().serverPrint(message.getRegisterCustomerMessage().getCustomer().getUserName() + " Is Created!");
         }
     }
@@ -74,7 +73,6 @@ public class DataController {
         } else {
             Manager manager = message.getRegisterManagerMessage().getManager();
             Manager.addManager(manager);
-            accounts.put(manager, null);
             Server.getInstance().serverPrint(message.getRegisterManagerMessage().getManager().getUserName() + " Is Created!");
         }
     }
@@ -108,11 +106,13 @@ public class DataController {
         clients.replace(message.getSender(), null);
         Server.getInstance().serverPrint(message.getSender() + " Is Logged Out.");
         // TODO -> Send Done Message
-
     }
 
     public void addManager(Message message) {
-
+        Account account = message.getRegisterManagerByManagerMessage().getManager();
+        if (account instanceof Manager) {
+            Manager.addManager((Manager) account);
+        }
     }
 
     public void chargeWallet(Message message) {
