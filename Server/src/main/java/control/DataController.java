@@ -102,7 +102,12 @@ public class DataController {
         }
     }
 
-    public void logout(Message message) {
+    public void logout(Message message) throws ClientException {
+        loginCheck(message);
+        accounts.replace(clients.get(message.getSender()), null);
+        clients.replace(message.getSender(), null);
+        Server.getInstance().serverPrint(message.getSender() + " Is Logged Out.");
+        // TODO -> Send Done Message
 
     }
 
