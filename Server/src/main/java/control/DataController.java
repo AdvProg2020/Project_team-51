@@ -9,6 +9,7 @@ import message.Message;
 import model.People.Account;
 import model.People.Customer;
 import model.People.Manager;
+import model.People.Seller;
 import model.Requests.*;
 
 import java.text.ParseException;
@@ -277,15 +278,27 @@ public class DataController {
     }
 
     public void setWage(Message message) {
-
+        //TODO
     }
 
     public void takeFromWallet(Message message) {
-
+        //TODO
     }
 
-    public void createAuction(Message message) {
-
+    public void createAddAuctionRequest(Message message) throws ClientException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            if (!(account instanceof Seller)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                var createAddAuctionRequest = message.getCreateAddAuctionRequestMessage();
+                new AddAuctionRequest(createAddAuctionRequest.getAuction(), createAddAuctionRequest.getSeller());
+                Server.getInstance().serverPrint("Request got accepted!");
+            }
+        }
     }
 
     public void createOffCode(Message message) {
