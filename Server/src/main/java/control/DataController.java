@@ -442,8 +442,23 @@ public class DataController {
         }
     }
 
-    public void createAddSellerForItemRequest(Message message) {
-
+    public void createAddSellerForItemRequest(Message message) throws ClientException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            if (!(account instanceof Seller)) {
+                throw new ClientException("You are not allowed to do that");
+            } else {
+                var createAddSellerForItemRequest = message.getCreateAddSellerForItemRequestMessage();
+                new AddSellerForItemRequest(createAddSellerForItemRequest.getProduct(),
+                        createAddSellerForItemRequest.getSeller(),
+                        createAddSellerForItemRequest.getQuantity(),
+                        createAddSellerForItemRequest.getPrice());
+                Server.getInstance().serverPrint("Request has created!");
+            }
+        }
     }
 
     public void createAddSellerRequest() {
