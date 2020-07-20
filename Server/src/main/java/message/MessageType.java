@@ -1,6 +1,8 @@
 package message;
 
 public enum MessageType {
+
+    // Client --> Server
     LOGIN,
     LOGOUT,
     REGISTER_CUSTOMER,
@@ -36,5 +38,30 @@ public enum MessageType {
     PAY_CART_VIA_WALLET,
     REMOVE_PRODUCT_FROM_CART,
     SET_WAGE,
-    SEND_EXCEPTION
+
+    // Server --> Client
+    GET_AUCTION,
+    GET_BID,
+    GET_BID_LIST,
+    GET_BUYER_LOG,
+    GET_CART,
+    GET_CATEGORY,
+    GET_CHAT,
+    GET_CUSTOMER,
+    GET_ITEM_OF_ORDER,
+    GET_MANAGER,
+    GET_OFF_CODE,
+    GET_PRODUCT,
+    GET_PRODUCTS_LIST,
+    GET_RATE,
+    GET_SELLER_LOG,
+    GET_SELLER,
+    GET_SERVICE,
+    GET_STATUS,
+    GET_TEXT_MESSAGE,
+    GET_WALLET,
+    DONE,
+    RESPONSE,
+    SEND_EXCEPTION,
+
 }
