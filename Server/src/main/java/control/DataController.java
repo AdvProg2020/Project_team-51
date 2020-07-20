@@ -1,5 +1,6 @@
 package control;
 
+import Server.ClientPortal;
 import Server.Server;
 import control.Exceptions.ClientException;
 import message.Message;
@@ -78,8 +79,27 @@ public class DataController {
         }
     }
 
-    public void login(Message message) {
-
+    public void login(Message message) throws ClientException {
+        if (message.getLoginMessage().getUsername() == null || message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        }
+        Account account = getAccount(message.getLoginMessage().getUsername());
+        if (!ClientPortal.getInstance().hasThisClient(message.getSender())) {
+            throw new ClientException("Client Wasn't Added!");
+        } else if (account == null) {
+            throw new ClientException("Username Not Found!");
+        } else if (!account.getPassword().equalsIgnoreCase(message.getLoginMessage().getPassword())) {
+            throw new ClientException("Incorrect PassWord!");
+        } else if (accounts.get(account) != null) {
+            throw new ClientException("Selected Username Is Online!");
+        } else if (clients.get(message.getSender()) != null) {
+            throw new ClientException("Your Client Has Logged In Before!");
+        } else {
+            accounts.replace(account, message.getSender());
+            clients.replace(message.getSender(), account);
+            // TODO -> Send Done Message
+            Server.getInstance().serverPrint(message.getSender() + " Is Logged In");
+        }
     }
 
     public void logout(Message message) {
