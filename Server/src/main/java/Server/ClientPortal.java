@@ -10,15 +10,16 @@ import java.util.*;
 
 public class ClientPortal extends Thread {
 
-    private static final String CONFIG_PATH = "config";
     private static final int DEFAULT_PORT = 8888;
-    private static ClientPortal ourInstance = new ClientPortal();
+    private static ClientPortal ourInstance;
     private HashMap<String, Formatter> clients = new HashMap<>();
 
     private ClientPortal() {
     }
 
     public static ClientPortal getInstance() {
+        if (ourInstance == null)
+            ourInstance = new ClientPortal();
         return ourInstance;
     }
 
