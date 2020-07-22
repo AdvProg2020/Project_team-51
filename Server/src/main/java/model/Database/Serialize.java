@@ -21,9 +21,8 @@ public class Serialize {
     public Serialize() {
     }
 
-
     public void serializeProduct(Product product) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\Products\\" + product.getProductId() + ".json";
+        String filePath = "Server\\src\\main\\resources\\Products\\" + product.getProductId() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(product, Product.class), filePath);
     }
 
@@ -34,48 +33,48 @@ public class Serialize {
     }
 
     private void serializeManager(Manager manager) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\People\\Managers\\" + "Manager_" + manager.getUserName() + ".json";
+        String filePath = "Server\\src\\main\\resources\\People\\Managers\\" + "Manager_" + manager.getUserName() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(manager, Manager.class), filePath);
     }
 
     private void serializeSeller(Seller seller) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\People\\Sellers\\" + "Seller_" + seller.getUserName() + ".json";
+        String filePath = "Server\\src\\main\\resources\\People\\Sellers\\" + "Seller_" + seller.getUserName() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(seller, Seller.class), filePath);
     }
 
     private void serializeCustomer(Customer customer) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\People\\Customers\\" + "Customer_" + customer.getUserName() + ".json";
+        String filePath = "Server\\src\\main\\resources\\People\\Customers\\" + "Customer_" + customer.getUserName() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(customer, Customer.class), filePath);
     }
 
     public void serializeAuction(Auction auction) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\Auctions\\" + auction.getAuctionId() + ".json";
+        String filePath = "Server\\src\\main\\resources\\Auctions\\" + auction.getAuctionId() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(auction, Auction.class), filePath);
     }
 
     public void serializeOffCode(OffCode offCode) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\OffCodes\\" + offCode.getOffCode() + ".json";
+        String filePath = "Server\\src\\main\\resources\\OffCodes\\" + offCode.getOffCode() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(offCode, OffCode.class), filePath);
     }
 
     public void serializeRate(Rate rate) throws IOException {
-        String filePath = "Project\\src\\resources\\Rates\\" + "RT_" + rate.getRateId() + ".json";
+        String filePath = "Server\\src\\resources\\Rates\\" + "RT_" + rate.getRateId() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(rate, Rate.class), filePath);
     }
 
     public void serializeComment(Comment comment) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\Comments\\" + "CM_" + comment.getCommentId() + ".json";
+        String filePath = "Server\\src\\main\\resources\\Comments\\" + "CM_" + comment.getCommentId() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(comment, Comment.class), filePath);
     }
 
     public void serializeCategory(Category category) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\Categories\\" + "CTG_" + category.getName() + "_" +
+        String filePath = "Server\\src\\main\\resources\\Categories\\" + "CTG_" + category.getName() + "_" +
                 category.getCategoryId() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(category, Category.class), filePath);
     }
 
     public void serializeRequest(Request request) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\Requests\\";
+        String filePath = "Server\\src\\main\\resources\\Requests\\";
         if (request instanceof AddAuctionRequest) {
             serializeAddAuctionRequest((AddAuctionRequest) request, filePath + "AddAuctionRequests\\"
                     + "AA_" + request.getRequestId() + ".json");
@@ -138,23 +137,23 @@ public class Serialize {
     }
 
     private void serializeBuyerLog(BuyerLog buyerLog) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\Orders\\" + "BL_" + buyerLog.getOrderID() + ".json";
+        String filePath = "Server\\src\\main\\resources\\Orders\\" + "BL_" + buyerLog.getOrderID() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(buyerLog, BuyerLog.class), filePath);
     }
 
     private void serializeSellerLog(SellerLog sellerLog) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\Orders\\" + "SL_" + sellerLog.getOrderID() + ".json";
+        String filePath = "Server\\src\\main\\resources\\Orders\\" + "SL_" + sellerLog.getOrderID() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(sellerLog, BuyerLog.class), filePath);
     }
 
     public void serializeItemOfOrder(ItemOfOrder itemOfOrder) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\ItemsOfOrders\\" + "IOO_" + itemOfOrder.getSeller().getUserName() + "_"
+        String filePath = "Server\\src\\main\\resources\\ItemsOfOrders\\" + "IOO_" + itemOfOrder.getSeller().getUserName() + "_"
                 + itemOfOrder.getProduct().getProductId() + "_" + itemOfOrder.getDate() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(itemOfOrder, ItemOfOrder.class), filePath);
     }
 
     public void serializeAttributes(Attributes attribute) throws IOException {
-        String filePath = "Project\\src\\main\\resources\\Attributes\\" + "ATB_" + attribute.getField() + ".json";
+        String filePath = "Server\\src\\main\\resources\\Attributes\\" + "ATB_" + attribute.getField() + ".json";
         WriteIntoFiles.writeIntoFile(yaGson.toJson(attribute, Attributes.class), filePath);
     }
 

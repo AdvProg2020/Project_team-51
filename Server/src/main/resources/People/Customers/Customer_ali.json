@@ -1,6 +1,7 @@
 {
   "cart": [],
   "historyOfOrders": [],
+  "wallet": null,
   "username": "ali",
   "firstName": "ali",
   "lastName": "ali",
@@ -8,5 +9,6 @@
   "email": "ali@ali.com",
   "phoneNumber": "09129834765",
   "password": "aliali",
-  "image": null
+  "image": null,
+  "chats": null
 }

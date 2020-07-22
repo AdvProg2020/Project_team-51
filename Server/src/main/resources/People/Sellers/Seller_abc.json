@@ -4,6 +4,7 @@
   "allAuctions": [],
   "brandName": "Amazon",
   "status": "APPROVED",
+  "wallet": null,
   "username": "abc",
   "firstName": "abc",
   "lastName": "abc",
@@ -11,5 +12,6 @@
   "email": "a@b.c",
   "phoneNumber": "0987654321",
   "password": "abc",
-  "image": null
+  "image": null,
+  "chats": null
 }

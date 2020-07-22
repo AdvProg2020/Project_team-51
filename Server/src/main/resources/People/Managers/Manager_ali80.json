@@ -6,5 +6,6 @@
   "email": "ali@ali.ali",
   "phoneNumber": "09123456787",
   "password": "ali80",
-  "image": null
+  "image": null,
+  "chats": null
 }

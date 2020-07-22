@@ -24,7 +24,6 @@ public class Deserialize {
         Product.addProduct(yaGson.fromJson(serializedObject, Product.class));
     }
 
-
     public void deserializeManagers(String serializedObject) throws IOException {
         Manager.addManager(yaGson.fromJson(serializedObject, Manager.class));
     }

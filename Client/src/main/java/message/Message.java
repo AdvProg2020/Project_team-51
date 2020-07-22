@@ -1,6 +1,6 @@
 package message;
 
-import Server.JsonConverter;
+import control.Client;
 import message.Messages.ClientToServer.*;
 import message.Messages.ServerToClient.*;
 
@@ -80,7 +80,7 @@ public class Message {
 
 
     private Message(String receiver) {
-        this.sender = Server.getInstance().serverName;
+        this.sender = Client.getInstance().getClientName();
         this.receiver = receiver;
     }
 

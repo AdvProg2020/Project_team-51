@@ -31,7 +31,7 @@ public class Server {
     }
 
     private void start() {
-        new Build().run();
+        new Thread(() -> new Build().run());
         Thread statusUpdaterThread = new Thread(new StatusUpdater());
         statusUpdaterThread.start();
         ClientPortal.getInstance().start();

@@ -19,14 +19,15 @@ public class Build implements Runnable {
             return null;
         }
     };
-    public final Consumer<String> buyerLog = str -> {
-//        try {
-//            deserialize.deserializeBuyerLog(str);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-    };
     Deserialize deserialize = new Deserialize();
+
+    public final Consumer<String> buyerLog = str -> {
+        try {
+            deserialize.deserializeBuyerLog(str);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    };
     public final Consumer<String> manager = str -> {
         try {
             deserialize.deserializeManagers(str);
@@ -155,7 +156,7 @@ public class Build implements Runnable {
     };
     public final Consumer<String> attribute = str -> {
         try {
-            deserialize.deserializeAddSellerForItemRequests(str);
+            deserialize.deserializeAttributes(str);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -166,7 +167,7 @@ public class Build implements Runnable {
         try {
             initialize();
         } catch (IOException e) {
-            System.out.println("failed ! ");
+            System.err.println("failed to build ! ");
         }
         while (true) {
             Thread thread2 = new Thread(new RuntimeDaraSaver());
@@ -181,7 +182,7 @@ public class Build implements Runnable {
 
 
     private Stream<File> createStream() throws IOException {
-        Path path = Paths.get("Project", "src", "main", "resources");
+        Path path = Paths.get("Server", "src", "main", "resources");
         Stream<Path> stream = Files.walk(path);
         Stream<File> dataBase = stream.filter(Files::isRegularFile).map(Path::toFile);
         return dataBase;
@@ -189,20 +190,20 @@ public class Build implements Runnable {
 
     public void initialize() throws IOException {
         createStream().filter(file -> file.getName().startsWith("Manager")).map(File::toPath).map(readContent).forEach(manager);
-//        createStream().filter(file -> file.getName().startsWith("Customer")).map(File::toPath).map(readContent).forEach(customer);
+        createStream().filter(file -> file.getName().startsWith("Customer")).map(File::toPath).map(readContent).forEach(customer);
         createStream().filter(file -> file.getName().startsWith("Seller")).map(File::toPath).map(readContent).forEach(seller);
         createStream().filter(file -> file.getName().startsWith("PID")).map(File::toPath).map(readContent).forEach(product);
         createStream().filter(file -> file.getName().startsWith("OFF")).map(File::toPath).map(readContent).forEach(offCode);
         createStream().filter(file -> file.getName().startsWith("AUC")).map(File::toPath).map(readContent).forEach(auction);
         createStream().filter(file -> file.getName().startsWith("CTG")).map(File::toPath).map(readContent).forEach(category);
         createStream().filter(file -> file.getName().startsWith("RT")).map(File::toPath).map(readContent).forEach(rate);
-//        createStream().filter(file -> file.getName().startsWith("CM")).map(File::toPath).map(readContent).forEach(comment);
+        createStream().filter(file -> file.getName().startsWith("CM")).map(File::toPath).map(readContent).forEach(comment);
         createStream().filter(file -> file.getName().startsWith("BL")).map(File::toPath).map(readContent).forEach(buyerLog);
         createStream().filter(file -> file.getName().startsWith("SL")).map(File::toPath).map(readContent).forEach(sellerLog);
         createStream().filter(file -> file.getName().startsWith("IOO")).map(File::toPath).map(readContent).forEach(itemOfOrder);
         createStream().filter(file -> file.getName().startsWith("AA")).map(File::toPath).map(readContent).forEach(addAuctionRequest);
         createStream().filter(file -> file.getName().startsWith("AS")).map(File::toPath).map(readContent).forEach(addSellerRequest);
-//        createStream().filter(file -> file.getName().startsWith("AC")).map(File::toPath).map(readContent).forEach(addCommentRequest);
+        createStream().filter(file -> file.getName().startsWith("AC")).map(File::toPath).map(readContent).forEach(addCommentRequest);
         createStream().filter(file -> file.getName().startsWith("AI")).map(File::toPath).map(readContent).forEach(addItemRequest);
         createStream().filter(file -> file.getName().startsWith("EA")).map(File::toPath).map(readContent).forEach(editAuctionRequest);
         createStream().filter(file -> file.getName().startsWith("EP")).map(File::toPath).map(readContent).forEach(editProductRequest);

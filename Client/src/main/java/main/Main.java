@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -44,9 +45,9 @@ public class Main extends Application {
     }
 
     private static void playAudio(String musicFile) {
-//        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
-//        audioClip.setCycleCount(Integer.MAX_VALUE);
-//        audioClip.play();
+        AudioClip audioClip = new AudioClip(String.valueOf(Main.class.getResource(musicFile)));
+        audioClip.setCycleCount(Integer.MAX_VALUE);
+        audioClip.play();
     }
 
     @Override

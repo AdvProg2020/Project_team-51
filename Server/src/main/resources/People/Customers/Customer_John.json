@@ -1,6 +1,7 @@
 {
   "cart": [],
   "historyOfOrders": [],
+  "wallet": null,
   "username": "John",
   "firstName": "John",
   "lastName": "Smith",
@@ -8,5 +9,6 @@
   "email": "John@Smith.com",
   "phoneNumber": "09131112233",
   "password": "10101010",
-  "image": null
+  "image": null,
+  "chats": null
 }
