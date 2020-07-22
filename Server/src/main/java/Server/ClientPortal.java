@@ -6,18 +6,17 @@ import message.Message;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.security.KeyPair;
+import java.security.PublicKey;
+import java.security.interfaces.RSAPublicKey;
 import java.util.*;
-
-import static Server.Server.decryptMessage;
 
 public class ClientPortal extends Thread {
 
     private static final int DEFAULT_PORT = 8888;
     private static ClientPortal ourInstance;
     private HashMap<String, Formatter> clients = new HashMap<>();
-    private HashMap<String, KeyPair> keyPairHashMap = new HashMap<>();
-    private HashMap<String, String> authToken = new HashMap<>(); //clientName -> token
+    private HashMap<String, RSAPublicKey> publicKeyHashMap = new HashMap<>();
+    private HashMap<String, String> authToken = new HashMap<>(); //ClientName -> token
 
     private ClientPortal() {
     }
@@ -55,14 +54,8 @@ public class ClientPortal extends Thread {
         DataController.getInstance().putClient(name, null);
     }
 
-    synchronized void addClientKey(String clientName) {
-        KeyPair pair = null;
-        try {
-            pair = Server.generateKeyPair();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        keyPairHashMap.put(clientName, pair);
+    synchronized void addClientKey(String clientName, RSAPublicKey client) {
+        publicKeyHashMap.put(clientName, client);
     }
 
     synchronized void addClientToken(String clientName, String token) {
@@ -70,18 +63,18 @@ public class ClientPortal extends Thread {
     }
 
 
-    public KeyPair getKeyPair(String clientName) {
-        return keyPairHashMap.get(clientName);
+    public PublicKey getKeyPair(String clientName) {
+        return publicKeyHashMap.get(clientName);
     }
 
-    void addMessage(String clientName, String message) {
-        Server.getInstance().addToReceivingMessages(Message.convertJsonToMessage(decryptMessage(message)));
+    void addMessage(String clientName, String message) throws Exception {
+        Server.getInstance().addToReceivingMessages(Message.convertJsonToMessage(Server.decrypt(message)));
     }
 
     synchronized public void sendMessage(String clientName, String message) throws Exception {//TODO:Change Synchronization
         if (clients.containsKey(clientName)) {
-            KeyPair pair = keyPairHashMap.get(clientName);
-            clients.get(clientName).format(Server.encryptMessage(message) + "\n");
+            PublicKey key = publicKeyHashMap.get(clientName);
+            clients.get(clientName).format(Server.encrypt(message, key) + "\n");
             clients.get(clientName).flush();
         } else {
             Server.getInstance().serverPrint("Client Not Found!");

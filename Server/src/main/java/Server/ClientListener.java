@@ -2,7 +2,11 @@ package Server;
 
 import control.TokenGenerator;
 
+import java.math.BigInteger;
 import java.net.Socket;
+import java.security.KeyFactory;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.RSAPublicKeySpec;
 import java.util.Formatter;
 import java.util.Scanner;
 
@@ -29,7 +33,6 @@ public class ClientListener extends Thread {
                 name = scanner.nextLine().split("#")[1];
                 if (name.length() >= 3 && !ClientPortal.getInstance().hasThisClient(name)) {
                     ClientPortal.getInstance().addClient(name, formatter);
-                    ClientPortal.getInstance().addClientKey(name);
                     formatter.format("#Valid#\n");
                     formatter.flush();
                     break;
@@ -43,8 +46,23 @@ public class ClientListener extends Thread {
             String clientToken = TokenGenerator.generateAuthToken();
             ClientPortal.getInstance().addClientToken(name, clientToken);
             System.out.println(clientToken);
-            ClientPortal.getInstance().sendMessage(name, clientToken);
+            formatter.format(clientToken + "\n");
+            formatter.flush();
 
+
+            // Exchanging public keys
+            //   sending server public key
+            String serverPublicKey = Server.getPublicKey().getModulus().toString() + "|" +
+                    Server.getPublicKey().getPublicExponent().toString();
+            formatter.format(serverPublicKey + "\n");
+            formatter.flush();
+            //   receiving client public key
+            String clientPublicKey;
+            while ((clientPublicKey = scanner.nextLine()) == null) ;
+            String[] Parts = clientPublicKey.split("\\|");
+            RSAPublicKeySpec Spec = new RSAPublicKeySpec(new BigInteger(Parts[0]), new BigInteger(Parts[1]));
+            RSAPublicKey client = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(Spec);
+            ClientPortal.getInstance().addClientKey(name, client);
 
             Server.getInstance().serverPrint("New Client Is Accepted!");
             DNS.getInstance().putClient(name, socket.getPort());

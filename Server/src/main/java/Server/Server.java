@@ -8,7 +8,11 @@ import model.Database.StatusUpdater;
 
 import javax.crypto.Cipher;
 import java.nio.charset.StandardCharsets;
-import java.security.*;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PublicKey;
+import java.security.SecureRandom;
+import java.security.interfaces.RSAPublicKey;
 import java.util.Base64;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -20,6 +24,7 @@ public class Server {
 
     private final Queue<Message> sendingMessages = new LinkedList<>();
     private final Queue<Message> receivingMessages = new LinkedList<>();
+    private static KeyPair keyPair;
 
     private Server(String serverName) {
         this.serverName = serverName;
@@ -30,6 +35,8 @@ public class Server {
     }
 
     public static void main(String[] args) throws Exception {
+        keyPair = generateKeyPair();
+        System.out.println(keyPair.getPublic().getFormat());
         server = new Server("Server");
         server.start();
     }
@@ -44,9 +51,7 @@ public class Server {
     public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
         Cipher encryptCipher = Cipher.getInstance("RSA");
         encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
-
         byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
-
         return Base64.getEncoder().encodeToString(cipherText);
     }
 
@@ -71,13 +76,16 @@ public class Server {
     }
 
 
-    public static String decrypt(String cipherText, PrivateKey privateKey) throws Exception {
+    public static String decrypt(String cipherText) throws Exception {
         byte[] bytes = Base64.getDecoder().decode(cipherText);
 
         Cipher decryptCipher = Cipher.getInstance("RSA");
-        decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
-
+        decryptCipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
         return new String(decryptCipher.doFinal(bytes), StandardCharsets.UTF_8);
+    }
+
+    public static RSAPublicKey getPublicKey() {
+        return (RSAPublicKey) keyPair.getPublic();
     }
 
     private void start() {

@@ -5,13 +5,21 @@ import javafx.application.Platform;
 import message.Message;
 import model.People.Account;
 
+import javax.crypto.Cipher;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.security.KeyPair;
+import java.nio.charset.StandardCharsets;
+import java.security.*;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPublicKeySpec;
+import java.util.Base64;
 import java.util.LinkedList;
+
 
 public class Client {
 
@@ -27,7 +35,8 @@ public class Client {
     private Thread sendMessageThread;
     private Thread receiveMessageThread;
     private BufferedReader bufferedReader;
-    private KeyPair keyPair;
+    private static KeyPair keyPair;
+    private RSAPublicKey server;
     private String authToken;
 
     private Client() {
@@ -40,33 +49,38 @@ public class Client {
         return client;
     }
 
-    public static String encryptMessage(String plainText) {
-        char[] characters = plainText.toCharArray();
-        String message = "";
-        for (int i = 0; i < characters.length; i++) {
-            characters[i] = (char) (characters[i] + (i % 11));
-            message += characters[i];
-        }
-        return message;
+    public static KeyPair generateKeyPair() throws Exception {
+        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+        generator.initialize(2048, new SecureRandom());
+        KeyPair pair = generator.generateKeyPair();
+        return pair;
     }
 
-    public static String decryptMessage(String plainText) {
-        char[] characters = plainText.toCharArray();
-        String message = "";
-        for (int i = 0; i < characters.length; i++) {
-            characters[i] = (char) (characters[i] - (i % 11));
-            message += characters[i];
-        }
-        return message;
+    public static String decrypt(String cipherText) throws Exception {
+        byte[] bytes = Base64.getDecoder().decode(cipherText);
+
+        Cipher decryptCipher = Cipher.getInstance("RSA");
+        decryptCipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
+        return new String(decryptCipher.doFinal(bytes), StandardCharsets.UTF_8);
     }
 
-    private void connect() throws IOException, NullPointerException {
+    public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
+        Cipher encryptCipher = Cipher.getInstance("RSA");
+        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(cipherText);
+    }
+
+    private void connect() throws Exception {
+        keyPair = generateKeyPair();
         socket = getSocketReady();
         sendClientNameToServer(socket);
+        Thread.sleep(1000);
+        exchangePublicKeys(socket);
         sendMessageThread = new Thread(() -> {
             try {
                 sendMessages();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -91,16 +105,26 @@ public class Client {
         System.out.println("server accepted me.");
         String encryptedToken;
         while ((encryptedToken = bufferedReader.readLine()) == null) ;
-        authToken = decryptMessage(encryptedToken);
-        System.out.println(authToken);
+        authToken = encryptedToken;
+    }
+
+    private void exchangePublicKeys(Socket socket) throws IOException, NoSuchProviderException, NoSuchAlgorithmException, InvalidKeySpecException {
+        String serverPublicKey;
+        while ((serverPublicKey = bufferedReader.readLine()) == null) ;
+        String[] Parts = serverPublicKey.split("\\|");
+        RSAPublicKeySpec Spec = new RSAPublicKeySpec(
+                new BigInteger(Parts[0]),
+                new BigInteger(Parts[1]));
+        server = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(Spec);
+        String myPublicKey = ((RSAPublicKey) keyPair.getPublic()).getModulus().toString() + "|" +
+                ((RSAPublicKey) keyPair.getPublic()).getPublicExponent().toString();
+        socket.getOutputStream().write((myPublicKey + "\n").getBytes());
     }
 
     private Socket getSocketReady() throws IOException {
         Socket socket = makeSocket();
         bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
         System.out.println("network connected.");
-
         return socket;
     }
 
@@ -115,7 +139,7 @@ public class Client {
         }
     }
 
-    private void sendMessages() throws IOException {
+    private void sendMessages() throws Exception {
         System.out.println("sending messages started");
         while (true) {
             Message message;
@@ -124,7 +148,7 @@ public class Client {
             }
             if (message != null) {
                 String json = message.toJson();
-                socket.getOutputStream().write((encryptMessage(json) + "\n").getBytes());
+                socket.getOutputStream().write((encrypt(json, server) + "\n").getBytes());
                 System.out.println("message sent: " + json);
             } else {
                 try {
@@ -137,12 +161,12 @@ public class Client {
         }
     }
 
-    private void receiveMessages() throws IOException {
+    private void receiveMessages() throws Exception {
         System.out.println("receiving messages started.");
         while (true) {
             String json = bufferedReader.readLine();
-            Message message = gson.fromJson(decryptMessage(json), Message.class);
-            System.out.println("message received: " + decryptMessage(json));
+            Message message = gson.fromJson(decrypt(json), Message.class);
+            System.out.println("message received: " + decrypt(json));
             handleMessage(message);
         }
     }
@@ -197,6 +221,8 @@ public class Client {
                         System.err.println("Connection Failed!")
                 );
                 disconnected();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }).start();
     }
