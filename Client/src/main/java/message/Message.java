@@ -15,7 +15,7 @@ public class Message {
     private String receiver;
     // In order to validate !!
     private LocalDate date;
-    private String Token;
+    private String token;
 
     // Clients --> Server
     private AcceptAddAuctionRequestMessage acceptAddAuctionRequestMessage;
@@ -83,6 +83,8 @@ public class Message {
         this.sender = Client.getInstance().getClientName();
         this.receiver = receiver;
         date = LocalDate.now();
+        System.out.println(date);
+        token = Client.getInstance().getAuthToken();
     }
 
 
@@ -142,11 +144,11 @@ public class Message {
     }
 
     public String getToken() {
-        return Token;
+        return token;
     }
 
     public void setToken(String token) {
-        Token = token;
+        token = token;
     }
 
     public AcceptAddAuctionRequestMessage getAcceptAddAuctionRequestMessage() {

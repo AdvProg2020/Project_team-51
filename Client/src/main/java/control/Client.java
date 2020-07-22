@@ -200,4 +200,8 @@ public class Client {
             }
         }).start();
     }
+
+    public String getAuthToken() {
+        return authToken;
+    }
 }
