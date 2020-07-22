@@ -5,7 +5,7 @@ import Server.Server;
 import message.Messages.ClientToServer.*;
 import message.Messages.ServerToClient.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Message {
 
@@ -15,7 +15,7 @@ public class Message {
     private String sender;
     private String receiver;
     // In order to validate !!
-    private LocalDate date;
+    private LocalDateTime date;
     private String Token;
 
     // Clients --> Server
@@ -133,12 +133,8 @@ public class Message {
         this.responseToClientMessage = responseToClientMessage;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public String getToken() {

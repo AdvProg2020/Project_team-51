@@ -2,21 +2,34 @@ package Server;
 
 import control.DataController;
 import message.Message;
+import message.MessageType;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.PublicKey;
 import java.security.interfaces.RSAPublicKey;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ClientPortal extends Thread {
 
     private static final int DEFAULT_PORT = 8888;
+    private static final int MAXIMUM_BRUTE_FORCE_ATTACKS = 10;
+    private static final int MAXIMUM_INPUT_SIZE = 50_000_000; // Characters
+    private static final int MAXIMUM_REQUEST_TIME = 20; // Seconds
+    private static final int SECONDS_TO_REMAIN_ON_BLACKLIST = 120;
+    private static final int MAXIMUM_REQUESTS_PER_SECOND = 10;
     private static ClientPortal ourInstance;
     private HashMap<String, Formatter> clients = new HashMap<>();
     private HashMap<String, RSAPublicKey> publicKeyHashMap = new HashMap<>();
     private HashMap<String, String> authToken = new HashMap<>(); //ClientName -> token
+    private HashMap<String, LocalDateTime> connectionTime = new HashMap<>();
+    private HashMap<String, AtomicInteger> numberOfRequests = new HashMap<>();
+    private HashMap<String, AtomicInteger> failedTries = new HashMap<>();
+    private HashSet<String> blackList = new HashSet<>();
 
     private ClientPortal() {
     }
@@ -68,7 +81,13 @@ public class ClientPortal extends Thread {
     }
 
     void addMessage(String clientName, String message) throws Exception {
-        Server.getInstance().addToReceivingMessages(Message.convertJsonToMessage(Server.decrypt(message)));
+        if (validate(clientName, message)) {
+            numberOfRequests.replace(clientName, new AtomicInteger(numberOfRequests.get(clientName).incrementAndGet()));
+            Message temp = JsonConverter.fromJson(message, Message.class);
+            if (temp.getMessageType().equals(MessageType.LOGIN))
+                failedTries.replace(clientName, new AtomicInteger(failedTries.get(clientName).incrementAndGet()));
+            Server.getInstance().addToReceivingMessages(Message.convertJsonToMessage(message));
+        }
     }
 
     synchronized public void sendMessage(String clientName, String message) throws Exception {//TODO:Change Synchronization
@@ -92,4 +111,56 @@ public class ClientPortal extends Thread {
     private ServerSocket makeServerSocket() throws IOException {
         return new ServerSocket(DEFAULT_PORT);
     }
+
+    private boolean validate(String client, String message) {
+        return checkReplayAttacks(message) && checkBruteForce(client) &&
+                checkImproperInputs(message) && checkDenialOfService(client);
+    }
+
+
+    private boolean checkBruteForce(String client) {
+        AtomicInteger numberOfAttempt = failedTries.get(client);
+        if (numberOfAttempt == null || numberOfAttempt.get() <= MAXIMUM_BRUTE_FORCE_ATTACKS)
+            return true;
+        else {
+            blackList.add(client);
+            // Removing Client Name From Blacklist After 2 Minutes
+            new Thread(() -> {
+                try {
+                    sleep(SECONDS_TO_REMAIN_ON_BLACKLIST * 1000);
+                    blackList.remove(client);
+                    failedTries.replace(client, new AtomicInteger(0));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            return false;
+        }
+    }
+
+    private boolean checkReplayAttacks(String message) {
+        Message receivedMessage = JsonConverter.fromJson(message, Message.class);
+        long seconds = Duration.between(receivedMessage.getDate(), LocalDateTime.now()).toSeconds();
+        return receivedMessage.getDate() != null && seconds <= MAXIMUM_REQUEST_TIME;
+    }
+
+    private boolean checkImproperInputs(String message) {
+        return message.length() < MAXIMUM_INPUT_SIZE && message.startsWith("{") && message.endsWith("}");
+    }
+
+    private boolean checkDenialOfService(String client) {
+        LocalDateTime firstConnection = connectionTime.get(client);
+        if (firstConnection == null) return false;
+        if (numberOfRequests.get(client) == null) return true;
+        int requests = numberOfRequests.get(client).get();
+        long seconds = Duration.between(firstConnection, LocalDateTime.now()).toSeconds();
+        return (requests / (seconds + 1)) <= MAXIMUM_REQUESTS_PER_SECOND;
+    }
+
+
+    public void setConnectionTime(String client) {
+        connectionTime.put(client, LocalDateTime.now());
+    }
+
+
 }

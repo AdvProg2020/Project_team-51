@@ -4,7 +4,7 @@ import control.Client;
 import message.Messages.ClientToServer.*;
 import message.Messages.ServerToClient.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Message {
 
@@ -14,7 +14,7 @@ public class Message {
     private String sender;
     private String receiver;
     // In order to validate !!
-    private LocalDate date;
+    private LocalDateTime date;
     private String token;
 
     // Clients --> Server
@@ -79,10 +79,10 @@ public class Message {
     private GetWalletMessage getWalletMessage;
 
 
-    private Message(String receiver) {
+    public Message(String receiver) {
         this.sender = Client.getInstance().getClientName();
         this.receiver = receiver;
-        date = LocalDate.now();
+        date = LocalDateTime.now();
         System.out.println(date);
         token = Client.getInstance().getAuthToken();
     }
@@ -135,12 +135,8 @@ public class Message {
         this.responseToClientMessage = responseToClientMessage;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public String getToken() {

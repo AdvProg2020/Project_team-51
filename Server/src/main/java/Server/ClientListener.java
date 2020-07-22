@@ -65,6 +65,7 @@ public class ClientListener extends Thread {
             ClientPortal.getInstance().addClientKey(name, client);
 
             Server.getInstance().serverPrint("New Client Is Accepted!");
+            ClientPortal.getInstance().setConnectionTime(name);
 
             while (true) {
                 String message = scanner.nextLine();

@@ -64,6 +64,7 @@ public class Client {
             }
         });
         sendMessageThread.start();
+        addToSendingMessagesAndSend(new Message(clientName));
         receiveMessages();
     }
 
