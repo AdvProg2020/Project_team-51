@@ -6,12 +6,12 @@ import message.Message;
 import model.Database.Build;
 import model.Database.StatusUpdater;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PublicKey;
-import java.security.SecureRandom;
+import java.security.*;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Base64;
 import java.util.LinkedList;
@@ -35,10 +35,13 @@ public class Server {
     }
 
     public static void main(String[] args) throws Exception {
-        keyPair = generateKeyPair();
-        System.out.println(keyPair.getPublic().getFormat());
         server = new Server("Server");
         server.start();
+    }
+
+
+    public static RSAPublicKey getPublicKey() {
+        return (RSAPublicKey) keyPair.getPublic();
     }
 
     public static KeyPair generateKeyPair() throws Exception {
@@ -46,98 +49,6 @@ public class Server {
         generator.initialize(2048, new SecureRandom());
         KeyPair pair = generator.generateKeyPair();
         return pair;
-    }
-
-    public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
-        Cipher encryptCipher = Cipher.getInstance("RSA");
-        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
-        return Base64.getEncoder().encodeToString(cipherText);
-    }
-
-    public static String encryptMessage(String plainText) {
-        char[] characters = plainText.toCharArray();
-        String message = "";
-        for (int i = 0; i < characters.length; i++) {
-            characters[i] = (char) (characters[i] + (i % 11));
-            message += characters[i];
-        }
-        return message;
-    }
-
-    public static String decryptMessage(String plainText) {
-        char[] characters = plainText.toCharArray();
-        String message = "";
-        for (int i = 0; i < characters.length; i++) {
-            characters[i] = (char) (characters[i] - (i % 11));
-            message += characters[i];
-        }
-        return message;
-    }
-
-
-    public static String decrypt(String cipherText) throws Exception {
-        byte[] bytes = Base64.getDecoder().decode(cipherText);
-
-        Cipher decryptCipher = Cipher.getInstance("RSA");
-        decryptCipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
-        return new String(decryptCipher.doFinal(bytes), StandardCharsets.UTF_8);
-    }
-
-    public static RSAPublicKey getPublicKey() {
-        return (RSAPublicKey) keyPair.getPublic();
-    }
-
-    private void start() {
-        new Thread(() -> new Build().run());
-        Thread statusUpdaterThread = new Thread(new StatusUpdater());
-        statusUpdaterThread.start();
-        ClientPortal.getInstance().start();
-
-        new Thread(() -> {
-            serverPrint("Server Thread:sending messages is started...");
-            while (true) {
-                Message message;
-                synchronized (sendingMessages) {
-                    message = sendingMessages.poll();
-                }
-                if (message != null) {
-                    try {
-                        ClientPortal.getInstance().sendMessage(message.getReceiver(), message.toJson());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println("TO:" + message.getReceiver() + ":  " + message.toJson());//TODO:remove
-                } else {
-                    try {
-                        synchronized (sendingMessages) {
-                            sendingMessages.wait();
-                        }
-                    } catch (InterruptedException ignored) {
-                    }
-                }
-            }
-        }).start();
-        new Thread(() -> {
-            serverPrint("Server Thread:receiving messages is started...");
-            while (true) {
-                Message message;
-                synchronized (receivingMessages) {
-                    message = receivingMessages.poll();
-                }
-                if (message != null) {
-                    System.out.println("From:" + message.getSender() + "    " + message.toJson());//TODO:remove
-                    receiveMessage(message);
-                } else {
-                    try {
-                        synchronized (receivingMessages) {
-                            receivingMessages.wait();
-                        }
-                    } catch (InterruptedException ignored) {
-                    }
-                }
-            }
-        }).start();
     }
 
 
@@ -296,5 +207,73 @@ public class Server {
         }
 
     }
+
+    public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
+        Cipher encryptCipher = Cipher.getInstance("RSA");
+        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(cipherText);
+    }
+
+    public static String decrypt(String cipherText) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
+        byte[] bytes = Base64.getDecoder().decode(cipherText);
+        Cipher decryptCipher = Cipher.getInstance("RSA");
+        decryptCipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
+        return new String(decryptCipher.doFinal(bytes), StandardCharsets.UTF_8);
+    }
+
+    private void start() throws Exception {
+        keyPair = generateKeyPair();
+        new Thread(() -> new Build().run());
+        Thread statusUpdaterThread = new Thread(new StatusUpdater());
+        statusUpdaterThread.start();
+        ClientPortal.getInstance().start();
+
+        new Thread(() -> {
+            serverPrint("Server Thread:sending messages is started...");
+            while (true) {
+                Message message;
+                synchronized (sendingMessages) {
+                    message = sendingMessages.poll();
+                }
+                if (message != null) {
+                    try {
+                        ClientPortal.getInstance().sendMessage(message.getReceiver(), message.toJson());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("TO:" + message.getReceiver() + ":  " + message.toJson());//TODO:remove
+                } else {
+                    try {
+                        synchronized (sendingMessages) {
+                            sendingMessages.wait();
+                        }
+                    } catch (InterruptedException ignored) {
+                    }
+                }
+            }
+        }).start();
+        new Thread(() -> {
+            serverPrint("Server Thread:receiving messages is started...");
+            while (true) {
+                Message message;
+                synchronized (receivingMessages) {
+                    message = receivingMessages.poll();
+                }
+                if (message != null) {
+                    System.out.println("From:" + message.getSender() + "    " + message.toJson());//TODO:remove
+                    receiveMessage(message);
+                } else {
+                    try {
+                        synchronized (receivingMessages) {
+                            receivingMessages.wait();
+                        }
+                    } catch (InterruptedException ignored) {
+                    }
+                }
+            }
+        }).start();
+    }
+
 
 }

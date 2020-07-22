@@ -33,6 +33,7 @@ public class ClientListener extends Thread {
                 name = scanner.nextLine().split("#")[1];
                 if (name.length() >= 3 && !ClientPortal.getInstance().hasThisClient(name)) {
                     ClientPortal.getInstance().addClient(name, formatter);
+                    DNS.getInstance().putClient(name, socket.getPort());
                     formatter.format("#Valid#\n");
                     formatter.flush();
                     break;
@@ -49,7 +50,6 @@ public class ClientListener extends Thread {
             formatter.format(clientToken + "\n");
             formatter.flush();
 
-
             // Exchanging public keys
             //   sending server public key
             String serverPublicKey = Server.getPublicKey().getModulus().toString() + "|" +
@@ -65,11 +65,10 @@ public class ClientListener extends Thread {
             ClientPortal.getInstance().addClientKey(name, client);
 
             Server.getInstance().serverPrint("New Client Is Accepted!");
-            DNS.getInstance().putClient(name, socket.getPort());
 
             while (true) {
                 String message = scanner.nextLine();
-                ClientPortal.getInstance().addMessage(name, Server.decryptMessage(message));
+                ClientPortal.getInstance().addMessage(name, Server.decrypt(message));
             }
         } catch (Exception e) {
 
