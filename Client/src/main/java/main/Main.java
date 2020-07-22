@@ -1,5 +1,6 @@
 package main;
 
+import control.Client;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,11 +30,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws IOException {
-//        Thread buildThread = new Thread(new Build());
-//        Thread statusUpdaterThread = new Thread(new StatusUpdater());
-//        buildThread.start();
-//        statusUpdaterThread.start();
-//        new Thread(() -> playAudio("Hunter.mp3")).start();
+        Client.getInstance().makeConnection();
         launch();
 
     }
