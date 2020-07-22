@@ -22,12 +22,11 @@ public class Server {
     }
 
     public static Server getInstance() {
-        if (server == null)
-            server = new Server("Server ");
         return server;
     }
 
     public static void main(String[] args) {
+        server = new Server("Server ");
         server.start();
     }
 
