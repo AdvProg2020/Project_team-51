@@ -61,4 +61,8 @@ public class TokenGenerator {
         return generateToken("WLT_", 5, true, true);
     }
 
+    public static String generateAuthToken() {
+        return generateToken("AuthToken_", 15, true, true);
+    }
+
 }

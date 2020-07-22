@@ -83,7 +83,6 @@ public class Message {
     public Message(String receiver) {
         this.sender = Server.getInstance().serverName;
         this.receiver = receiver;
-        date = LocalDate.now();
     }
 
 

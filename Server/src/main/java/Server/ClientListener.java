@@ -1,6 +1,6 @@
 package Server;
 
-import message.Message;
+import control.TokenGenerator;
 
 import java.net.Socket;
 import java.util.Formatter;
@@ -39,12 +39,15 @@ public class ClientListener extends Thread {
                 }
             }
 
+            // Sending Token to Client
+            String clientToken = TokenGenerator.generateAuthToken();
+            ClientPortal.getInstance().addClientToken(name, clientToken);
+            System.out.println(clientToken);
+            ClientPortal.getInstance().sendMessage(name, clientToken);
+
+
             Server.getInstance().serverPrint("New Client Is Accepted!");
             DNS.getInstance().putClient(name, socket.getPort());
-
-
-            Thread.sleep(3000);
-            ClientPortal.getInstance().sendMessage(name, JsonConverter.toJson(new Message(name)));
 
             while (true) {
                 String message = scanner.nextLine();

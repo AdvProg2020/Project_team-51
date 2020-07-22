@@ -17,6 +17,7 @@ public class ClientPortal extends Thread {
     private static ClientPortal ourInstance;
     private HashMap<String, Formatter> clients = new HashMap<>();
     private HashMap<String, KeyPair> keyPairHashMap = new HashMap<>();
+    private HashMap<String, String> authToken = new HashMap<>(); //clientName -> token
 
     private ClientPortal() {
     }
@@ -62,6 +63,10 @@ public class ClientPortal extends Thread {
             System.out.println(e.getMessage());
         }
         keyPairHashMap.put(clientName, pair);
+    }
+
+    synchronized void addClientToken(String clientName, String token) {
+        authToken.put(clientName, token);
     }
 
 

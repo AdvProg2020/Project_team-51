@@ -30,7 +30,7 @@ public class Server {
     }
 
     public static void main(String[] args) throws Exception {
-        server = new Server("Server ");
+        server = new Server("Server");
         server.start();
     }
 

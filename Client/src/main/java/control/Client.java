@@ -28,6 +28,7 @@ public class Client {
     private Thread receiveMessageThread;
     private BufferedReader bufferedReader;
     private KeyPair keyPair;
+    private String authToken;
 
     private Client() {
     }
@@ -88,12 +89,10 @@ public class Client {
         }
         clientName = finalClientName;
         System.out.println("server accepted me.");
-//        String key = null;
-//        while ((key=bufferedReader.readLine())==null) ;
-//        System.out.println(key);
-//        keyPair = JsonConverter.fromJson(key, KeyPair.class);
-//        System.out.println(key);
-//        System.out.println("The public key is : " + keyPair.getPublic());
+        String encryptedToken;
+        while ((encryptedToken = bufferedReader.readLine()) == null) ;
+        authToken = decryptMessage(encryptedToken);
+        System.out.println(authToken);
     }
 
     private Socket getSocketReady() throws IOException {
