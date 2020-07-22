@@ -80,9 +80,10 @@ public class Message {
     private GetWalletMessage getWalletMessage;
 
 
-    private Message(String receiver) {
+    public Message(String receiver) {
         this.sender = Server.getInstance().serverName;
         this.receiver = receiver;
+        date = LocalDate.now();
     }
 
 

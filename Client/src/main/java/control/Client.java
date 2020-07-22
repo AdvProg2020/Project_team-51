@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.security.KeyPair;
 import java.util.LinkedList;
 
 public class Client {
@@ -26,6 +27,7 @@ public class Client {
     private Thread sendMessageThread;
     private Thread receiveMessageThread;
     private BufferedReader bufferedReader;
+    private KeyPair keyPair;
 
     private Client() {
     }
@@ -35,6 +37,26 @@ public class Client {
             client = new Client();
         }
         return client;
+    }
+
+    public static String encryptMessage(String plainText) {
+        char[] characters = plainText.toCharArray();
+        String message = "";
+        for (int i = 0; i < characters.length; i++) {
+            characters[i] = (char) (characters[i] + (i % 11));
+            message += characters[i];
+        }
+        return message;
+    }
+
+    public static String decryptMessage(String plainText) {
+        char[] characters = plainText.toCharArray();
+        String message = "";
+        for (int i = 0; i < characters.length; i++) {
+            characters[i] = (char) (characters[i] - (i % 11));
+            message += characters[i];
+        }
+        return message;
     }
 
     private void connect() throws IOException, NullPointerException {
@@ -66,6 +88,12 @@ public class Client {
         }
         clientName = finalClientName;
         System.out.println("server accepted me.");
+//        String key = null;
+//        while ((key=bufferedReader.readLine())==null) ;
+//        System.out.println(key);
+//        keyPair = JsonConverter.fromJson(key, KeyPair.class);
+//        System.out.println(key);
+//        System.out.println("The public key is : " + keyPair.getPublic());
     }
 
     private Socket getSocketReady() throws IOException {
@@ -97,8 +125,7 @@ public class Client {
             }
             if (message != null) {
                 String json = message.toJson();
-                socket.getOutputStream().write((json + "\n").getBytes());
-
+                socket.getOutputStream().write((encryptMessage(json) + "\n").getBytes());
                 System.out.println("message sent: " + json);
             } else {
                 try {
@@ -115,8 +142,8 @@ public class Client {
         System.out.println("receiving messages started.");
         while (true) {
             String json = bufferedReader.readLine();
-            Message message = gson.fromJson(json, Message.class);
-            System.out.println("message received: " + json);
+            Message message = gson.fromJson(decryptMessage(json), Message.class);
+            System.out.println("message received: " + decryptMessage(json));
             handleMessage(message);
         }
     }

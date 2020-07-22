@@ -6,6 +6,10 @@ import message.Message;
 import model.Database.Build;
 import model.Database.StatusUpdater;
 
+import javax.crypto.Cipher;
+import java.nio.charset.StandardCharsets;
+import java.security.*;
+import java.util.Base64;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -25,9 +29,55 @@ public class Server {
         return server;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         server = new Server("Server ");
         server.start();
+    }
+
+    public static KeyPair generateKeyPair() throws Exception {
+        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+        generator.initialize(2048, new SecureRandom());
+        KeyPair pair = generator.generateKeyPair();
+        return pair;
+    }
+
+    public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
+        Cipher encryptCipher = Cipher.getInstance("RSA");
+        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+
+        byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
+
+        return Base64.getEncoder().encodeToString(cipherText);
+    }
+
+    public static String encryptMessage(String plainText) {
+        char[] characters = plainText.toCharArray();
+        String message = "";
+        for (int i = 0; i < characters.length; i++) {
+            characters[i] = (char) (characters[i] + (i % 11));
+            message += characters[i];
+        }
+        return message;
+    }
+
+    public static String decryptMessage(String plainText) {
+        char[] characters = plainText.toCharArray();
+        String message = "";
+        for (int i = 0; i < characters.length; i++) {
+            characters[i] = (char) (characters[i] - (i % 11));
+            message += characters[i];
+        }
+        return message;
+    }
+
+
+    public static String decrypt(String cipherText, PrivateKey privateKey) throws Exception {
+        byte[] bytes = Base64.getDecoder().decode(cipherText);
+
+        Cipher decryptCipher = Cipher.getInstance("RSA");
+        decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
+
+        return new String(decryptCipher.doFinal(bytes), StandardCharsets.UTF_8);
     }
 
     private void start() {
@@ -44,7 +94,11 @@ public class Server {
                     message = sendingMessages.poll();
                 }
                 if (message != null) {
-                    ClientPortal.getInstance().sendMessage(message.getReceiver(), message.toJson());
+                    try {
+                        ClientPortal.getInstance().sendMessage(message.getReceiver(), message.toJson());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     System.out.println("TO:" + message.getReceiver() + ":  " + message.toJson());//TODO:remove
                 } else {
                     try {

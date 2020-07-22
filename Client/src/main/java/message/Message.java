@@ -82,6 +82,7 @@ public class Message {
     private Message(String receiver) {
         this.sender = Client.getInstance().getClientName();
         this.receiver = receiver;
+        date = LocalDate.now();
     }
 
 
