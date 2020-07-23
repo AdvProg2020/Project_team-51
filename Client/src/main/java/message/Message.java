@@ -1,8 +1,11 @@
 package message;
 
 import control.Client;
+import control.Controller;
 import message.Messages.ClientToServer.*;
 import message.Messages.ServerToClient.*;
+import model.People.Seller;
+import model.Product;
 
 import java.time.LocalDateTime;
 
@@ -96,6 +99,27 @@ public class Message {
         return message;
     }
 
+    public static Message makeLoginMessage(String receiver, String username, String password) {
+        Message message = new Message(receiver);
+        message.loginMessage = new LoginMessage(username, password);
+        message.messageType = MessageType.LOGIN;
+        return message;
+    }
+
+    public static Message makeLogoutMessage(String receiver) {
+        Message message = new Message(receiver);
+        message.logoutMessage = new LogoutMessage(Controller.getCurrentAccount());
+        message.messageType = MessageType.LOGOUT;
+        return message;
+    }
+
+    public static Message makeAddToCartMessage(String receiver, Product product, Seller seller) {
+        Message message = new Message(receiver);
+        message.addToCartMessage = new AddToCartMessage(product, seller);
+        message.messageType = MessageType.ADD_TO_CART;
+        return message;
+    }
+    
 
     public static Message convertJsonToMessage(String messageJson) {
         return JsonConverter.fromJson(messageJson, Message.class);
