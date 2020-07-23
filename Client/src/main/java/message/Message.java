@@ -231,6 +231,49 @@ public class Message {
         return message;
     }
 
+    public static Message makeCreateBidMessage(String receiver, Seller seller, Product product) {
+        Message message = new Message(receiver);
+        message.createBidMessage = new CreateBidMessage(seller, product);
+        message.messageType = MessageType.CREATE_BID;
+        return message;
+    }
+
+    public static Message makeCreateCategoryMessage(String receiver, Category category) {
+        Message message = new Message(receiver);
+        message.createCategoryMessage = new CreateCategoryMessage(category);
+        message.messageType = MessageType.CREATE_CATEGORY;
+        return message;
+    }
+
+    public static Message makeCreateOffCodeMessage(String receiver, OffCode offCode) {
+        Message message = new Message(receiver);
+        message.createOffCodeMessage = new CreateOffCodeMessage(offCode);
+        message.messageType = MessageType.CREATE_OFF_CODE;
+        return message;
+    }
+
+    public static Message makeCreateFileForSaleMessage(String receiver) {
+        Message message = new Message(receiver);
+        message.createFileForSaleMessage = new CreateFileForSaleMessage(); //TODO
+        message.messageType = MessageType.CREATE_FILE_FOR_SALE;
+        return message;
+    }
+
+    public static Message makeIncrementProductQuantityMessage(String receiver, ItemOfOrder itemOfOrder, int number) {
+        Message message = new Message(receiver);
+        message.incrementProductQuantityMessage = new IncrementProductQuantityMessage(itemOfOrder, number);
+        message.messageType = MessageType.INCREMENT_PRODUCT_QUANTITY;
+        return message;
+    }
+
+    public static Message makeDecrementProductQuantityMessage(String receiver, ItemOfOrder itemOfOrder, int number) {
+        Message message = new Message(receiver);
+        message.decrementProductQuantityMessage = new DecrementProductQuantityMessage(itemOfOrder, number);
+        message.messageType = MessageType.DECREMENT_PRODUCT_QUANTITY;
+        return message;
+    }
+
+
     public static Message makeBuyFileMessage(String receiver, double price) {
         Message message = new Message(receiver);
         message.buyFileMessage = new BuyFileMessage(price); //TODO
