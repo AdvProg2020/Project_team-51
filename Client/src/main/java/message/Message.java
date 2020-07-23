@@ -7,6 +7,7 @@ import message.Messages.ServerToClient.*;
 import model.People.Seller;
 import model.Product;
 import model.Requests.AddAuctionRequest;
+import model.Requests.AddCommentRequest;
 
 import java.time.LocalDateTime;
 
@@ -93,6 +94,10 @@ public class Message {
     }
 
 
+    public static Message convertJsonToMessage(String messageJson) {
+        return JsonConverter.fromJson(messageJson, Message.class);
+    }
+
     public static Message makeIsThereAnyManagerMessage(String receiver) {
         Message message = new Message(receiver);
         message.isThereAnyManagerMessage = new IsThereAnyManagerMessage();
@@ -128,10 +133,13 @@ public class Message {
         return message;
     }
 
-
-    public static Message convertJsonToMessage(String messageJson) {
-        return JsonConverter.fromJson(messageJson, Message.class);
+    public static Message makeAcceptAddCommentRequest(String receiver, AddCommentRequest addCommentRequest) {
+        Message message = new Message(receiver);
+        message.acceptAddCommentRequestMessage = new AcceptAddCommentRequestMessage(addCommentRequest);
+        message.messageType = MessageType.ACCEPT_ADD_COMMENT_REQUEST;
+        return message;
     }
+
 
     public static Message makeExceptionMessage(String receiver, String exceptionString) {
         Message message = new Message(receiver);
