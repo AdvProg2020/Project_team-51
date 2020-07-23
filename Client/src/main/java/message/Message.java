@@ -54,6 +54,7 @@ public class Message {
     private SetWageMessage setWageMessage;
     private ResponseToClientMessage responseToClientMessage;
     private AddToCartMessage addToCartMessage;
+    private IsThereAnyManagerMessage isThereAnyManagerMessage;
 
     // Server --> Clients
     private ExceptionMessage exceptionMessage;
@@ -88,6 +89,14 @@ public class Message {
     }
 
 
+    public static Message makeIsThereAnyManagerMessage(String receiver) {
+        Message message = new Message(receiver);
+        message.isThereAnyManagerMessage = new IsThereAnyManagerMessage();
+        message.messageType = MessageType.IS_THERE_ANY_MANAGER;
+        return message;
+    }
+
+
     public static Message convertJsonToMessage(String messageJson) {
         return JsonConverter.fromJson(messageJson, Message.class);
     }
@@ -99,8 +108,17 @@ public class Message {
         return message;
     }
 
+
     public String toJson() {
         return JsonConverter.toJson(this);
+    }
+
+    public IsThereAnyManagerMessage getIsThereAnyManagerMessage() {
+        return isThereAnyManagerMessage;
+    }
+
+    public void setIsThereAnyManagerMessage(IsThereAnyManagerMessage isThereAnyManagerMessage) {
+        this.isThereAnyManagerMessage = isThereAnyManagerMessage;
     }
 
     public MessageType getMessageType() {

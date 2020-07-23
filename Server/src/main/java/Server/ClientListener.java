@@ -67,9 +67,11 @@ public class ClientListener extends Thread {
             Server.getInstance().serverPrint("New Client Is Accepted!");
             ClientPortal.getInstance().setConnectionTime(name);
 
+            ClientPortal.getInstance().addClientSymmetricKeyAndSendToClient(name);
+
             while (true) {
                 String message = scanner.nextLine();
-                ClientPortal.getInstance().addMessage(name, Server.decrypt(message));
+                ClientPortal.getInstance().addMessage(name, message);
             }
         } catch (Exception e) {
 

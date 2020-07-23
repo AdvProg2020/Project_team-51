@@ -1,6 +1,7 @@
 package control;
 
 import Server.ClientPortal;
+import Server.JsonConverter;
 import Server.Server;
 import control.Exceptions.*;
 import message.Message;
@@ -56,6 +57,15 @@ public class DataController {
         return null;
     }
 
+    public void isThereAnyManager(Message message) throws Exception {
+        boolean answer = Controller.isThereAnyManager();
+        Server.getInstance().serverPrint(answer + "");
+        ClientPortal.getInstance().sendMessage(message.getSender(),
+                JsonConverter.toJson(Message.makeIsThereAnyManagerMessage(message.getSender(), answer)));
+        Server.getInstance().serverPrint(" Response to IsThereAnyManager Is Sent!");
+    }
+
+
     public void registerCustomer(Message message) throws ClientException {
         if (message.getRegisterCustomerMessage().getCustomer().getUserName() == null ||
                 getAccount(message.getRegisterCustomerMessage().getCustomer().getUserName()) != null) {
@@ -86,7 +96,7 @@ public class DataController {
     }
 
     public void login(Message message) throws ClientException {
-        if (message.getLoginMessage().getUsername() == null || message.getSender() == null) {
+        if (message.getSender() == null || message.getLoginMessage().getUsername() == null) {
             throw new ClientException("invalid message!");
         }
         Account account = getAccount(message.getLoginMessage().getUsername());

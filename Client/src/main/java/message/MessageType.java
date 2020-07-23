@@ -38,6 +38,7 @@ public enum MessageType {
     PAY_CART_VIA_WALLET,
     REMOVE_PRODUCT_FROM_CART,
     SET_WAGE,
+    IS_THERE_ANY_MANAGER,
 
     // Server --> Client
     GET_AUCTION,

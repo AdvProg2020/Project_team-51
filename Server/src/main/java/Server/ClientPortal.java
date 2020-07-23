@@ -2,8 +2,9 @@ package Server;
 
 import control.DataController;
 import message.Message;
-import message.MessageType;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -25,6 +26,7 @@ public class ClientPortal extends Thread {
     private static ClientPortal ourInstance;
     private HashMap<String, Formatter> clients = new HashMap<>();
     private HashMap<String, RSAPublicKey> publicKeyHashMap = new HashMap<>();
+    private HashMap<String, SecretKey> symmetricKeyMap = new HashMap<>();
     private HashMap<String, String> authToken = new HashMap<>(); //ClientName -> token
     private HashMap<String, LocalDateTime> connectionTime = new HashMap<>();
     private HashMap<String, AtomicInteger> numberOfRequests = new HashMap<>();
@@ -76,21 +78,44 @@ public class ClientPortal extends Thread {
     }
 
 
+    synchronized void addClientSymmetricKeyAndSendToClient(String clientName) throws Exception {
+        KeyGenerator generator = KeyGenerator.getInstance("AES");
+        generator.init(128); // The AES key size in number of bits
+        SecretKey secKey = generator.generateKey();
+        Base64.getEncoder().encode(secKey.getEncoded());
+        symmetricKeyMap.put(clientName, secKey);
+        String encodedKey = Base64.getEncoder().encodeToString(secKey.getEncoded());
+        sendMessageWithRSA(clientName, encodedKey);
+    }
+
     public PublicKey getKeyPair(String clientName) {
         return publicKeyHashMap.get(clientName);
     }
 
-    void addMessage(String clientName, String message) throws Exception {
+    void addMessage(String clientName, String encryptedMessage) throws Exception {
+        String message = Server.decryptSymmetric(encryptedMessage, symmetricKeyMap.get(clientName));
         if (validate(clientName, message)) {
-            numberOfRequests.replace(clientName, new AtomicInteger(numberOfRequests.get(clientName).incrementAndGet()));
-            Message temp = JsonConverter.fromJson(message, Message.class);
-            if (temp.getMessageType().equals(MessageType.LOGIN))
-                failedTries.replace(clientName, new AtomicInteger(failedTries.get(clientName).incrementAndGet()));
             Server.getInstance().addToReceivingMessages(Message.convertJsonToMessage(message));
+//            numberOfRequests.replace(clientName, new AtomicInteger(numberOfRequests.get(clientName).incrementAndGet()));
+//            Message temp = JsonConverter.fromJson(message, Message.class);
+//            if (temp.getMessageType().equals(MessageType.LOGIN))
+//                failedTries.replace(clientName, new AtomicInteger(failedTries.get(clientName).incrementAndGet()));
+        } else {
+            System.out.println(11);
         }
     }
 
     synchronized public void sendMessage(String clientName, String message) throws Exception {//TODO:Change Synchronization
+        if (clients.containsKey(clientName)) {
+            SecretKey key = symmetricKeyMap.get(clientName);
+            clients.get(clientName).format(Server.encryptSymmetric(message, key) + "\n");
+            clients.get(clientName).flush();
+        } else {
+            Server.getInstance().serverPrint("Client Not Found!");
+        }
+    }
+
+    synchronized public void sendMessageWithRSA(String clientName, String message) throws Exception {//TODO:Change Synchronization
         if (clients.containsKey(clientName)) {
             PublicKey key = publicKeyHashMap.get(clientName);
             clients.get(clientName).format(Server.encrypt(message, key) + "\n");
@@ -116,7 +141,6 @@ public class ClientPortal extends Thread {
         return checkReplayAttacks(message) && checkBruteForce(client) &&
                 checkImproperInputs(message) && checkDenialOfService(client);
     }
-
 
     private boolean checkBruteForce(String client) {
         AtomicInteger numberOfAttempt = failedTries.get(client);
@@ -156,7 +180,6 @@ public class ClientPortal extends Thread {
         long seconds = Duration.between(firstConnection, LocalDateTime.now()).toSeconds();
         return (requests / (seconds + 1)) <= MAXIMUM_REQUESTS_PER_SECOND;
     }
-
 
     public void setConnectionTime(String client) {
         connectionTime.put(client, LocalDateTime.now());

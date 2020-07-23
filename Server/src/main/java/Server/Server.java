@@ -6,10 +6,7 @@ import message.Message;
 import model.Database.Build;
 import model.Database.StatusUpdater;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import javax.crypto.*;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.interfaces.RSAPublicKey;
@@ -63,15 +60,37 @@ public class Server {
         }
     }
 
-    public void addToReceivingMessages(Message message) {
-        synchronized (receivingMessages) {
-            receivingMessages.add(message);
-            receivingMessages.notify();
-        }
+    public static String encryptSymmetric(String plainText, SecretKey secretKey) throws Exception {
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        byte[] cipherText = aesCipher.doFinal(plainText.getBytes());
+        return Base64.getEncoder().encodeToString(cipherText);
     }
 
     private void sendException(String exceptionString, String receiver) {
         addToSendingMessages(Message.makeExceptionMessage(receiver, exceptionString));
+    }
+
+    public static String decryptSymmetric(String cipherText, SecretKey secretKey) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
+        byte[] bytes = Base64.getDecoder().decode(cipherText);
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.DECRYPT_MODE, secretKey);
+        return new String(aesCipher.doFinal(bytes), StandardCharsets.UTF_8);
+    }
+
+    public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
+        Cipher encryptCipher = Cipher.getInstance("RSA");
+        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(cipherText);
+    }
+
+    public void addToReceivingMessages(Message message) {
+        synchronized (receivingMessages) {
+            serverPrint("Entered here : ");
+            receivingMessages.add(message);
+            receivingMessages.notify();
+        }
     }
 
     private void receiveMessage(Message message) {
@@ -80,9 +99,14 @@ public class Server {
         }
         if (!message.getReceiver().equals(serverName)) {
             // message doesn't belong to this sever
+            System.out.println("HOY");
         }
         try {
+            System.out.println(message.getMessageType());
             switch (message.getMessageType()) {
+                case IS_THERE_ANY_MANAGER:
+                    DataController.getInstance().isThereAnyManager(message);
+                    break;
                 case LOGIN:
                     DataController.getInstance().login(message);
                     break;
@@ -201,25 +225,12 @@ public class Server {
 //            }
 //        }
         catch (ClientException e) {
+            System.out.println(e.getMessage());
             sendException(e.getMessage(), message.getSender());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }
-
-    public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
-        Cipher encryptCipher = Cipher.getInstance("RSA");
-        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
-        return Base64.getEncoder().encodeToString(cipherText);
-    }
-
-    public static String decrypt(String cipherText) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
-        byte[] bytes = Base64.getDecoder().decode(cipherText);
-        Cipher decryptCipher = Cipher.getInstance("RSA");
-        decryptCipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
-        return new String(decryptCipher.doFinal(bytes), StandardCharsets.UTF_8);
     }
 
     private void start() throws Exception {

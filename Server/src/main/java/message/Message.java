@@ -55,6 +55,7 @@ public class Message {
     private SetWageMessage setWageMessage;
     private ResponseToClientMessage responseToClientMessage;
     private AddToCartMessage addToCartMessage;
+    private IsThereAnyManagerMessage isThereAnyManagerMessage;
 
     // Server --> Clients
     private ExceptionMessage exceptionMessage;
@@ -83,6 +84,13 @@ public class Message {
     public Message(String receiver) {
         this.sender = Server.getInstance().serverName;
         this.receiver = receiver;
+    }
+
+    public static Message makeIsThereAnyManagerMessage(String receiver, boolean isThere) {
+        Message message = new Message(receiver);
+        message.isThereAnyManagerMessage = new IsThereAnyManagerMessage(isThere);
+        message.messageType = MessageType.IS_THERE_ANY_MANAGER;
+        return message;
     }
 
 

@@ -1,6 +1,7 @@
 package control;
 
 import control.Exceptions.*;
+import message.Message;
 import model.ItemOfOrder;
 import model.People.Account;
 import model.People.Customer;
@@ -14,6 +15,7 @@ import java.util.List;
 public class Controller {
     protected static Account currentAccount;
     protected static List<ItemOfOrder> cart = new ArrayList<>();
+    public static boolean isThereAnyManager;
 
     public Controller(Account currentAccount) {
         Controller.currentAccount = currentAccount;
@@ -86,12 +88,12 @@ public class Controller {
     }
 
     public static boolean isThereAnyManager() {
-        for (Account account : Account.getAllAccounts()) {
-            if (account instanceof Manager)
-                return true;
-        }
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeIsThereAnyManagerMessage("Server"));
+        return isThereAnyManager;
+    }
 
-        return false;
+    public static void setIsThereAnyManager(boolean isThere) {
+        isThereAnyManager = isThere;
     }
 
     public static List<ItemOfOrder> getCart() {

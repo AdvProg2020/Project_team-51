@@ -5,7 +5,8 @@ import javafx.application.Platform;
 import message.Message;
 import model.People.Account;
 
-import javax.crypto.Cipher;
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,6 +25,8 @@ import java.util.LinkedList;
 public class Client {
 
     private static Client client;
+    private static KeyPair keyPair;
+    private static SecretKey symmetricKey;
     private final LinkedList<Message> sendingMessages = new LinkedList<>();
     private String clientName;
     private Account account;
@@ -35,7 +38,6 @@ public class Client {
     private Thread sendMessageThread;
     private Thread receiveMessageThread;
     private BufferedReader bufferedReader;
-    private static KeyPair keyPair;
     private RSAPublicKey server;
     private String authToken;
 
@@ -49,6 +51,40 @@ public class Client {
         return client;
     }
 
+    public static KeyPair generateKeyPair() throws Exception {
+        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+        generator.initialize(2048, new SecureRandom());
+        KeyPair pair = generator.generateKeyPair();
+        return pair;
+    }
+
+    public static String decrypt(String cipherText) throws Exception {
+        byte[] bytes = Base64.getDecoder().decode(cipherText);
+        Cipher decryptCipher = Cipher.getInstance("RSA");
+        decryptCipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
+        return new String(decryptCipher.doFinal(bytes), StandardCharsets.UTF_8);
+    }
+
+    public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
+        Cipher encryptCipher = Cipher.getInstance("RSA");
+        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(cipherText);
+    }
+
+    public static String encryptSymmetric(String plainText) throws Exception {
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.ENCRYPT_MODE, symmetricKey);
+        byte[] cipherText = aesCipher.doFinal(plainText.getBytes());
+        return Base64.getEncoder().encodeToString(cipherText);
+    }
+
+    public static String decryptSymmetric(String cipherText) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
+        byte[] bytes = Base64.getDecoder().decode(cipherText);
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.DECRYPT_MODE, symmetricKey);
+        return new String(aesCipher.doFinal(bytes), StandardCharsets.UTF_8);
+    }
 
     private void connect() throws Exception {
         keyPair = generateKeyPair();
@@ -56,6 +92,7 @@ public class Client {
         sendClientNameToServer(socket);
         Thread.sleep(1000);
         exchangePublicKeys(socket);
+        getSymmetricKeys();
         sendMessageThread = new Thread(() -> {
             try {
                 sendMessages();
@@ -64,7 +101,6 @@ public class Client {
             }
         });
         sendMessageThread.start();
-        addToSendingMessagesAndSend(new Message(clientName));
         receiveMessages();
     }
 
@@ -101,6 +137,13 @@ public class Client {
         socket.getOutputStream().write((myPublicKey + "\n").getBytes());
     }
 
+    private void getSymmetricKeys() throws Exception {
+        String encryptedSymmetricKey;
+        while ((encryptedSymmetricKey = bufferedReader.readLine()) == null) ;
+        byte[] decodedKey = Base64.getDecoder().decode(decrypt(encryptedSymmetricKey));
+        symmetricKey = new SecretKeySpec(decodedKey, 0, 16, "AES");
+    }
+
     private Socket getSocketReady() throws IOException {
         Socket socket = makeSocket();
         bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -128,7 +171,7 @@ public class Client {
             }
             if (message != null) {
                 String json = message.toJson();
-                socket.getOutputStream().write((encrypt(json, server) + "\n").getBytes());
+                socket.getOutputStream().write((encryptSymmetric(json) + "\n").getBytes());
                 System.out.println("message sent: " + json);
             } else {
                 try {
@@ -145,14 +188,17 @@ public class Client {
         System.out.println("receiving messages started.");
         while (true) {
             String json = bufferedReader.readLine();
-            Message message = gson.fromJson(decrypt(json), Message.class);
-            System.out.println("message received: " + decrypt(json));
+            Message message = gson.fromJson(decryptSymmetric(json), Message.class);
+            System.out.println("message received: " + decryptSymmetric(json));
             handleMessage(message);
         }
     }
 
     private void handleMessage(Message message) {
-        //TODO
+        switch (message.getMessageType()) {
+            case IS_THERE_ANY_MANAGER:
+                Controller.setIsThereAnyManager(message.getIsThereAnyManagerMessage().isThereAnyManager());
+        }
     }
 
     private void showOrSaveMessage(Message message) {
@@ -166,7 +212,6 @@ public class Client {
         errorMessage = message.getExceptionMessage().getExceptionString();
         Platform.runLater(() -> System.out.println("TODO")); //TODO
     }
-
 
     private void disconnected() {
     }
@@ -209,27 +254,5 @@ public class Client {
 
     public String getAuthToken() {
         return authToken;
-    }
-
-    public static KeyPair generateKeyPair() throws Exception {
-        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
-        generator.initialize(2048, new SecureRandom());
-        KeyPair pair = generator.generateKeyPair();
-        return pair;
-    }
-
-    public static String decrypt(String cipherText) throws Exception {
-        byte[] bytes = Base64.getDecoder().decode(cipherText);
-
-        Cipher decryptCipher = Cipher.getInstance("RSA");
-        decryptCipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
-        return new String(decryptCipher.doFinal(bytes), StandardCharsets.UTF_8);
-    }
-
-    public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
-        Cipher encryptCipher = Cipher.getInstance("RSA");
-        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
-        return Base64.getEncoder().encodeToString(cipherText);
     }
 }
