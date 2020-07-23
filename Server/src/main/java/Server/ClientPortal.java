@@ -2,6 +2,7 @@ package Server;
 
 import control.DataController;
 import message.Message;
+import message.MessageType;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -96,10 +97,10 @@ public class ClientPortal extends Thread {
         String message = Server.decryptSymmetric(encryptedMessage, symmetricKeyMap.get(clientName));
         if (validate(clientName, message)) {
             Server.getInstance().addToReceivingMessages(Message.convertJsonToMessage(message));
-//            numberOfRequests.replace(clientName, new AtomicInteger(numberOfRequests.get(clientName).incrementAndGet()));
-//            Message temp = JsonConverter.fromJson(message, Message.class);
-//            if (temp.getMessageType().equals(MessageType.LOGIN))
-//                failedTries.replace(clientName, new AtomicInteger(failedTries.get(clientName).incrementAndGet()));
+            numberOfRequests.replace(clientName, new AtomicInteger(numberOfRequests.get(clientName).incrementAndGet()));
+            Message temp = JsonConverter.fromJson(message, Message.class);
+            if (temp.getMessageType().equals(MessageType.LOGIN))
+                failedTries.replace(clientName, new AtomicInteger(failedTries.get(clientName).incrementAndGet()));
         } else {
             System.out.println(11);
         }
