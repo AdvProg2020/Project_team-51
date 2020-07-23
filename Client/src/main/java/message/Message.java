@@ -6,6 +6,7 @@ import message.Messages.ClientToServer.*;
 import message.Messages.ServerToClient.*;
 import model.People.Seller;
 import model.Product;
+import model.Requests.AddAuctionRequest;
 
 import java.time.LocalDateTime;
 
@@ -119,7 +120,14 @@ public class Message {
         message.messageType = MessageType.ADD_TO_CART;
         return message;
     }
-    
+
+    public static Message makeAcceptAddAuctionRequest(String receiver, AddAuctionRequest addAuctionRequest) {
+        Message message = new Message(receiver);
+        message.acceptAddAuctionRequestMessage = new AcceptAddAuctionRequestMessage(addAuctionRequest);
+        message.messageType = MessageType.ACCEPT_ADD_AUCTION_REQUEST;
+        return message;
+    }
+
 
     public static Message convertJsonToMessage(String messageJson) {
         return JsonConverter.fromJson(messageJson, Message.class);
