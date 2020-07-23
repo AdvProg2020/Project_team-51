@@ -6,8 +6,7 @@ import message.Messages.ClientToServer.*;
 import message.Messages.ServerToClient.*;
 import model.People.Seller;
 import model.Product;
-import model.Requests.AddAuctionRequest;
-import model.Requests.AddCommentRequest;
+import model.Requests.*;
 
 import java.time.LocalDateTime;
 
@@ -137,6 +136,41 @@ public class Message {
         Message message = new Message(receiver);
         message.acceptAddCommentRequestMessage = new AcceptAddCommentRequestMessage(addCommentRequest);
         message.messageType = MessageType.ACCEPT_ADD_COMMENT_REQUEST;
+        return message;
+    }
+
+    public static Message makeAcceptAddItemRequest(String receiver, AddItemRequest addItemRequest) {
+        Message message = new Message(receiver);
+        message.acceptAddItemRequestMessage = new AcceptAddItemRequestMessage(addItemRequest);
+        message.messageType = MessageType.ACCEPT_ADD_ITEM_REQUEST;
+        return message;
+    }
+
+    public static Message makeAcceptAddSellerForItemRequest(String receiver, AddSellerForItemRequest addSellerForItemRequest) {
+        Message message = new Message(receiver);
+        message.acceptAddSellerForItemRequestMessage = new AcceptAddSellerForItemRequestMessage(addSellerForItemRequest);
+        message.messageType = MessageType.ACCEPT_ADD_SELLER_FOR_ITEM_REQUEST;
+        return message;
+    }
+
+    public static Message makeAcceptAddSellerRequest(String receiver, AddSellerRequest addSellerRequest) {
+        Message message = new Message(receiver);
+        message.acceptAddSellerRequestMessage = new AcceptAddSellerRequestMessage(addSellerRequest);
+        message.messageType = MessageType.ACCEPT_ADD_SELLER_REQUEST;
+        return message;
+    }
+
+    public static Message makeAcceptEditAuctionRequest(String receiver, EditAuctionRequest editAuctionRequest) {
+        Message message = new Message(receiver);
+        message.acceptEditAuctionRequestMessage = new AcceptEditAuctionRequestMessage(editAuctionRequest);
+        message.messageType = MessageType.ACCEPT_EDIT_AUCTION_REQUEST;
+        return message;
+    }
+
+    public static Message makeAcceptEditProductRequest(String receiver, EditAuctionRequest editAuctionRequest) {
+        Message message = new Message(receiver);
+        message.acceptEditAuctionRequestMessage = new AcceptEditAuctionRequestMessage(editAuctionRequest);
+        message.messageType = MessageType.ACCEPT_EDIT_AUCTION_REQUEST;
         return message;
     }
 
