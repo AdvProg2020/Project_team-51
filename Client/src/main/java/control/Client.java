@@ -51,41 +51,6 @@ public class Client {
         return client;
     }
 
-    public static KeyPair generateKeyPair() throws Exception {
-        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
-        generator.initialize(2048, new SecureRandom());
-        KeyPair pair = generator.generateKeyPair();
-        return pair;
-    }
-
-    public static String decrypt(String cipherText) throws Exception {
-        byte[] bytes = Base64.getDecoder().decode(cipherText);
-        Cipher decryptCipher = Cipher.getInstance("RSA");
-        decryptCipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
-        return new String(decryptCipher.doFinal(bytes), StandardCharsets.UTF_8);
-    }
-
-    public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
-        Cipher encryptCipher = Cipher.getInstance("RSA");
-        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
-        return Base64.getEncoder().encodeToString(cipherText);
-    }
-
-    public static String encryptSymmetric(String plainText) throws Exception {
-        Cipher aesCipher = Cipher.getInstance("AES");
-        aesCipher.init(Cipher.ENCRYPT_MODE, symmetricKey);
-        byte[] cipherText = aesCipher.doFinal(plainText.getBytes());
-        return Base64.getEncoder().encodeToString(cipherText);
-    }
-
-    public static String decryptSymmetric(String cipherText) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
-        byte[] bytes = Base64.getDecoder().decode(cipherText);
-        Cipher aesCipher = Cipher.getInstance("AES");
-        aesCipher.init(Cipher.DECRYPT_MODE, symmetricKey);
-        return new String(aesCipher.doFinal(bytes), StandardCharsets.UTF_8);
-    }
-
     private void connect() throws Exception {
         keyPair = generateKeyPair();
         socket = getSocketReady();
@@ -255,4 +220,41 @@ public class Client {
     public String getAuthToken() {
         return authToken;
     }
+
+
+    public static KeyPair generateKeyPair() throws Exception {
+        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+        generator.initialize(2048, new SecureRandom());
+        KeyPair pair = generator.generateKeyPair();
+        return pair;
+    }
+
+    public static String decrypt(String cipherText) throws Exception {
+        byte[] bytes = Base64.getDecoder().decode(cipherText);
+        Cipher decryptCipher = Cipher.getInstance("RSA");
+        decryptCipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
+        return new String(decryptCipher.doFinal(bytes), StandardCharsets.UTF_8);
+    }
+
+    public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
+        Cipher encryptCipher = Cipher.getInstance("RSA");
+        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(cipherText);
+    }
+
+    public static String encryptSymmetric(String plainText) throws Exception {
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.ENCRYPT_MODE, symmetricKey);
+        byte[] cipherText = aesCipher.doFinal(plainText.getBytes());
+        return Base64.getEncoder().encodeToString(cipherText);
+    }
+
+    public static String decryptSymmetric(String cipherText) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
+        byte[] bytes = Base64.getDecoder().decode(cipherText);
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.DECRYPT_MODE, symmetricKey);
+        return new String(aesCipher.doFinal(bytes), StandardCharsets.UTF_8);
+    }
+
 }
