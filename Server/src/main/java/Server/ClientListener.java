@@ -2,10 +2,13 @@ package Server;
 
 import control.TokenGenerator;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.net.Socket;
 import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Formatter;
 import java.util.Scanner;
@@ -71,10 +74,20 @@ public class ClientListener extends Thread {
 
             while (true) {
                 String message = scanner.nextLine();
-                ClientPortal.getInstance().addMessage(name, message);
+                try {
+                    ClientPortal.getInstance().addMessage(name, message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 }

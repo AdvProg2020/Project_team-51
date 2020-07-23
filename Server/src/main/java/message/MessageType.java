@@ -39,6 +39,7 @@ public enum MessageType {
     REMOVE_PRODUCT_FROM_CART,
     SET_WAGE,
     IS_THERE_ANY_MANAGER,
+    GIVE_DATA,
 
     // Server --> Client
     GET_AUCTION,
@@ -64,5 +65,6 @@ public enum MessageType {
     DONE,
     RESPONSE,
     SEND_EXCEPTION,
+    DATA,
 
 }

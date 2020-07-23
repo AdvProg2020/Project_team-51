@@ -63,6 +63,7 @@ public class Message {
     private ResponseToClientMessage responseToClientMessage;
     private AddToCartMessage addToCartMessage;
     private IsThereAnyManagerMessage isThereAnyManagerMessage;
+    private GiveMeTheDataMessage giveMeTheDataMessage;
 
     // Server --> Clients
     private ExceptionMessage exceptionMessage;
@@ -86,6 +87,7 @@ public class Message {
     private GetStatusMessage getStatusMessage;
     private GetTextMessageMessage getTextMessageMessage;
     private GetWalletMessage getWalletMessage;
+    private DataMessage dataMessage;
 
 
     public Message(String receiver) {
@@ -105,6 +107,13 @@ public class Message {
         Message message = new Message(receiver);
         message.isThereAnyManagerMessage = new IsThereAnyManagerMessage();
         message.messageType = MessageType.IS_THERE_ANY_MANAGER;
+        return message;
+    }
+
+    public static Message makeGiveMeTheDataMessage(String receiver) {
+        Message message = new Message(receiver);
+        message.giveMeTheDataMessage = new GiveMeTheDataMessage();
+        message.messageType = MessageType.GIVE_DATA;
         return message;
     }
 
@@ -861,5 +870,13 @@ public class Message {
 
     public void setGetWalletMessage(GetWalletMessage getWalletMessage) {
         this.getWalletMessage = getWalletMessage;
+    }
+
+    public GiveMeTheDataMessage getGiveMeTheDataMessage() {
+        return giveMeTheDataMessage;
+    }
+
+    public DataMessage getDataMessage() {
+        return dataMessage;
     }
 }

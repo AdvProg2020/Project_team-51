@@ -189,13 +189,13 @@ public class Build implements Runnable {
     }
 
     public void initialize() throws IOException {
+//        createStream().filter(file -> file.getName().startsWith("CTG")).map(File::toPath).map(readContent).forEach(category);
         createStream().filter(file -> file.getName().startsWith("Manager")).map(File::toPath).map(readContent).forEach(manager);
         createStream().filter(file -> file.getName().startsWith("Customer")).map(File::toPath).map(readContent).forEach(customer);
         createStream().filter(file -> file.getName().startsWith("Seller")).map(File::toPath).map(readContent).forEach(seller);
         createStream().filter(file -> file.getName().startsWith("PID")).map(File::toPath).map(readContent).forEach(product);
         createStream().filter(file -> file.getName().startsWith("OFF")).map(File::toPath).map(readContent).forEach(offCode);
         createStream().filter(file -> file.getName().startsWith("AUC")).map(File::toPath).map(readContent).forEach(auction);
-        createStream().filter(file -> file.getName().startsWith("CTG")).map(File::toPath).map(readContent).forEach(category);
         createStream().filter(file -> file.getName().startsWith("RT")).map(File::toPath).map(readContent).forEach(rate);
         createStream().filter(file -> file.getName().startsWith("CM")).map(File::toPath).map(readContent).forEach(comment);
         createStream().filter(file -> file.getName().startsWith("BL")).map(File::toPath).map(readContent).forEach(buyerLog);

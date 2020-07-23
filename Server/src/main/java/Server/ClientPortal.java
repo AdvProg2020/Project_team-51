@@ -76,6 +76,8 @@ public class ClientPortal extends Thread {
 
     synchronized void addClientToken(String clientName, String token) {
         authToken.put(clientName, token);
+        numberOfRequests.put(clientName, new AtomicInteger(0));
+        failedTries.put(clientName, new AtomicInteger(0));
     }
 
 
@@ -101,8 +103,6 @@ public class ClientPortal extends Thread {
             Message temp = JsonConverter.fromJson(message, Message.class);
             if (temp.getMessageType().equals(MessageType.LOGIN))
                 failedTries.replace(clientName, new AtomicInteger(failedTries.get(clientName).incrementAndGet()));
-        } else {
-            System.out.println(11);
         }
     }
 

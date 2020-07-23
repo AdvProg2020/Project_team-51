@@ -2,8 +2,11 @@ package message;
 
 import Server.JsonConverter;
 import Server.Server;
+import control.Controller;
 import message.Messages.ClientToServer.*;
 import message.Messages.ServerToClient.*;
+import model.Category;
+import model.Product;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +19,7 @@ public class Message {
     private String receiver;
     // In order to validate !!
     private LocalDateTime date;
-    private String Token;
+    private String token;
 
     // Clients --> Server
     private AcceptAddAuctionRequestMessage acceptAddAuctionRequestMessage;
@@ -56,6 +59,7 @@ public class Message {
     private ResponseToClientMessage responseToClientMessage;
     private AddToCartMessage addToCartMessage;
     private IsThereAnyManagerMessage isThereAnyManagerMessage;
+    private GiveMeTheDataMessage giveMeTheDataMessage;
 
     // Server --> Clients
     private ExceptionMessage exceptionMessage;
@@ -79,6 +83,7 @@ public class Message {
     private GetStatusMessage getStatusMessage;
     private GetTextMessageMessage getTextMessageMessage;
     private GetWalletMessage getWalletMessage;
+    private DataMessage dataMessage;
 
 
     public Message(String receiver) {
@@ -90,6 +95,20 @@ public class Message {
         Message message = new Message(receiver);
         message.isThereAnyManagerMessage = new IsThereAnyManagerMessage(isThere);
         message.messageType = MessageType.IS_THERE_ANY_MANAGER;
+        return message;
+    }
+
+    public static Message makeDoneMessage(String receiver) {
+        Message message = new Message(receiver);
+        message.messageType = MessageType.DONE;
+        return message;
+    }
+
+    public static Message makeDataMessage(String receiver) {
+        Message message = new Message(receiver);
+        message.dataMessage = new DataMessage(Category.getAllCategories(), Product.getAllProducts(),
+                null, Controller.isThereAnyManager());
+        message.messageType = MessageType.DATA;
         return message;
     }
 
@@ -146,11 +165,11 @@ public class Message {
     }
 
     public String getToken() {
-        return Token;
+        return token;
     }
 
     public void setToken(String token) {
-        Token = token;
+        this.token = token;
     }
 
     public AcceptAddAuctionRequestMessage getAcceptAddAuctionRequestMessage() {

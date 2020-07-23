@@ -65,22 +65,28 @@ public class DataController {
         Server.getInstance().serverPrint(" Response to IsThereAnyManager Is Sent!");
     }
 
+    public void giveData(Message message) throws Exception {
+        Server.getInstance().addToSendingMessages(Message.makeDataMessage(message.getSender()));
+        Server.getInstance().serverPrint(" Response to Give Data Is Sent!");
+    }
 
-    public void registerCustomer(Message message) throws ClientException {
+
+    public void registerCustomer(Message message) throws Exception {
         if (message.getRegisterCustomerMessage().getCustomer().getUserName() == null ||
                 getAccount(message.getRegisterCustomerMessage().getCustomer().getUserName()) != null) {
             throw new ClientException("Invalid Username!");
-        } else if (message.getLoginMessage().getPassword() == null) {
+        } else if (message.getRegisterCustomerMessage().getCustomer().getPassword() == null) {
             throw new ClientException("Invalid Password!");
         } else {
             Customer customer = message.getRegisterCustomerMessage().getCustomer();
             Customer.addCustomer(customer);
+            Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
             Server.getInstance().serverPrint(message.getRegisterCustomerMessage().getCustomer().getUserName() + " Is Created!");
         }
     }
 
 
-    public void registerManager(Message message) throws ClientException {
+    public void registerManager(Message message) throws Exception {
         if (message.getRegisterManagerMessage().getManager().getUserName() == null ||
                 getAccount(message.getRegisterManagerMessage().getManager().getUserName()) != null) {
             throw new ClientException("Invalid Username!");
@@ -91,6 +97,7 @@ public class DataController {
         } else {
             Manager manager = message.getRegisterManagerMessage().getManager();
             Manager.addManager(manager);
+            ClientPortal.getInstance().sendMessage(message.getSender(), JsonConverter.toJson(Message.makeDoneMessage(message.getSender())));
             Server.getInstance().serverPrint(message.getRegisterManagerMessage().getManager().getUserName() + " Is Created!");
         }
     }

@@ -208,7 +208,6 @@ public class MainController {
                 search = newValue;
             }
         });
-
         cartButton.setOnMouseClicked(event -> {
             var account = Controller.getCurrentAccount();
             System.out.println(Controller.getCart());
@@ -334,7 +333,6 @@ public class MainController {
             stackPane.getScene().setRoot(new ProductsController(SearchFilter.getInstance().applyFilter(Product.getAllProducts(), search)));
 
         });
-
         logout.setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button.wav")).start();
             if (Controller.isLoggedIn()) {
@@ -460,12 +458,12 @@ public class MainController {
         mostViewedProductPrice4.setText(mostViewedProducts.get(3).getAveragePrice() + " $");
     }
 
-    private void showError(String message) {
+    public void showError(String message) {
         showErrorWithColor(message, "#fe615a");
     }
 
     @FXML
-    private void showErrorWithColor(String message, String color) {
+    public void showErrorWithColor(String message, String color) {
         BoxBlur boxBlur = new BoxBlur(4, 4, 4);
         JFXButton button = new JFXButton("  Yes  ");
         button.setStyle("-fx-background-color:" + color + "; -fx-background-radius:  18; -fx-text-fill: white");

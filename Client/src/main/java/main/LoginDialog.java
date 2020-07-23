@@ -2,6 +2,7 @@ package main;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.events.JFXDialogEvent;
+import control.Client;
 import control.Controller;
 import control.Exceptions.InvalidUsernameException;
 import control.Exceptions.WrongPasswordException;
@@ -19,10 +20,10 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import message.Message;
 import model.People.Customer;
 import model.People.Manager;
 import model.People.Seller;
-import model.Requests.AddSellerRequest;
 
 import java.io.IOException;
 
@@ -210,17 +211,21 @@ public class LoginDialog extends AnchorPane {
         registerButton.setOnAction(e -> {
             if (readyToRegister()) {
                 if (type.equals("Customer")) {
-                    Controller.setCurrentAccount(new Customer(registerUsername, registerPassword, firstNameText, lastNameText,
+                    Message message = Message.makeRegisterCustomerMessage("Server", new Customer(registerUsername, registerPassword, firstNameText, lastNameText,
                             Double.parseDouble(balanceText), emailText, phoneNumberText));
+                    Client.getInstance().addToSendingMessagesAndSend(message);
                     showConfirmation("You registered successfully");
                 } else if (type.equals("Seller")) {
-                    new AddSellerRequest(new Seller(registerUsername, registerPassword, firstNameText, lastNameText,
-                            Double.parseDouble(balanceText), emailText, phoneNumberText, companyName));
+                    Message message = Message.makeCreateAddSellerRequestMessage("Server",
+                            new Seller(registerUsername, registerPassword, firstNameText, lastNameText,
+                                    Double.parseDouble(balanceText), emailText, phoneNumberText, companyName));
+                    Client.getInstance().addToSendingMessagesAndSend(message);
                     showConfirmation("You registered successfully! Request sent to Manager !");
                 }
                 if (type.equals("Manager")) {
-                    Controller.setCurrentAccount(new Manager(registerUsername, registerPassword, firstNameText, lastNameText
+                    Message message = Message.makeRegisterManagerMessage("Server", new Manager(registerUsername, registerPassword, firstNameText, lastNameText
                             , emailText, phoneNumberText));
+                    Client.getInstance().addToSendingMessagesAndSend(message);
                     showConfirmation("Manager account has created successfully!");
                 }
             }

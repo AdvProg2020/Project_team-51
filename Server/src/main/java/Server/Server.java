@@ -17,11 +17,10 @@ import java.util.Queue;
 public class Server {
 
     private static Server server;
+    private static KeyPair keyPair;
     public final String serverName;
-
     private final Queue<Message> sendingMessages = new LinkedList<>();
     private final Queue<Message> receivingMessages = new LinkedList<>();
-    private static KeyPair keyPair;
 
     private Server(String serverName) {
         this.serverName = serverName;
@@ -48,27 +47,11 @@ public class Server {
         return pair;
     }
 
-
-    public void serverPrint(String string) {
-        System.out.println("\u001B[32m" + string.trim() + "\u001B[0m");
-    }
-
-    public void addToSendingMessages(Message message) {
-        synchronized (sendingMessages) {
-            sendingMessages.add(message);
-            sendingMessages.notify();
-        }
-    }
-
     public static String encryptSymmetric(String plainText, SecretKey secretKey) throws Exception {
         Cipher aesCipher = Cipher.getInstance("AES");
         aesCipher.init(Cipher.ENCRYPT_MODE, secretKey);
         byte[] cipherText = aesCipher.doFinal(plainText.getBytes());
         return Base64.getEncoder().encodeToString(cipherText);
-    }
-
-    private void sendException(String exceptionString, String receiver) {
-        addToSendingMessages(Message.makeExceptionMessage(receiver, exceptionString));
     }
 
     public static String decryptSymmetric(String cipherText, SecretKey secretKey) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
@@ -83,6 +66,21 @@ public class Server {
         encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
         byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
         return Base64.getEncoder().encodeToString(cipherText);
+    }
+
+    public void serverPrint(String string) {
+        System.out.println("\u001B[32m" + string.trim() + "\u001B[0m");
+    }
+
+    public void addToSendingMessages(Message message) {
+        synchronized (sendingMessages) {
+            sendingMessages.add(message);
+            sendingMessages.notify();
+        }
+    }
+
+    private void sendException(String exceptionString, String receiver) {
+        addToSendingMessages(Message.makeExceptionMessage(receiver, exceptionString));
     }
 
     public void addToReceivingMessages(Message message) {
@@ -104,6 +102,9 @@ public class Server {
         try {
             System.out.println(message.getMessageType());
             switch (message.getMessageType()) {
+                case GIVE_DATA:
+                    DataController.getInstance().giveData(message);
+                    break;
                 case IS_THERE_ANY_MANAGER:
                     DataController.getInstance().isThereAnyManager(message);
                     break;
@@ -235,7 +236,7 @@ public class Server {
 
     private void start() throws Exception {
         keyPair = generateKeyPair();
-        new Thread(() -> new Build().run());
+        new Thread(() -> new Build().run()).start();
         Thread statusUpdaterThread = new Thread(new StatusUpdater());
         statusUpdaterThread.start();
         ClientPortal.getInstance().start();
@@ -250,16 +251,17 @@ public class Server {
                 if (message != null) {
                     try {
                         ClientPortal.getInstance().sendMessage(message.getReceiver(), message.toJson());
+                        System.out.println("TO:" + message.getReceiver() + ":  " + message.toJson());//TODO:remove
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    System.out.println("TO:" + message.getReceiver() + ":  " + message.toJson());//TODO:remove
                 } else {
                     try {
                         synchronized (sendingMessages) {
                             sendingMessages.wait();
                         }
                     } catch (InterruptedException ignored) {
+                        System.out.println("BITCH");
                     }
                 }
             }
@@ -280,6 +282,7 @@ public class Server {
                             receivingMessages.wait();
                         }
                     } catch (InterruptedException ignored) {
+                        System.out.println("BITCH PLEASE");
                     }
                 }
             }

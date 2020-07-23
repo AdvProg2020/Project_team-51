@@ -3,7 +3,9 @@ package control;
 import com.gilecode.yagson.com.google.gson.Gson;
 import javafx.application.Platform;
 import message.Message;
+import model.Category;
 import model.People.Account;
+import model.Product;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
@@ -66,6 +68,7 @@ public class Client {
             }
         });
         sendMessageThread.start();
+        addToSendingMessagesAndSend(Message.makeGiveMeTheDataMessage("Server"));
         receiveMessages();
     }
 
@@ -120,7 +123,7 @@ public class Client {
         return new Socket("localhost", 8888);
     }
 
-    void addToSendingMessagesAndSend(Message message) {
+    public void addToSendingMessagesAndSend(Message message) {
         synchronized (sendingMessages) {
             sendingMessages.add(message);
             sendingMessages.notify();
@@ -149,7 +152,7 @@ public class Client {
         }
     }
 
-    private void receiveMessages() throws Exception {
+    private void receiveMessages() throws IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
         System.out.println("receiving messages started.");
         while (true) {
             String json = bufferedReader.readLine();
@@ -163,7 +166,21 @@ public class Client {
         switch (message.getMessageType()) {
             case IS_THERE_ANY_MANAGER:
                 Controller.setIsThereAnyManager(message.getIsThereAnyManagerMessage().isThereAnyManager());
+                break;
+            case DATA:
+                loadData(message);
+                break;
+            case DONE:
+                System.out.println("DONE !");
+                break;
         }
+    }
+
+    private void loadData(Message message) {
+        Category.getAllCategories().addAll(message.getDataMessage().getCategories());
+        Product.getAllProducts().addAll(message.getDataMessage().getProducts());
+        // Bids
+        Controller.setIsThereAnyManager(message.getDataMessage().isThereAnyManager());
     }
 
     private void showOrSaveMessage(Message message) {

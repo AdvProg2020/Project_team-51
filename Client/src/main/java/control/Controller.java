@@ -1,7 +1,6 @@
 package control;
 
 import control.Exceptions.*;
-import message.Message;
 import model.ItemOfOrder;
 import model.People.Account;
 import model.People.Customer;
@@ -88,7 +87,6 @@ public class Controller {
     }
 
     public static boolean isThereAnyManager() {
-        Client.getInstance().addToSendingMessagesAndSend(Message.makeIsThereAnyManagerMessage("Server"));
         return isThereAnyManager;
     }
 
