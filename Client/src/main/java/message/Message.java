@@ -4,11 +4,14 @@ import control.Client;
 import control.Controller;
 import message.Messages.ClientToServer.*;
 import message.Messages.ServerToClient.*;
+import model.ItemOfOrder;
+import model.OffCode;
 import model.People.Seller;
 import model.Product;
 import model.Requests.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Message {
 
@@ -125,52 +128,73 @@ public class Message {
         return message;
     }
 
-    public static Message makeAcceptAddAuctionRequest(String receiver, AddAuctionRequest addAuctionRequest) {
+    public static Message makeAcceptAddAuctionRequestMessage(String receiver, AddAuctionRequest addAuctionRequest) {
         Message message = new Message(receiver);
         message.acceptAddAuctionRequestMessage = new AcceptAddAuctionRequestMessage(addAuctionRequest);
         message.messageType = MessageType.ACCEPT_ADD_AUCTION_REQUEST;
         return message;
     }
 
-    public static Message makeAcceptAddCommentRequest(String receiver, AddCommentRequest addCommentRequest) {
+    public static Message makeAcceptAddCommentRequestMessage(String receiver, AddCommentRequest addCommentRequest) {
         Message message = new Message(receiver);
         message.acceptAddCommentRequestMessage = new AcceptAddCommentRequestMessage(addCommentRequest);
         message.messageType = MessageType.ACCEPT_ADD_COMMENT_REQUEST;
         return message;
     }
 
-    public static Message makeAcceptAddItemRequest(String receiver, AddItemRequest addItemRequest) {
+    public static Message makeAcceptAddItemRequestMessage(String receiver, AddItemRequest addItemRequest) {
         Message message = new Message(receiver);
         message.acceptAddItemRequestMessage = new AcceptAddItemRequestMessage(addItemRequest);
         message.messageType = MessageType.ACCEPT_ADD_ITEM_REQUEST;
         return message;
     }
 
-    public static Message makeAcceptAddSellerForItemRequest(String receiver, AddSellerForItemRequest addSellerForItemRequest) {
+    public static Message makeAcceptAddSellerForItemRequestMessage(String receiver, AddSellerForItemRequest addSellerForItemRequest) {
         Message message = new Message(receiver);
         message.acceptAddSellerForItemRequestMessage = new AcceptAddSellerForItemRequestMessage(addSellerForItemRequest);
         message.messageType = MessageType.ACCEPT_ADD_SELLER_FOR_ITEM_REQUEST;
         return message;
     }
 
-    public static Message makeAcceptAddSellerRequest(String receiver, AddSellerRequest addSellerRequest) {
+    public static Message makeAcceptAddSellerRequestMessage(String receiver, AddSellerRequest addSellerRequest) {
         Message message = new Message(receiver);
         message.acceptAddSellerRequestMessage = new AcceptAddSellerRequestMessage(addSellerRequest);
         message.messageType = MessageType.ACCEPT_ADD_SELLER_REQUEST;
         return message;
     }
 
-    public static Message makeAcceptEditAuctionRequest(String receiver, EditAuctionRequest editAuctionRequest) {
+    public static Message makeAcceptEditAuctionRequestMessage(String receiver, EditAuctionRequest editAuctionRequest) {
         Message message = new Message(receiver);
         message.acceptEditAuctionRequestMessage = new AcceptEditAuctionRequestMessage(editAuctionRequest);
         message.messageType = MessageType.ACCEPT_EDIT_AUCTION_REQUEST;
         return message;
     }
 
-    public static Message makeAcceptEditProductRequest(String receiver, EditAuctionRequest editAuctionRequest) {
+    public static Message makeAcceptEditProductRequestMessage(String receiver, EditAuctionRequest editAuctionRequest) {
         Message message = new Message(receiver);
         message.acceptEditAuctionRequestMessage = new AcceptEditAuctionRequestMessage(editAuctionRequest);
         message.messageType = MessageType.ACCEPT_EDIT_AUCTION_REQUEST;
+        return message;
+    }
+
+    public static Message makeApplyOffCodeMessage(String receiver, OffCode offCode, List<ItemOfOrder> cart) {
+        Message message = new Message(receiver);
+        message.applyOffCodeMessage = new ApplyOffCodeMessage(offCode, cart);
+        message.messageType = MessageType.APPLY_OFF_CODE;
+        return message;
+    }
+
+    public static Message makeBuyFileMessage(String receiver, double price) {
+        Message message = new Message(receiver);
+        message.buyFileMessage = new BuyFileMessage(price); //TODO
+        message.messageType = MessageType.BUY_FILE;
+        return message;
+    }
+
+    public static Message makeChargeWalletMessage(String receiver) {
+        Message message = new Message(receiver);
+        message.chargeWalletMessage = new ChargeWalletMessage();//TODO
+        message.messageType = MessageType.BUY_FILE;
         return message;
     }
 
