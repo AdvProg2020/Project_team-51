@@ -1,16 +1,16 @@
 package message.Messages.ClientToServer;
 
-import model.People.Seller;
+import model.People.Service;
 
 public class RegisterServiceByManagerMessage {
 
-    private Seller seller;
+    private Service service;
 
-    public RegisterServiceByManagerMessage(Seller seller) {
-        this.seller = seller;
+    public RegisterServiceByManagerMessage(Service service) {
+        this.service = service;
     }
 
-    public Seller getSeller() {
-        return seller;
+    public Service getService() {
+        return service;
     }
 }

@@ -5,7 +5,10 @@ import control.Controller;
 import message.Messages.ClientToServer.*;
 import message.Messages.ServerToClient.*;
 import model.*;
+import model.People.Customer;
+import model.People.Manager;
 import model.People.Seller;
+import model.People.Service;
 import model.Requests.*;
 
 import java.time.LocalDateTime;
@@ -102,6 +105,48 @@ public class Message {
         Message message = new Message(receiver);
         message.isThereAnyManagerMessage = new IsThereAnyManagerMessage();
         message.messageType = MessageType.IS_THERE_ANY_MANAGER;
+        return message;
+    }
+
+    public static Message makeRegisterCustomerMessage(String receiver, Customer customer) {
+        Message message = new Message(receiver);
+        message.registerCustomerMessage = new RegisterCustomerMessage(customer);
+        message.messageType = MessageType.REGISTER_CUSTOMER;
+        return message;
+    }
+
+    public static Message makeRegisterManagerMessage(String receiver, Manager manager) {
+        Message message = new Message(receiver);
+        message.registerManagerMessage = new RegisterManagerMessage(manager);
+        message.messageType = MessageType.REGISTER_MANAGER;
+        return message;
+    }
+
+    public static Message makeRegisterManagerByManagerMessage(String receiver, Manager manager) {
+        Message message = new Message(receiver);
+        message.registerManagerByManagerMessage = new RegisterManagerByManagerMessage(manager);
+        message.messageType = MessageType.REGISTER_MANAGER_BY_MANAGER;
+        return message;
+    }
+
+    public static Message makeRegisterServiceByManagerMessage(String receiver, Service service) {
+        Message message = new Message(receiver);
+        message.registerServiceByManagerMessage = new RegisterServiceByManagerMessage(service);
+        message.messageType = MessageType.REGISTER_SERVICE_BY_MANAGER;
+        return message;
+    }
+
+    public static Message makeRemoveProductFromCartMessage(String receiver, Product product) {
+        Message message = new Message(receiver);
+        message.removeProductFromCartMessage = new RemoveProductFromCartMessage(product);
+        message.messageType = MessageType.REMOVE_PRODUCT_FROM_CART;
+        return message;
+    }
+
+    public static Message makeSetWageMessage(String receiver, int wage) {
+        Message message = new Message(receiver);
+        message.setWageMessage = new SetWageMessage(wage);
+        message.messageType = MessageType.SET_WAGE;
         return message;
     }
 
@@ -273,6 +318,19 @@ public class Message {
         return message;
     }
 
+    public static Message makePayCartViaWalletMessage(String receiver, List<ItemOfOrder> cart) {
+        Message message = new Message(receiver);
+        message.payCartViaWalletMessage = new PayCartViaWalletMessage(cart);
+        message.messageType = MessageType.PAY_CART_VIA_WALLET;
+        return message;
+    }
+
+    public static Message makePayCartViaBankMessage(String receiver, List<ItemOfOrder> cart) {
+        Message message = new Message(receiver);
+        message.payCartViaBankMessage = new PayCartViaBankMessage(cart);
+        message.messageType = MessageType.PAY_CART_VIA_BANK;
+        return message;
+    }
 
     public static Message makeBuyFileMessage(String receiver, double price) {
         Message message = new Message(receiver);
