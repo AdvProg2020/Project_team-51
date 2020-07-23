@@ -4,10 +4,8 @@ import control.Client;
 import control.Controller;
 import message.Messages.ClientToServer.*;
 import message.Messages.ServerToClient.*;
-import model.ItemOfOrder;
-import model.OffCode;
+import model.*;
 import model.People.Seller;
-import model.Product;
 import model.Requests.*;
 
 import java.time.LocalDateTime;
@@ -170,10 +168,59 @@ public class Message {
         return message;
     }
 
-    public static Message makeAcceptEditProductRequestMessage(String receiver, EditAuctionRequest editAuctionRequest) {
+    public static Message makeAcceptEditProductRequestMessage(String receiver, EditProductRequest editProductRequest) {
         Message message = new Message(receiver);
-        message.acceptEditAuctionRequestMessage = new AcceptEditAuctionRequestMessage(editAuctionRequest);
-        message.messageType = MessageType.ACCEPT_EDIT_AUCTION_REQUEST;
+        message.acceptEditProductRequestMessage = new AcceptEditProductRequestMessage(editProductRequest);
+        message.messageType = MessageType.ACCEPT_EDIT_PRODUCT_REQUEST;
+        return message;
+    }
+
+    public static Message makeCreateAddAuctionRequestMessage(String receiver, Auction auction, Seller seller) {
+        Message message = new Message(receiver);
+        message.createAddAuctionRequestMessage = new CreateAddAuctionRequestMessage(auction, seller);
+        message.messageType = MessageType.CREATE_ADD_AUCTION_REQUEST;
+        return message;
+    }
+
+    public static Message makeCreateAddCommentRequestMessage(String receiver, Comment comment) {
+        Message message = new Message(receiver);
+        message.createAddCommentRequestMessage = new CreateAddCommentRequestMessage(comment);
+        message.messageType = MessageType.CREATE_ADD_COMMENT_REQUEST;
+        return message;
+    }
+
+    public static Message makeCreateAddItemRequestMessage(String receiver, Product product, Seller seller) {
+        Message message = new Message(receiver);
+        message.createAddItemRequestMessage = new CreateAddItemRequestMessage(product, seller);
+        message.messageType = MessageType.CREATE_ADD_ITEM_REQUEST;
+        return message;
+    }
+
+    public static Message makeCreateAddSellerForItemRequestMessage(String receiver, Product product, Seller seller, int quantity, double price) {
+        Message message = new Message(receiver);
+        message.createAddSellerForItemRequestMessage = new CreateAddSellerForItemRequestMessage(product, seller, quantity, price);
+        message.messageType = MessageType.CREATE_ADD_SELLER_FOR_ITEM_REQUEST;
+        return message;
+    }
+
+    public static Message makeCreateAddSellerRequestMessage(String receiver, Seller seller) {
+        Message message = new Message(receiver);
+        message.createAddSellerRequestMessage = new CreateAddSellerRequestMessage(seller);
+        message.messageType = MessageType.CREATE_ADD_SELLER_REQUEST;
+        return message;
+    }
+
+    public static Message makeCreateEditAuctionRequestMessage(String receiver, Auction auction, String field, String value) {
+        Message message = new Message(receiver);
+        message.createEditAuctionRequestMessage = new CreateEditAuctionRequestMessage(auction, field, value);
+        message.messageType = MessageType.CREATE_EDIT_AUCTION_REQUEST;
+        return message;
+    }
+
+    public static Message makeCreateEditProductRequestMessage(String receiver, Product product, Seller seller, String field, String value) {
+        Message message = new Message(receiver);
+        message.createEditProductRequestMessage = new CreateEditProductRequestMessage(product, seller, field, value);
+        message.messageType = MessageType.CREATE_EDIT_PRODUCT_REQUEST;
         return message;
     }
 
