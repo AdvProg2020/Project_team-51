@@ -61,31 +61,17 @@ public class Message {
     private AddToCartMessage addToCartMessage;
     private IsThereAnyManagerMessage isThereAnyManagerMessage;
     private GiveMeTheDataMessage giveMeTheDataMessage;
+    private GetProductsListByCategoryNameMessage getProductsListByCategoryNameMessage;
+    private GetProductsListBySearchMessage getProductsListBySearchMessage;
 
     // Server --> Clients
     private ExceptionMessage exceptionMessage;
-    private GetAuctionMessage getAuctionMessage;
-    private GetBidMessage getBidMessage;
-    private GetBidListMessage getBidListMessage;
-    private GetBuyerLogMessage getBuyerLogMessage;
-    private GetCartMessage getCartMessage;
-    private GetCategoryMessage getCategoryMessage;
-    private GetChatMessage getChatMessage;
-    private GetCustomerMessage getCustomerMessage;
-    private GetItemOfOrderMessage getItemOfOrderMessage;
-    private GetMangerMessage getMangerMessage;
-    private GetOffCodeMessage getOffCodeMessage;
-    private GetProductMessage getProductMessage;
-    private GetProductsListMessage getProductsListMessage;
-    private GetRateMessage getRateMessage;
-    private GetSellerLogMessage getSellerLogMessage;
-    private GetSellerMessage getSellerMessage;
-    private GetServiceMessage getServiceMessage;
-    private GetStatusMessage getStatusMessage;
-    private GetTextMessageMessage getTextMessageMessage;
-    private GetWalletMessage getWalletMessage;
     private DataMessage dataMessage;
     private UpdateAccountMessage updateAccountMessage;
+    private UpdateCartMessage updateCartMessage;
+    private UpdateCategoriesMessage updateCategoriesMessage;
+    private UpdateProductsListMessage updateProductsListMessage;
+    private UpdateRequestsMessage updateRequestsMessage;
 
 
     public Message(String receiver) {
@@ -473,163 +459,11 @@ public class Message {
         this.exceptionMessage = exceptionMessage;
     }
 
-    public GetAuctionMessage getGetAuctionMessage() {
-        return getAuctionMessage;
+    public GetProductsListBySearchMessage getGetProductsListBySearchMessage() {
+        return getProductsListBySearchMessage;
     }
 
-    public void setGetAuctionMessage(GetAuctionMessage getAuctionMessage) {
-        this.getAuctionMessage = getAuctionMessage;
-    }
-
-    public GetBidMessage getGetBidMessage() {
-        return getBidMessage;
-    }
-
-    public void setGetBidMessage(GetBidMessage getBidMessage) {
-        this.getBidMessage = getBidMessage;
-    }
-
-    public GetBidListMessage getGetBidListMessage() {
-        return getBidListMessage;
-    }
-
-    public void setGetBidListMessage(GetBidListMessage getBidListMessage) {
-        this.getBidListMessage = getBidListMessage;
-    }
-
-    public GetBuyerLogMessage getGetBuyerLogMessage() {
-        return getBuyerLogMessage;
-    }
-
-    public void setGetBuyerLogMessage(GetBuyerLogMessage getBuyerLogMessage) {
-        this.getBuyerLogMessage = getBuyerLogMessage;
-    }
-
-    public GetCartMessage getGetCartMessage() {
-        return getCartMessage;
-    }
-
-    public void setGetCartMessage(GetCartMessage getCartMessage) {
-        this.getCartMessage = getCartMessage;
-    }
-
-    public GetCategoryMessage getGetCategoryMessage() {
-        return getCategoryMessage;
-    }
-
-    public void setGetCategoryMessage(GetCategoryMessage getCategoryMessage) {
-        this.getCategoryMessage = getCategoryMessage;
-    }
-
-    public GetChatMessage getGetChatMessage() {
-        return getChatMessage;
-    }
-
-    public void setGetChatMessage(GetChatMessage getChatMessage) {
-        this.getChatMessage = getChatMessage;
-    }
-
-    public GetCustomerMessage getGetCustomerMessage() {
-        return getCustomerMessage;
-    }
-
-    public void setGetCustomerMessage(GetCustomerMessage getCustomerMessage) {
-        this.getCustomerMessage = getCustomerMessage;
-    }
-
-    public GetItemOfOrderMessage getGetItemOfOrderMessage() {
-        return getItemOfOrderMessage;
-    }
-
-    public void setGetItemOfOrderMessage(GetItemOfOrderMessage getItemOfOrderMessage) {
-        this.getItemOfOrderMessage = getItemOfOrderMessage;
-    }
-
-    public GetMangerMessage getGetMangerMessage() {
-        return getMangerMessage;
-    }
-
-    public void setGetMangerMessage(GetMangerMessage getMangerMessage) {
-        this.getMangerMessage = getMangerMessage;
-    }
-
-    public GetOffCodeMessage getGetOffCodeMessage() {
-        return getOffCodeMessage;
-    }
-
-    public void setGetOffCodeMessage(GetOffCodeMessage getOffCodeMessage) {
-        this.getOffCodeMessage = getOffCodeMessage;
-    }
-
-    public GetProductMessage getGetProductMessage() {
-        return getProductMessage;
-    }
-
-    public void setGetProductMessage(GetProductMessage getProductMessage) {
-        this.getProductMessage = getProductMessage;
-    }
-
-    public GetProductsListMessage getGetProductsListMessage() {
-        return getProductsListMessage;
-    }
-
-    public void setGetProductsListMessage(GetProductsListMessage getProductsListMessage) {
-        this.getProductsListMessage = getProductsListMessage;
-    }
-
-    public GetRateMessage getGetRateMessage() {
-        return getRateMessage;
-    }
-
-    public void setGetRateMessage(GetRateMessage getRateMessage) {
-        this.getRateMessage = getRateMessage;
-    }
-
-    public GetSellerLogMessage getGetSellerLogMessage() {
-        return getSellerLogMessage;
-    }
-
-    public void setGetSellerLogMessage(GetSellerLogMessage getSellerLogMessage) {
-        this.getSellerLogMessage = getSellerLogMessage;
-    }
-
-    public GetSellerMessage getGetSellerMessage() {
-        return getSellerMessage;
-    }
-
-    public void setGetSellerMessage(GetSellerMessage getSellerMessage) {
-        this.getSellerMessage = getSellerMessage;
-    }
-
-    public GetServiceMessage getGetServiceMessage() {
-        return getServiceMessage;
-    }
-
-    public void setGetServiceMessage(GetServiceMessage getServiceMessage) {
-        this.getServiceMessage = getServiceMessage;
-    }
-
-    public GetStatusMessage getGetStatusMessage() {
-        return getStatusMessage;
-    }
-
-    public void setGetStatusMessage(GetStatusMessage getStatusMessage) {
-        this.getStatusMessage = getStatusMessage;
-    }
-
-    public GetTextMessageMessage getGetTextMessageMessage() {
-        return getTextMessageMessage;
-    }
-
-    public void setGetTextMessageMessage(GetTextMessageMessage getTextMessageMessage) {
-        this.getTextMessageMessage = getTextMessageMessage;
-    }
-
-    public GetWalletMessage getGetWalletMessage() {
-        return getWalletMessage;
-    }
-
-    public void setGetWalletMessage(GetWalletMessage getWalletMessage) {
-        this.getWalletMessage = getWalletMessage;
+    public GetProductsListByCategoryNameMessage getGetProductsListByCategoryNameMessage() {
+        return getProductsListByCategoryNameMessage;
     }
 }

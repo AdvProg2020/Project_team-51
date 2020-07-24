@@ -172,6 +172,7 @@ public class DataController {
                 throw new ClientException("You are not allowed to do that");
             } else {
                 addAuctionRequest.accept();
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Request got accepted!");
             }
         }
@@ -190,8 +191,8 @@ public class DataController {
                 throw new ClientException("You are not allowed to do that");
             } else {
                 addCommentRequest.accept();
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Request got accepted!");
-//                Server.getInstance().addToSendingMessages();
             }
         }
     }
@@ -209,6 +210,7 @@ public class DataController {
                 throw new ClientException("You are not allowed to do that");
             } else {
                 addItemRequest.accept();
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Request got accepted!");
             }
         }
@@ -227,6 +229,7 @@ public class DataController {
                 throw new ClientException("You are not allowed to do that");
             } else {
                 addSellerForItemRequest.accept();
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Request got accepted!");
             }
         }
@@ -245,6 +248,7 @@ public class DataController {
                 throw new ClientException("You are not allowed to do that");
             } else {
                 addSellerRequest.accept();
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Request got accepted!");
             }
         }
@@ -263,6 +267,7 @@ public class DataController {
                 throw new ClientException("You are not allowed to do that");
             } else {
                 editAuctionRequest.accept();
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Request got accepted!");
             }
         }
@@ -281,6 +286,7 @@ public class DataController {
                 throw new ClientException("You are not allowed to do that");
             } else {
                 editProductRequest.accept();
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Request got accepted!");
             }
         }
@@ -297,6 +303,7 @@ public class DataController {
             } else {
                 var createAddAuctionRequest = message.getCreateAddAuctionRequestMessage();
                 new AddAuctionRequest(createAddAuctionRequest.getAuction(), createAddAuctionRequest.getSeller());
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Request has created!");
             }
         }
@@ -314,6 +321,7 @@ public class DataController {
             } else {
                 var createAddCommentRequest = message.getCreateAddCommentRequestMessage();
                 new AddCommentRequest(createAddCommentRequest.getComment());
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Request has created!");
             }
         }
@@ -330,6 +338,7 @@ public class DataController {
             } else {
                 var createAddItemRequest = message.getCreateAddItemRequestMessage();
                 new AddItemRequest(createAddItemRequest.getProduct(), createAddItemRequest.getSeller());
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Request has created!");
             }
         }
@@ -349,6 +358,7 @@ public class DataController {
                         createAddSellerForItemRequest.getSeller(),
                         createAddSellerForItemRequest.getQuantity(),
                         createAddSellerForItemRequest.getPrice());
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Request has created!");
             }
         }
@@ -365,6 +375,7 @@ public class DataController {
             } else {
                 var createAddSellerRequest = message.getCreateAddSellerRequestMessage();
                 new AddSellerRequest(createAddSellerRequest.getSeller());
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Request has created!");
             }
         }
@@ -381,6 +392,7 @@ public class DataController {
             } else {
                 var createEditAuctionRequest = message.getCreateEditAuctionRequestMessage();
                 new EditAuctionRequest(createEditAuctionRequest.getAuction(), createEditAuctionRequest.getField(), createEditAuctionRequest.getValue());
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Request has created!");
             }
         }
@@ -400,6 +412,7 @@ public class DataController {
                         createEditProductRequest.getSeller(),
                         createEditProductRequest.getField(),
                         createEditProductRequest.getValue());
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Request has created!");
             }
         }
@@ -416,6 +429,7 @@ public class DataController {
             } else {
                 var offCode = message.getCreateOffCodeMessage().getOffCode();
                 OffCode.addOffCode(offCode);
+                Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
                 Server.getInstance().serverPrint("Off Code has created!");
             }
         }
@@ -435,6 +449,8 @@ public class DataController {
             }
         }
     }
+
+
 
     public void createCategory(Message message) throws ClientException {
         loginCheck(message);
