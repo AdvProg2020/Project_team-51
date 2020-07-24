@@ -331,7 +331,6 @@ public class MainController {
         searchButton.setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button.wav")).start();
             stackPane.getScene().setRoot(new ProductsController(SearchFilter.getInstance().applyFilter(Product.getAllProducts(), search)));
-
         });
         logout.setOnMouseClicked(event -> {
             new Thread(() -> playAudio("button.wav")).start();

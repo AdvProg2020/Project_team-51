@@ -35,12 +35,7 @@ public class Controller {
     }
 
     public static void logout() throws HaveNotLoggedInException {
-        if (currentAccount != null)
-            currentAccount = null;
-        else {
-            throw new HaveNotLoggedInException();
-        }
-
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeLogoutMessage("Server"));
     }
 
     public static Account getCurrentAccount() {

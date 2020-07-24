@@ -136,8 +136,8 @@ public class DataController {
         loginCheck(message);
         accounts.replace(clients.get(message.getSender()), null);
         clients.replace(message.getSender(), null);
+        Server.getInstance().addToSendingMessages(Message.makeUpdateAccountMessage(message.getSender(), null));
         Server.getInstance().serverPrint(message.getSender() + " Is Logged Out.");
-        // TODO -> Send Done Message
     }
 
     public void registerManagerByManager(Message message) throws ClientException {
