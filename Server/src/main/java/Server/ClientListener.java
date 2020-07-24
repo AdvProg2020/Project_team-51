@@ -36,7 +36,6 @@ public class ClientListener extends Thread {
                 name = scanner.nextLine().split("#")[1];
                 if (name.length() >= 3 && !ClientPortal.getInstance().hasThisClient(name)) {
                     ClientPortal.getInstance().addClient(name, formatter);
-                    DNS.getInstance().putClient(name, socket.getPort());
                     formatter.format("#Valid#\n");
                     formatter.flush();
                     break;

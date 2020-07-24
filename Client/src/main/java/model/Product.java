@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import model.People.Customer;
 import model.People.Seller;
 
+import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,7 @@ public class Product {
     private int sellNumber;
     private List<Comment> comments = new ArrayList<>();
     private Image image;
+    private File file;
 
 
     public Product(String productId, String name, String brandName,
@@ -275,4 +277,11 @@ public class Product {
     }
 
 
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
 }

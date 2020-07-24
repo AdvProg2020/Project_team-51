@@ -40,6 +40,9 @@ public enum MessageType {
     SET_WAGE,
     IS_THERE_ANY_MANAGER,
     GIVE_DATA,
+    GET_PRODUCTS_LIST_BY_CATEGORY_NAME,
+    GET_PRODUCTS_LIST_BY_SEARCH,
+    P2P_SERVER,
 
     // Server --> Client
     GET_AUCTION,
@@ -66,6 +69,12 @@ public enum MessageType {
     RESPONSE,
     SEND_EXCEPTION,
     DATA,
-    UPDATE_ACCOUNT
+    UPDATE_ACCOUNT,
+    UPDATE_CART,
+    UPDATE_CATEGORIES,
+    UPDATE_PRODUCTS_LIST,
+    UPDATE_REQUESTS,
+    ADD_FILE_SERVER,
+    P2P_RECEIVE
 
 }

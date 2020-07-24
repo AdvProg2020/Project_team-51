@@ -114,6 +114,9 @@ public class Server {
                 case LOGOUT:
                     DataController.getInstance().logout(message);
                     break;
+                case P2P_SERVER:
+                    DataController.getInstance().addP2PServerToDNS(message);
+                    break;
                 case REGISTER_CUSTOMER:
                     DataController.getInstance().registerCustomer(message);
                     break;

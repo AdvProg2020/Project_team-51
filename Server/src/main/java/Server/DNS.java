@@ -1,11 +1,13 @@
 package Server;
 
+import model.Product;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class DNS {
 
-    private static Map<String, Integer> clientsPorts = new HashMap<>(); // Username --> Client Port
+    private static Map<Product, Integer> clientsPorts = new HashMap<>(); // Product  --> Client P2P Server Port
     private static DNS instance;
 
     private DNS() {
@@ -18,16 +20,13 @@ public class DNS {
     }
 
 
-    public int getPortByUsername(String username) {
-        return clientsPorts.get(username);
+    public int getPortByUsername(Product product) {
+        return clientsPorts.get(product);
     }
 
-    public void putClient(String username, int port) {
-        clientsPorts.put(username, port);
+    public void putClient(Product product, int port) {
+        clientsPorts.put(product, port);
     }
 
-    public void remove(String username) {
-        clientsPorts.remove(username);
-    }
 
 }

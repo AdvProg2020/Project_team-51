@@ -66,6 +66,7 @@ public class Message {
     private GiveMeTheDataMessage giveMeTheDataMessage;
     private GetProductsListByCategoryNameMessage getProductsListByCategoryNameMessage;
     private GetProductsListBySearchMessage getProductsListBySearchMessage;
+    private P2PServerPortMessage p2PServerPortMessage;
 
     // Server --> Clients
     private ExceptionMessage exceptionMessage;
@@ -75,7 +76,8 @@ public class Message {
     private UpdateCategoriesMessage updateCategoriesMessage;
     private UpdateProductsListMessage updateProductsListMessage;
     private UpdateRequestsMessage updateRequestsMessage;
-
+    private AddP2PFileServerMessage addP2PFileServerMessage;
+    private P2PReceiveMessage p2PReceiveMessage;
 
 
     public Message(String receiver) {
@@ -94,6 +96,20 @@ public class Message {
     public static Message makeIsThereAnyManagerMessage(String receiver) {
         Message message = new Message(receiver);
         message.isThereAnyManagerMessage = new IsThereAnyManagerMessage();
+        message.messageType = MessageType.IS_THERE_ANY_MANAGER;
+        return message;
+    }
+
+    public static Message makeP2PServerPortMessage(String receiver, Product product, int port) {
+        Message message = new Message(receiver);
+        message.p2PServerPortMessage = new P2PServerPortMessage(product, port);
+        message.messageType = MessageType.P2P_SERVER;
+        return message;
+    }
+
+    public static Message makeGetProductsListByCategoryNameMessage(String receiver, String categoryName) {
+        Message message = new Message(receiver);
+        message.getProductsListByCategoryNameMessage = new GetProductsListByCategoryNameMessage(categoryName);
         message.messageType = MessageType.IS_THERE_ANY_MANAGER;
         return message;
     }
@@ -726,5 +742,17 @@ public class Message {
 
     public UpdateCartMessage getUpdateCartMessage() {
         return updateCartMessage;
+    }
+
+    public AddP2PFileServerMessage getAddP2PFileServerMessage() {
+        return addP2PFileServerMessage;
+    }
+
+    public P2PReceiveMessage getP2PReceiveMessage() {
+        return p2PReceiveMessage;
+    }
+
+    public void setP2PReceiveMessage(P2PReceiveMessage p2PReceiveMessage) {
+        this.p2PReceiveMessage = p2PReceiveMessage;
     }
 }

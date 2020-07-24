@@ -50,6 +50,7 @@ public class ClientPortal extends Thread {
             ServerSocket serverSocket = makeServerSocket();
             while (true) {
                 Socket socket = serverSocket.accept();
+                Server.getInstance().serverPrint(socket.getPort() + " :   Socket PORT");
                 ClientListener clientListener = new ClientListener(socket);
                 clientListener.setDaemon(true);
                 clientListener.start();
@@ -139,7 +140,7 @@ public class ClientPortal extends Thread {
     }
 
     private boolean validate(String client, String message) {
-        return checkReplayAttacks(message) && checkBruteForce(client) &&
+        return !(blackList.contains(client)) && checkReplayAttacks(message) && checkBruteForce(client) &&
                 checkImproperInputs(message) && checkDenialOfService(client);
     }
 
@@ -184,6 +185,10 @@ public class ClientPortal extends Thread {
 
     public void setConnectionTime(String client) {
         connectionTime.put(client, LocalDateTime.now());
+    }
+
+    public String getSecretKeyEncoded(String client) {
+        return Base64.getEncoder().encodeToString(symmetricKeyMap.get(client).getEncoded());
     }
 
 

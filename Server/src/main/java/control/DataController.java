@@ -1,6 +1,7 @@
 package control;
 
 import Server.ClientPortal;
+import Server.DNS;
 import Server.JsonConverter;
 import Server.Server;
 import control.Exceptions.*;
@@ -138,6 +139,12 @@ public class DataController {
         clients.replace(message.getSender(), null);
         Server.getInstance().addToSendingMessages(Message.makeUpdateAccountMessage(message.getSender(), null));
         Server.getInstance().serverPrint(message.getSender() + " Is Logged Out.");
+    }
+
+    public void addP2PServerToDNS(Message message) throws ClientException {
+        DNS.getInstance().putClient(message.getP2PServerPortMessage().getProduct(), message.getP2PServerPortMessage().getPort());
+        Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
+        Server.getInstance().serverPrint(message.getSender() + "'s P2P Server port saved in DNS.");
     }
 
     public void registerManagerByManager(Message message) throws ClientException {
@@ -489,6 +496,13 @@ public class DataController {
                 var customerController = new CustomerController(account);
                 try {
                     customerController.purchase();
+                    ((Customer) account).getCart().stream()
+                            .map(a -> a.getProduct()).
+                            filter(b -> b.getFile() != null)
+                            .forEach(c -> Server.getInstance().addToSendingMessages(
+                                    Message.makeP2PReceiveMessage(message.getSender(),
+                                            ClientPortal.getInstance().getSecretKeyEncoded(message.getSender()),
+                                            DNS.getInstance().getPortByUsername(c))));
                     Server.getInstance().serverPrint("Paid !");
                 } catch (InsufficientBalanceException e) {
                     Server.getInstance().serverPrint("Insufficient money");

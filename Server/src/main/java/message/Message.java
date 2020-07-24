@@ -63,6 +63,7 @@ public class Message {
     private GiveMeTheDataMessage giveMeTheDataMessage;
     private GetProductsListByCategoryNameMessage getProductsListByCategoryNameMessage;
     private GetProductsListBySearchMessage getProductsListBySearchMessage;
+    private P2PServerPortMessage p2PServerPortMessage;
 
     // Server --> Clients
     private ExceptionMessage exceptionMessage;
@@ -72,12 +73,15 @@ public class Message {
     private UpdateCategoriesMessage updateCategoriesMessage;
     private UpdateProductsListMessage updateProductsListMessage;
     private UpdateRequestsMessage updateRequestsMessage;
+    private AddP2PFileServerMessage addP2PFileServerMessage;
+    private P2PReceiveMessage p2PReceiveMessage;
 
 
     public Message(String receiver) {
         this.sender = Server.getInstance().serverName;
         this.receiver = receiver;
     }
+
 
     public static Message makeIsThereAnyManagerMessage(String receiver, boolean isThere) {
         Message message = new Message(receiver);
@@ -89,6 +93,20 @@ public class Message {
     public static Message makeDoneMessage(String receiver) {
         Message message = new Message(receiver);
         message.messageType = MessageType.DONE;
+        return message;
+    }
+
+    public static Message makeAddP2PFileServerMessage(String receiver, Product product) {
+        Message message = new Message(receiver);
+        message.addP2PFileServerMessage = new AddP2PFileServerMessage(product);
+        message.messageType = MessageType.P2P_SERVER;
+        return message;
+    }
+
+    public static Message makeP2PReceiveMessage(String receiver, String encodedKey, int port) {
+        Message message = new Message(receiver);
+        message.p2PReceiveMessage = new P2PReceiveMessage(encodedKey, port);
+        message.messageType = MessageType.P2P_RECEIVE;
         return message;
     }
 
@@ -465,5 +483,9 @@ public class Message {
 
     public GetProductsListByCategoryNameMessage getGetProductsListByCategoryNameMessage() {
         return getProductsListByCategoryNameMessage;
+    }
+
+    public P2PServerPortMessage getP2PServerPortMessage() {
+        return p2PServerPortMessage;
     }
 }

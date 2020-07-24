@@ -2,18 +2,22 @@ package control;
 
 import com.gilecode.yagson.com.google.gson.Gson;
 import javafx.application.Platform;
+import message.JsonConverter;
 import message.Message;
 import model.Category;
 import model.People.Account;
 import model.Product;
+import model.WriteIntoFiles;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
@@ -51,6 +55,41 @@ public class Client {
             client = new Client();
         }
         return client;
+    }
+
+    public static KeyPair generateKeyPair() throws Exception {
+        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+        generator.initialize(2048, new SecureRandom());
+        KeyPair pair = generator.generateKeyPair();
+        return pair;
+    }
+
+    public static String decrypt(String cipherText) throws Exception {
+        byte[] bytes = Base64.getDecoder().decode(cipherText);
+        Cipher decryptCipher = Cipher.getInstance("RSA");
+        decryptCipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
+        return new String(decryptCipher.doFinal(bytes), StandardCharsets.UTF_8);
+    }
+
+    public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
+        Cipher encryptCipher = Cipher.getInstance("RSA");
+        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(cipherText);
+    }
+
+    public static String encryptSymmetric(String plainText) throws Exception {
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.ENCRYPT_MODE, symmetricKey);
+        byte[] cipherText = aesCipher.doFinal(plainText.getBytes());
+        return Base64.getEncoder().encodeToString(cipherText);
+    }
+
+    public static String decryptSymmetric(String cipherText) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
+        byte[] bytes = Base64.getDecoder().decode(cipherText);
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.DECRYPT_MODE, symmetricKey);
+        return new String(aesCipher.doFinal(bytes), StandardCharsets.UTF_8);
     }
 
     private void connect() throws Exception {
@@ -162,6 +201,13 @@ public class Client {
         }
     }
 
+    public static String decryptSymmetric(String cipherText, SecretKey symmetricKey) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
+        byte[] bytes = Base64.getDecoder().decode(cipherText);
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.DECRYPT_MODE, symmetricKey);
+        return new String(aesCipher.doFinal(bytes), StandardCharsets.UTF_8);
+    }
+
     private void handleMessage(Message message) {
         switch (message.getMessageType()) {
             case IS_THERE_ANY_MANAGER:
@@ -176,6 +222,38 @@ public class Client {
             case UPDATE_ACCOUNT:
                 updateAccount(message);
                 break;
+            case ADD_FILE_SERVER:
+                runAServerForSendingFile(message.getAddP2PFileServerMessage().getProduct());
+                break;
+            case P2P_RECEIVE:
+                receiveFileFromP2PServer(message);
+                break;
+        }
+    }
+
+    private void receiveFileFromP2PServer(Message message) {
+        byte[] decodedKey = Base64.getDecoder().decode(message.getP2PReceiveMessage().getEncodedSecretKey());
+        SecretKey secretKey = new SecretKeySpec(decodedKey, 0, 16, "AES");
+        int port = message.getP2PReceiveMessage().getPort();
+        Socket receiveSocket = null;
+        try {
+            receiveSocket = new Socket("localhost", port);
+            BufferedReader input = new BufferedReader(new InputStreamReader(receiveSocket.getInputStream()));
+            String file;
+            while ((file = input.readLine()) == null) ;
+            WriteIntoFiles.writeIntoFile(decryptSymmetric(file, secretKey), "//Client//src//main//resources//downloadedFiles");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
         }
     }
 
@@ -246,40 +324,43 @@ public class Client {
         return authToken;
     }
 
-
-    public static KeyPair generateKeyPair() throws Exception {
-        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
-        generator.initialize(2048, new SecureRandom());
-        KeyPair pair = generator.generateKeyPair();
-        return pair;
+    public void runAServerForSendingFile(Product product) {
+        try {
+            ServerSocket serverSocket = new ServerSocket(0);
+            while (true) while (true) {
+                this.socket.getOutputStream().write((encryptSymmetric(JsonConverter.toJson
+                        (Message.makeP2PServerPortMessage("Server", product, serverSocket.getLocalPort()))) + "\n").getBytes());
+                Socket socket = serverSocket.accept();
+                System.out.println(socket.getPort() + " :   Socket PORT");
+                FileSender fileSender = new FileSender(socket, product.getFile());
+                fileSender.setDaemon(true);
+                fileSender.start();
+                System.out.println(clientName + "'s Server for sending file is running ...");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public static String decrypt(String cipherText) throws Exception {
-        byte[] bytes = Base64.getDecoder().decode(cipherText);
-        Cipher decryptCipher = Cipher.getInstance("RSA");
-        decryptCipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
-        return new String(decryptCipher.doFinal(bytes), StandardCharsets.UTF_8);
-    }
+    class FileSender extends Thread {
 
-    public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
-        Cipher encryptCipher = Cipher.getInstance("RSA");
-        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
-        return Base64.getEncoder().encodeToString(cipherText);
-    }
+        Socket socket;
+        File file;
 
-    public static String encryptSymmetric(String plainText) throws Exception {
-        Cipher aesCipher = Cipher.getInstance("AES");
-        aesCipher.init(Cipher.ENCRYPT_MODE, symmetricKey);
-        byte[] cipherText = aesCipher.doFinal(plainText.getBytes());
-        return Base64.getEncoder().encodeToString(cipherText);
-    }
+        public FileSender(Socket socket, File file) {
+            this.socket = socket;
+            this.file = file;
+        }
 
-    public static String decryptSymmetric(String cipherText) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
-        byte[] bytes = Base64.getDecoder().decode(cipherText);
-        Cipher aesCipher = Cipher.getInstance("AES");
-        aesCipher.init(Cipher.DECRYPT_MODE, symmetricKey);
-        return new String(aesCipher.doFinal(bytes), StandardCharsets.UTF_8);
+        @Override
+        public void run() {
+            try {
+                socket.getOutputStream().write((encryptSymmetric(JsonConverter.toJson(file) + "\n").getBytes()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
-
 }
