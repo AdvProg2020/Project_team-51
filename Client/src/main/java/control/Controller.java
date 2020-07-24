@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
+    public static boolean isThereAnyManager;
     protected static Account currentAccount;
     protected static List<ItemOfOrder> cart = new ArrayList<>();
-    public static boolean isThereAnyManager;
 
     public Controller(Account currentAccount) {
         Controller.currentAccount = currentAccount;

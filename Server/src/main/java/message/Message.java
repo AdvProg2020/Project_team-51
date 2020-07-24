@@ -130,15 +130,15 @@ public class Message {
         return JsonConverter.fromJson(messageJson, Message.class);
     }
 
-    public String toJson() {
-        return JsonConverter.toJson(this);
-    }
-
     public static Message makeExceptionMessage(String receiver, String exceptionString) {
         Message message = new Message(receiver);
         message.exceptionMessage = new ExceptionMessage(exceptionString);
         message.messageType = MessageType.SEND_EXCEPTION;
         return message;
+    }
+
+    public String toJson() {
+        return JsonConverter.toJson(this);
     }
 
     public MessageType getMessageType() {

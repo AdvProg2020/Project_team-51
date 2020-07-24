@@ -139,6 +139,10 @@ public class ClientPortal extends Thread {
         return new ServerSocket(DEFAULT_PORT);
     }
 
+    public String getSecretKeyEncoded(String client) {
+        return Base64.getEncoder().encodeToString(symmetricKeyMap.get(client).getEncoded());
+    }
+
     private boolean validate(String client, String message) {
         return !(blackList.contains(client)) && checkReplayAttacks(message) && checkBruteForce(client) &&
                 checkImproperInputs(message) && checkDenialOfService(client);
@@ -171,7 +175,7 @@ public class ClientPortal extends Thread {
     }
 
     private boolean checkImproperInputs(String message) {
-        return message.length() < MAXIMUM_INPUT_SIZE && message.startsWith("{") && message.endsWith("}");
+        return message.length() < MAXIMUM_INPUT_SIZE && parseChecker(message);
     }
 
     private boolean checkDenialOfService(String client) {
@@ -180,15 +184,41 @@ public class ClientPortal extends Thread {
         if (numberOfRequests.get(client) == null) return true;
         int requests = numberOfRequests.get(client).get();
         long seconds = Duration.between(firstConnection, LocalDateTime.now()).toSeconds();
-        return (requests / (seconds + 1)) <= MAXIMUM_REQUESTS_PER_SECOND;
+        if ((requests / (seconds + 1)) <= MAXIMUM_REQUESTS_PER_SECOND)
+            return true;
+        else {
+            blackList.add(client);
+            // Removing Client Name From Blacklist After 2 Minutes
+            new Thread(() -> {
+                try {
+                    sleep(SECONDS_TO_REMAIN_ON_BLACKLIST * 1000);
+                    blackList.remove(client);
+                    numberOfRequests.replace(client, new AtomicInteger(0));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            return false;
+        }
+    }
+
+
+    private boolean parseChecker(String message) {
+        Stack<Character> characterStack = new Stack<>();
+        char[] chars = message.toCharArray();
+
+        for (char character : chars) {
+            if (character == '{')
+                characterStack.push(character);
+            if (character == '}' && characterStack.peek() == '{')
+                characterStack.pop();
+        }
+
+        return characterStack.isEmpty();
     }
 
     public void setConnectionTime(String client) {
         connectionTime.put(client, LocalDateTime.now());
-    }
-
-    public String getSecretKeyEncoded(String client) {
-        return Base64.getEncoder().encodeToString(symmetricKeyMap.get(client).getEncoded());
     }
 
 

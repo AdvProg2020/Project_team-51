@@ -458,7 +458,6 @@ public class DataController {
     }
 
 
-
     public void createCategory(Message message) throws ClientException {
         loginCheck(message);
         if (message.getSender() == null) {

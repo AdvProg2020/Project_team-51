@@ -92,6 +92,13 @@ public class Client {
         return new String(aesCipher.doFinal(bytes), StandardCharsets.UTF_8);
     }
 
+    public static String decryptSymmetric(String cipherText, SecretKey symmetricKey) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
+        byte[] bytes = Base64.getDecoder().decode(cipherText);
+        Cipher aesCipher = Cipher.getInstance("AES");
+        aesCipher.init(Cipher.DECRYPT_MODE, symmetricKey);
+        return new String(aesCipher.doFinal(bytes), StandardCharsets.UTF_8);
+    }
+
     private void connect() throws Exception {
         keyPair = generateKeyPair();
         socket = getSocketReady();
@@ -199,13 +206,6 @@ public class Client {
             System.out.println("message received: " + decryptSymmetric(json));
             handleMessage(message);
         }
-    }
-
-    public static String decryptSymmetric(String cipherText, SecretKey symmetricKey) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
-        byte[] bytes = Base64.getDecoder().decode(cipherText);
-        Cipher aesCipher = Cipher.getInstance("AES");
-        aesCipher.init(Cipher.DECRYPT_MODE, symmetricKey);
-        return new String(aesCipher.doFinal(bytes), StandardCharsets.UTF_8);
     }
 
     private void handleMessage(Message message) {
