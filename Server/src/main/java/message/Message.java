@@ -6,6 +6,7 @@ import control.Controller;
 import message.Messages.ClientToServer.*;
 import message.Messages.ServerToClient.*;
 import model.Category;
+import model.People.Account;
 import model.Product;
 
 import java.time.LocalDateTime;
@@ -84,6 +85,7 @@ public class Message {
     private GetTextMessageMessage getTextMessageMessage;
     private GetWalletMessage getWalletMessage;
     private DataMessage dataMessage;
+    private UpdateAccountMessage updateAccountMessage;
 
 
     public Message(String receiver) {
@@ -101,6 +103,13 @@ public class Message {
     public static Message makeDoneMessage(String receiver) {
         Message message = new Message(receiver);
         message.messageType = MessageType.DONE;
+        return message;
+    }
+
+    public static Message makeUpdateAccountMessage(String receiver, Account account) {
+        Message message = new Message(receiver);
+        message.updateAccountMessage = new UpdateAccountMessage(account);
+        message.messageType = MessageType.UPDATE_ACCOUNT;
         return message;
     }
 

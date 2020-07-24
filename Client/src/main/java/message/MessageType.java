@@ -66,6 +66,7 @@ public enum MessageType {
     RESPONSE,
     SEND_EXCEPTION,
     DATA,
+    UPDATE_ACCOUNT
 
 
 }

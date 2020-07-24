@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 
 public class JsonConverter {
 
-    private static YaGson yaGson = new YaGsonBuilder().serializeNulls().enableComplexMapKeySerialization().create();
+    private static YaGson yaGson = new YaGsonBuilder().enableComplexMapKeySerialization().create();
 
     public static <T> String toJson(T object) {
         return yaGson.toJson(object)

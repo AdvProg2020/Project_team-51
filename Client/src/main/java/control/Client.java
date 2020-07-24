@@ -173,7 +173,15 @@ public class Client {
             case DONE:
                 System.out.println("DONE !");
                 break;
+            case UPDATE_ACCOUNT:
+                updateAccount(message);
+                break;
         }
+    }
+
+    private void updateAccount(Message message) {
+        System.out.println(message.getUpdateAccountMessage().getAccount());
+        Controller.setCurrentAccount(message.getUpdateAccountMessage().getAccount());
     }
 
     private void loadData(Message message) {

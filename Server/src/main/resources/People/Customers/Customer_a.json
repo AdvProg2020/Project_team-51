@@ -2,14 +2,13 @@
   "cart": [],
   "historyOfOrders": [],
   "wallet": {
-    "balance": 12.0,
-    "account": "@root",
-    "id": "WLT_9O7cY"
+    "balance": 2132412.0,
+    "id": "WLT_nZk30"
   },
   "username": "a",
   "firstName": "a",
   "lastName": "a",
-  "balance": 12.0,
+  "balance": 2132412.0,
   "email": "a",
   "phoneNumber": "a",
   "password": "a",

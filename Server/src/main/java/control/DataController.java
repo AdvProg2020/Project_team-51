@@ -45,11 +45,18 @@ public class DataController {
 
 
     public Account getAccount(String username) {
+
         if (username == null) {
             Server.getInstance().serverPrint("Null Username In getAccount.");
             return null;
         }
         for (Account account : accounts.keySet()) {
+            if (account.getUserName().equalsIgnoreCase(username)) {
+                return account;
+            }
+        }
+
+        for (Account account : Account.getAllAccounts()) {
             if (account.getUserName().equalsIgnoreCase(username)) {
                 return account;
             }
@@ -97,7 +104,7 @@ public class DataController {
         } else {
             Manager manager = message.getRegisterManagerMessage().getManager();
             Manager.addManager(manager);
-            ClientPortal.getInstance().sendMessage(message.getSender(), JsonConverter.toJson(Message.makeDoneMessage(message.getSender())));
+            Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
             Server.getInstance().serverPrint(message.getRegisterManagerMessage().getManager().getUserName() + " Is Created!");
         }
     }
@@ -120,7 +127,7 @@ public class DataController {
         } else {
             accounts.replace(account, message.getSender());
             clients.replace(message.getSender(), account);
-            // TODO -> Send Done Message
+            Server.getInstance().addToSendingMessages(Message.makeUpdateAccountMessage(message.getSender(), account));
             Server.getInstance().serverPrint(message.getSender() + " Is Logged In");
         }
     }

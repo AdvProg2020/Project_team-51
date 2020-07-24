@@ -1,23 +1,21 @@
 package model;
 
 import control.TokenGenerator;
-import model.People.Account;
 
 import java.util.ArrayList;
 
 public class Wallet {
+
     static ArrayList<Wallet> wallets = new ArrayList<>();
     static double minRemain = 0;
     static int interest;
     private static Wallet shopWallet;
     double balance;
-    Account account;
     String id;
 
     // mishe wallet ba balance kam tar az minimum sakht.
-    public Wallet(double balance, Account account) {
+    public Wallet(double balance) {
         this.balance = balance;
-        this.account = account;
         this.id = TokenGenerator.generateWalletid();
         wallets.add(this);
     }

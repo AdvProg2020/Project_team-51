@@ -23,7 +23,7 @@ public class Seller extends Account {
         super(username, password, firstName, lastName, balance, email, phoneNumber);
         this.brandName = brandName;
         this.status = Status.PENDING_CREATE;
-        this.wallet = new Wallet(balance, this);
+        this.wallet = new Wallet(balance);
     }
 
     public static void addSeller(Seller seller) {

@@ -88,6 +88,7 @@ public class Message {
     private GetTextMessageMessage getTextMessageMessage;
     private GetWalletMessage getWalletMessage;
     private DataMessage dataMessage;
+    private UpdateAccountMessage updateAccountMessage;
 
 
     public Message(String receiver) {
@@ -878,5 +879,9 @@ public class Message {
 
     public DataMessage getDataMessage() {
         return dataMessage;
+    }
+
+    public UpdateAccountMessage getUpdateAccountMessage() {
+        return updateAccountMessage;
     }
 }

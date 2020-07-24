@@ -15,7 +15,7 @@ public class Customer extends Account {
 
     public Customer(String username, String password, String firstName, String lastName, Double balance, String email, String phoneNumber) {
         super(username, password, firstName, lastName, balance, email, phoneNumber);
-        this.wallet = new Wallet(balance, this);
+        this.wallet = new Wallet(balance);
     }
 
     public static void addCustomer(Customer customer) {

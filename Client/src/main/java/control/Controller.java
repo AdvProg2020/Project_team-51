@@ -1,12 +1,10 @@
 package control;
 
 import control.Exceptions.*;
+import message.Message;
 import model.ItemOfOrder;
 import model.People.Account;
-import model.People.Customer;
 import model.People.Manager;
-import model.People.Seller;
-import model.Status;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +27,7 @@ public class Controller {
     }
 
     public static void login(String username, String password) throws WrongPasswordException, InvalidUsernameException {
-        var account = Account.getAccountById(username);
-        if (doesPasswordMatches(username, password)
-                && (!(account instanceof Seller) || ((((Seller) account).getStatus().equals(Status.APPROVED))))) {
-            currentAccount = Account.getAccountById(username);
-            if (currentAccount instanceof Customer)
-                ((Customer) currentAccount).setCart(cart);
-            if (currentAccount == null) throw new InvalidUsernameException();
-        } else {
-            throw new WrongPasswordException();
-        }
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeLoginMessage("Server", username, password));
     }
 
     public static boolean doesPasswordMatches(String user, String password) throws InvalidUsernameException {
