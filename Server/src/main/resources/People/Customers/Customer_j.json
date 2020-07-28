@@ -1,0 +1,17 @@
+{
+  "cart": [],
+  "historyOfOrders": [],
+  "wallet": {
+    "balance": 179.0,
+    "id": "WLT_kIyWy"
+  },
+  "username": "j",
+  "firstName": "j",
+  "lastName": "j",
+  "balance": 179.0,
+  "email": "jj@gmail.com",
+  "phoneNumber": "09132233445",
+  "password": "j",
+  "image": null,
+  "chats": []
+}

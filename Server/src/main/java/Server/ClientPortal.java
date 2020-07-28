@@ -21,7 +21,7 @@ public class ClientPortal extends Thread {
     private static final int DEFAULT_PORT = 8888;
     private static final int MAXIMUM_BRUTE_FORCE_ATTACKS = 10;
     private static final int MAXIMUM_INPUT_SIZE = 20_000_000; // Characters
-    private static final int MAXIMUM_REQUEST_TIME = 30; // Seconds
+    private static final int MAXIMUM_REQUEST_TIME = 86400; // Seconds
     private static final int SECONDS_TO_REMAIN_ON_BLACKLIST = 120;
     private static final int MAXIMUM_REQUESTS_PER_SECOND = 10;
     private static ClientPortal ourInstance;
@@ -175,7 +175,8 @@ public class ClientPortal extends Thread {
     }
 
     private boolean checkImproperInputs(String message) {
-        return message.length() < MAXIMUM_INPUT_SIZE && parseChecker(message);
+        return message.length() < MAXIMUM_INPUT_SIZE && message.startsWith("{") &&
+                message.endsWith("}") && parseChecker(message);
     }
 
     private boolean checkDenialOfService(String client) {

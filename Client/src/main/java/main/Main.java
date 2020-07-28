@@ -32,8 +32,12 @@ public class Main extends Application {
 
     public static void main(String[] args) throws IOException {
         Client.getInstance().makeConnection();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         launch();
-
     }
 
     static public Stage getPrimaryStage() {

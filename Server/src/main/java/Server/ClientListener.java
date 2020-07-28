@@ -74,6 +74,7 @@ public class ClientListener extends Thread {
             while (true) {
                 String message = scanner.nextLine();
                 try {
+                    System.out.println(message);
                     ClientPortal.getInstance().addMessage(name, message);
                 } catch (Exception e) {
                     e.printStackTrace();

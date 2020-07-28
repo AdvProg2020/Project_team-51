@@ -134,8 +134,8 @@
         "@type": "java.util.HashMap",
         "@val": {
           "@root.availableProducts.0.parentCategory.attributes.elements.1": "b",
-          "@root.availableProducts.0.parentCategory.attributes.elements.2": "c",
-          "@root.availableProducts.0.parentCategory.attributes.elements.0": "a"
+          "@root.availableProducts.0.parentCategory.attributes.elements.0": "a",
+          "@root.availableProducts.0.parentCategory.attributes.elements.2": "c"
         }
       },
       "rating": [],

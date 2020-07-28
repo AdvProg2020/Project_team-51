@@ -9,16 +9,11 @@ import message.Message;
 import model.Attributes;
 import model.Bid;
 import model.OffCode;
-import model.People.Account;
-import model.People.Customer;
-import model.People.Manager;
-import model.People.Seller;
+import model.People.*;
 import model.Requests.*;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class DataController {
 
@@ -102,7 +97,7 @@ public class DataController {
         if (message.getRegisterManagerMessage().getManager().getUserName() == null ||
                 getAccount(message.getRegisterManagerMessage().getManager().getUserName()) != null) {
             throw new ClientException("Invalid Username!");
-        } else if (message.getLoginMessage().getPassword() == null) {
+        } else if (message.getRegisterManagerMessage().getManager().getPassword() == null) {
             throw new ClientException("Invalid Password!");
         } else if (ManagerController.isThereAnyManager()) {
             Server.getInstance().serverPrint("manager already exists");
@@ -515,6 +510,50 @@ public class DataController {
         }
     }
 
+    public void updateAccount(Message message) throws ClientException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            Account account = getAccount(message.getSender());
+            accounts.remove(account);
+            accounts.put(message.getUpdateAccountMessage().getAccount(), message.getSender());
+            clients.replace(message.getSender(), message.getUpdateAccountMessage().getAccount());
+            Account.getAllAccounts().remove(account);
+            Account.getAllAccounts().add(message.getUpdateAccountMessage().getAccount());
+            Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
+            Server.getInstance().serverPrint("Account Information Has Updated!");
+        }
+    }
+
+    public void getOnlineAccounts(Message message) throws ClientException {
+        loginCheck(message);
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            List<Account> accounts = new LinkedList<>();
+            for (Map.Entry<String, Account> entry : clients.entrySet()) {
+                if (isOnline(entry.getKey()))
+                    accounts.add(entry.getValue());
+            }
+            Server.getInstance().addToSendingMessages(Message.makeOnlineUsersMessage(message.getSender(), accounts));
+            Server.getInstance().serverPrint("Online Users Has Been Sent!");
+        }
+    }
+
+    public void getOnlineServices(Message message) throws ClientException {
+        if (message.getSender() == null) {
+            throw new ClientException("invalid message!");
+        } else {
+            List<Account> accounts = new LinkedList<>();
+            for (Map.Entry<String, Account> entry : clients.entrySet()) {
+                if (isOnline(entry.getKey()) && entry.getValue() instanceof Service)
+                    accounts.add(entry.getValue());
+            }
+            Server.getInstance().addToSendingMessages(Message.makeOnlineUsersMessage(message.getSender(), accounts));
+            Server.getInstance().serverPrint("Online Servers Has Been Sent!");
+        }
+    }
 
     public void incrementProductQuantity(Message message) throws ClientException, InvalidProductIdException {
         loginCheck(message);

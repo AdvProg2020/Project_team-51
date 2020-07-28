@@ -64,6 +64,8 @@ public class Message {
     private GetProductsListByCategoryNameMessage getProductsListByCategoryNameMessage;
     private GetProductsListBySearchMessage getProductsListBySearchMessage;
     private P2PServerPortMessage p2PServerPortMessage;
+    private GetOnlineUsersMessage getOnlineUsersMessage;
+    private GetOnlineServiceMessage getOnlineServiceMessage;
 
     // Server --> Clients
     private ExceptionMessage exceptionMessage;
@@ -75,6 +77,8 @@ public class Message {
     private UpdateRequestsMessage updateRequestsMessage;
     private AddP2PFileServerMessage addP2PFileServerMessage;
     private P2PReceiveMessage p2PReceiveMessage;
+    private OnlineUsersMessage onlineUsersMessage;
+    private OnlineServicesMessage onlineServicesMessage;
 
 
     public Message(String receiver) {
@@ -101,6 +105,13 @@ public class Message {
         Message message = new Message(receiver);
         message.p2PServerPortMessage = new P2PServerPortMessage(product, port);
         message.messageType = MessageType.P2P_SERVER;
+        return message;
+    }
+
+    public static Message makeGetOnlineUsersMessage(String receiver) {
+        Message message = new Message(receiver);
+        message.getOnlineUsersMessage = new GetOnlineUsersMessage();
+        message.messageType = MessageType.GET_ONLINE_USERS;
         return message;
     }
 
@@ -181,9 +192,17 @@ public class Message {
         return message;
     }
 
-    public static Message makeUpdateAccountMessage(String receiver, Account pervAccount){
+    public static Message makeUpdateAccountMessage(String receiver, Account pervAccount) {
         Message message = new Message(receiver);
         message.updateAccountMessage = new UpdateAccountMessage(pervAccount);
+        message.messageType = MessageType.UPDATE_ACCOUNT;
+        return message;
+    }
+
+    public static Message makeGetOnlineServicesMessage(String receiver) {
+        Message message = new Message(receiver);
+        message.getOnlineServiceMessage = new GetOnlineServiceMessage();
+        message.messageType = MessageType.GET_ONLINE_SERVICES;
         return message;
     }
 
@@ -757,5 +776,13 @@ public class Message {
 
     public void setP2PReceiveMessage(P2PReceiveMessage p2PReceiveMessage) {
         this.p2PReceiveMessage = p2PReceiveMessage;
+    }
+
+    public OnlineUsersMessage getOnlineUsersMessage() {
+        return onlineUsersMessage;
+    }
+
+    public OnlineServicesMessage getOnlineServicesMessage() {
+        return onlineServicesMessage;
     }
 }

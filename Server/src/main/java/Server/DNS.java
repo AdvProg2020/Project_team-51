@@ -19,7 +19,6 @@ public class DNS {
         return instance;
     }
 
-
     public int getPortByUsername(Product product) {
         return clientsPorts.get(product);
     }
@@ -27,6 +26,5 @@ public class DNS {
     public void putClient(Product product, int port) {
         clientsPorts.put(product, port);
     }
-
 
 }

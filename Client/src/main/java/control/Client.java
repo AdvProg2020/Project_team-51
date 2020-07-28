@@ -228,6 +228,12 @@ public class Client {
             case P2P_RECEIVE:
                 receiveFileFromP2PServer(message);
                 break;
+            case ONLINE_USERS:
+                //TODO
+                break;
+            case ONLINE_SERVICES:
+                //TODO
+                break;
         }
     }
 

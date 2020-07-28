@@ -43,6 +43,8 @@ public enum MessageType {
     GET_PRODUCTS_LIST_BY_CATEGORY_NAME,
     GET_PRODUCTS_LIST_BY_SEARCH,
     P2P_SERVER,
+    GET_ONLINE_USERS,
+    GET_ONLINE_SERVICES,
 
     // Server --> Client
     GET_AUCTION,
@@ -75,6 +77,8 @@ public enum MessageType {
     UPDATE_PRODUCTS_LIST,
     UPDATE_REQUESTS,
     ADD_FILE_SERVER,
-    P2P_RECEIVE
+    P2P_RECEIVE,
+    ONLINE_USERS,
+    ONLINE_SERVICES,
 
 }

@@ -218,6 +218,15 @@ public class Server {
                     DataController.getInstance().payCart(message);
                     // TODO VIA WALLET
                     break;
+                case UPDATE_ACCOUNT:
+                    DataController.getInstance().updateAccount(message);
+                    break;
+                case GET_ONLINE_USERS:
+                    DataController.getInstance().getOnlineAccounts(message);
+                    break;
+                case GET_ONLINE_SERVICES:
+                    DataController.getInstance().getOnlineServices(message);
+                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + message.getMessageType());
             }

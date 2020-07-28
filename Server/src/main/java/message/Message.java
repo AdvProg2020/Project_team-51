@@ -7,9 +7,11 @@ import message.Messages.ClientToServer.*;
 import message.Messages.ServerToClient.*;
 import model.Category;
 import model.People.Account;
+import model.People.Service;
 import model.Product;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Message {
 
@@ -64,6 +66,8 @@ public class Message {
     private GetProductsListByCategoryNameMessage getProductsListByCategoryNameMessage;
     private GetProductsListBySearchMessage getProductsListBySearchMessage;
     private P2PServerPortMessage p2PServerPortMessage;
+    private GetOnlineUsersMessage getOnlineUsersMessage;
+    private GetOnlineServiceMessage getOnlineServiceMessage;
 
     // Server --> Clients
     private ExceptionMessage exceptionMessage;
@@ -75,6 +79,8 @@ public class Message {
     private UpdateRequestsMessage updateRequestsMessage;
     private AddP2PFileServerMessage addP2PFileServerMessage;
     private P2PReceiveMessage p2PReceiveMessage;
+    private OnlineUsersMessage onlineUsersMessage;
+    private OnlineServicesMessage onlineServicesMessage;
 
 
     public Message(String receiver) {
@@ -103,6 +109,20 @@ public class Message {
         return message;
     }
 
+    public static Message makeOnlineUsersMessage(String receiver, List<Account> accounts) {
+        Message message = new Message(receiver);
+        message.onlineUsersMessage = new OnlineUsersMessage(accounts);
+        message.messageType = MessageType.ONLINE_USERS;
+        return message;
+    }
+
+    public static Message makeOnlineServicesMessage(String receiver, List<Service> accounts) {
+        Message message = new Message(receiver);
+        message.onlineServicesMessage = new OnlineServicesMessage(accounts);
+        message.messageType = MessageType.ONLINE_SERVICES;
+        return message;
+    }
+
     public static Message makeP2PReceiveMessage(String receiver, String encodedKey, int port) {
         Message message = new Message(receiver);
         message.p2PReceiveMessage = new P2PReceiveMessage(encodedKey, port);
@@ -125,7 +145,6 @@ public class Message {
         return message;
     }
 
-
     public static Message convertJsonToMessage(String messageJson) {
         return JsonConverter.fromJson(messageJson, Message.class);
     }
@@ -135,6 +154,10 @@ public class Message {
         message.exceptionMessage = new ExceptionMessage(exceptionString);
         message.messageType = MessageType.SEND_EXCEPTION;
         return message;
+    }
+
+    public UpdateAccountMessage getUpdateAccountMessage() {
+        return updateAccountMessage;
     }
 
     public String toJson() {
@@ -487,5 +510,13 @@ public class Message {
 
     public P2PServerPortMessage getP2PServerPortMessage() {
         return p2PServerPortMessage;
+    }
+
+    public GetOnlineUsersMessage getGetOnlineUsersMessage() {
+        return getOnlineUsersMessage;
+    }
+
+    public GetOnlineServiceMessage getGetOnlineServiceMessage() {
+        return getOnlineServiceMessage;
     }
 }
