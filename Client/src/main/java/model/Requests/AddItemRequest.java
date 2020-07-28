@@ -37,4 +37,12 @@ public class AddItemRequest extends Request {
         this.product.setStatus(Status.APPROVED, seller);
 
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
 }

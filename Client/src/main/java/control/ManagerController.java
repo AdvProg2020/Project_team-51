@@ -1,17 +1,19 @@
 package control;
 
 import control.Exceptions.*;
+import message.Message;
 import model.*;
 import model.People.Account;
 import model.People.Customer;
 import model.People.Manager;
 import model.People.Seller;
-import model.Requests.AddSellerRequest;
-import model.Requests.Request;
+import model.Requests.*;
+import org.hibernate.engine.spi.ManagedEntity;
 
 import java.util.*;
 
 public class ManagerController extends Controller {
+    static String s = "Server";
 
     public ManagerController(Account currentAccount) {
         super(currentAccount);
@@ -41,7 +43,10 @@ public class ManagerController extends Controller {
 
     public void editPhoneNumber(String phoneNumber) throws Exception {
         checkPhoneNumber(phoneNumber);
-        if (currentAccount != null) currentAccount.setPhoneNumber(phoneNumber);
+        if (currentAccount == null)return;
+        currentAccount.setPhoneNumber(phoneNumber);
+        Message message = Message.makeUpdateAccountMessage("Server" , currentAccount);
+        Client.getInstance().addToSendingMessagesAndSend(message);
     }
 
     public List<Account> getAllProfiles() {
@@ -56,15 +61,12 @@ public class ManagerController extends Controller {
         for (Account account : allAccounts) {
             if (account.getUserName().equals(username)) {
                 allAccounts.remove(account);
+                //Message message = Message.;
+                //Client.getInstance().addToSendingMessagesAndSend(message);
                 break;
             }
         }
         Account.setAllAccounts(allAccounts);
-    }
-
-    // what is this used for
-    public void createManager(String[] info) {
-        //new Manager(info[0], info[1], info[2], info[3], Double.valueOf(info[4]), info[5], info[6]);
     }
 
     public Boolean isThisPidValid(String productId) {
@@ -81,6 +83,8 @@ public class ManagerController extends Controller {
         for (Product product : allProducts) {
             if (product.getProductId().equals(productId)) {
                 allProducts.remove(product);
+                //Message message = Message.;
+                //Client.getInstance().addToSendingMessagesAndSend(message);
                 break;
             }
         }
@@ -118,19 +122,23 @@ public class ManagerController extends Controller {
     public void createDiscountCode(ArrayList<Account> appliedAccounts,
                                    Date startDate, Date endDate
             , int offPercent, Double maxDiscount, int repeat) {
+        Message message = Message.makeCreateOffCodeMessage("Server",
         new OffCode(TokenGenerator.generateOffCode(), startDate,
                 endDate,
                 appliedAccounts,
                 offPercent,
                 maxDiscount,
                 repeat
-        );
+        ));
+        Client.getInstance().addToSendingMessagesAndSend(message);
     }
 
     public void setAccountType(Account a, String type) {
         if (type.equals("Manager")) changeTypeToManager(a);
         if (type.equals("Customer")) changeTypeToCustomer(a);
         if (type.equals("Seller")) changeTypeToSeller(a);
+        Message message = Message.makeUpdateAccountMessage("Server",currentAccount);
+        Client.getInstance().addToSendingMessagesAndSend(message);
     }
 
     public List<Product> getAllProducts() {
@@ -152,12 +160,14 @@ public class ManagerController extends Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Message message = Message.makeRegisterManagerMessage("Server",
         new Manager(a.getUserName(),
                 a.getPassword(),
                 a.getFirstName(),
                 a.getLastName(),
                 a.getEmail(),
-                a.getPhoneNumber());
+                a.getPhoneNumber()));
+        Client.getInstance().addToSendingMessagesAndSend(message);
     }
 
     public void changeTypeToSeller(Account a) {
@@ -167,7 +177,8 @@ public class ManagerController extends Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        new AddSellerRequest(new Seller(a.getUserName(),
+        Message message = Message.makeCreateAddSellerRequestMessage("Server",
+        new Seller(a.getUserName(),
                 a.getPassword(),
                 a.getFirstName(),
                 a.getLastName(),
@@ -175,6 +186,7 @@ public class ManagerController extends Controller {
                 a.getEmail(),
                 a.getPhoneNumber(),
                 "not Specified"));
+        Client.getInstance().addToSendingMessagesAndSend(message);
     }
 
     public void changeTypeToCustomer(Account a) {
@@ -184,13 +196,14 @@ public class ManagerController extends Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Message message = Message.makeRegisterCustomerMessage("Server",
         new Customer(a.getUserName(),
                 a.getPassword(),
                 a.getFirstName(),
                 a.getLastName(),
                 1000.0,
                 a.getEmail(),
-                a.getPhoneNumber());
+                a.getPhoneNumber()));
     }
 
     public void editDiscountCode(OffCode offCode, List<Account> appliedAccounts,
@@ -202,6 +215,8 @@ public class ManagerController extends Controller {
         offCode.setOffPercentage(offPercent);
         offCode.setMaxDiscount(maxDiscount);
         offCode.setRepeat(repeat);
+        //Message message = Message.;
+        //Client.getInstance().addToSendingMessagesAndSend(message);
     }
 
     public void removeDiscountCode(String code) throws InvalidOffCodeException {
@@ -210,6 +225,8 @@ public class ManagerController extends Controller {
             if (offCode.getOffCode().equals(code)) {
                 offCodes.remove(offCode);
                 model.OffCode.setAllOffCodes(offCodes);
+                //Message message = Message.;
+                //Client.getInstance().addToSendingMessagesAndSend(message);
                 return;
             }
         }
@@ -239,6 +256,38 @@ public class ManagerController extends Controller {
         Request request = getRequestById(requestId);
         if (request == null) throw new Exception("request is invalid");
         request.accept();
+        Message message = null;
+        if (request instanceof AddCommentRequest){
+            message = Message.makeCreateAddCommentRequestMessage("Server" ,
+                    ((AddCommentRequest)request).getComment()
+                    );
+        }
+        else if (request instanceof AddSellerRequest){
+            message = Message.makeCreateAddSellerRequestMessage("Server" , ((AddSellerRequest)request).getSeller());
+        }
+        else if (request instanceof AddAuctionRequest){
+            message = Message.makeCreateAddAuctionRequestMessage("Server" , ((AddAuctionRequest)request).getAuction(),
+                    ((AddAuctionRequest)request).getSeller());
+        }
+        else if (request instanceof AddItemRequest){
+            message = Message.makeCreateAddItemRequestMessage("Server" , ((AddItemRequest)request).getProduct(),
+                    ((AddItemRequest)request).getSeller());
+        }
+        else if (request instanceof AddSellerForItemRequest){
+            message = Message.makeCreateAddSellerForItemRequestMessage("Server" ,((AddSellerForItemRequest)request).getProduct(),
+                    ((AddSellerForItemRequest)request).getSeller(),((AddSellerForItemRequest)request).getQuantity(),
+                    ((AddSellerForItemRequest)request).getPrice());
+        }
+        else if (request instanceof EditAuctionRequest){
+            message = Message.makeCreateEditAuctionRequestMessage(s,((EditAuctionRequest)request).getAuction(),
+                    ((EditAuctionRequest)request).getField(),((EditAuctionRequest)request).getValue());
+        }
+        else if (request instanceof EditProductRequest){
+            message = Message.makeCreateEditProductRequestMessage(s,((EditProductRequest)request).getProduct(),
+                    ((EditProductRequest)request).getSeller(),((EditProductRequest)request).getField(),
+                    ((EditProductRequest)request).getValue());
+        }
+        Client.getInstance().addToSendingMessagesAndSend(message);
     }
 
     //not done
@@ -257,6 +306,8 @@ public class ManagerController extends Controller {
         List<Category> allCategories = ((Manager) currentAccount).getAllCategories();
         allCategories.add(newCategory);
         ((Manager) currentAccount).setAllCategories(allCategories);
+        Message message = Message.makeCreateCategoryMessage(s,newCategory);
+        Client.getInstance().addToSendingMessagesAndSend(message);
     }
 
     public void editCategory(Category category, ArrayList<Product> newProducts, String name, Category parent) {
@@ -274,12 +325,17 @@ public class ManagerController extends Controller {
             Map<Integer, Category> subCategories1 = parent.getSubCategories();
             subCategories1.put(subCategories1.size() + 1, category);
         }
+        // TODO: 7/28/2020
+        //Message message = Message.;
+        //Client.getInstance().addToSendingMessagesAndSend(message);
     }
 
     public void addProductToCategory(String categoryId, String pid) throws Exception {
         Product product = Product.getProductById(pid);
         Category category1 = Category.getCategoryById(categoryId);
         category1.getCategoryProducts().add(product);
+       //Message message = Message.;
+       //Client.getInstance().addToSendingMessagesAndSend(message);
     }
 
     public void removeProductFromCategory(String categoryId, String pid) throws Exception {
@@ -288,6 +344,7 @@ public class ManagerController extends Controller {
         if (!category1.getCategoryProducts().contains(product))
             throw new Exception("category does not contaon the product");
         category1.getCategoryProducts().remove(product);
+        //todo message
     }
 
     public void addChildCategory(String categoryName, String childCategoryName) throws Exception {
@@ -298,6 +355,7 @@ public class ManagerController extends Controller {
         if (!parent.getSubCategories().containsValue(child))
             parent.setSubCategories((Map<Integer, Category>) parent.getSubCategories()
                     .put(parent.getSubCategories().size(), child));
+        //todo message
     }
 
     public void removeChildCategory(String categoryName, String childCategoryName) throws Exception {
@@ -307,6 +365,7 @@ public class ManagerController extends Controller {
             Integer key = getKeyByValue(parent.getSubCategories(), child);
             parent.getSubCategories().remove(key, child);
         }
+        //todo message
     }
 
     public void removeCategory(String categoryName) throws Exception {
@@ -315,6 +374,7 @@ public class ManagerController extends Controller {
                 "category is invalid"
         );
         Category.getAllCategories().remove(category);
+        //todo message
     }
 
     public Category getCategoryByName(String name) {
@@ -341,12 +401,14 @@ public class ManagerController extends Controller {
         if (c == null) throw new Exception("category is invalid");
         if (c2 != null) throw new Exception("this name is taken");
         c.setName(afterName);
+        //todo message
     }
 
     public void editFirstName(String firstName) throws WrongFormatException {
         if (firstName.matches("[^a-zA-Z ]")) throw new WrongFormatException("name");
         if (currentAccount != null) {
             currentAccount.setFirstName(firstName);
+            Client.getInstance().addToSendingMessagesAndSend(Message.makeUpdateAccountMessage(s,currentAccount));
         }
     }
 
@@ -355,6 +417,7 @@ public class ManagerController extends Controller {
 
         if (currentAccount != null) {
             currentAccount.setLastName(lastName);
+            Client.getInstance().addToSendingMessagesAndSend(Message.makeUpdateAccountMessage(s,currentAccount));
         }
     }
 
@@ -362,6 +425,7 @@ public class ManagerController extends Controller {
         checkEmail(email);
         if (currentAccount != null) {
             currentAccount.setEmail(email);
+            Client.getInstance().addToSendingMessagesAndSend(Message.makeUpdateAccountMessage(s,currentAccount));
         }
     }
 
@@ -387,6 +451,7 @@ public class ManagerController extends Controller {
         List<Account> accounts = o.getAppliedAccounts();
         accounts.add(a);
         o.setAppliedAccounts(accounts);
+        //todo
     }
 
     public void removeAccountFromOffcode(String code, String id) throws Exception {
@@ -397,6 +462,7 @@ public class ManagerController extends Controller {
         List<Account> accounts = o.getAppliedAccounts();
         accounts.remove(a);
         o.setAppliedAccounts(accounts);
+        //todo
     }
 
     public List<OffCode> getAllOffcodes() {
@@ -432,5 +498,6 @@ public class ManagerController extends Controller {
 
     public void changePassword(String text) {
         currentAccount.setPassword(text);
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeUpdateAccountMessage(s,currentAccount));
     }
 }

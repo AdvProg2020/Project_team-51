@@ -1,5 +1,6 @@
 package model.Requests;
 
+import javafx.scene.control.ComboBox;
 import model.Comment;
 import model.Status;
 
@@ -25,5 +26,9 @@ public class AddCommentRequest extends Request {
         comment.getProduct().addComment(comment);
         this.status = Status.APPROVED;
         comment.setCommentStatus(Status.APPROVED);
+    }
+
+    public Comment getComment() {
+        return comment;
     }
 }

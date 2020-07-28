@@ -1358,6 +1358,57 @@ public class ManagerMenuPanes {
         return tableView;
     }
 
+    public Pane getMoneySettingPane(){
+        Pane pane = new Pane();
+        Label label = getLabel("interest" , 100 , 80);
+        Label label1 = getLabel("minimum remaining" , 300 , 80);
+        Slider percentSlider = new Slider(1, 99, 1);
+        Label percentSliderAmount = new Label("");
+        setPlace(percentSlider , 100 , 100);
+        setPlace(percentSliderAmount, 100 , 120);
+        percentSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(
+                    ObservableValue<? extends Number> observableValue,
+                    Number oldValue,
+                    Number newValue) {
+                percentSliderAmount.textProperty().setValue(
+                        String.valueOf(newValue.intValue()));
+            }
+        });
+
+        Slider minRemain = new Slider(1, 99, 1);
+        Label minRemainLabel = new Label("");
+        setPlace(minRemain , 300 , 100);
+        setPlace(minRemainLabel, 300 , 120);
+        minRemain.valueProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(
+                    ObservableValue<? extends Number> observableValue,
+                    Number oldValue,
+                    Number newValue) {
+                percentSliderAmount.textProperty().setValue(
+                        String.valueOf(newValue.intValue()));
+            }
+        });
+
+        getButton("done" , event -> {
+            //whatever should be done
+        });
+
+        pane.getChildren().addAll(
+                label,
+                label1,
+                percentSlider,
+                percentSliderAmount,
+                minRemain,
+                minRemainLabel
+        );
+        return pane;
+    }
+
     private TextField getTextFieldDefault(String Default, double x, double y) {
         TextField textField = new TextField();
         textField.setText(Default);

@@ -29,4 +29,12 @@ public class AddAuctionRequest extends Request {
         status = Status.APPROVED;
         auction.setAuctionStatus(Status.APPROVED);
     }
+
+    public Auction getAuction() {
+        return auction;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
 }

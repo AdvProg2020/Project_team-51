@@ -27,4 +27,8 @@ public class AddSellerRequest extends Request {
         status = (Status.APPROVED);
         seller.setStatus(Status.APPROVED);
     }
+
+    public Seller getSeller() {
+    return seller;
+    }
 }

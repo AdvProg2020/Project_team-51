@@ -28,6 +28,18 @@ public class EditAuctionRequest extends Request {
                 "\nValue : " + value;
     }
 
+    public Auction getAuction() {
+        return auction;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
     @Override
     public void accept() throws InvalidProductIdException, ParseException {
 

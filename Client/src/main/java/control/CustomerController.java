@@ -3,6 +3,7 @@ package control;
 import control.Exceptions.InsufficientBalanceException;
 import control.Exceptions.InvalidProductIdException;
 import control.Exceptions.WrongFormatException;
+import message.Message;
 import model.ItemOfOrder;
 import model.OffCode;
 import model.OrderLog.Order;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CustomerController extends Controller {
+    static String s = "Server";
 
     public CustomerController(Account currentAccount) {
         super(currentAccount);
@@ -29,6 +31,9 @@ public class CustomerController extends Controller {
         if (phoneNumber.length() != 11 || !phoneNumber.startsWith("09"))
             throw new WrongFormatException("");
         currentAccount.setPhoneNumber(phoneNumber);
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeUpdateAccountMessage(s,currentAccount)
+        );
     }
 
     private static List<String> getAllPhoneNumbers() {
@@ -54,12 +59,18 @@ public class CustomerController extends Controller {
         if (currentAccount.getFirstName().equals(firstName))
             throw new InstanceAlreadyExistsException();
         currentAccount.setFirstName(firstName);
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeUpdateAccountMessage(s,currentAccount)
+        );
     }
 
     public void editLastName(String lastName) throws InstanceAlreadyExistsException {
         if (currentAccount.getLastName().equals(lastName))
             throw new InstanceAlreadyExistsException();
         currentAccount.setLastName(lastName);
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeUpdateAccountMessage(s,currentAccount)
+        );
     }
 
     public void editEmail(String email) throws InstanceAlreadyExistsException {
@@ -70,6 +81,9 @@ public class CustomerController extends Controller {
             throw new IllegalArgumentException();
 
         currentAccount.setEmail(email);
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeUpdateAccountMessage(s,currentAccount)
+        );
     }
 
     private ItemOfOrder getItemOfOrderByProduct(Product product) throws InvalidProductIdException {
@@ -113,6 +127,9 @@ public class CustomerController extends Controller {
             customer.setBalance(viewBalance() - showTotalPrice());
         else
             throw new InsufficientBalanceException();
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeUpdateAccountMessage(s,currentAccount)
+        );
     }
 
     public void emptyCard() {
@@ -133,6 +150,9 @@ public class CustomerController extends Controller {
 
     public void changePassword(String newPass) {
         currentAccount.setPassword(newPass);
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeUpdateAccountMessage(s,currentAccount)
+        );
     }
 
     private boolean isBuyerOfProduct(Product product) {

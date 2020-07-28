@@ -52,4 +52,20 @@ public class EditProductRequest extends Request {
 
         status = Status.APPROVED;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }

@@ -5,10 +5,7 @@ import control.Controller;
 import message.Messages.ClientToServer.*;
 import message.Messages.ServerToClient.*;
 import model.*;
-import model.People.Customer;
-import model.People.Manager;
-import model.People.Seller;
-import model.People.Service;
+import model.People.*;
 import model.Requests.*;
 
 import java.time.LocalDateTime;
@@ -181,6 +178,12 @@ public class Message {
         Message message = new Message(receiver);
         message.addToCartMessage = new AddToCartMessage(product, seller);
         message.messageType = MessageType.ADD_TO_CART;
+        return message;
+    }
+
+    public static Message makeUpdateAccountMessage(String receiver, Account pervAccount){
+        Message message = new Message(receiver);
+        message.updateAccountMessage = new UpdateAccountMessage(pervAccount);
         return message;
     }
 

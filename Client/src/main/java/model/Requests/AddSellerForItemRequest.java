@@ -36,4 +36,20 @@ public class AddSellerForItemRequest extends Request {
         product.addQuantityOfNewSeller(seller, quantity);
         this.status = Status.APPROVED;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
 }
