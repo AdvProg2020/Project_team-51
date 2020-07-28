@@ -37,8 +37,12 @@ public class DataController {
     }
 
     public boolean isOnline(String username) {
-        return true;
+        Account account = getAccount(username);
+        if (account == null)
+            return false;
+        return accounts.get(account) != null;
     }
+
 
     public void putClient(String name, Account account) {
         clients.put(name, account);

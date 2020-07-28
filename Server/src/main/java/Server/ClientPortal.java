@@ -20,8 +20,8 @@ public class ClientPortal extends Thread {
 
     private static final int DEFAULT_PORT = 8888;
     private static final int MAXIMUM_BRUTE_FORCE_ATTACKS = 10;
-    private static final int MAXIMUM_INPUT_SIZE = 50_000_000; // Characters
-    private static final int MAXIMUM_REQUEST_TIME = 20; // Seconds
+    private static final int MAXIMUM_INPUT_SIZE = 20_000_000; // Characters
+    private static final int MAXIMUM_REQUEST_TIME = 30; // Seconds
     private static final int SECONDS_TO_REMAIN_ON_BLACKLIST = 120;
     private static final int MAXIMUM_REQUESTS_PER_SECOND = 10;
     private static ClientPortal ourInstance;
